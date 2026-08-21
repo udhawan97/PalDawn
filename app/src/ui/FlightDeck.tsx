@@ -73,7 +73,7 @@ function Intro() {
   return (
     <section className="intro" aria-labelledby="intro-title">
       <p className="eyebrow">P0 technical voyage · v0.1</p>
-      <h1 id="intro-title">Follow the<br /><em>first light.</em></h1>
+      <h1 id="intro-title" tabIndex={-1}>Follow the<br /><em>first light.</em></h1>
       <p className="intro-copy">
         Enter a project-authored synthetic route that proves PalDawn’s flight
         system before any anatomy or clinical teaching is allowed aboard.
@@ -547,6 +547,7 @@ export function FlightDeck({
 }) {
   const entered = useExperience((state) => state.entered)
   const progress = useExperience((state) => state.progress)
+  const playing = useExperience((state) => state.playing)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const comfortVignette = useSettings((state) => state.comfortVignette)
@@ -577,10 +578,17 @@ export function FlightDeck({
       const next = progressForStageId(id)
       if (next !== null) useExperience.getState().setProgress(next)
     }
-    followHash()
+    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined
+    if (navigation?.type !== 'reload') followHash()
     window.addEventListener('hashchange', followHash)
     return () => window.removeEventListener('hashchange', followHash)
   }, [])
+
+  const currentStageId = stageAt(progress).id
+  useEffect(() => {
+    if (!entered || stageIdFromHash(window.location.hash) === currentStageId) return
+    replaceStageHash(currentStageId)
+  }, [currentStageId, entered])
 
   useEffect(() => {
     const flush = () => {
@@ -613,6 +621,12 @@ export function FlightDeck({
     document.addEventListener('visibilitychange', onVisibilityChange)
     return () => document.removeEventListener('visibilitychange', onVisibilityChange)
   }, [])
+
+  useEffect(() => {
+    if (!playing) return
+    pausedForVisibility.current = false
+    setVisibilityPaused(false)
+  }, [playing])
 
   useEffect(() => {
     const onUpdate = () => setUpdateReady(true)
@@ -696,7 +710,9 @@ export function FlightDeck({
 
   return (
     <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage}>
-      <a className="skip-link" href="#flight-controls">Skip to voyage controls</a>
+      <a className="skip-link" href={entered ? '#flight-controls' : '#intro-title'}>
+        Skip to {entered ? 'voyage controls' : 'introduction'}
+      </a>
       <header className="masthead">
         <a className="wordmark" href="./" aria-label="PalDawn home">
           <span>Pal</span>Dawn <i>पाल</i>
@@ -720,7 +736,9 @@ export function FlightDeck({
         {visibilityPaused ? (
           <p className="system-banner">Voyage paused while this page was in the background.<button type="button" onClick={() => {
             setVisibilityPaused(false)
-            useExperience.getState().togglePlayback(false)
+            pausedForVisibility.current = false
+            const state = useExperience.getState()
+            if (!state.playing && state.progress < 1 && !reducedMotion) state.togglePlayback(false)
           }}>Resume</button></p>
         ) : null}
       </div>

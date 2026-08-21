@@ -1,10 +1,38 @@
+import { createHash } from 'node:crypto'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// GitHub Pages project-site support: set VITE_BASE_PATH=/paldawn/ at build
-// time (deploy workflow, later). Default '/' keeps local dev/preview simple.
+const SERVICE_WORKER_BUILD_TOKEN = '__PALDAWN_BUILD_ID__'
+
+function stampServiceWorker() {
+  return {
+    name: 'paldawn-service-worker-build-stamp',
+    apply: 'build' as const,
+    closeBundle() {
+      const distRoot = resolve(process.cwd(), 'dist')
+      const workerPath = resolve(distRoot, 'sw.js')
+      const buildInputs = ['index.html', 'sw.js', 'site.webmanifest', 'icon.svg']
+        .map((filename) => readFileSync(resolve(distRoot, filename)))
+      const buildId = createHash('sha256')
+        .update(Buffer.concat(buildInputs))
+        .update(process.env.PALDAWN_BUILD_SALT ?? '')
+        .digest('hex')
+        .slice(0, 12)
+      const worker = readFileSync(workerPath, 'utf8')
+      if (!worker.includes(SERVICE_WORKER_BUILD_TOKEN)) {
+        throw new Error('PalDawn service-worker build token is missing')
+      }
+      writeFileSync(workerPath, worker.replaceAll(SERVICE_WORKER_BUILD_TOKEN, buildId))
+    },
+  }
+}
+
+// GitHub Pages project-site support: the deploy workflow sets
+// VITE_BASE_PATH=/PalDawn/. Default '/' keeps local dev/preview simple.
 export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? '/',
-  plugins: [react()],
+  plugins: [react(), stampServiceWorker()],
   build: { target: 'es2022', sourcemap: false },
 })

@@ -28,7 +28,7 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 **Depth dial:** every beat carries two narration tracks (Layperson ↔ Clinical) over the same scene.
 
-**SPD — the co-pilot.** Every journey is flown with a companion character, **SPD** (in-universe: *Somatic Pathfinding Droid*; the initials privately honor the founder's father, the app's namesake). SPD narrates both depth tracks, points at what the camera is seeing, and carries the safety lines — wherever suspected-heart-attack symptoms are discussed, it is SPD who says **"contact your local emergency services immediately."** SPD explains; SPD never diagnoses. **Later:** EN + हिन्दी i18n, PWA offline.
+**SPD — the co-pilot.** Every journey is flown with a companion character, **SPD** (in-universe: *Somatic Pathfinding Droid*; the initials privately honor the founder's father, the app's namesake). SPD narrates both depth tracks, points at what the camera is seeing, and carries the safety lines — wherever suspected-heart-attack symptoms are discussed, it is SPD who says **"contact your local emergency services immediately."** SPD explains; SPD never diagnoses. Foundation+ now provides a first-party offline shell for First Light. **Later:** EN + हिन्दी i18n and richer versioned content-pack offline support.
 
 ---
 

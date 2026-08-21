@@ -76,6 +76,12 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
   },
   moveStage: (direction) => {
     const current = stageIndexAt(get().progress)
+    if (direction === 1 && current === JOURNEY.stages.length - 1) {
+      const progress = 1
+      saveJourneySession({ progress, narrationMode: get().narrationMode })
+      set({ entered: true, playing: false, progress })
+      return
+    }
     const target = Math.min(JOURNEY.stages.length - 1, Math.max(0, current + direction))
     const progress = stageEntryProgress(target)
     saveJourneySession({ progress, narrationMode: get().narrationMode })

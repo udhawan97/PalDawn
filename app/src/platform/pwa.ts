@@ -1,5 +1,6 @@
 let registration: ServiceWorkerRegistration | null = null
 let refreshing = false
+let updateActivationRequested = false
 
 const dispatch = (name: 'update-ready' | 'offline-ready'): void => {
   window.dispatchEvent(new CustomEvent(`paldawn:${name}`))
@@ -29,14 +30,17 @@ export function registerPwa(): void {
   }, { once: true })
 
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshing) return
+    if (!updateActivationRequested || refreshing) return
     refreshing = true
     window.location.reload()
   })
 }
 
 export function activatePwaUpdate(): void {
-  registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
+  const waiting = registration?.waiting
+  if (!waiting) return
+  updateActivationRequested = true
+  waiting.postMessage({ type: 'SKIP_WAITING' })
 }
 
 export function checkForPwaUpdate(): Promise<void> {

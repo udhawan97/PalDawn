@@ -38,8 +38,12 @@ contract requirements.
 - Production build remains inside the existing gzip budget.
 - First Light's five-stage, synthetic-only, no-medical-claim invariants pass.
 - All fourteen Foundation+ feature contracts pass.
-- Provenance validation and dependency-license inventory remain fail-closed.
+- Provenance validation remains fail-closed; the unchanged dependency inventory
+  continues to deny blocked licenses and report unallowlisted licenses for review.
 - Browser acceptance covers keyboard, persistence, deep links, transcript and
   diagnostic exports, text voyage, recovery, responsive layouts, reduced motion,
-  and same-origin offline reload at the production Pages base path. Static
-  contracts cover the user-triggered service-worker update path.
+  and the first-install, user-triggered update, and offline-reload worker lifecycle
+  at the production Pages base path.
+
+The retained acceptance matrix and known limitations are in
+`docs/FOUNDATION-PLUS-QA.md`.
