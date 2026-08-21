@@ -1,0 +1,124 @@
+{
+  "$comment": "PalDawn (formerly Antaryaan) universal provenance record — descriptive schema. The deterministic validator (validate.mjs, Node built-ins only) is the enforcement source of truth; this file documents the shape for humans and tools.",
+  "title": "PalDawnProvenanceRecord",
+  "type": "object",
+  "required": ["record_id", "subject", "medical_scope", "upstream", "license", "lineage", "reproduction", "modifications", "output_digest", "attribution", "landing_zone", "usage_status", "approval", "review"],
+  "properties": {
+    "record_id": { "type": "string", "description": "Stable unique ID for this record, e.g. npm--react--19.2.8" },
+    "subject": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "enum": ["code_dependency", "vendored_code", "tooling", "asset", "dataset", "content"] },
+        "structure_id": { "type": "string", "description": "Project structure ID for anatomical objects (e.g. structure:coronary.lad); omit for code" }
+      }
+    },
+    "medical_scope": { "type": "boolean", "description": "true when the subject carries medical/anatomical claims (assets, datasets, ontology mappings, journey content). Pure code/tooling: false" },
+    "upstream": {
+      "type": "object",
+      "required": ["repository", "version_or_commit", "source_digest", "creator"],
+      "properties": {
+        "repository": { "type": "string", "description": "Upstream repository or registry URL" },
+        "path": { "type": "string", "description": "Exact file/object path inside upstream, when applicable" },
+        "version_or_commit": { "type": "string", "description": "Immutable released version or commit SHA" },
+        "source_digest": { "type": "string", "description": "Digest of the consumed artifact (e.g. npm sha512 integrity, sha256 of a file)" },
+        "creator": { "type": "string" }
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["spdx", "license_url", "source_url"],
+      "properties": {
+        "spdx": { "type": "string", "description": "Exact SPDX ID or LicenseRef-*; fail-closed against zone allowlists" },
+        "license_url": { "type": "string", "description": "Canonical license text URL" },
+        "source_url": { "type": "string", "description": "Where the license claim was verified (repo LICENSE file, registry metadata...)" },
+        "scope": { "type": "string", "description": "Scope of the licence evidence, such as repository-level or exact-object" },
+        "object_level_status": { "enum": ["resolved", "unresolved"], "description": "Required as resolved before a medical asset, dataset, or content record may be approved or used" }
+      }
+    },
+    "lineage": { "type": "string", "description": "Original source and derivation chain, e.g. BodyParts3D (CC BY-SA 2.1 JP) -> Z-Anatomy (CC BY-SA 4.0) -> this object" },
+    "reproduction": {
+      "type": "object",
+      "required": ["tools", "commands"],
+      "properties": {
+        "tools": { "type": "array", "items": { "type": "string" }, "description": "Tool names + versions" },
+        "commands": { "type": "array", "items": { "type": "string" }, "description": "Reproducible commands that produced the output" }
+      }
+    },
+    "modifications": { "type": "string", "description": "\"None — unmodified\" or a description of every change" },
+    "output_digest": { "type": ["string", "null"], "description": "Digest of the produced/landed artifact; required non-empty when usage_status = used" },
+    "attribution": {
+      "type": "object",
+      "required": ["required_text", "source_pack_url"],
+      "properties": {
+        "required_text": { "type": "string", "description": "Exact attribution text to surface (CREDITS.md / NOTICE.md / UI)" },
+        "source_pack_url": { "type": "string", "description": "Corresponding-source or source-pack URL (share-alike compliance)" }
+      }
+    },
+    "landing_zone": { "enum": ["app", "pipeline", "content"], "description": "app/pipeline are MIT code zones (share-alike material forbidden); content is the CC BY-SA zone" },
+    "usage_status": { "enum": ["planned", "used"], "description": "used = actually incorporated in the repository/build. Never mark used before incorporation" },
+    "approval": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["pending", "approved", "rejected"] },
+        "approved_by": { "type": "string", "description": "Required when status = approved" },
+        "date": { "type": "string" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["applicability"],
+      "properties": {
+        "applicability": { "enum": ["required", "not_applicable"], "description": "required for medical/anatomical subjects; not_applicable (with rationale) for pure code/tooling" },
+        "rationale": { "type": "string", "description": "Required when applicability = not_applicable" },
+        "reviewer": { "type": "string", "description": "Named qualified human; required for approved/used medical records" },
+        "reviewer_qualification": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "enum": ["pending", "approved", "rejected"] },
+        "claim_scope": { "type": "string", "description": "Exactly which claims the review covers" }
+      }
+    },
+    "source_container": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "zip_git_blob_sha1": { "type": "string" },
+        "zip_sha256": { "type": "string" },
+        "inner_blend_sha256": { "type": "string" }
+      },
+      "description": "Pinned container evidence required by the validator for Z-Anatomy medical assets."
+    },
+    "source_object": {
+      "type": "object",
+      "properties": {
+        "object_name": { "type": ["string", "null"] },
+        "data_block": { "type": ["string", "null"] },
+        "object_type": { "type": "string" },
+        "geometry": { "type": "object" },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      },
+      "description": "Exact upstream object/data-block identity or evidence that the requested object is unavailable."
+    },
+    "ontology_mappings": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["pending_medical_review", "approved", "rejected"] },
+        "source_evidence": { "type": "object" },
+        "ta2": { "type": "array", "items": { "type": "object" } },
+        "fma": { "type": "array", "items": { "type": "object" } }
+      },
+      "description": "Separately sourced TA2 and FMA mappings; the validator requires immutable source evidence, method, confidence, and basis for medical assets."
+    },
+    "adoption_gate": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["blocked", "clear"] },
+        "blockers": { "type": "array", "items": { "type": "string" } },
+        "validator_pass_meaning": { "type": "string" }
+      },
+      "description": "Audit disposition. blocked records may validate while planned/pending; medical assets, datasets, and content require clear before approval/use."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "record_id": "blocked-asset-promoted",
+  "subject": { "name": "blocked anatomy candidate", "type": "asset", "structure_id": "structure:test.blocked" },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://example.invalid/upstream",
+    "version_or_commit": "0123456789abcdef",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Repository authors (object-level creator unresolved)"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://example.invalid/upstream/LICENSE",
+    "scope": "Repository-level declaration only",
+    "object_level_status": "unresolved"
+  },
+  "lineage": "Object-level source and derivation chain unresolved.",
+  "reproduction": { "tools": ["fixture"], "commands": ["fixture"] },
+  "modifications": "Synthetic invalid fixture.",
+  "output_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "attribution": { "required_text": "Synthetic fixture", "source_pack_url": "https://example.invalid/upstream" },
+  "landing_zone": "content",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Synthetic fixture approver", "date": "2026-08-20" },
+  "review": {
+    "applicability": "required",
+    "reviewer": "Synthetic fixture reviewer",
+    "reviewer_qualification": "Synthetic fixture qualification",
+    "date": "2026-08-20",
+    "status": "approved",
+    "claim_scope": "Synthetic fixture only"
+  },
+  "adoption_gate": { "status": "blocked", "blockers": ["Unresolved object-level evidence"] }
+}

@@ -1,0 +1,44 @@
+{
+  "record_id": "fixture--ccbysa-content-planned",
+  "subject": { "name": "example-heart-mesh", "type": "asset", "structure_id": "structure:heart.example" },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://github.com/example/open-anatomy-models",
+    "path": "meshes/heart/example-heart.blend",
+    "version_or_commit": "ab12cd34ef56ab12cd34ef56ab12cd34ef56ab12",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Example Anatomy Collective"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://github.com/example/open-anatomy-models/blob/ab12cd3/License.txt",
+    "scope": "Exact synthetic fixture object",
+    "object_level_status": "resolved"
+  },
+  "lineage": "Example upstream atlas (CC BY-SA 4.0), itself derived from an example CC BY-SA 2.1 JP dataset; full chain retained.",
+  "reproduction": { "tools": ["blender 4.x", "gltf-transform (pinned)"], "commands": ["(planned) blender --background --python export.py", "(planned) gltf-transform optimize in.glb out.glb"] },
+  "modifications": "(planned) decimation and LOD chain; nothing produced yet.",
+  "output_digest": null,
+  "attribution": { "required_text": "Example heart mesh — Example Anatomy Collective — CC BY-SA 4.0 (synthetic fixture)", "source_pack_url": "https://github.com/example/open-anatomy-models" },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": { "status": "pending" },
+  "review": { "applicability": "required", "status": "pending", "claim_scope": "anatomical fidelity of the example heart exterior (synthetic fixture)" },
+  "source_object": {
+    "object_name": "OBExample heart",
+    "data_block": "MEExample heart",
+    "object_type": "MESH",
+    "geometry": { "vertices": 3, "polygons": 1 }
+  },
+  "ontology_mappings": {
+    "status": "pending_medical_review",
+    "source_evidence": {
+      "ta2": { "repository": "https://example.invalid/ta2", "version_or_commit": "ta2-pin", "path": "TA2.csv", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "method": "Synthetic TA2 fixture method" },
+      "fma": { "repository": "https://example.invalid/fma", "version_or_commit": "fma-pin", "path": "FMA.csv", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "method": "Synthetic FMA fixture method" }
+    },
+    "ta2": [{ "id": "TA2:1", "label": "Synthetic TA2", "confidence": "low", "basis": "Synthetic fixture basis" }],
+    "fma": [{ "id": "FMA:1", "label": "Synthetic FMA", "confidence": "low", "basis": "Synthetic fixture basis" }]
+  },
+  "adoption_gate": { "status": "blocked", "blockers": ["Synthetic fixture review and output are pending"] }
+}

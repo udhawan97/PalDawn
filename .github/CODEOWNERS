@@ -1,0 +1,7 @@
+# The repository owner must review any content, data, or provenance change.
+# Branch protection must require code-owner review for this file to enforce a gate.
+/content/ @udhawan97
+/data/ @udhawan97
+/pipeline/provenance/ @udhawan97
+/.github/workflows/ @udhawan97
+/.github/CODEOWNERS @udhawan97

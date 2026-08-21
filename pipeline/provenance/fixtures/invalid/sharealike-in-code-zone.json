@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--sharealike-in-code-zone",
+  "subject": { "name": "example-ccbysa-shader", "type": "vendored_code" },
+  "medical_scope": false,
+  "upstream": { "repository": "https://github.com/example/ccbysa-shaders", "version_or_commit": "beefcafe", "source_digest": "sha256:fixture", "creator": "Example Shader Artist" },
+  "license": { "spdx": "CC-BY-SA-4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode", "source_url": "https://github.com/example/ccbysa-shaders/blob/main/LICENSE" },
+  "lineage": "Share-alike shader snippet.",
+  "reproduction": { "tools": ["copy"], "commands": ["cp shader.glsl app/src/"] },
+  "modifications": "None.",
+  "output_digest": "sha256:fixture",
+  "attribution": { "required_text": "example shader — CC BY-SA 4.0", "source_pack_url": "https://github.com/example/ccbysa-shaders" },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-01" },
+  "review": { "applicability": "not_applicable", "rationale": "Shader code (synthetic fixture)." }
+}

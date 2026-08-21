@@ -1,0 +1,47 @@
+{
+  "record_id": "npm--vite--8.2.1",
+  "subject": {
+    "name": "vite",
+    "type": "code_dependency"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/vitejs/vite.git",
+    "path": "node_modules/vite (published npm artifact)",
+    "version_or_commit": "8.2.1",
+    "source_digest": "sha512-EU/eS7BH3XROHh2YnBefjM6DBKA6ZeMZEYQbj7NLWg5wHYlhB8B/Mayd5XsgWq+NFYccDOTemRpdETWR6Ka/lw==",
+    "creator": "VoidZero Inc. and Vite contributors (created by Evan You)"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://spdx.org/licenses/MIT.html",
+    "source_url": "https://registry.npmjs.org/vite/-/vite-8.2.1.tgz (package.json license field; full text in app/THIRD_PARTY_LICENSES.md)"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/vitejs/vite.git.",
+  "reproduction": {
+    "tools": [
+      "node 22.22.2",
+      "npm 10.9.7"
+    ],
+    "commands": [
+      "npm install --save-exact vite@8.2.1"
+    ]
+  },
+  "modifications": "None — consumed as an unmodified npm dependency; package-lock.json integrity pins the exact artifact.",
+  "output_digest": "sha512-EU/eS7BH3XROHh2YnBefjM6DBKA6ZeMZEYQbj7NLWg5wHYlhB8B/Mayd5XsgWq+NFYccDOTemRpdETWR6Ka/lw==",
+  "attribution": {
+    "required_text": "vite v8.2.1 — © VoidZero Inc. and Vite contributors (created by Evan You) — MIT — https://github.com/vitejs/vite.git",
+    "source_pack_url": "https://registry.npmjs.org/vite/-/vite-8.2.1.tgz"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "Locked-stack directive — Antaryaan bounded foundation pass (2026-08-16)",
+    "date": "2026-08-16"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Pure rendering/build tooling with no medical or anatomical claims; medical review does not apply. License and source verified against the npm registry and lockfile integrity on 2026-08-16."
+  }
+}

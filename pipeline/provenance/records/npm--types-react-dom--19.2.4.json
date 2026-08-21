@@ -1,0 +1,47 @@
+{
+  "record_id": "npm--types-react-dom--19.2.4",
+  "subject": {
+    "name": "@types/react-dom",
+    "type": "code_dependency"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "path": "node_modules/@types/react-dom (published npm artifact)",
+    "version_or_commit": "19.2.4",
+    "source_digest": "sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==",
+    "creator": "DefinitelyTyped contributors"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://spdx.org/licenses/MIT.html",
+    "source_url": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.4.tgz (package.json license field; full text in app/THIRD_PARTY_LICENSES.md)"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/DefinitelyTyped/DefinitelyTyped.git.",
+  "reproduction": {
+    "tools": [
+      "node 22.22.2",
+      "npm 10.9.7"
+    ],
+    "commands": [
+      "npm install --save-exact @types/react-dom@19.2.4"
+    ]
+  },
+  "modifications": "None — consumed as an unmodified npm dependency; package-lock.json integrity pins the exact artifact.",
+  "output_digest": "sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==",
+  "attribution": {
+    "required_text": "@types/react-dom v19.2.4 — © DefinitelyTyped contributors — MIT — https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "source_pack_url": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.4.tgz"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "Locked-stack directive — Antaryaan bounded foundation pass (2026-08-16)",
+    "date": "2026-08-16"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Pure rendering/build tooling with no medical or anatomical claims; medical review does not apply. License and source verified against the npm registry and lockfile integrity on 2026-08-16."
+  }
+}

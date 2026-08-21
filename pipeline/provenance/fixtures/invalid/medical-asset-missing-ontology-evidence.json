@@ -1,0 +1,63 @@
+{
+  "record_id": "medical-asset-missing-ontology-evidence",
+  "subject": {
+    "name": "synthetic medical asset",
+    "type": "asset",
+    "structure_id": "structure:test.asset"
+  },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://example.invalid/upstream",
+    "path": "asset/object",
+    "version_or_commit": "0123456789abcdef",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Synthetic fixture creator"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://example.invalid/upstream/LICENSE",
+    "scope": "Synthetic exact fixture scope",
+    "object_level_status": "unresolved"
+  },
+  "lineage": "Synthetic fixture lineage.",
+  "reproduction": {
+    "tools": [
+      "fixture"
+    ],
+    "commands": [
+      "fixture"
+    ]
+  },
+  "modifications": "Synthetic invalid fixture.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "Synthetic fixture",
+    "source_pack_url": "https://example.invalid/upstream"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "required",
+    "status": "pending",
+    "claim_scope": "Synthetic fixture only"
+  },
+  "adoption_gate": {
+    "status": "blocked",
+    "blockers": [
+      "Synthetic unresolved evidence"
+    ]
+  },
+  "source_object": {
+    "object_name": "OBSynthetic",
+    "data_block": "MESynthetic",
+    "object_type": "MESH",
+    "geometry": {
+      "vertices": 3,
+      "polygons": 1
+    }
+  }
+}

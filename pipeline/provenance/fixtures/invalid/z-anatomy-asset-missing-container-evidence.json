@@ -1,0 +1,98 @@
+{
+  "record_id": "z-anatomy-asset-missing-container-evidence",
+  "subject": {
+    "name": "synthetic medical asset",
+    "type": "asset",
+    "structure_id": "structure:test.asset"
+  },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://github.com/Z-Anatomy/Models-of-human-anatomy.git",
+    "path": "asset/object",
+    "version_or_commit": "0123456789abcdef",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Synthetic fixture creator"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://example.invalid/upstream/LICENSE",
+    "scope": "Synthetic exact fixture scope",
+    "object_level_status": "unresolved"
+  },
+  "lineage": "Synthetic fixture lineage.",
+  "reproduction": {
+    "tools": [
+      "fixture"
+    ],
+    "commands": [
+      "fixture"
+    ]
+  },
+  "modifications": "Synthetic invalid fixture.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "Synthetic fixture",
+    "source_pack_url": "https://example.invalid/upstream"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "required",
+    "status": "pending",
+    "claim_scope": "Synthetic fixture only"
+  },
+  "adoption_gate": {
+    "status": "blocked",
+    "blockers": [
+      "Synthetic unresolved evidence"
+    ]
+  },
+  "source_object": {
+    "object_name": "OBSynthetic",
+    "data_block": "MESynthetic",
+    "object_type": "MESH",
+    "geometry": {
+      "vertices": 3,
+      "polygons": 1
+    }
+  },
+  "ontology_mappings": {
+    "status": "pending_medical_review",
+    "source_evidence": {
+      "ta2": {
+        "repository": "https://example.invalid/ta2",
+        "version_or_commit": "ta2-pin",
+        "path": "TA2.csv",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "method": "Synthetic TA2 fixture method"
+      },
+      "fma": {
+        "repository": "https://example.invalid/fma",
+        "version_or_commit": "fma-pin",
+        "path": "FMA.csv",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "method": "Synthetic FMA fixture method"
+      }
+    },
+    "ta2": [
+      {
+        "id": "TA2:1",
+        "label": "Synthetic TA2",
+        "confidence": "low",
+        "basis": "Synthetic fixture basis"
+      }
+    ],
+    "fma": [
+      {
+        "id": "FMA:1",
+        "label": "Synthetic FMA",
+        "confidence": "low",
+        "basis": "Synthetic fixture basis"
+      }
+    ]
+  }
+}

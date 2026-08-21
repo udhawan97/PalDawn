@@ -1,0 +1,45 @@
+{
+  "record_id": "z-anatomy-asset-misclassified-nonmedical",
+  "subject": {
+    "name": "misclassified Z-Anatomy asset",
+    "type": "asset",
+    "structure_id": "structure:test.misclassified"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/Z-Anatomy/Models-of-human-anatomy.git",
+    "path": "Z-Anatomy.zip::object",
+    "version_or_commit": "ebdd5edf207af1dd765cc6796ad90b34add9799a",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Synthetic fixture creator"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://example.invalid/license"
+  },
+  "lineage": "Synthetic fixture lineage.",
+  "reproduction": {
+    "tools": [
+      "fixture"
+    ],
+    "commands": [
+      "fixture"
+    ]
+  },
+  "modifications": "Synthetic invalid fixture.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "Synthetic fixture",
+    "source_pack_url": "https://example.invalid/upstream"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Intentionally misclassified invalid fixture"
+  }
+}

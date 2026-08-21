@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--medical-without-review",
+  "subject": { "name": "example-coronary-mesh-rushed", "type": "asset", "structure_id": "structure:coronary.example" },
+  "medical_scope": true,
+  "upstream": { "repository": "https://github.com/example/models", "path": "coronary.glb", "version_or_commit": "cafef00d", "source_digest": "sha256:fixture", "creator": "Example Modeler" },
+  "license": { "spdx": "CC-BY-SA-4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode", "source_url": "https://github.com/example/models/blob/main/LICENSE" },
+  "lineage": "Example CC BY-SA atlas.",
+  "reproduction": { "tools": ["blender 4.x"], "commands": ["blender --background --python export.py"] },
+  "modifications": "Decimated.",
+  "output_digest": "sha256:fixtureoutput",
+  "attribution": { "required_text": "example coronary mesh — CC BY-SA 4.0", "source_pack_url": "https://github.com/example/models" },
+  "landing_zone": "content",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-01" },
+  "review": { "applicability": "required", "status": "pending", "claim_scope": "coronary anatomy (synthetic fixture)" }
+}

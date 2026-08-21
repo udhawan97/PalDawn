@@ -1,0 +1,26 @@
+{
+  "record_id": "fixture--mit-code-dependency-used",
+  "subject": { "name": "example-render-lib", "type": "code_dependency" },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/example/example-render-lib",
+    "path": "node_modules/example-render-lib (published npm artifact)",
+    "version_or_commit": "2.4.1",
+    "source_digest": "sha512-FIXTUREDIGESTFIXTUREDIGESTFIXTUREDIGESTFIXTUREDIGEST==",
+    "creator": "Example OSS Working Group"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://spdx.org/licenses/MIT.html",
+    "source_url": "https://github.com/example/example-render-lib/blob/v2.4.1/LICENSE"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/example/example-render-lib.",
+  "reproduction": { "tools": ["node 22.x", "npm 10.x"], "commands": ["npm install --save-exact example-render-lib@2.4.1"] },
+  "modifications": "None — consumed as an unmodified npm dependency.",
+  "output_digest": "sha512-FIXTUREDIGESTFIXTUREDIGESTFIXTUREDIGESTFIXTUREDIGEST==",
+  "attribution": { "required_text": "example-render-lib v2.4.1 — © Example OSS Working Group — MIT", "source_pack_url": "https://registry.npmjs.org/example-render-lib/-/example-render-lib-2.4.1.tgz" },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-01" },
+  "review": { "applicability": "not_applicable", "rationale": "Pure rendering code with no medical or anatomical claims (synthetic fixture)." }
+}

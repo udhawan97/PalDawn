@@ -1,0 +1,47 @@
+{
+  "record_id": "npm--react-three-postprocessing--3.0.5",
+  "subject": {
+    "name": "@react-three/postprocessing",
+    "type": "code_dependency"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/pmndrs/react-postprocessing.git",
+    "path": "node_modules/@react-three/postprocessing (published npm artifact)",
+    "version_or_commit": "3.0.5",
+    "source_digest": "sha512-rqxoH8cjq51w5yZ7Re3WNPVVDdSsuVwEYA+Nl90/nFLv0MIxYGjMkqhc6akp5+VLNwZD2aqOd8KcwuZW7NeUKQ==",
+    "creator": "Poimandres (pmndrs) contributors"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://spdx.org/licenses/MIT.html",
+    "source_url": "https://registry.npmjs.org/@react-three/postprocessing/-/postprocessing-3.0.5.tgz (package.json license field; full text in app/THIRD_PARTY_LICENSES.md)"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/pmndrs/react-postprocessing.git.",
+  "reproduction": {
+    "tools": [
+      "node 22.22.2",
+      "npm 10.9.7"
+    ],
+    "commands": [
+      "npm install --save-exact @react-three/postprocessing@3.0.5"
+    ]
+  },
+  "modifications": "None — consumed as an unmodified npm dependency; package-lock.json integrity pins the exact artifact.",
+  "output_digest": "sha512-rqxoH8cjq51w5yZ7Re3WNPVVDdSsuVwEYA+Nl90/nFLv0MIxYGjMkqhc6akp5+VLNwZD2aqOd8KcwuZW7NeUKQ==",
+  "attribution": {
+    "required_text": "@react-three/postprocessing v3.0.5 — © Poimandres (pmndrs) contributors — MIT — https://github.com/pmndrs/react-postprocessing.git",
+    "source_pack_url": "https://registry.npmjs.org/@react-three/postprocessing/-/postprocessing-3.0.5.tgz"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "Locked-stack directive — Antaryaan bounded foundation pass (2026-08-16)",
+    "date": "2026-08-16"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Pure rendering/build tooling with no medical or anatomical claims; medical review does not apply. License and source verified against the npm registry and lockfile integrity on 2026-08-16."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--missing-license",
+  "subject": { "name": "example-unlicensed-snippet", "type": "vendored_code" },
+  "medical_scope": false,
+  "upstream": { "repository": "https://gist.github.com/example/abc123", "version_or_commit": "abc123", "source_digest": "sha256:fixture", "creator": "Unknown Gist Author" },
+  "license": { "spdx": "", "license_url": "", "source_url": "" },
+  "lineage": "Gist with no license.",
+  "reproduction": { "tools": ["copy-paste"], "commands": ["(none)"] },
+  "modifications": "None.",
+  "output_digest": null,
+  "attribution": { "required_text": "example gist", "source_pack_url": "https://gist.github.com/example/abc123" },
+  "landing_zone": "app",
+  "usage_status": "planned",
+  "approval": { "status": "pending" },
+  "review": { "applicability": "not_applicable", "rationale": "Code snippet (synthetic fixture)." }
+}

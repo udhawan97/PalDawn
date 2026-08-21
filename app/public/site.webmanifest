@@ -1,0 +1,17 @@
+{
+  "name": "PalDawn — First Light",
+  "short_name": "PalDawn",
+  "description": "A synthetic, non-anatomical technical voyage.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#04070c",
+  "theme_color": "#04070c",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

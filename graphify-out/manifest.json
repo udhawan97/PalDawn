@@ -1,0 +1,402 @@
+{
+  "app/package.json": {
+    "mtime": 1787273179.8879292,
+    "ast_hash": "031f0711ee0c58651701f5d299036b11",
+    "semantic_hash": "031f0711ee0c58651701f5d299036b11"
+  },
+  "app/scripts/license-inventory.mjs": {
+    "mtime": 1787273179.8976858,
+    "ast_hash": "fb59e5a90b869a1ac49fba4787759918",
+    "semantic_hash": "fb59e5a90b869a1ac49fba4787759918"
+  },
+  "app/src/App.tsx": {
+    "mtime": 1787273179.8983433,
+    "ast_hash": "9c82d8dbb67a7eeb328e44242804d0a4",
+    "semantic_hash": "9c82d8dbb67a7eeb328e44242804d0a4"
+  },
+  "app/src/main.tsx": {
+    "mtime": 1786872783.5339253,
+    "ast_hash": "3b7f5f679e0ee00804d63f654617f9fc",
+    "semantic_hash": "3b7f5f679e0ee00804d63f654617f9fc"
+  },
+  "app/src/scene/CalibrationScene.tsx": {
+    "mtime": 1786872783.5334287,
+    "ast_hash": "0ab27c91c78b43b83e52cc66363d55b1",
+    "semantic_hash": "0ab27c91c78b43b83e52cc66363d55b1"
+  },
+  "app/src/state/settings.ts": {
+    "mtime": 1786872783.5345924,
+    "ast_hash": "566347777269728a638cc17e355767db",
+    "semantic_hash": "566347777269728a638cc17e355767db"
+  },
+  "app/src/ui/Hud.tsx": {
+    "mtime": 1787273179.8993318,
+    "ast_hash": "167b0f3bf221e9976b96bc3080387c87",
+    "semantic_hash": "167b0f3bf221e9976b96bc3080387c87"
+  },
+  "app/src/vite-env.d.ts": {
+    "mtime": 1786872783.5328004,
+    "ast_hash": "0352474ba2918efe13895edbc3780d94",
+    "semantic_hash": "0352474ba2918efe13895edbc3780d94"
+  },
+  "app/src/webgl.ts": {
+    "mtime": 1787273179.8988404,
+    "ast_hash": "320c821fd038cc4496453e90afeb01ce",
+    "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
+  },
+  "app/third-party-license-inventory.json": {
+    "mtime": 1787273179.8965147,
+    "ast_hash": "74e20b44e683ede8009f7418d9f45e0f",
+    "semantic_hash": "74e20b44e683ede8009f7418d9f45e0f"
+  },
+  "app/tsconfig.app.json": {
+    "mtime": 1786872783.5354495,
+    "ast_hash": "b9cc25752c2f7dfcc2667a99307a9a07",
+    "semantic_hash": "b9cc25752c2f7dfcc2667a99307a9a07"
+  },
+  "app/tsconfig.json": {
+    "mtime": 1786872783.5451186,
+    "ast_hash": "cebcd0aef9a53b9c724ac53266f03437",
+    "semantic_hash": "cebcd0aef9a53b9c724ac53266f03437"
+  },
+  "app/tsconfig.node.json": {
+    "mtime": 1786872783.5409894,
+    "ast_hash": "ec13a78f7848db48070fca4a0bfb9c09",
+    "semantic_hash": "ec13a78f7848db48070fca4a0bfb9c09"
+  },
+  "app/vite.config.ts": {
+    "mtime": 1787273179.89709,
+    "ast_hash": "2f6d6e4f1301e40b9530115b080d6296",
+    "semantic_hash": "2f6d6e4f1301e40b9530115b080d6296"
+  },
+  "pipeline/provenance/fixtures/invalid/ccbync-asset.json": {
+    "mtime": 1786872783.5557444,
+    "ast_hash": "1af44a9647a1ef86eda81e184a182918",
+    "semantic_hash": "1af44a9647a1ef86eda81e184a182918"
+  },
+  "pipeline/provenance/fixtures/invalid/code-review-mismatch.json": {
+    "mtime": 1786872783.5561666,
+    "ast_hash": "8c071a366eedd1dc99b573d86b9f594b",
+    "semantic_hash": "8c071a366eedd1dc99b573d86b9f594b"
+  },
+  "pipeline/provenance/fixtures/invalid/gpl-code.json": {
+    "mtime": 1786872783.5547469,
+    "ast_hash": "9feec15750f9627b19a8405198cfcacc",
+    "semantic_hash": "9feec15750f9627b19a8405198cfcacc"
+  },
+  "pipeline/provenance/fixtures/invalid/medical-without-review.json": {
+    "mtime": 1786872783.557037,
+    "ast_hash": "15671c84cfc4e6682f73d0879bbac42a",
+    "semantic_hash": "15671c84cfc4e6682f73d0879bbac42a"
+  },
+  "pipeline/provenance/fixtures/invalid/missing-license.json": {
+    "mtime": 1786872783.5566092,
+    "ast_hash": "a5ba1d89e4027a2609279bc2e703f3da",
+    "semantic_hash": "a5ba1d89e4027a2609279bc2e703f3da"
+  },
+  "pipeline/provenance/fixtures/invalid/premature-used.json": {
+    "mtime": 1786872783.557463,
+    "ast_hash": "1d5a0d272bc0e1641ee9f46a38c2f716",
+    "semantic_hash": "1d5a0d272bc0e1641ee9f46a38c2f716"
+  },
+  "pipeline/provenance/fixtures/invalid/sharealike-in-code-zone.json": {
+    "mtime": 1786872783.5551653,
+    "ast_hash": "0d40e53e98e04d04612d0a31851ddfac",
+    "semantic_hash": "0d40e53e98e04d04612d0a31851ddfac"
+  },
+  "pipeline/provenance/fixtures/valid/ccbysa-content-planned.json": {
+    "mtime": 1787277372.6040664,
+    "ast_hash": "624d17c01cb848b6a830751d866c31d0",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/valid/medical-content-used-reviewed.json": {
+    "mtime": 1787277372.6049008,
+    "ast_hash": "5669eb1b5a7289dca364bc223564bfe0",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/valid/mit-code-dependency-used.json": {
+    "mtime": 1786872783.554154,
+    "ast_hash": "d7fc120251a9a7ac32abc5d2d7830201",
+    "semantic_hash": "d7fc120251a9a7ac32abc5d2d7830201"
+  },
+  "pipeline/provenance/records/npm--react--19.2.8.json": {
+    "mtime": 1786872783.5504613,
+    "ast_hash": "d43f656e87e06c6f214989cca70a7cf8",
+    "semantic_hash": "d43f656e87e06c6f214989cca70a7cf8"
+  },
+  "pipeline/provenance/records/npm--react-dom--19.2.8.json": {
+    "mtime": 1786872783.5473583,
+    "ast_hash": "18bf85c0e82de850a0f003b0c3fdbfc8",
+    "semantic_hash": "18bf85c0e82de850a0f003b0c3fdbfc8"
+  },
+  "pipeline/provenance/records/npm--react-three-drei--10.7.8.json": {
+    "mtime": 1786872783.551371,
+    "ast_hash": "7b26644ed45dab2b7f899f1f3a64e956",
+    "semantic_hash": "7b26644ed45dab2b7f899f1f3a64e956"
+  },
+  "pipeline/provenance/records/npm--react-three-fiber--9.7.0.json": {
+    "mtime": 1786872783.552233,
+    "ast_hash": "25914d847438ee51d5c31cf921f1045f",
+    "semantic_hash": "25914d847438ee51d5c31cf921f1045f"
+  },
+  "pipeline/provenance/records/npm--react-three-postprocessing--3.0.5.json": {
+    "mtime": 1786872783.5468638,
+    "ast_hash": "98cca7f126f2f74ba168c145a45b69dd",
+    "semantic_hash": "98cca7f126f2f74ba168c145a45b69dd"
+  },
+  "pipeline/provenance/records/npm--three--0.185.1.json": {
+    "mtime": 1786872783.5482,
+    "ast_hash": "9f123774b9dd1111ff2469199efb2eab",
+    "semantic_hash": "9f123774b9dd1111ff2469199efb2eab"
+  },
+  "pipeline/provenance/records/npm--types-node--26.2.0.json": {
+    "mtime": 1786872783.5487714,
+    "ast_hash": "5f7062d5ae5c099dad4079636a3bf7eb",
+    "semantic_hash": "5f7062d5ae5c099dad4079636a3bf7eb"
+  },
+  "pipeline/provenance/records/npm--types-react--19.2.18.json": {
+    "mtime": 1786872783.5517952,
+    "ast_hash": "cc7c203ca7f01b72baf8a41ed6970df2",
+    "semantic_hash": "cc7c203ca7f01b72baf8a41ed6970df2"
+  },
+  "pipeline/provenance/records/npm--types-react-dom--19.2.4.json": {
+    "mtime": 1786872783.5491712,
+    "ast_hash": "fa3b7c049d47a983b7fb587410bc1a19",
+    "semantic_hash": "fa3b7c049d47a983b7fb587410bc1a19"
+  },
+  "pipeline/provenance/records/npm--typescript--7.0.2.json": {
+    "mtime": 1786872783.549622,
+    "ast_hash": "84dcb51a6eefc346795703b4a196c2ef",
+    "semantic_hash": "84dcb51a6eefc346795703b4a196c2ef"
+  },
+  "pipeline/provenance/records/npm--vite--8.2.1.json": {
+    "mtime": 1786872783.5478,
+    "ast_hash": "914028856fe86d69b33259bac5547a56",
+    "semantic_hash": "914028856fe86d69b33259bac5547a56"
+  },
+  "pipeline/provenance/records/npm--vitejs-plugin-react--6.0.5.json": {
+    "mtime": 1786872783.550941,
+    "ast_hash": "cffb39927377d6870e85274ebc760f3f",
+    "semantic_hash": "cffb39927377d6870e85274ebc760f3f"
+  },
+  "pipeline/provenance/records/npm--zustand--5.0.15.json": {
+    "mtime": 1786872783.5500228,
+    "ast_hash": "ac5d6ca81bba45783af3512f65730221",
+    "semantic_hash": "ac5d6ca81bba45783af3512f65730221"
+  },
+  "pipeline/provenance/run-checks.mjs": {
+    "mtime": 1787277372.603623,
+    "ast_hash": "368836fe20045c5696331ae66e4d9c0c",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/schema.json": {
+    "mtime": 1787277221.391852,
+    "ast_hash": "ff9fc79c9c38d09c2fe305d592cb80cb",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/tools/gen-npm-records.mjs": {
+    "mtime": 1786872783.5593038,
+    "ast_hash": "617f21ae59c53554813e14985df7c19f",
+    "semantic_hash": "617f21ae59c53554813e14985df7c19f"
+  },
+  "pipeline/provenance/validate.mjs": {
+    "mtime": 1787277462.409406,
+    "ast_hash": "baf2d8bcce7669dd0ac5c05c8d399fa6",
+    "semantic_hash": ""
+  },
+  ".github/ISSUE_TEMPLATE/accuracy_report.md": {
+    "mtime": 1786865524.5276752,
+    "ast_hash": "e9d87c69f35a534d5540f769122004cb",
+    "semantic_hash": "e9d87c69f35a534d5540f769122004cb"
+  },
+  ".github/ISSUE_TEMPLATE/bug_report.md": {
+    "mtime": 1786865524.5291045,
+    "ast_hash": "1e4c3830eec3a8f8d94002ab6c72ff61",
+    "semantic_hash": "1e4c3830eec3a8f8d94002ab6c72ff61"
+  },
+  ".github/ISSUE_TEMPLATE/journey_proposal.md": {
+    "mtime": 1786865524.5284283,
+    "ast_hash": "6e4c47cae6595209bf4cc66eb595a264",
+    "semantic_hash": "6e4c47cae6595209bf4cc66eb595a264"
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1787277462.411333,
+    "ast_hash": "efbf731c9d58fa785271ef7d3fc9ac00",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1787275347.494469,
+    "ast_hash": "22dabd591c1377bfc7eaedaad86b114e",
+    "semantic_hash": ""
+  },
+  "CONTRIBUTING.md": {
+    "mtime": 1787273179.879531,
+    "ast_hash": "0d71e6067caf60b68d516b2167bb88c9",
+    "semantic_hash": "0d71e6067caf60b68d516b2167bb88c9"
+  },
+  "CREDITS.md": {
+    "mtime": 1787273179.8823082,
+    "ast_hash": "c7216ab3adab29eb16ebadc9f9bd183c",
+    "semantic_hash": "c7216ab3adab29eb16ebadc9f9bd183c"
+  },
+  "NOTICE.md": {
+    "mtime": 1787273179.8815496,
+    "ast_hash": "89bfec078d10a90e7e3a7b0612753a66",
+    "semantic_hash": "89bfec078d10a90e7e3a7b0612753a66"
+  },
+  "README.md": {
+    "mtime": 1787273179.8784866,
+    "ast_hash": "658685630bd644ad3462fffe74b1bc3d",
+    "semantic_hash": "658685630bd644ad3462fffe74b1bc3d"
+  },
+  "app/README.md": {
+    "mtime": 1787273179.8911207,
+    "ast_hash": "f1df2a4f58fa290f3ab4b56eab4c092b",
+    "semantic_hash": "f1df2a4f58fa290f3ab4b56eab4c092b"
+  },
+  "app/THIRD_PARTY_LICENSES.md": {
+    "mtime": 1787273179.8956435,
+    "ast_hash": "f6607928eaaacab262dd2b006c557b0c",
+    "semantic_hash": "f6607928eaaacab262dd2b006c557b0c"
+  },
+  "app/index.html": {
+    "mtime": 1787273179.8906863,
+    "ast_hash": "3a5dce905542d501884c93d60303cb89",
+    "semantic_hash": "3a5dce905542d501884c93d60303cb89"
+  },
+  "docs/BRIEF-FOR-CODEX.md": {
+    "mtime": 1787273179.8847136,
+    "ast_hash": "174cfc89ecbc4116fcdb8122605bbc1c",
+    "semantic_hash": "174cfc89ecbc4116fcdb8122605bbc1c"
+  },
+  "docs/PLAN.md": {
+    "mtime": 1787277462.4109218,
+    "ast_hash": "e66c7612c24897da7165782a59dc0869",
+    "semantic_hash": ""
+  },
+  "docs/PROMPT-FOR-CODEX.md": {
+    "mtime": 1787273179.8871434,
+    "ast_hash": "1b75c1f023cc4716164bacb31ebfecc2",
+    "semantic_hash": "1b75c1f023cc4716164bacb31ebfecc2"
+  },
+  "docs/PROMPT-FOR-GPT.md": {
+    "mtime": 1787273179.8860922,
+    "ast_hash": "3ebaabd1dbca0d2e5ce2ccfe615ca85f",
+    "semantic_hash": "3ebaabd1dbca0d2e5ce2ccfe615ca85f"
+  },
+  "docs/research/github-recon-evidence.md": {
+    "mtime": 1786868839.078443,
+    "ast_hash": "6451a79db33ff4e54e1d1fe29734fde9",
+    "semantic_hash": "6451a79db33ff4e54e1d1fe29734fde9"
+  },
+  "pipeline/provenance/README.md": {
+    "mtime": 1787277462.409853,
+    "ast_hash": "76e833b59c5e4fedc897cb07e5a2e3c8",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--anterior-interventricular-artery--ebdd5edf.json": {
+    "mtime": 1787277425.3666916,
+    "ast_hash": "8090f2f076c9769968d8c1bffb53dfb5",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--aortic-root-unavailable--ebdd5edf.json": {
+    "mtime": 1787277425.3671901,
+    "ast_hash": "142029e8854b7f4da50370e79b802026",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--ascending-aorta--ebdd5edf.json": {
+    "mtime": 1787277425.3675728,
+    "ast_hash": "08b13d7d557b79cce3755b817798295e",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--circumflex-artery-of-heart--ebdd5edf.json": {
+    "mtime": 1787277425.3679285,
+    "ast_hash": "f577adbb669a41448ee832bbaed22a4a",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--left-atrium--ebdd5edf.json": {
+    "mtime": 1787277425.368253,
+    "ast_hash": "c714b1133c623c51100d65dd4dc8afb9",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--left-coronary-artery--ebdd5edf.json": {
+    "mtime": 1787277425.3685458,
+    "ast_hash": "77d9e0c7a7eea9628109290dadb756b5",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--left-ventricle--ebdd5edf.json": {
+    "mtime": 1787277425.36884,
+    "ast_hash": "0bc44ce16cffe4241932729a655f353c",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--right-atrium--ebdd5edf.json": {
+    "mtime": 1787277425.3692205,
+    "ast_hash": "2c9653555ed8bb287ab80a67608a7843",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--right-coronary-artery--ebdd5edf.json": {
+    "mtime": 1787277425.3695955,
+    "ast_hash": "d9592d5e1185b012a11c0c5d3e49e273",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/records/z-anatomy--right-ventricle--ebdd5edf.json": {
+    "mtime": 1787277425.3698661,
+    "ast_hash": "f0e2337f41cc41d5e35651d2b0464363",
+    "semantic_hash": ""
+  },
+  "docs/research/paldawn-heart-coronary-asset-audit.md": {
+    "mtime": 1787277682.8864875,
+    "ast_hash": "6fdd8b92b686ac9edeab9dd54731c4d4",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/blocked-asset-promoted.json": {
+    "mtime": 1787275347.4947739,
+    "ast_hash": "eb72b16d28764678c86d4581c9861e1e",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/tools/audit_z_anatomy_blend.py": {
+    "mtime": 1787275593.1437554,
+    "ast_hash": "0a0070350ef38c53640926b3b983d559",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md": {
+    "mtime": 1787274974.6967092,
+    "ast_hash": "f8a117adcc6b97612de2cf248dae8b7a",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/medical-asset-bad-output-digest.json": {
+    "mtime": 1787277394.0828176,
+    "ast_hash": "746c406e78c945c1dfd01dc018800606",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/medical-asset-missing-adoption-evidence.json": {
+    "mtime": 1787276829.8535113,
+    "ast_hash": "45cac22bed65ab882ccd5df10cebbaf7",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/medical-asset-missing-object-evidence.json": {
+    "mtime": 1787277240.0699694,
+    "ast_hash": "a35cf70e3eec61d1f8ecc7ba7326728d",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/medical-asset-missing-ontology-evidence.json": {
+    "mtime": 1787277240.0705564,
+    "ast_hash": "9b8b308934f6d454e4b52b8dee037efc",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/z-anatomy-asset-misclassified-nonmedical.json": {
+    "mtime": 1787277394.0830512,
+    "ast_hash": "8632c426806a35c03c6e2b37c5462bcb",
+    "semantic_hash": ""
+  },
+  "pipeline/provenance/fixtures/invalid/z-anatomy-asset-missing-container-evidence.json": {
+    "mtime": 1787277240.0708039,
+    "ast_hash": "784cd7966a9da5e8f2bcf3dfe735096b",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md": {
+    "mtime": 1787275879.4522853,
+    "ast_hash": "b0b6f83843f98a7dc8a9536139ab8e8a",
+    "semantic_hash": ""
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--premature-used",
+  "subject": { "name": "example-lib-rushed", "type": "code_dependency" },
+  "medical_scope": false,
+  "upstream": { "repository": "https://github.com/example/rushed", "version_or_commit": "3.1.4", "source_digest": "sha512-fixture==", "creator": "Example Author" },
+  "license": { "spdx": "MIT", "license_url": "https://spdx.org/licenses/MIT.html", "source_url": "https://github.com/example/rushed/blob/main/LICENSE" },
+  "lineage": "Published npm artifact.",
+  "reproduction": { "tools": ["npm 10.x"], "commands": ["npm i example-lib-rushed"] },
+  "modifications": "None.",
+  "output_digest": "",
+  "attribution": { "required_text": "example-lib-rushed — MIT", "source_pack_url": "https://registry.npmjs.org/example-lib-rushed" },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": { "status": "pending" },
+  "review": { "applicability": "not_applicable", "rationale": "Code dependency (synthetic fixture)." }
+}

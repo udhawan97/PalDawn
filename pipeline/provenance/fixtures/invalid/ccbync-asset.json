@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--ccbync-asset",
+  "subject": { "name": "example-nc-kidney-model", "type": "asset", "structure_id": "structure:kidney.example" },
+  "medical_scope": true,
+  "upstream": { "repository": "https://github.com/example/nc-models", "path": "kidney.blend", "version_or_commit": "deadbeef", "source_digest": "sha256:fixture", "creator": "Example NC Modeler" },
+  "license": { "spdx": "CC-BY-NC-SA-4.0", "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode", "source_url": "https://github.com/example/nc-models/blob/main/LICENSE" },
+  "lineage": "Non-commercial licensed model.",
+  "reproduction": { "tools": ["blender 4.x"], "commands": ["(planned) export"] },
+  "modifications": "None yet.",
+  "output_digest": null,
+  "attribution": { "required_text": "example-nc-kidney-model — CC BY-NC-SA 4.0", "source_pack_url": "https://github.com/example/nc-models" },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": { "status": "pending" },
+  "review": { "applicability": "required", "status": "pending", "claim_scope": "kidney anatomy (synthetic fixture)" }
+}

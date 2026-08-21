@@ -1,0 +1,32 @@
+{
+  "record_id": "medical-asset-missing-adoption-evidence",
+  "subject": { "name": "medical asset with deleted gate fields", "type": "asset", "structure_id": "structure:test.missing-gate" },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://example.invalid/upstream",
+    "version_or_commit": "0123456789abcdef",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "creator": "Synthetic fixture creator"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://example.invalid/upstream/LICENSE"
+  },
+  "lineage": "Synthetic fixture lineage.",
+  "reproduction": { "tools": ["fixture"], "commands": ["fixture"] },
+  "modifications": "Synthetic invalid fixture.",
+  "output_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "attribution": { "required_text": "Synthetic fixture", "source_pack_url": "https://example.invalid/upstream" },
+  "landing_zone": "content",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Synthetic fixture approver", "date": "2026-08-20" },
+  "review": {
+    "applicability": "required",
+    "reviewer": "Synthetic fixture reviewer",
+    "reviewer_qualification": "Synthetic fixture qualification",
+    "date": "2026-08-20",
+    "status": "approved",
+    "claim_scope": "Synthetic fixture only"
+  }
+}

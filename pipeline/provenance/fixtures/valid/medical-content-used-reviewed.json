@@ -1,0 +1,29 @@
+{
+  "record_id": "fixture--medical-content-used-reviewed",
+  "subject": { "name": "example-topic-summary", "type": "content", "structure_id": "structure:heart.example" },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://medlineplus.gov/ (example health topic)",
+    "path": "healthtopics/example-topic.xml",
+    "version_or_commit": "2026-01-15-snapshot",
+    "source_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "creator": "MedlinePlus, National Library of Medicine (example)"
+  },
+  "license": {
+    "spdx": "LicenseRef-MedlinePlus-PublicDomain",
+    "license_url": "https://medlineplus.gov/about/using/usingcontent/",
+    "source_url": "https://medlineplus.gov/about/using/usingcontent/",
+    "scope": "exact reviewed item",
+    "object_level_status": "resolved"
+  },
+  "lineage": "MedlinePlus public-domain health-topic summary (example), used under MedlinePlus content rules.",
+  "reproduction": { "tools": ["node 22.x harvester (pinned)"], "commands": ["node pipeline/harvest/medlineplus.mjs --topic example"] },
+  "modifications": "Excerpted summary; wording unchanged; credit line attached (synthetic fixture).",
+  "output_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "attribution": { "required_text": "Source: MedlinePlus, National Library of Medicine.", "source_pack_url": "https://medlineplus.gov/ (example health topic)" },
+  "landing_zone": "content",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-20" },
+  "review": { "applicability": "required", "reviewer": "Dr. Example Reviewer, MD (synthetic test data — not a real approval)", "reviewer_qualification": "Board-certified cardiologist (synthetic fixture)", "date": "2026-01-19", "status": "approved", "claim_scope": "lay summary accuracy for the example topic only" },
+  "adoption_gate": { "status": "clear", "blockers": [] }
+}

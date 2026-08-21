@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--code-review-mismatch",
+  "subject": { "name": "example-lib-fake-reviewer", "type": "code_dependency" },
+  "medical_scope": false,
+  "upstream": { "repository": "https://github.com/example/lib", "version_or_commit": "1.0.0", "source_digest": "sha512-fixture==", "creator": "Example Author" },
+  "license": { "spdx": "MIT", "license_url": "https://spdx.org/licenses/MIT.html", "source_url": "https://github.com/example/lib/blob/main/LICENSE" },
+  "lineage": "Published npm artifact.",
+  "reproduction": { "tools": ["npm 10.x"], "commands": ["npm i example-lib"] },
+  "modifications": "None.",
+  "output_digest": "sha512-fixture==",
+  "attribution": { "required_text": "example-lib — MIT", "source_pack_url": "https://registry.npmjs.org/example-lib" },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-01" },
+  "review": { "applicability": "required", "reviewer": "Dr. Invented Reviewer (this should be rejected)", "reviewer_qualification": "n/a", "date": "2026-01-01", "status": "approved", "claim_scope": "none — code has no medical claims" }
+}

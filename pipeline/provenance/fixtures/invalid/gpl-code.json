@@ -1,0 +1,16 @@
+{
+  "record_id": "fixture--gpl-code",
+  "subject": { "name": "example-gpl-exporter", "type": "vendored_code" },
+  "medical_scope": false,
+  "upstream": { "repository": "https://github.com/example/gpl-exporter", "version_or_commit": "1.0.0", "source_digest": "sha256:fixture", "creator": "Example Author" },
+  "license": { "spdx": "GPL-3.0-only", "license_url": "https://spdx.org/licenses/GPL-3.0-only.html", "source_url": "https://github.com/example/gpl-exporter/blob/main/LICENSE" },
+  "lineage": "GPL-licensed exporter script.",
+  "reproduction": { "tools": ["node 22.x"], "commands": ["cp upstream.js pipeline/"] },
+  "modifications": "None.",
+  "output_digest": "sha256:fixture",
+  "attribution": { "required_text": "example-gpl-exporter — GPL-3.0-only", "source_pack_url": "https://github.com/example/gpl-exporter" },
+  "landing_zone": "pipeline",
+  "usage_status": "used",
+  "approval": { "status": "approved", "approved_by": "Fixture Approver (synthetic test data)", "date": "2026-01-01" },
+  "review": { "applicability": "not_applicable", "rationale": "Code tooling (synthetic fixture)." }
+}

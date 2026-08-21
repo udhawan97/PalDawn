@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "journey:p0.first-light",
+  "title": "First light",
+  "release": "0.1.0",
+  "duration_seconds": 42,
+  "content_status": "synthetic_engineering_only",
+  "published_medical_claims": false,
+  "reduced_motion_route": "stage_steps",
+  "disclosure": "Project-authored synthetic route. It is not anatomy and carries no clinical meaning.",
+  "stages": [
+    {
+      "id": "approach",
+      "label": "Approach",
+      "level": "L0 · orbit",
+      "start": 0,
+      "end": 0.18,
+      "guide": "We are approaching a project-authored navigation model. It is intentionally synthetic, so it cannot teach anatomy.",
+      "engineering": "Procedural calibration geometry only. There are no structure IDs, ontology mappings, patient data, or pathophysiology claims."
+    },
+    {
+      "id": "surface-trace",
+      "label": "Surface trace",
+      "level": "L2 · shell",
+      "start": 0.18,
+      "end": 0.42,
+      "guide": "The dawn line marks one route through the model. The guide, camera, and moving signals all follow that same line.",
+      "engineering": "One normalized lookup drives the camera rail, guide geometry, corridor sweep, and analytic instances."
+    },
+    {
+      "id": "portal",
+      "label": "Portal",
+      "level": "L3 · threshold",
+      "start": 0.42,
+      "end": 0.56,
+      "guide": "The threshold changes our scale without pretending that one mesh spans every level. Reduced motion uses a direct cut here.",
+      "engineering": "An explicit semantic stage owns the transition. A bounded portal blend hands off to an opaque fog swap when motion is reduced."
+    },
+    {
+      "id": "flow-corridor",
+      "label": "Flow corridor",
+      "level": "L4 · inside",
+      "start": 0.56,
+      "end": 0.82,
+      "guide": "These lights are flow markers, not blood cells. They show that thousands of signals can move smoothly without changing the route.",
+      "engineering": "Static phase, radial, speed, and seed attributes are sampled in a vertex shader from uniform time; no per-frame CPU instance matrices."
+    },
+    {
+      "id": "arrival",
+      "label": "Arrival",
+      "level": "L5 · signal",
+      "start": 0.82,
+      "end": 1,
+      "guide": "First light is complete. The voyage system is ready; anatomy and clinical teaching remain locked until separate evidence and human review exist.",
+      "engineering": "P0 engineering acceptance only. Asset adoption, medical content, and clinical publication remain fail-closed in provenance."
+    }
+  ]
+}

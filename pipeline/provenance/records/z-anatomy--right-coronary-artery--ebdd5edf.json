@@ -1,0 +1,127 @@
+{
+  "record_id": "z-anatomy--right-coronary-artery--ebdd5edf",
+  "subject": {
+    "name": "Z-Anatomy right coronary artery branch-network curve candidate",
+    "type": "asset",
+    "structure_id": "structure:coronary.rca"
+  },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://github.com/Z-Anatomy/Models-of-human-anatomy.git",
+    "version_or_commit": "ebdd5edf207af1dd765cc6796ad90b34add9799a",
+    "source_digest": "sha256:9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
+    "creator": "Z-Anatomy project authors (repository-level attribution; target-object creator unresolved)",
+    "path": "Z-Anatomy.zip::Z-Anatomy/Startup.blend::Object \"OBRight coronary artery\" -> Curve \"CURight coronary artery\""
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "source_url": "https://github.com/Z-Anatomy/Models-of-human-anatomy/blob/ebdd5edf207af1dd765cc6796ad90b34add9799a/License.txt",
+    "scope": "Repository-level declaration only; no target-object-to-source-or-license binding was found.",
+    "object_level_status": "unresolved"
+  },
+  "lineage": "Repository-level notice requests BodyParts3D CC BY-SA 2.1 Japan and Z-Anatomy CC BY-SA 4.0 attribution, but the exact source and derivation chain for OBRight coronary artery is untraceable at this pin. This is not a positive object-level licence determination.",
+  "reproduction": {
+    "tools": [
+      "git 2.50.1 (Apple Git-155)",
+      "UnZip 6.00",
+      "Python 3.14.5",
+      "zstandard 0.25.0",
+      "Blender tools/modules/blendfile.py at ca5415dfdc33b536fedfff1ae7a431d0f5e8505a",
+      "PalDawn pipeline/provenance/tools/audit_z_anatomy_blend.py"
+    ],
+    "commands": [
+      "PALDAWN_REPO=\"$(pwd -P)\"; test -f \"$PALDAWN_REPO/pipeline/provenance/tools/audit_z_anatomy_blend.py\" || { printf 'Run from the PalDawn repository root.\\n' >&2; exit 1; }; PALDAWN_AUDIT_TMP=\"$(mktemp -d)\" || exit 1; test -n \"$PALDAWN_AUDIT_TMP\" && test -d \"$PALDAWN_AUDIT_TMP\" || exit 1; case \"$PALDAWN_AUDIT_TMP\" in /tmp/*|/private/tmp/*|/var/folders/*/T/*) ;; *) printf 'Unsafe temporary directory.\\n' >&2; exit 1 ;; esac; trap 'test -n \"$PALDAWN_AUDIT_TMP\" && test -d \"$PALDAWN_AUDIT_TMP\" && rm -rf -- \"$PALDAWN_AUDIT_TMP\"' EXIT; git clone --filter=blob:none --no-checkout https://github.com/Z-Anatomy/Models-of-human-anatomy.git \"$PALDAWN_AUDIT_TMP/z-anatomy\" && git -C \"$PALDAWN_AUDIT_TMP/z-anatomy\" sparse-checkout set Z-Anatomy.zip && git -C \"$PALDAWN_AUDIT_TMP/z-anatomy\" checkout ebdd5edf207af1dd765cc6796ad90b34add9799a && unzip -p \"$PALDAWN_AUDIT_TMP/z-anatomy/Z-Anatomy.zip\" Z-Anatomy/Startup.blend > \"$PALDAWN_AUDIT_TMP/Startup.blend\" && printf '%s  %s\\n' 9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd \"$PALDAWN_AUDIT_TMP/Startup.blend\" | shasum -a 256 -c - >/dev/null && git clone --filter=blob:none --no-checkout https://projects.blender.org/blender/blender.git \"$PALDAWN_AUDIT_TMP/blender\" && git -C \"$PALDAWN_AUDIT_TMP/blender\" sparse-checkout set tools/modules scripts/modules/_blendfile_header.py && git -C \"$PALDAWN_AUDIT_TMP/blender\" checkout ca5415dfdc33b536fedfff1ae7a431d0f5e8505a && python3.14 -m venv \"$PALDAWN_AUDIT_TMP/blend-venv\" && \"$PALDAWN_AUDIT_TMP/blend-venv/bin/pip\" install --quiet zstandard==0.25.0 && \"$PALDAWN_AUDIT_TMP/blend-venv/bin/python\" \"$PALDAWN_REPO/pipeline/provenance/tools/audit_z_anatomy_blend.py\" --blend \"$PALDAWN_AUDIT_TMP/Startup.blend\" --blendfile-module \"$PALDAWN_AUDIT_TMP/blender/tools/modules/blendfile.py\" --blender-commit ca5415dfdc33b536fedfff1ae7a431d0f5e8505a"
+    ]
+  },
+  "modifications": "Audit metadata only. No source anatomy was imported, resaved, converted, modified, or landed.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "BodyParts3D — The Database Center for Life Science — CC BY-SA 2.1 Japan; Z-Anatomy — The libre 3D atlas of anatomy — CC BY-SA 4.0. Object-level lineage unresolved; do not publish or ship.",
+    "source_pack_url": "https://github.com/Z-Anatomy/Models-of-human-anatomy/tree/ebdd5edf207af1dd765cc6796ad90b34add9799a"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "required",
+    "status": "pending",
+    "claim_scope": "Object identity and anatomical extent; TA2 and FMA terminology mappings; representative variation; geometry fitness; intended PalDawn use."
+  },
+  "source_container": {
+    "path": "Z-Anatomy.zip::Z-Anatomy/Startup.blend",
+    "zip_git_blob_sha1": "f43cabc6f366b2a6058dd2ed4a2b3c7b9b2492cb",
+    "zip_sha256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+    "inner_blend_sha256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd"
+  },
+  "source_object": {
+    "object_name": "OBRight coronary artery",
+    "data_block": "CURight coronary artery",
+    "object_type": "CURVE",
+    "geometry": {
+      "curve_kind": "3D Bezier",
+      "splines": 14,
+      "control_points": 108,
+      "all_splines_open": true,
+      "base_bevel_source_scene_units": 0.0005,
+      "branch_junctions_welded": false,
+      "semantic_extent": "branch network, not one isolated trunk",
+      "ready_lumen_mesh": false
+    }
+  },
+  "ontology_mappings": {
+    "status": "pending_medical_review",
+    "source_evidence": {
+      "ta2": {
+        "repository": "https://github.com/Z-Anatomy/Models-of-human-anatomy.git",
+        "version_or_commit": "ebdd5edf207af1dd765cc6796ad90b34add9799a",
+        "path": "TA2.csv",
+        "git_blob_sha1": "71bef934c23d207550ad1f318ec6edd8551cdba4",
+        "sha256": "0f9092a328b27dcd15d696d9f9a4087deb229a1aad21b75876657622de835974",
+        "method": "Unique case-insensitive preferred English-label match within pinned TA2.csv; no FMA equivalence inferred."
+      },
+      "fma": {
+        "repository": "https://github.com/Kevin-Mattheus-Moerman/BodyParts3D.git",
+        "version_or_commit": "f0eeb6e843380cfe6b83797cf8c3e1af74de5e61",
+        "path": "assets/BodyParts3D_data/FMA.csv",
+        "git_blob_sha1": "81ba005f65abaf1a04479aebd4d36f17a6279c2b",
+        "sha256": "14aa88169ea1013bf64853b8fcbe88b2a11477fc8e920f6ddde7be6ac5e1d2e8",
+        "method": "Independent preferred-label candidate lookup within pinned FMA.csv; no TA2 equivalence or Z-object identity inferred."
+      }
+    },
+    "ta2": [
+      {
+        "id": "TA2:4131",
+        "label": "Right coronary artery",
+        "confidence": "high",
+        "basis": "unique exact English-label match in pinned TA2.csv"
+      }
+    ],
+    "fma": [
+      {
+        "id": "FMA:50039",
+        "label": "Right coronary artery",
+        "confidence": "high",
+        "basis": "semantic exact-label concept; no direct pinned geometry file"
+      },
+      {
+        "id": "FMA:3802",
+        "label": "Trunk of right coronary artery",
+        "confidence": "low",
+        "basis": "direct geometry-file candidate, but narrower than the source branch network; unresolved"
+      }
+    ]
+  },
+  "adoption_gate": {
+    "status": "blocked",
+    "blockers": [
+      "Target-object source and derivation chain are untraceable at the pinned commit.",
+      "The repository-level licence notice does not bind this exact object to an original source and licence.",
+      "No named qualified human has completed the required anatomy and terminology review.",
+      "No deterministic export artifact or output digest exists."
+    ],
+    "validator_pass_meaning": "Pending-state schema and policy-shape validation only; not provenance, licence, medical, or adoption approval."
+  }
+}

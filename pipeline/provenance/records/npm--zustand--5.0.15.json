@@ -1,0 +1,47 @@
+{
+  "record_id": "npm--zustand--5.0.15",
+  "subject": {
+    "name": "zustand",
+    "type": "code_dependency"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/pmndrs/zustand.git",
+    "path": "node_modules/zustand (published npm artifact)",
+    "version_or_commit": "5.0.15",
+    "source_digest": "sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A==",
+    "creator": "Poimandres (pmndrs) contributors"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://spdx.org/licenses/MIT.html",
+    "source_url": "https://registry.npmjs.org/zustand/-/zustand-5.0.15.tgz (package.json license field; full text in app/THIRD_PARTY_LICENSES.md)"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/pmndrs/zustand.git.",
+  "reproduction": {
+    "tools": [
+      "node 22.22.2",
+      "npm 10.9.7"
+    ],
+    "commands": [
+      "npm install --save-exact zustand@5.0.15"
+    ]
+  },
+  "modifications": "None — consumed as an unmodified npm dependency; package-lock.json integrity pins the exact artifact.",
+  "output_digest": "sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A==",
+  "attribution": {
+    "required_text": "zustand v5.0.15 — © Poimandres (pmndrs) contributors — MIT — https://github.com/pmndrs/zustand.git",
+    "source_pack_url": "https://registry.npmjs.org/zustand/-/zustand-5.0.15.tgz"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "Locked-stack directive — Antaryaan bounded foundation pass (2026-08-16)",
+    "date": "2026-08-16"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Pure rendering/build tooling with no medical or anatomical claims; medical review does not apply. License and source verified against the npm registry and lockfile integrity on 2026-08-16."
+  }
+}
