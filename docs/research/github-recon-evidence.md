@@ -1,5 +1,10 @@
 # Antaryaan GitHub reconnaissance: primary-source evidence dossier
 
+> **Historical research snapshot (2026-08-16).** Antaryaan was renamed
+> **PalDawn** on 2026-08-20. This dossier preserves the original point-in-time
+> research language and is not evidence of the current release state; use the
+> root `README.md`, `docs/PLAN.md`, and `docs/releases/v0.1.0.md` for that.
+
 Captured 2026-08-16. Repository facts below are marked **(verified)** and backed by a README, license file, implementation/configuration file, current GitHub metadata, or an explicitly linked bounded search. Recommendations, integration-cost ratings, and Antaryaan-specific combinations are engineering assessments rather than upstream claims; they are marked as verified assessments/syntheses wherever the distinction matters. Repository `pushed_at` is reported as “last push”; it is not inferred from page-update timestamps. Approximate star counts are a point-in-time snapshot and will drift. **(verified)**
 
 License rule used here: permissive code may be installed or adapted with attribution; GPL/AGPL or absent/ambiguous licenses are ideas-only; CC BY-SA material remains in `content/` or release asset packs and never enters the MIT application source. **(verified against the mission constraints)**

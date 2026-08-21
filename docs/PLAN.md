@@ -10,7 +10,9 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 - **License:** code MIT · PalDawn-authored and compatible derived content/asset packs CC BY-SA 4.0; upstream material additionally retains its exact source license and lineage record
 - **Hosting:** 100% free tier — static GitHub Pages; immutable versioned GLB packs later streamed from GitHub Releases; no backend, no paid services
-- **Status:** Foundation pass complete (scaffold + provenance gate). No anatomy assets, no clinical content yet.
+- **Status:** v0.1.0 First Light systems release complete: a synthetic five-stage
+  voyage plus provenance, test, and publication gates. No anatomy assets or
+  clinical content are included.
 - **Not medical advice.** Education only — never diagnosis or personalized triage. Any user-facing context about a *suspected heart attack* must direct the person to **contact local emergency services immediately**.
 
 ---
@@ -111,7 +113,7 @@ content/
 
 ### 3D assets — per-object approval only
 
-**Z-Anatomy is not approved wholesale:** its repository-level CC BY-SA declaration coexists with listed **CC BY-NC / NC-SA third-party models** (e.g., inner ear, kidney). Objects are approved **individually**, each with a provenance record tracing to BodyParts3D CC BY-SA 2.1 JP, Z-Anatomy's own CC BY-SA 4.0 work, or another compatible license. If no suitable object passes, the fallback is a **from-scratch, visibly synthetic/non-anatomical engineering placeholder**, labeled as such and excluded from anatomical/clinical claims (not yet created).
+**Z-Anatomy is not approved wholesale:** its repository-level CC BY-SA declaration coexists with listed **CC BY-NC / NC-SA third-party models** (e.g., inner ear, kidney). Objects are approved **individually**, each with a provenance record tracing to BodyParts3D CC BY-SA 2.1 JP, Z-Anatomy's own CC BY-SA 4.0 work, or another compatible license. Because no audited v0.1 target passed, First Light uses the permitted **from-scratch, visibly synthetic/non-anatomical engineering placeholder**, labeled as such and excluded from anatomical/clinical claims.
 
 ### Provenance precedes adoption
 
@@ -176,7 +178,7 @@ and qualified-human review.
 
 ## 10. GitHub plan
 
-Repo layout, workflows (`ci.yml`, `deploy.yml`; local files only, no hosted run proven), owner CODEOWNERS routing over `content/`, `data/`, provenance, and workflows, issue templates (bug / journey proposal / accuracy report), Discussions for recruiting medical reviewers, big-binary strategy (GLB packs on Releases, never in git; LFS avoided), branch protection, and the launch sequence (three.js showcase → Show HN → med-ed channels) remain the plan. CODEOWNERS is not a medical-review gate: a qualified-reviewer team and branch-protection requirement must be configured before medical content can publish. The audit pass did not commit, push, deploy, or configure GitHub settings.
+Repo layout, immutable-action workflows (`ci.yml`, `deploy.yml`), owner CODEOWNERS routing over `content/`, `data/`, provenance, and workflows, and issue templates (bug / journey proposal / accuracy report) are implemented for v0.1. Hosted run status is evidenced by GitHub Actions rather than this static plan. Discussions for recruiting medical reviewers, big-binary GLB packs on Releases, branch protection, and the later launch sequence (three.js showcase → Show HN → med-ed channels) remain planned. CODEOWNERS is not a medical-review gate: a qualified-reviewer team and branch-protection requirement must be configured before medical content can publish.
 
 ---
 

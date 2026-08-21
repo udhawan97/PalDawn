@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1787283213.4713523,
-    "ast_hash": "23ad4b640676daafa30e36b250e48dc3",
+    "mtime": 1787284450.838109,
+    "ast_hash": "555d65c88455ca69110f9499c8eb7743",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -275,9 +275,9 @@
     "semantic_hash": "3ebaabd1dbca0d2e5ce2ccfe615ca85f"
   },
   "docs/research/github-recon-evidence.md": {
-    "mtime": 1786868839.078443,
-    "ast_hash": "6451a79db33ff4e54e1d1fe29734fde9",
-    "semantic_hash": "6451a79db33ff4e54e1d1fe29734fde9"
+    "mtime": 1787284450.83962,
+    "ast_hash": "e6e012791e4ffa8022fcb1a21c5e58ba",
+    "semantic_hash": ""
   },
   "pipeline/provenance/README.md": {
     "mtime": 1787277462.409853,
