@@ -17,7 +17,11 @@ curated source.
 > data, diagnostic logic, pathology, symptoms, or clinical teaching. The
 > audited heart/coronary candidates remain blocked.
 
-## What v0.1.0 ships
+## What current main offers
+
+Current `main` extends the immutable v0.1.0 First Light snapshot with the
+post-release Foundation+ and Foundation+2 continuity waves described below.
+These additions are not part of the v0.1.0 tag.
 
 - A five-stage WebGL2 voyage: Approach → Surface trace → Portal → Flow
   corridor → Arrival.
@@ -34,11 +38,12 @@ curated source.
   voyage, local-data export/reset, and preference-preserving voyage restart.
 - Auto/high/balanced/low tiers, on-device telemetry, a 500 KB gzip JavaScript
   release gate, and static GitHub Pages deployment.
-- A fail-closed provenance system: 24 live records pass; all 10 audited
+- A fail-closed provenance system: current `main` has 24 live records that
+  pass; all 10 audited
   Z-Anatomy targets remain planned/pending/blocked with null adoption output.
 
-The release proves the product’s flight and governance architecture. It does
-not satisfy the later medical-content milestone.
+The v0.1.0 release proved the product’s flight and governance architecture. It
+does not satisfy the later medical-content milestone.
 
 ## Run it locally
 
