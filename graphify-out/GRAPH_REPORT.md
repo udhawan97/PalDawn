@@ -1,16 +1,16 @@
 # Graph Report - PalDawn  (2026-08-21)
 
 ## Corpus Check
-- 99 files · ~65,131 words
+- 99 files · ~65,235 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 436 nodes · 656 edges · 36 communities (34 shown, 2 thin omitted)
+- 437 nodes · 660 edges · 35 communities (33 shown, 2 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 40 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `feaaf147`
+- Built from commit: `edd8c091`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -44,7 +44,6 @@
 - PalDawn v0.1.0 — First Light
 - test-foundation-plus.mjs
 - Foundation+ acceptance evidence
-- pwa.ts
 - PalDawn Foundation+
 - sw.js
 
@@ -80,15 +79,15 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (36 total, 2 thin omitted)
+## Communities (35 total, 2 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
 Nodes (20): Medical Accuracy Report, Journey Proposal, Quality and Reduced-Motion Settings, Canonical Coronary Route, Medical Content Source Boundary, Medical Guardrails, Minimal Linear Journey Schema, P0 Graphics Directives (+12 more)
 
 ### Community 1 - "FlightDeck.tsx"
-Cohesion: 0.09
-Nodes (43): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+35 more)
+Cohesion: 0.08
+Nodes (48): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+40 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
@@ -194,16 +193,12 @@ Nodes (11): app, builtServiceWorker, deck, experience, journey, localData, manif
 Cohesion: 0.40
 Nodes (4): Automated gates, Browser acceptance, Foundation+ acceptance evidence, Known limitations
 
-### Community 31 - "pwa.ts"
-Cohesion: 0.47
-Nodes (4): rootEl, activatePwaUpdate(), dispatch(), registerPwa()
-
 ### Community 32 - "PalDawn Foundation+"
 Cohesion: 0.33
 Nodes (5): Boundary, Eight requested continuity features, PalDawn Foundation+, Six additional high-confidence features, Verification contract
 
 ## Knowledge Gaps
-- **151 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+146 more)
+- **150 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+145 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -215,9 +210,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `PalDawn Engineering Scaffold` connect `PalDawn Engineering Scaffold` to `PalDawn Project Plan`, `PalDawn Overview`, `Contributing to PalDawn`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _151 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _150 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `FlightDeck.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.09216255442670537 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07966101694915254 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
