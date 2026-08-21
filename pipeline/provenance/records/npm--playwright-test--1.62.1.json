@@ -1,0 +1,47 @@
+{
+  "record_id": "npm--playwright-test--1.62.1",
+  "subject": {
+    "name": "@playwright/test",
+    "type": "tooling"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/microsoft/playwright.git",
+    "path": "node_modules/@playwright/test (published npm artifact)",
+    "version_or_commit": "1.62.1",
+    "source_digest": "sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==",
+    "creator": "Microsoft Corporation and Playwright contributors"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "license_url": "https://github.com/microsoft/playwright/blob/v1.62.1/LICENSE",
+    "source_url": "https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz (package.json license field and bundled LICENSE)"
+  },
+  "lineage": "Published npm registry artifact; source repository https://github.com/microsoft/playwright.git.",
+  "reproduction": {
+    "tools": [
+      "node 26.4.0",
+      "npm 11.17.0"
+    ],
+    "commands": [
+      "npm install --save-dev --save-exact @playwright/test@1.62.1"
+    ]
+  },
+  "modifications": "None — consumed as an unmodified test-only npm dependency; package-lock.json integrity pins the exact artifact.",
+  "output_digest": "sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==",
+  "attribution": {
+    "required_text": "@playwright/test v1.62.1 — © Microsoft Corporation and Playwright contributors — Apache-2.0 — https://github.com/microsoft/playwright",
+    "source_pack_url": "https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "Owner-authorized Foundation+ quality gate (2026-08-21)",
+    "date": "2026-08-21"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Pure browser-test tooling with no medical or anatomical claims; medical review does not apply. License and source were verified against the npm registry artifact and the pinned upstream license on 2026-08-21."
+  }
+}

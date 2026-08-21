@@ -5,6 +5,7 @@ import { createServer } from 'vite'
 const APP_ROOT = fileURLToPath(new URL('..', import.meta.url))
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const JOURNEY_KEY = 'paldawn:journey:v1'
+const RESET_KEY = 'paldawn:reset:v1'
 
 class MemoryStorage {
   #values = new Map()
@@ -53,15 +54,17 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(journey.stageIdFromHash('#stage/portal'), 'portal')
   assert.equal(journey.stageIdFromHash('#stage/%E0%A4%A'), null)
 
-  const localData = await load('/src/platform/localData.ts')
+  const localData = await load('/src/platform/localData.ts?tab=a')
+  const otherTabLocalData = await load('/src/platform/localData.ts?tab=b')
   localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 4, narrationMode: 'invalid' }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 1, narrationMode: 'guide' })
 
   localData.saveJourneySession({ progress: 0.42, narrationMode: 'engineering' })
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.42)
-  localData.resetLocalData()
+  otherTabLocalData.resetLocalData()
   localData.saveJourneySession({ progress: 0.75, narrationMode: 'guide' })
-  assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'reset must survive the unload flush')
+  assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'reset must suppress a stale tab flush')
+  assert.ok(localStorage.getItem(RESET_KEY), 'reset must publish a cross-tab token')
 })
 
 await withModules(new MemoryStorage(), async (load) => {
@@ -78,6 +81,9 @@ await withModules(new MemoryStorage(), async (load) => {
   for (let step = 0; step < 5; step += 1) useExperience.getState().togglePlayback(true)
   assert.equal(useExperience.getState().progress, 1, 'reduced-motion controls must reach completion')
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 1)
+
+  const { useExperience: restoredCompletion } = await load('/src/state/experience.ts?completed')
+  assert.equal(restoredCompletion.getState().entered, true, 'persisted completion must restore its summary')
 })
 
 await withModules(new MemoryStorage(), async (load) => {
@@ -91,4 +97,4 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(useSettings.getState().highContrast, false)
 })
 
-console.log('foundation runtime checks: corrupt state safe · reset durable · reduced motion completes')
+console.log('foundation runtime checks: corrupt state safe · cross-tab reset durable · completion restores')

@@ -2762,3 +2762,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+---
+
+## @playwright/test@1.62.1
+
+- License (declared): Apache-2.0
+- Source artifact: https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz
+- Integrity: `sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==`
+- Scope: test-only browser acceptance tooling; not bundled into the shipped app
+
+The complete Apache License 2.0 text reproduced above for
+`typescript@7.0.2` applies unchanged to this package. The published Playwright
+artifact also includes that license in its bundled `LICENSE` file.

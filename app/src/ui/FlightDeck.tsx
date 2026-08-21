@@ -17,7 +17,7 @@ import { resolveTier, useSettings, type CaptionScale, type QualityTier } from '.
 import { useTelemetry } from '../state/telemetry'
 import { diagnosticReport } from '../platform/diagnostics'
 import { copyText, downloadText } from '../platform/downloads'
-import { exportLocalData, resetLocalData, saveJourneySession } from '../platform/localData'
+import { PALDAWN_RESET_KEY, exportLocalData, resetLocalData, saveJourneySession } from '../platform/localData'
 import { activatePwaUpdate, checkForPwaUpdate } from '../platform/pwa'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
@@ -198,7 +198,7 @@ function ControlDeck() {
     moveStage(direction)
   }
   return (
-    <section className="control-deck" id="flight-controls" aria-label="Voyage controls">
+    <section className="control-deck" id="flight-controls" aria-label="Voyage controls" tabIndex={-1}>
       <div className="transport-controls">
         <button type="button" aria-label="Skip to previous stage" onClick={() => moveToStage(-1)}>←</button>
         <button
@@ -519,9 +519,20 @@ function CompletionSummary() {
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const [status, setStatus] = useState('')
+  const summaryRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    summaryRef.current?.focus()
+  }, [])
 
   return (
-    <section className="completion-summary" aria-labelledby="completion-title">
+    <section
+      ref={summaryRef}
+      className="completion-summary"
+      id="completion-summary"
+      aria-labelledby="completion-title"
+      tabIndex={-1}
+    >
       <p className="eyebrow">Route complete · five synthetic stages</p>
       <h2 id="completion-title">First light reached.</h2>
       <p>You completed the {narrationMode} track. Anatomy and clinical teaching remain locked behind separate evidence and review.</p>
@@ -582,6 +593,18 @@ export function FlightDeck({
     if (navigation?.type !== 'reload') followHash()
     window.addEventListener('hashchange', followHash)
     return () => window.removeEventListener('hashchange', followHash)
+  }, [])
+
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== PALDAWN_RESET_KEY || event.newValue === null) return
+      const resetUrl = new URL(window.location.href)
+      resetUrl.hash = ''
+      window.history.replaceState(null, '', resetUrl)
+      window.location.reload()
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
   }, [])
 
   const currentStageId = stageAt(progress).id
@@ -663,13 +686,13 @@ export function FlightDeck({
         return
       }
       if (isTypingTarget(event.target)) return
-      if (!useExperience.getState().entered) return
+      const state = useExperience.getState()
+      if (!state.entered || state.progress >= 1) return
       if (event.code === 'Space') {
         event.preventDefault()
-        useExperience.getState().togglePlayback(reducedMotion)
+        state.togglePlayback(reducedMotion)
       } else if (event.key === 'ArrowRight') {
         event.preventDefault()
-        const state = useExperience.getState()
         if (event.shiftKey || reducedMotion) {
           const target = Math.min(JOURNEY.stages.length - 1, stageIndexAt(state.progress) + 1)
           replaceStageHash(JOURNEY.stages[target].id)
@@ -681,7 +704,6 @@ export function FlightDeck({
         }
       } else if (event.key === 'ArrowLeft') {
         event.preventDefault()
-        const state = useExperience.getState()
         if (event.shiftKey || reducedMotion) {
           const target = Math.max(0, stageIndexAt(state.progress) - 1)
           replaceStageHash(JOURNEY.stages[target].id)
@@ -707,11 +729,25 @@ export function FlightDeck({
     ? 0
     : smoothRange(progress, PORTAL_START, PORTAL_CENTER) *
       (1 - smoothRange(progress, PORTAL_CENTER, PORTAL_END))
+  const completed = entered && progress >= 1
+  const skipTargetId = !entered ? 'intro-title' : completed ? 'completion-summary' : 'flight-controls'
 
   return (
     <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage}>
-      <a className="skip-link" href={entered ? '#flight-controls' : '#intro-title'}>
-        Skip to {entered ? 'voyage controls' : 'introduction'}
+      <a
+        className="skip-link"
+        href={`#${skipTargetId}`}
+        onClick={(event) => {
+          const target = document.getElementById(skipTargetId)
+          if (!target) return
+          event.preventDefault()
+          const skipUrl = new URL(window.location.href)
+          skipUrl.hash = skipTargetId
+          window.history.replaceState(null, '', skipUrl)
+          target.focus()
+        }}
+      >
+        Skip to {!entered ? 'introduction' : completed ? 'completion summary' : 'voyage controls'}
       </a>
       <header className="masthead">
         <a className="wordmark" href="./" aria-label="PalDawn home">
@@ -747,11 +783,16 @@ export function FlightDeck({
         <span>{textVoyage ? 'SCENE-FREE ROUTE' : 'NO ANATOMICAL SCALE'}</span>
       </div>
       {!entered && <Intro />}
-      <PhaseRail />
-      <CompanionCaption />
-      <ControlDeck />
-      <Telemetry />
-      {entered && progress >= 1 ? <CompletionSummary /> : null}
+      {completed ? (
+        <CompletionSummary />
+      ) : (
+        <>
+          <PhaseRail />
+          <CompanionCaption />
+          <ControlDeck />
+          <Telemetry />
+        </>
+      )}
       <Drawer textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />
       {entered && !textVoyage ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
       {entered && comfortVignette && !textVoyage ? <div className="comfort-vignette" aria-hidden="true" /> : null}

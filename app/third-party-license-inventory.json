@@ -1,8 +1,8 @@
 {
   "note": "PalDawn transitive license inventory. Deterministic; regenerate with `npm run licenses`. Policy: see scripts/license-inventory.mjs and docs/PLAN.md.",
   "counts": {
-    "total": 91,
-    "allowed": 89,
+    "total": 94,
+    "allowed": 92,
     "review": 2,
     "denied": 0
   },
@@ -50,6 +50,12 @@
       "name": "@oxc-project/types",
       "version": "0.144.0",
       "license": "MIT",
+      "verdict": "allow"
+    },
+    {
+      "name": "@playwright/test",
+      "version": "1.62.1",
+      "license": "Apache-2.0",
       "verdict": "allow"
     },
     {
@@ -344,6 +350,18 @@
       "name": "picomatch",
       "version": "4.0.5",
       "license": "MIT",
+      "verdict": "allow"
+    },
+    {
+      "name": "playwright",
+      "version": "1.62.1",
+      "license": "Apache-2.0",
+      "verdict": "allow"
+    },
+    {
+      "name": "playwright-core",
+      "version": "1.62.1",
+      "license": "Apache-2.0",
       "verdict": "allow"
     },
     {

@@ -30,7 +30,7 @@ const stageEntryProgress = (index: number): number => {
 }
 
 export const useExperience = create<ExperienceState>()((set, get) => ({
-  entered: false,
+  entered: initialSession.progress >= 1,
   playing: false,
   progress: initialSession.progress,
   narrationMode: initialSession.narrationMode,

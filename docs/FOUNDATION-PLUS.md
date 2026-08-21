@@ -44,6 +44,8 @@ contract requirements.
   diagnostic exports, text voyage, recovery, responsive layouts, reduced motion,
   and the first-install, user-triggered update, and offline-reload worker lifecycle
   at the production Pages base path.
+- A pinned, provenance-recorded Playwright suite runs in CI and the Pages gate for
+  focus movement, completion restoration, target sizing, and cross-tab reset races.
 
 The retained acceptance matrix and known limitations are in
 `docs/FOUNDATION-PLUS-QA.md`.

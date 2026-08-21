@@ -1,5 +1,6 @@
 export const PALDAWN_SETTINGS_KEY = 'paldawn:settings:v1'
 export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
+export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
 
 export interface JourneySession {
   progress: number
@@ -7,6 +8,7 @@ export interface JourneySession {
 }
 
 let resetInProgress = false
+let resetTokenAtLoad: string | null = null
 
 const storage = (): Storage | null => {
   try {
@@ -15,6 +17,16 @@ const storage = (): Storage | null => {
     return null
   }
 }
+
+const readString = (key: string): string | null => {
+  try {
+    return storage()?.getItem(key) ?? null
+  } catch {
+    return null
+  }
+}
+
+resetTokenAtLoad = readString(PALDAWN_RESET_KEY)
 
 const readJson = (key: string): unknown => {
   try {
@@ -38,7 +50,7 @@ export function loadJourneySession(): JourneySession {
 }
 
 export function saveJourneySession(session: JourneySession): void {
-  if (resetInProgress) return
+  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
   try {
     storage()?.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({
       progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
@@ -62,6 +74,9 @@ export function resetLocalData(): void {
   resetInProgress = true
   try {
     const localStorage = storage()
+    const resetToken = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
+    localStorage?.setItem(PALDAWN_RESET_KEY, resetToken)
+    resetTokenAtLoad = resetToken
     localStorage?.removeItem(PALDAWN_SETTINGS_KEY)
     localStorage?.removeItem(PALDAWN_JOURNEY_KEY)
   } catch {

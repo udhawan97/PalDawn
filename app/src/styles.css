@@ -958,6 +958,7 @@ kbd {
 
 .quality-setting select {
   min-width: 104px;
+  min-height: 44px;
   padding: 7px 9px;
   border: 1px solid var(--line);
   border-radius: 2px;

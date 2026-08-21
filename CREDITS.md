@@ -22,10 +22,12 @@ texts in `app/THIRD_PARTY_LICENSES.md`.
 - @vitejs/plugin-react 6.0.5 — © VoidZero Inc. and Vite contributors — MIT — https://github.com/vitejs/vite-plugin-react
 - typescript 7.0.2 — © Microsoft Corporation — Apache-2.0 — https://github.com/microsoft/TypeScript
 - @types/react 19.2.18, @types/react-dom 19.2.4, @types/node 26.2.0 — DefinitelyTyped contributors — MIT — https://github.com/DefinitelyTyped/DefinitelyTyped
+- @playwright/test 1.62.1 — © Microsoft Corporation and Playwright contributors — Apache-2.0 — test-only browser acceptance tooling — https://github.com/microsoft/playwright
 
 Transitive packages are covered by the preserved lockfile plus the denylist
-inventory (`app/third-party-license-inventory.json`; currently 91 packages,
-0 denied). Notes: `webgl-constants@1.1.1` (via drei → detect-gpu) declares no
+inventory (`app/third-party-license-inventory.json`; currently 94 packages,
+0 denied, regenerated on every gate).
+Notes: `webgl-constants@1.1.1` (via drei → detect-gpu) declares no
 license field but ships a verbatim MIT LICENSE in its published artifact
 (resolution evidence recorded in `app/scripts/license-inventory.mjs`);
 `lightningcss` (Vite build-time, MPL-2.0) is review-tier, build-tooling only,
