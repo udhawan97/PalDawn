@@ -3,6 +3,9 @@ name: 🎬 Journey proposal
 about: Propose a new disease journey
 labels: journey
 ---
+> Do not include personal health information, patient details, or identifying
+> data. Proposals must use public, citable educational evidence only.
+
 **Condition:**
 
 **Why it matters (burden, who it helps):**

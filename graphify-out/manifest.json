@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787282781.6475918,
+    "mtime": 1787283243.6024497,
     "ast_hash": "74a06ae2a104e670f15a0361c9c0335f",
     "semantic_hash": ""
   },
@@ -195,9 +195,9 @@
     "semantic_hash": ""
   },
   ".github/ISSUE_TEMPLATE/accuracy_report.md": {
-    "mtime": 1786865524.5276752,
-    "ast_hash": "e9d87c69f35a534d5540f769122004cb",
-    "semantic_hash": "e9d87c69f35a534d5540f769122004cb"
+    "mtime": 1787283776.099065,
+    "ast_hash": "9002e7effcb3e1938e35d2e67f5d2a00",
+    "semantic_hash": ""
   },
   ".github/ISSUE_TEMPLATE/bug_report.md": {
     "mtime": 1786865524.5291045,
@@ -205,18 +205,18 @@
     "semantic_hash": "1e4c3830eec3a8f8d94002ab6c72ff61"
   },
   ".github/ISSUE_TEMPLATE/journey_proposal.md": {
-    "mtime": 1786865524.5284283,
-    "ast_hash": "6e4c47cae6595209bf4cc66eb595a264",
-    "semantic_hash": "6e4c47cae6595209bf4cc66eb595a264"
+    "mtime": 1787283776.0992775,
+    "ast_hash": "82538627e7d47c4390de738b18b61c29",
+    "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1787281522.2623177,
-    "ast_hash": "0161d8f651d0e10d58945a33f167fde4",
+    "mtime": 1787283751.7879748,
+    "ast_hash": "2a5c8f11b5a9928d530eb21bcfc605e6",
     "semantic_hash": ""
   },
   ".github/workflows/deploy.yml": {
-    "mtime": 1787281522.2626579,
-    "ast_hash": "c6a75c8e7067854a6892dc57d17d89e0",
+    "mtime": 1787283751.7884376,
+    "ast_hash": "71e8012d34e5b52e12415eaf5ed27ae8",
     "semantic_hash": ""
   },
   "CONTRIBUTING.md": {
@@ -455,13 +455,8 @@
     "semantic_hash": ""
   },
   "docs/releases/v0.1.0.md": {
-    "mtime": 1787282167.617642,
-    "ast_hash": "30ed4bb5565c15607efc39b1e00e40e0",
-    "semantic_hash": ""
-  },
-  "graphify-out/memory/query_20260821_024513_what_is_currently_implemented_in_paldawn__what_doe.md": {
-    "mtime": 1787280313.9208674,
-    "ast_hash": "c2cd8d8cb2a9101545af1c5da4eaad05",
+    "mtime": 1787283637.6734352,
+    "ast_hash": "d361241410f0bff0ee90e3432ffdf5b7",
     "semantic_hash": ""
   },
   "app/public/icon.svg": {
