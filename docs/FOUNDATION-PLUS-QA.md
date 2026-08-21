@@ -14,12 +14,13 @@ integration. All routes below used the production Pages base path `/PalDawn/`.
 - `npm run test:browser` exercises skip-target focus, narrow-screen completion
   focus, completed-session restoration, 44 px settings selects, and a two-tab
   reset race in headless Chromium. Both CI and Pages deployment run this suite.
-- Built JavaScript was 334,507 bytes gzip against the existing 500 KiB budget.
+- Built JavaScript was 334,539 bytes gzip against the existing 500 KiB budget.
 - `node pipeline/provenance/run-checks.mjs` passed every valid, invalid, and live
   record. No anatomy, binary asset, or runtime dependency was added. The one new
   test-only dependency, `@playwright/test`, has a pinned Apache-2.0 provenance
   record and lockfile integrity.
-- `npm run licenses` reported 94 packages: 92 allowed, 2 existing MPL review
+- A fresh macOS `npm ci` followed by `npm run licenses` reported 95 packages:
+  93 allowed, 2 existing MPL review
   entries, and 0 denied.
 
 ## Browser acceptance

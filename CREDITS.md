@@ -25,7 +25,7 @@ texts in `app/THIRD_PARTY_LICENSES.md`.
 - @playwright/test 1.62.1 — © Microsoft Corporation and Playwright contributors — Apache-2.0 — test-only browser acceptance tooling — https://github.com/microsoft/playwright
 
 Transitive packages are covered by the preserved lockfile plus the denylist
-inventory (`app/third-party-license-inventory.json`; currently 94 packages,
+inventory (`app/third-party-license-inventory.json`; currently 95 packages,
 0 denied, regenerated on every gate).
 Notes: `webgl-constants@1.1.1` (via drei → detect-gpu) declares no
 license field but ships a verbatim MIT LICENSE in its published artifact

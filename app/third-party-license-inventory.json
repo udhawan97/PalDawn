@@ -1,8 +1,8 @@
 {
   "note": "PalDawn transitive license inventory. Deterministic; regenerate with `npm run licenses`. Policy: see scripts/license-inventory.mjs and docs/PLAN.md.",
   "counts": {
-    "total": 94,
-    "allowed": 92,
+    "total": 95,
+    "allowed": 93,
     "review": 2,
     "denied": 0
   },
@@ -247,6 +247,12 @@
     {
       "name": "fflate",
       "version": "0.8.3",
+      "license": "MIT",
+      "verdict": "allow"
+    },
+    {
+      "name": "fsevents",
+      "version": "2.3.2",
       "license": "MIT",
       "verdict": "allow"
     },

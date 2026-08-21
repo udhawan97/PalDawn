@@ -7,6 +7,10 @@ export interface JourneySession {
   narrationMode: 'guide' | 'engineering'
 }
 
+interface PersistedJourneySession extends JourneySession {
+  resetToken?: string | null
+}
+
 let resetInProgress = false
 let resetTokenAtLoad: string | null = null
 
@@ -41,7 +45,16 @@ export function loadJourneySession(): JourneySession {
   const value = readJson(PALDAWN_JOURNEY_KEY)
   if (!value || typeof value !== 'object') return { progress: 0, narrationMode: 'guide' }
 
-  const candidate = value as Partial<JourneySession>
+  const candidate = value as Partial<PersistedJourneySession>
+  const currentResetToken = readString(PALDAWN_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
+    try {
+      storage()?.removeItem(PALDAWN_JOURNEY_KEY)
+    } catch {
+      // The stale record is still ignored when storage cannot be changed.
+    }
+    return { progress: 0, narrationMode: 'guide' }
+  }
   const progress = typeof candidate.progress === 'number' && Number.isFinite(candidate.progress)
     ? Math.min(1, Math.max(0, candidate.progress))
     : 0
@@ -55,6 +68,7 @@ export function saveJourneySession(session: JourneySession): void {
     storage()?.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({
       progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
       narrationMode: session.narrationMode,
+      resetToken: resetTokenAtLoad,
     }))
   } catch {
     // Persistence is an enhancement. The voyage remains fully usable without it.

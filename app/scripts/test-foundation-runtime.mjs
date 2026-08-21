@@ -65,6 +65,9 @@ await withModules(new MemoryStorage(), async (load) => {
   localData.saveJourneySession({ progress: 0.75, narrationMode: 'guide' })
   assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'reset must suppress a stale tab flush')
   assert.ok(localStorage.getItem(RESET_KEY), 'reset must publish a cross-tab token')
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.75, narrationMode: 'guide', resetToken: null }))
+  assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
+  assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'stale-generation records must be removed on load')
 })
 
 await withModules(new MemoryStorage(), async (load) => {
