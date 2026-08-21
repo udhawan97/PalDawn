@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1787334999.1819634,
-    "ast_hash": "cb720b425ef5e5554e944e4433101bd2",
+    "mtime": 1787337268.6307201,
+    "ast_hash": "ec6b1ab35c2608bbeffb25e1ee505080",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787336551.028783,
+    "mtime": 1787337682.773589,
     "ast_hash": "74a06ae2a104e670f15a0361c9c0335f",
     "semantic_hash": ""
   },
@@ -55,9 +55,9 @@
     "semantic_hash": "ec13a78f7848db48070fca4a0bfb9c09"
   },
   "app/vite.config.ts": {
-    "mtime": 1787334447.3691933,
-    "ast_hash": "2f6d6e4f1301e40b9530115b080d6296",
-    "semantic_hash": "2f6d6e4f1301e40b9530115b080d6296"
+    "mtime": 1787337703.9966493,
+    "ast_hash": "c5cfeb5657a208d995df9a349b5b600e",
+    "semantic_hash": ""
   },
   "pipeline/provenance/fixtures/invalid/ccbync-asset.json": {
     "mtime": 1787334447.3731978,
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/index.html": {
-    "mtime": 1787334447.3644867,
-    "ast_hash": "97db64f1aa58a8041ac670a34a5214a8",
+    "mtime": 1787337187.0640204,
+    "ast_hash": "0012c2b90a9f41da505f459ff8c373fa",
     "semantic_hash": ""
   },
   "docs/BRIEF-FOR-CODEX.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1787335025.656471,
-    "ast_hash": "7df3d41c6b3650fa95e3f3723c3c6324",
+    "mtime": 1787337187.0643694,
+    "ast_hash": "a128af878566b87fc9e98a5c7a68a965",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -380,8 +380,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
-    "mtime": 1787334447.3657534,
-    "ast_hash": "4a44ac4fe46adc463b250b97a89d1d7a",
+    "mtime": 1787337296.6137187,
+    "ast_hash": "7e519e6c6a184bee52442d6d80050abd",
     "semantic_hash": ""
   },
   "app/src/data/p0-journey.json": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "app/src/state/experience.ts": {
-    "mtime": 1787334628.9319055,
-    "ast_hash": "954e65475dc0fc97c414ac19dd63a58c",
+    "mtime": 1787337187.0620916,
+    "ast_hash": "837df2a69e4946814dac8b85868295af",
     "semantic_hash": ""
   },
   "app/src/state/telemetry.ts": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1787336332.410064,
-    "ast_hash": "b300604d53559bc70c56e3a839c1a7a5",
+    "mtime": 1787337419.0038264,
+    "ast_hash": "7971c5b378934f1674c860b5c5c8e2f8",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "app/public/sw.js": {
-    "mtime": 1787336475.835883,
-    "ast_hash": "dbafc4c67ca99086f861bb29e0fb3208",
+    "mtime": 1787337187.0629175,
+    "ast_hash": "d4d874b396046de27398a568612bfa99",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1787336467.735467,
-    "ast_hash": "cc842cd92a63b11fa2268324e5f462e2",
+    "mtime": 1787337231.2789505,
+    "ast_hash": "55a7c06ba8148fc99aef709d3fcd34d3",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -480,13 +480,23 @@
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1787334551.8992426,
-    "ast_hash": "a15df8a671ace27a324ef09f8727d809",
+    "mtime": 1787337187.0625072,
+    "ast_hash": "92f4559e43b95ce54ea35e028e946ec2",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
-    "mtime": 1787336332.4103084,
-    "ast_hash": "893cdb6434a27fc6c4e24fc83500bf51",
+    "mtime": 1787337668.3989038,
+    "ast_hash": "fb642b60f394b45e7280ff32ccde1069",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-foundation-runtime.mjs": {
+    "mtime": 1787337268.630055,
+    "ast_hash": "d25b7d46bf67fc7e0b278cf17b754c0e",
+    "semantic_hash": ""
+  },
+  "docs/FOUNDATION-PLUS-QA.md": {
+    "mtime": 1787337661.553944,
+    "ast_hash": "c383bbe51a208521d308cc0ade2b2ae3",
     "semantic_hash": ""
   }
 }
