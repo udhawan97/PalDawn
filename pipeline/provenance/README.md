@@ -9,7 +9,7 @@ hand-authored records.
 - `schema.json` — record shape (documentation).
 - `validate.mjs` — deterministic validator, Node built-ins only. `node validate.mjs records/` or any file/dir list.
 - `run-checks.mjs` — full check suite: valid fixtures must pass, invalid fixtures must fail (with the expected error codes), and every record in `records/` must pass. Run: `node run-checks.mjs`.
-- `records/` — 23 live records: 13 used direct npm dependencies plus 10
+- `records/` — 24 live records: 14 used direct npm dependencies plus 10
   planned/pending/adoption-blocked Z-Anatomy audit drafts.
 - `fixtures/valid/`, `fixtures/invalid/` — synthetic test records. Reviewer names in fixtures are clearly-marked fake test data, never real approvals.
 - `tools/gen-npm-records.mjs` — regenerates npm dependency records from `app/package-lock.json`.

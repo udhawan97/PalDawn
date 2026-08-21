@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   JOURNEY,
   formatDuration,
@@ -13,15 +13,48 @@ import {
 } from '../journey/journey'
 import { PORTAL_CENTER, PORTAL_END, PORTAL_START, smoothRange } from '../journey/route'
 import { useExperience, type OpenPanel } from '../state/experience'
-import { resolveTier, useSettings, type CaptionScale, type QualityTier } from '../state/settings'
+import {
+  resolveTier,
+  useSettings,
+  type CaptionScale,
+  type PlaybackRate,
+  type QualityTier,
+} from '../state/settings'
 import { useTelemetry } from '../state/telemetry'
 import { diagnosticReport } from '../platform/diagnostics'
 import { copyText, downloadText } from '../platform/downloads'
-import { PALDAWN_RESET_KEY, exportLocalData, resetLocalData, saveJourneySession } from '../platform/localData'
-import { activatePwaUpdate, checkForPwaUpdate } from '../platform/pwa'
+import {
+  PALDAWN_BOOKMARKS_KEY,
+  PALDAWN_RESET_KEY,
+  exportLocalData,
+  loadStageBookmarks,
+  resetLocalData,
+  saveJourneySession,
+  saveStageBookmarks,
+} from '../platform/localData'
+import {
+  activatePwaUpdate,
+  checkForPwaUpdate,
+  getPwaInstallState,
+  requestPwaInstall,
+  type PwaInstallState,
+} from '../platform/pwa'
+import { shareOrCopy, type ShareOutcome } from '../platform/share'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
 const CAPTION_SCALES: CaptionScale[] = ['standard', 'large', 'largest']
+const PLAYBACK_RATES: PlaybackRate[] = [0.5, 1, 1.5]
+const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
+
+const orderedBookmarks = (ids: string[]): string[] =>
+  JOURNEY.stages.filter((stage) => ids.includes(stage.id)).map((stage) => stage.id)
+
+const shareStatus = (outcome: ShareOutcome, subject: string): string => {
+  if (outcome === 'shared') return `${subject} shared.`
+  if (outcome === 'copied') return `Sharing is unavailable, so the ${subject.toLowerCase()} was copied.`
+  if (outcome === 'cancelled') return 'Share cancelled.'
+  return 'Sharing and copy are unavailable in this browser context.'
+}
 
 const replaceStageHash = (id: string): void => {
   const url = new URL(window.location.href)
@@ -126,13 +159,20 @@ function PhaseRail() {
   )
 }
 
-function CompanionCaption() {
+function CompanionCaption({
+  bookmarks,
+  onToggleBookmark,
+}: {
+  bookmarks: string[]
+  onToggleBookmark: (id: string) => void
+}) {
   const entered = useExperience((state) => state.entered)
   const progress = useExperience((state) => state.progress)
   const narrationMode = useExperience((state) => state.narrationMode)
   const setNarrationMode = useExperience((state) => state.setNarrationMode)
   const [linkStatus, setLinkStatus] = useState('')
   const stage = stageAt(progress)
+  const bookmarked = bookmarks.includes(stage.id)
 
   if (!entered) return null
 
@@ -161,18 +201,46 @@ function CompanionCaption() {
           </button>
         ))}
       </div>
-      <button
-        className="quiet-action"
-        type="button"
-        onClick={() => {
-          replaceStageHash(stage.id)
-          void copyText(stageUrl(stage.id)).then((copied) => {
-            setLinkStatus(copied ? 'Stage link copied.' : 'Copy unavailable. The stage URL is now in the address bar.')
-          })
-        }}
-      >
-        Copy this stage link
-      </button>
+      <div className="companion-actions">
+        <button
+          className="quiet-action"
+          type="button"
+          aria-pressed={bookmarked}
+          onClick={() => {
+            onToggleBookmark(stage.id)
+            setLinkStatus(bookmarked ? 'Stage removed from saved stages.' : 'Stage saved on this device.')
+          }}
+        >
+          {bookmarked ? 'Saved' : 'Save stage'}
+        </button>
+        <button
+          className="quiet-action"
+          type="button"
+          onClick={() => {
+            replaceStageHash(stage.id)
+            void shareOrCopy({
+              title: `PalDawn First Light — ${stage.label}`,
+              text: stage[narrationMode],
+              url: stageUrl(stage.id),
+            }).then((outcome) => setLinkStatus(shareStatus(outcome, 'Stage')))
+          }}
+        >
+          Share
+        </button>
+        <button
+          className="quiet-action"
+          type="button"
+          aria-label="Copy this stage link"
+          onClick={() => {
+            replaceStageHash(stage.id)
+            void copyText(stageUrl(stage.id)).then((copied) => {
+              setLinkStatus(copied ? 'Stage link copied.' : 'Copy unavailable. The stage URL is now in the address bar.')
+            })
+          }}
+        >
+          Copy link
+        </button>
+      </div>
       <p className="action-status" aria-live="polite">{linkStatus}</p>
     </section>
   )
@@ -187,6 +255,7 @@ function ControlDeck() {
   const moveStage = useExperience((state) => state.moveStage)
   const setProgress = useExperience((state) => state.setProgress)
   const reducedMotion = useSettings((state) => state.reducedMotion)
+  const playbackRate = useSettings((state) => state.playbackRate)
   const currentIndex = stageIndexAt(progress)
 
   if (!entered) return null
@@ -229,6 +298,7 @@ function ControlDeck() {
         />
       </div>
       <div className="shortcut-hint">
+        <output aria-label="Playback speed">{playbackRate}×</output>
         <kbd>Space</kbd> {reducedMotion ? 'next' : 'play / pause'}
         <kbd>←</kbd><kbd>→</kbd> seek
       </div>
@@ -263,23 +333,77 @@ function MissionPanel() {
   )
 }
 
-function TranscriptPanel() {
+function TranscriptPanel({
+  bookmarks,
+  onToggleBookmark,
+}: {
+  bookmarks: string[]
+  onToggleBookmark: (id: string) => void
+}) {
   const narrationMode = useExperience((state) => state.narrationMode)
+  const setProgress = useExperience((state) => state.setProgress)
+  const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const [status, setStatus] = useState('')
+  const [query, setQuery] = useState('')
   const transcript = transcriptText(narrationMode)
+  const normalizedQuery = query.trim().toLocaleLowerCase()
+  const stages = normalizedQuery
+    ? JOURNEY.stages.filter((stage) =>
+      [stage.label, stage.level, stage[narrationMode]].join(' ').toLocaleLowerCase().includes(normalizedQuery),
+    )
+    : JOURNEY.stages
+  const savedStages = JOURNEY.stages.filter((stage) => bookmarks.includes(stage.id))
+  const openStage = (id: string) => {
+    const progress = progressForStageId(id)
+    if (progress === null) return
+    replaceStageHash(id)
+    setProgress(progress)
+    setOpenPanel(null)
+  }
+
   return (
     <>
       <p className="panel-kicker">Text route · {narrationMode}</p>
       <h2 id="panel-title">Full transcript</h2>
+      <label className="transcript-search" htmlFor="transcript-search">
+        <span>Find a stage or phrase</span>
+        <input
+          id="transcript-search"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search this authored route"
+        />
+      </label>
+      <p className="search-status" role="status">
+        {stages.length} {stages.length === 1 ? 'stage' : 'stages'} shown
+      </p>
+      {savedStages.length ? (
+        <section className="saved-stages" aria-labelledby="saved-stages-title">
+          <h3 id="saved-stages-title">Saved stages</h3>
+          <div>
+            {savedStages.map((stage) => (
+              <button type="button" key={stage.id} onClick={() => openStage(stage.id)}>{stage.label}</button>
+            ))}
+          </div>
+        </section>
+      ) : null}
       <ol className="transcript-list">
-        {JOURNEY.stages.map((stage) => (
+        {stages.map((stage) => (
           <li key={stage.id}>
             <span>{stage.level}</span>
             <h3>{stage.label}</h3>
             <p>{stage[narrationMode]}</p>
+            <div className="transcript-stage-actions">
+              <button type="button" onClick={() => openStage(stage.id)}>Go to stage</button>
+              <button type="button" aria-pressed={bookmarks.includes(stage.id)} onClick={() => onToggleBookmark(stage.id)}>
+                {bookmarks.includes(stage.id) ? 'Remove saved stage' : 'Save stage'}
+              </button>
+            </div>
           </li>
         ))}
       </ol>
+      {!stages.length ? <p className="empty-search">No stage matches that phrase.</p> : null}
       <div className="panel-actions" aria-label="Transcript actions">
         <button type="button" onClick={() => {
           void copyText(transcript).then((copied) => setStatus(copied ? 'Transcript copied.' : 'Copy unavailable.'))
@@ -288,6 +412,13 @@ function TranscriptPanel() {
           downloadText(`paldawn-first-light-${narrationMode}.txt`, transcript)
           setStatus('Transcript downloaded.')
         }}>Download text</button>
+        <button type="button" onClick={() => {
+          void shareOrCopy({
+            title: `PalDawn First Light — ${narrationMode} transcript`,
+            text: transcript,
+            url: window.location.href.split('#')[0],
+          }).then((outcome) => setStatus(shareStatus(outcome, 'Transcript')))
+        }}>Share transcript</button>
         <button type="button" onClick={() => window.print()}>Print</button>
       </div>
       <p className="action-status" aria-live="polite">{status}</p>
@@ -327,6 +458,8 @@ function HelpPanel() {
         <div><dt><kbd>Shift</kbd> + <kbd>←</kbd> <kbd>→</kbd></dt><dd>Move one complete stage</dd></div>
         <div><dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>Move to the first or final route position</dd></div>
         <div><dt><kbd>T</kbd></dt><dd>Open the complete transcript</dd></div>
+        <div><dt><kbd>/</kbd></dt><dd>Open the transcript and focus its search</dd></div>
+        <div><dt><kbd>B</kbd></dt><dd>Save or remove the current stage on this device</dd></div>
         <div><dt><kbd>?</kbd></dt><dd>Open this help panel</dd></div>
         <div><dt><kbd>Esc</kbd></dt><dd>Close the open panel</dd></div>
       </dl>
@@ -348,15 +481,20 @@ function SettingsPanel({
   const highContrast = useSettings((state) => state.highContrast)
   const showTelemetry = useSettings((state) => state.showTelemetry)
   const captionScale = useSettings((state) => state.captionScale)
+  const playbackRate = useSettings((state) => state.playbackRate)
   const setQualityTier = useSettings((state) => state.setQualityTier)
   const setReducedMotion = useSettings((state) => state.setReducedMotion)
   const setComfortVignette = useSettings((state) => state.setComfortVignette)
   const setHighContrast = useSettings((state) => state.setHighContrast)
   const setShowTelemetry = useSettings((state) => state.setShowTelemetry)
   const setCaptionScale = useSettings((state) => state.setCaptionScale)
+  const setPlaybackRate = useSettings((state) => state.setPlaybackRate)
+  const restart = useExperience((state) => state.restart)
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
   const [status, setStatus] = useState('')
   const [confirmReset, setConfirmReset] = useState(false)
+  const [confirmRestart, setConfirmRestart] = useState(false)
+  const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
 
   useEffect(() => {
@@ -365,12 +503,24 @@ function SettingsPanel({
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
   }, [])
 
+  useEffect(() => {
+    const syncInstallState = () => setInstallState(getPwaInstallState())
+    window.addEventListener('paldawn:install-ready', syncInstallState)
+    window.addEventListener('paldawn:app-installed', syncInstallState)
+    return () => {
+      window.removeEventListener('paldawn:install-ready', syncInstallState)
+      window.removeEventListener('paldawn:app-installed', syncInstallState)
+    }
+  }, [])
+
   const report = () => diagnosticReport({
     qualityTier,
     resolvedTier: resolveTier(qualityTier),
     reducedMotion,
     highContrast,
     textVoyage,
+    playbackRate,
+    bookmarkCount: orderedBookmarks(loadStageBookmarks()).length,
     telemetry: useTelemetry.getState(),
   })
 
@@ -394,6 +544,12 @@ function SettingsPanel({
           {CAPTION_SCALES.map((scale) => <option key={scale} value={scale}>{scale}</option>)}
         </select>
       </label>
+      <label className="quality-setting" htmlFor="playback-rate">
+        <span><strong>Playback speed</strong><small>Changes route pacing without skipping authored stages.</small></span>
+        <select id="playback-rate" value={playbackRate} onChange={(event) => setPlaybackRate(Number(event.target.value) as PlaybackRate)}>
+          {PLAYBACK_RATES.map((rate) => <option key={rate} value={rate}>{rate}×</option>)}
+        </select>
+      </label>
       <div className="settings-actions">
         <button type="button" onClick={() => onTextVoyageChange(!textVoyage)}>
           {textVoyage ? 'Return to 3D scene' : 'Use text voyage'}
@@ -411,6 +567,21 @@ function SettingsPanel({
         <button type="button" onClick={() => {
           void checkForPwaUpdate().then(() => setStatus('Update check complete.'))
         }}>Check for app update</button>
+        <button
+          type="button"
+          disabled={installState === 'installed'}
+          onClick={() => {
+            void requestPwaInstall().then((outcome) => {
+              setInstallState(getPwaInstallState())
+              if (outcome === 'accepted') setStatus('Install request accepted. Your browser will finish adding PalDawn.')
+              else if (outcome === 'dismissed') setStatus('Install cancelled. Nothing changed.')
+              else if (outcome === 'installed') setStatus('PalDawn is already running as an installed app.')
+              else setStatus('If your browser offers Install App or Add to Home Screen, use that command to install PalDawn.')
+            })
+          }}
+        >
+          {installState === 'available' ? 'Install PalDawn' : installState === 'installed' ? 'PalDawn installed' : 'Installation help'}
+        </button>
       </div>
       <section className="settings-subsection" aria-labelledby="diagnostics-title">
         <h3 id="diagnostics-title">Local diagnostics</h3>
@@ -427,7 +598,7 @@ function SettingsPanel({
       </section>
       <section className="settings-subsection" aria-labelledby="local-data-title">
         <h3 id="local-data-title">Local data</h3>
-        <p>Only display preferences and one First Light resume position are stored.</p>
+        <p>Only display preferences, one First Light resume position, and saved stage IDs are stored.</p>
         <div className="panel-actions">
           <button type="button" onClick={() => {
             downloadText('paldawn-local-data.json', exportLocalData(), 'application/json')
@@ -447,6 +618,24 @@ function SettingsPanel({
           {confirmReset ? <button type="button" onClick={() => setConfirmReset(false)}>Cancel</button> : null}
         </div>
       </section>
+      <section className="settings-subsection" aria-labelledby="restart-title">
+        <h3 id="restart-title">Voyage recovery</h3>
+        <p>Return to the introduction while keeping display preferences and saved stages.</p>
+        <div className="panel-actions">
+          {confirmRestart ? (
+            <button type="button" onClick={() => {
+              const restartUrl = new URL(window.location.href)
+              restartUrl.hash = ''
+              window.history.replaceState(null, '', restartUrl)
+              restart()
+              window.requestAnimationFrame(() => document.getElementById('intro-title')?.focus())
+            }}>Confirm restart voyage</button>
+          ) : (
+            <button type="button" onClick={() => setConfirmRestart(true)}>Restart voyage</button>
+          )}
+          {confirmRestart ? <button type="button" onClick={() => setConfirmRestart(false)}>Cancel restart</button> : null}
+        </div>
+      </section>
       <p className="action-status" aria-live="polite">{status}</p>
     </>
   )
@@ -455,9 +644,13 @@ function SettingsPanel({
 function Drawer({
   textVoyage,
   onTextVoyageChange,
+  bookmarks,
+  onToggleBookmark,
 }: {
   textVoyage: boolean
   onTextVoyageChange: (enabled: boolean) => void
+  bookmarks: string[]
+  onToggleBookmark: (id: string) => void
 }) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
@@ -483,7 +676,7 @@ function Drawer({
       <button className="drawer-close" type="button" aria-label="Close panel" onClick={() => setOpenPanel(null)}>×</button>
       <div className="drawer-scroll">
         {openPanel === 'mission' && <MissionPanel />}
-        {openPanel === 'transcript' && <TranscriptPanel />}
+        {openPanel === 'transcript' && <TranscriptPanel bookmarks={bookmarks} onToggleBookmark={onToggleBookmark} />}
         {openPanel === 'settings' && <SettingsPanel textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />}
         {openPanel === 'help' && <HelpPanel />}
       </div>
@@ -543,6 +736,14 @@ function CompletionSummary() {
           replaceStageHash('arrival')
           void copyText(stageUrl('arrival')).then((copied) => setStatus(copied ? 'Arrival link copied.' : 'Copy unavailable.'))
         }}>Copy arrival link</button>
+        <button type="button" onClick={() => {
+          replaceStageHash('arrival')
+          void shareOrCopy({
+            title: 'PalDawn First Light — route complete',
+            text: `First Light complete on PalDawn’s ${narrationMode} track. Synthetic systems model; not anatomy.`,
+            url: stageUrl('arrival'),
+          }).then((outcome) => setStatus(shareStatus(outcome, 'Arrival')))
+        }}>Share arrival</button>
       </div>
       <p className="action-status" aria-live="polite">{status}</p>
     </section>
@@ -568,7 +769,20 @@ export function FlightDeck({
   const [offlineReady, setOfflineReady] = useState(false)
   const [online, setOnline] = useState(navigator.onLine)
   const [visibilityPaused, setVisibilityPaused] = useState(false)
+  const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
+  const [bookmarkStatus, setBookmarkStatus] = useState('')
   const pausedForVisibility = useRef(false)
+
+  const toggleStageBookmark = useCallback((id: string) => {
+    if (!STAGE_IDS.has(id)) return
+    setBookmarks((current) => {
+      const saved = current.includes(id)
+      const next = orderedBookmarks(saved ? current.filter((candidate) => candidate !== id) : [...current, id])
+      saveStageBookmarks(next)
+      setBookmarkStatus(saved ? 'Stage removed from saved stages.' : 'Stage saved on this device.')
+      return next
+    })
+  }, [])
 
   useEffect(() => {
     document.documentElement.dataset.contrast = highContrast ? 'high' : 'standard'
@@ -597,6 +811,10 @@ export function FlightDeck({
 
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
+      if (event.key === PALDAWN_BOOKMARKS_KEY) {
+        setBookmarks(orderedBookmarks(loadStageBookmarks()))
+        return
+      }
       if (event.key !== PALDAWN_RESET_KEY || event.newValue === null) return
       const resetUrl = new URL(window.location.href)
       resetUrl.hash = ''
@@ -685,10 +903,18 @@ export function FlightDeck({
         setOpenPanel('transcript')
         return
       }
+      if (!isTextEntry && event.code === 'Slash' && !event.shiftKey) {
+        event.preventDefault()
+        setOpenPanel('transcript')
+        window.setTimeout(() => document.getElementById('transcript-search')?.focus(), 0)
+        return
+      }
       if (isTypingTarget(event.target)) return
       const state = useExperience.getState()
       if (!state.entered || state.progress >= 1) return
-      if (event.code === 'Space') {
+      if (event.key.toLowerCase() === 'b') {
+        toggleStageBookmark(stageAt(state.progress).id)
+      } else if (event.code === 'Space') {
         event.preventDefault()
         state.togglePlayback(reducedMotion)
       } else if (event.key === 'ArrowRight') {
@@ -723,7 +949,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [reducedMotion, setOpenPanel])
+  }, [reducedMotion, setOpenPanel, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
@@ -753,7 +979,7 @@ export function FlightDeck({
         <a className="wordmark" href="./" aria-label="PalDawn home">
           <span>Pal</span>Dawn <i>पाल</i>
         </a>
-        <p className="build-mark">FIRST LIGHT / FOUNDATION+</p>
+        <p className="build-mark">FIRST LIGHT / FOUNDATION+2</p>
         <nav className="utility-nav" aria-label="Release information">
           <PanelButton panel="mission">Mission</PanelButton>
           <PanelButton panel="transcript">Transcript</PanelButton>
@@ -788,12 +1014,17 @@ export function FlightDeck({
       ) : (
         <>
           <PhaseRail />
-          <CompanionCaption />
+          <CompanionCaption bookmarks={bookmarks} onToggleBookmark={toggleStageBookmark} />
           <ControlDeck />
           <Telemetry />
         </>
       )}
-      <Drawer textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />
+      <Drawer
+        textVoyage={textVoyage}
+        onTextVoyageChange={onTextVoyageChange}
+        bookmarks={bookmarks}
+        onToggleBookmark={toggleStageBookmark}
+      />
       {entered && !textVoyage ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
       {entered && comfortVignette && !textVoyage ? <div className="comfort-vignette" aria-hidden="true" /> : null}
       <p className="safety-line">
@@ -803,6 +1034,7 @@ export function FlightDeck({
       <p className="sr-only" aria-live="polite">
         {entered ? `${stageAt(progress).label}. ${stageAt(progress).guide}` : 'First light introduction.'}
       </p>
+      <p className="sr-only" aria-live="polite">{bookmarkStatus}</p>
     </div>
   )
 }

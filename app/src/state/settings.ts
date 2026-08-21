@@ -5,6 +5,7 @@ import { PALDAWN_SETTINGS_KEY } from '../platform/localData'
 export type QualityTier = 'auto' | 'high' | 'balanced' | 'low'
 export type ResolvedTier = Exclude<QualityTier, 'auto'>
 export type CaptionScale = 'standard' | 'large' | 'largest'
+export type PlaybackRate = 0.5 | 1 | 1.5
 
 const prefersReducedMotion = (): boolean =>
   typeof window !== 'undefined' &&
@@ -40,12 +41,14 @@ interface SettingsState {
   highContrast: boolean
   showTelemetry: boolean
   captionScale: CaptionScale
+  playbackRate: PlaybackRate
   setQualityTier: (t: QualityTier) => void
   setReducedMotion: (v: boolean) => void
   setComfortVignette: (v: boolean) => void
   setHighContrast: (v: boolean) => void
   setShowTelemetry: (v: boolean) => void
   setCaptionScale: (v: CaptionScale) => void
+  setPlaybackRate: (v: PlaybackRate) => void
 }
 
 type PersistedSettings = Pick<SettingsState,
@@ -55,10 +58,12 @@ type PersistedSettings = Pick<SettingsState,
   | 'highContrast'
   | 'showTelemetry'
   | 'captionScale'
+  | 'playbackRate'
 >
 
 const qualityTiers: readonly QualityTier[] = ['auto', 'high', 'balanced', 'low']
 const captionScales: readonly CaptionScale[] = ['standard', 'large', 'largest']
+const playbackRates: readonly PlaybackRate[] = [0.5, 1, 1.5]
 
 const mergePersistedSettings = (persisted: unknown, current: SettingsState): SettingsState => {
   const value = persisted && typeof persisted === 'object'
@@ -76,6 +81,9 @@ const mergePersistedSettings = (persisted: unknown, current: SettingsState): Set
     captionScale: captionScales.includes(value.captionScale as CaptionScale)
       ? value.captionScale as CaptionScale
       : current.captionScale,
+    playbackRate: playbackRates.includes(value.playbackRate as PlaybackRate)
+      ? value.playbackRate as PlaybackRate
+      : current.playbackRate,
   }
 }
 
@@ -98,12 +106,14 @@ export const useSettings = create<SettingsState>()(persist<SettingsState, [], []
   highContrast: false,
   showTelemetry: false,
   captionScale: 'standard',
+  playbackRate: 1,
   setQualityTier: (qualityTier) => set({ qualityTier }),
   setReducedMotion: (reducedMotion) => set({ reducedMotion }),
   setComfortVignette: (comfortVignette) => set({ comfortVignette }),
   setHighContrast: (highContrast) => set({ highContrast }),
   setShowTelemetry: (showTelemetry) => set({ showTelemetry }),
   setCaptionScale: (captionScale) => set({ captionScale }),
+  setPlaybackRate: (playbackRate) => set({ playbackRate }),
 }), {
   name: PALDAWN_SETTINGS_KEY,
   version: 1,
@@ -116,5 +126,6 @@ export const useSettings = create<SettingsState>()(persist<SettingsState, [], []
     highContrast: state.highContrast,
     showTelemetry: state.showTelemetry,
     captionScale: state.captionScale,
+    playbackRate: state.playbackRate,
   }),
 }))

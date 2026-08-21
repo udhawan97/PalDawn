@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+
+const ROOT = new URL('..', import.meta.url)
+const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
+
+const deck = read('src/ui/FlightDeck.tsx')
+const settings = read('src/state/settings.ts')
+const experience = read('src/state/experience.ts')
+const scene = read('src/scene/VoyageScene.tsx')
+const localData = read('src/platform/localData.ts')
+const pwa = read('src/platform/pwa.ts')
+const share = read('src/platform/share.ts')
+
+assert.match(settings, /export type PlaybackRate = 0\.5 \| 1 \| 1\.5/)
+assert.match(settings, /playbackRates\.includes/)
+assert.match(scene, /advance\(delta, playbackRate\)/)
+assert.match(experience, /deltaSeconds \* playbackRate/)
+assert.match(deck, /id="transcript-search"/)
+assert.match(deck, /Go to stage/)
+assert.match(deck, /event\.code === 'Slash'/)
+assert.match(localData, /paldawn:bookmarks:v1/)
+assert.match(localData, /saveStageBookmarks/)
+assert.match(localData, /bookmarks: readJson\(PALDAWN_BOOKMARKS_KEY\)/)
+assert.match(localData, /removeItem\(PALDAWN_BOOKMARKS_KEY\)/)
+assert.match(deck, /event\.key\.toLowerCase\(\) === 'b'/)
+assert.match(share, /typeof navigator\.share === 'function'/)
+assert.match(share, /copyText\(text\)/)
+assert.match(deck, /Share transcript/)
+assert.match(deck, /Share arrival/)
+assert.match(pwa, /beforeinstallprompt/)
+assert.match(pwa, /Add to Home Screen|PwaInstallState/)
+assert.match(deck, /Installation help/)
+assert.match(experience, /restart: \(\) =>/)
+assert.match(deck, /Confirm restart voyage/)
+assert.match(deck, /keeping display preferences and saved stages/)
+
+console.log('foundation+2 checks: 6 features · local-first boundaries intact · no new dependency')

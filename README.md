@@ -26,11 +26,15 @@ curated source.
 - A bounded drei portal preview with an opaque fog-swap fallback.
 - Guide ↔ Engineering narration, a complete transcript, scrubber, stage
   navigation, and SPD as the co-pilot.
+- Local resume and saved stages, transcript phrase search, direct stage links,
+  user-triggered sharing, and `0.5×`/`1×`/`1.5×` route pacing.
 - Keyboard operation, system-aware reduced motion, stage-by-stage reduced
   route, comfort vignette, high contrast, and an honest WebGL failure screen.
+- A first-party offline shell with update and installation guidance, plus text
+  voyage, local-data export/reset, and preference-preserving voyage restart.
 - Auto/high/balanced/low tiers, on-device telemetry, a 500 KB gzip JavaScript
   release gate, and static GitHub Pages deployment.
-- A fail-closed provenance system: 23 live records pass; all 10 audited
+- A fail-closed provenance system: 24 live records pass; all 10 audited
   Z-Anatomy targets remain planned/pending/blocked with null adoption output.
 
 The release proves the product’s flight and governance architecture. It does

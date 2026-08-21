@@ -53,7 +53,7 @@ test('settings selects provide 44px activation targets', async ({ page }) => {
   const heights = await page.locator('.quality-setting select').evaluateAll((selects) =>
     selects.map((select) => select.getBoundingClientRect().height),
   )
-  expect(heights).toHaveLength(2)
+  expect(heights).toHaveLength(3)
   expect(heights.every((height) => height >= 44)).toBe(true)
 })
 
@@ -64,6 +64,8 @@ test('reset in one tab cannot be undone by another open tab', async ({ page }) =
     page.getByRole('button', { name: 'Begin the voyage' }).click(),
     otherPage.getByRole('button', { name: 'Begin the voyage' }).click(),
   ])
+  await otherPage.evaluate(() => document.activeElement?.blur())
+  await otherPage.keyboard.press('b')
   await otherPage.getByRole('button', { name: 'Skip to next stage' }).click()
   await otherPage.getByRole('button', { name: 'Settings' }).click()
   await otherPage.getByLabel('Quality tier').selectOption('low')
@@ -77,13 +79,15 @@ test('reset in one tab cannot be undone by another open tab', async ({ page }) =
   await page.waitForTimeout(3500)
 
   for (const candidate of [page, otherPage]) {
-    const stored = await candidate.evaluate(({ journeyKey, settingsKey, resetKey }) => ({
+    const stored = await candidate.evaluate(({ journeyKey, settingsKey, bookmarksKey, resetKey }) => ({
       journey: localStorage.getItem(journeyKey),
       settings: localStorage.getItem(settingsKey),
+      bookmarks: localStorage.getItem(bookmarksKey),
       reset: localStorage.getItem(resetKey),
-    }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY, resetKey: RESET_KEY })
+    }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY, bookmarksKey: 'paldawn:bookmarks:v1', resetKey: RESET_KEY })
     expect(stored.journey).toBeNull()
     expect(stored.settings).toBeNull()
+    expect(stored.bookmarks).toBeNull()
     expect(stored.reset).not.toBeNull()
     await expect(candidate.getByRole('button', { name: 'Begin the voyage' })).toBeVisible()
     await expect(candidate.getByRole('button', { name: 'Resume at' })).toHaveCount(0)

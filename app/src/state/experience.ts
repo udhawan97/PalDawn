@@ -15,7 +15,8 @@ interface ExperienceState {
   pause: () => void
   togglePlayback: (reducedMotion: boolean) => void
   replay: (reducedMotion: boolean) => void
-  advance: (deltaSeconds: number) => void
+  restart: () => void
+  advance: (deltaSeconds: number, playbackRate?: number) => void
   setProgress: (progress: number) => void
   setNarrationMode: (mode: NarrationMode) => void
   moveStage: (direction: -1 | 1) => void
@@ -59,10 +60,14 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
     saveJourneySession({ progress, narrationMode: get().narrationMode })
     set({ entered: true, playing: !reducedMotion, progress, openPanel: null })
   },
-  advance: (deltaSeconds) => {
+  restart: () => {
+    saveJourneySession({ progress: 0, narrationMode: get().narrationMode })
+    set({ entered: false, playing: false, progress: 0, openPanel: null })
+  },
+  advance: (deltaSeconds, playbackRate = 1) => {
     const { playing, progress } = get()
     if (!playing) return
-    const next = clampProgress(progress + deltaSeconds / JOURNEY.duration_seconds)
+    const next = clampProgress(progress + (deltaSeconds * playbackRate) / JOURNEY.duration_seconds)
     set({ progress: next, playing: next < 1 })
   },
   setProgress: (progress) => {

@@ -173,6 +173,15 @@ background pause, local-data export/reset, fullscreen support, and a completion
 summary. See `docs/FOUNDATION-PLUS.md` for the exact boundary and verification
 contract. This work does not reopen P1 anatomy or medical-content gates.
 
+### Foundation+2 continuity wave
+
+The next mainline pass adds six bounded local-first features: persisted playback
+pacing, transcript search and stage jumps, local stage bookmarks, user-triggered
+native sharing with copy fallback, capability-driven installation guidance, and a
+preference-preserving voyage restart. See `docs/FOUNDATION-PLUS-2.md` for the
+exact boundary and verification contract. No dependency or medical-content gate
+is reopened.
+
 ---
 
 ## 9. Medical guardrails

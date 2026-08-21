@@ -5,6 +5,7 @@ import { createServer } from 'vite'
 const APP_ROOT = fileURLToPath(new URL('..', import.meta.url))
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const JOURNEY_KEY = 'paldawn:journey:v1'
+const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 const RESET_KEY = 'paldawn:reset:v1'
 
 class MemoryStorage {
@@ -61,9 +62,13 @@ await withModules(new MemoryStorage(), async (load) => {
 
   localData.saveJourneySession({ progress: 0.42, narrationMode: 'engineering' })
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.42)
+  localData.saveStageBookmarks(['portal', 'portal', 'not-a-stage'])
+  assert.deepEqual(localData.loadStageBookmarks(), ['portal'], 'unknown stage IDs must fail closed')
   otherTabLocalData.resetLocalData()
   localData.saveJourneySession({ progress: 0.75, narrationMode: 'guide' })
+  localData.saveStageBookmarks(['arrival'])
   assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'reset must suppress a stale tab flush')
+  assert.equal(localStorage.getItem(BOOKMARKS_KEY), null, 'reset must suppress stale bookmark writes')
   assert.ok(localStorage.getItem(RESET_KEY), 'reset must publish a cross-tab token')
   localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.75, narrationMode: 'guide', resetToken: null }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
@@ -80,6 +85,16 @@ await withModules(new MemoryStorage(), async (load) => {
 
   useExperience.getState().resume()
   assert.equal(useExperience.getState().playing, false, 'resume must never autoplay')
+  useExperience.getState().start(false)
+  const rateStart = useExperience.getState().progress
+  useExperience.getState().advance(2, 0.5)
+  assert.ok(
+    Math.abs(useExperience.getState().progress - (rateStart + 1 / 42)) < 1e-10,
+    '0.5x playback must advance one journey second for two wall-clock seconds',
+  )
+  useExperience.getState().restart()
+  assert.equal(useExperience.getState().entered, false, 'restart must return to the introduction')
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0, 'restart must clear only progress')
   useExperience.getState().replay(true)
   for (let step = 0; step < 5; step += 1) useExperience.getState().togglePlayback(true)
   assert.equal(useExperience.getState().progress, 1, 'reduced-motion controls must reach completion')
@@ -91,12 +106,13 @@ await withModules(new MemoryStorage(), async (load) => {
 
 await withModules(new MemoryStorage(), async (load) => {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-    state: { qualityTier: 'broken', captionScale: 'tiny', highContrast: 'yes' },
+    state: { qualityTier: 'broken', captionScale: 'tiny', playbackRate: 4, highContrast: 'yes' },
     version: 1,
   }))
   const { useSettings } = await load('/src/state/settings.ts')
   assert.equal(useSettings.getState().qualityTier, 'auto')
   assert.equal(useSettings.getState().captionScale, 'standard')
+  assert.equal(useSettings.getState().playbackRate, 1)
   assert.equal(useSettings.getState().highContrast, false)
 })
 

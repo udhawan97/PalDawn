@@ -1,5 +1,8 @@
+import { JOURNEY } from '../journey/journey'
+
 export const PALDAWN_SETTINGS_KEY = 'paldawn:settings:v1'
 export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
+export const PALDAWN_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
 
 export interface JourneySession {
@@ -11,8 +14,14 @@ interface PersistedJourneySession extends JourneySession {
   resetToken?: string | null
 }
 
+interface PersistedStageBookmarks {
+  stageIds?: unknown
+  resetToken?: string | null
+}
+
 let resetInProgress = false
 let resetTokenAtLoad: string | null = null
+const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
 
 const storage = (): Storage | null => {
   try {
@@ -75,12 +84,45 @@ export function saveJourneySession(session: JourneySession): void {
   }
 }
 
+export function loadStageBookmarks(): string[] {
+  const value = readJson(PALDAWN_BOOKMARKS_KEY)
+  if (!value || typeof value !== 'object') return []
+
+  const candidate = value as PersistedStageBookmarks
+  const currentResetToken = readString(PALDAWN_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
+    try {
+      storage()?.removeItem(PALDAWN_BOOKMARKS_KEY)
+    } catch {
+      // The stale record is still ignored when storage cannot be changed.
+    }
+    return []
+  }
+  if (!Array.isArray(candidate.stageIds)) return []
+  return [...new Set(candidate.stageIds.filter(
+    (id): id is string => typeof id === 'string' && STAGE_IDS.has(id),
+  ))]
+}
+
+export function saveStageBookmarks(stageIds: string[]): void {
+  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
+  try {
+    storage()?.setItem(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
+      stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
+      resetToken: resetTokenAtLoad,
+    }))
+  } catch {
+    // Bookmarks remain usable in memory when persistence is blocked.
+  }
+}
+
 export function exportLocalData(): string {
   return JSON.stringify({
     schema_version: 1,
     local_only: true,
     settings: readJson(PALDAWN_SETTINGS_KEY),
     journey: readJson(PALDAWN_JOURNEY_KEY),
+    bookmarks: readJson(PALDAWN_BOOKMARKS_KEY),
   }, null, 2)
 }
 
@@ -93,6 +135,7 @@ export function resetLocalData(): void {
     resetTokenAtLoad = resetToken
     localStorage?.removeItem(PALDAWN_SETTINGS_KEY)
     localStorage?.removeItem(PALDAWN_JOURNEY_KEY)
+    localStorage?.removeItem(PALDAWN_BOOKMARKS_KEY)
   } catch {
     // A blocked storage API already behaves like a reset state.
   }

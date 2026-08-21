@@ -33,7 +33,8 @@ const DEEP_INK = new Color('#04070c')
 const CORRIDOR_INK = new Color('#12050b')
 
 function JourneyClock() {
-  useFrame((_, delta) => useExperience.getState().advance(delta))
+  const playbackRate = useSettings((state) => state.playbackRate)
+  useFrame((_, delta) => useExperience.getState().advance(delta, playbackRate))
   return null
 }
 

@@ -1,12 +1,34 @@
 let registration: ServiceWorkerRegistration | null = null
 let refreshing = false
 let updateActivationRequested = false
+let installPrompt: BeforeInstallPromptEvent | null = null
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
+
+export type PwaInstallState = 'available' | 'installed' | 'instructions'
+
+const isStandalone = (): boolean =>
+  window.matchMedia?.('(display-mode: standalone)').matches === true ||
+  (navigator as Navigator & { standalone?: boolean }).standalone === true
 
 const dispatch = (name: 'update-ready' | 'offline-ready'): void => {
   window.dispatchEvent(new CustomEvent(`paldawn:${name}`))
 }
 
 export function registerPwa(): void {
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault()
+    installPrompt = event as BeforeInstallPromptEvent
+    window.dispatchEvent(new CustomEvent('paldawn:install-ready'))
+  })
+  window.addEventListener('appinstalled', () => {
+    installPrompt = null
+    window.dispatchEvent(new CustomEvent('paldawn:app-installed'))
+  })
+
   if (!('serviceWorker' in navigator) || !import.meta.env.PROD) return
 
   window.addEventListener('load', () => {
@@ -34,6 +56,27 @@ export function registerPwa(): void {
     refreshing = true
     window.location.reload()
   })
+}
+
+export function getPwaInstallState(): PwaInstallState {
+  if (isStandalone()) return 'installed'
+  return installPrompt ? 'available' : 'instructions'
+}
+
+export async function requestPwaInstall(): Promise<'accepted' | 'dismissed' | 'instructions' | 'installed'> {
+  if (isStandalone()) return 'installed'
+  if (!installPrompt) return 'instructions'
+
+  const prompt = installPrompt
+  try {
+    await prompt.prompt()
+    const { outcome } = await prompt.userChoice
+    installPrompt = null
+    return outcome
+  } catch {
+    installPrompt = null
+    return 'instructions'
+  }
 }
 
 export function activatePwaUpdate(): void {
