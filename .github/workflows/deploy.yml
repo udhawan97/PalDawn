@@ -2,7 +2,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ['app/**', 'content/**', 'data/**']
+    paths:
+      - app/**
+      - content/**
+      - data/**
+      - pipeline/provenance/**
+      - .github/workflows/deploy.yml
 permissions:
   contents: read
   pages: write
