@@ -1,16 +1,16 @@
 # Graph Report - PalDawn  (2026-08-21)
 
 ## Corpus Check
-- 104 files · ~68,233 words
+- 109 files · ~71,593 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 483 nodes · 741 edges · 40 communities (38 shown, 2 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 41 edges (avg confidence: 0.86)
+- 524 nodes · 817 edges · 45 communities (43 shown, 2 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 43 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `961ea6a4`
+- Built from commit: `839aaa50`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - MemoryStorage
 - validate.mjs
 - package.json
-- dependencies
+- localData.ts
 - license-inventory.mjs
 - compilerOptions
 - VoyageScene.tsx
@@ -50,18 +50,22 @@
 - test-foundation-plus-2.mjs
 - PalDawn Foundation+2
 - Foundation+2 acceptance evidence
+- devDependencies
+- test-foundation-plus-3.mjs
+- Foundation+3 acceptance evidence
+- PalDawn Foundation+3
 
 ## God Nodes (most connected - your core abstractions)
 1. `useSettings` - 19 edges
-2. `PalDawn Project Plan` - 18 edges
-3. `useExperience` - 17 edges
-4. `validateRecord()` - 16 edges
-5. `FlightDeck()` - 15 edges
-6. `compilerOptions` - 15 edges
-7. `SettingsPanel()` - 14 edges
-8. `resolveTier()` - 11 edges
-9. `PalDawn backlog #3: heart/coronary per-object asset audit dossier` - 11 edges
-10. `GitHub Reconnaissance Evidence Dossier` - 11 edges
+2. `useExperience` - 18 edges
+3. `FlightDeck()` - 18 edges
+4. `PalDawn Project Plan` - 18 edges
+5. `SettingsPanel()` - 16 edges
+6. `validateRecord()` - 16 edges
+7. `compilerOptions` - 15 edges
+8. `storage()` - 11 edges
+9. `resolveTier()` - 11 edges
+10. `PalDawn backlog #3: heart/coronary per-object asset audit dossier` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Unpublished Medical Content` --semantically_similar_to--> `Medical Guardrails`  [INFERRED] [semantically similar]
@@ -83,23 +87,23 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (40 total, 2 thin omitted)
+## Communities (45 total, 2 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
 Nodes (20): Medical Accuracy Report, Journey Proposal, Quality and Reduced-Motion Settings, Canonical Coronary Route, Medical Content Source Boundary, Medical Guardrails, Minimal Linear Journey Schema, P0 Graphics Directives (+12 more)
 
 ### Community 1 - "FlightDeck.tsx"
-Cohesion: 0.08
-Nodes (50): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+42 more)
+Cohesion: 0.10
+Nodes (39): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+31 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
 Nodes (21): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution, noEmit, noFallthroughCasesInSwitch (+13 more)
 
 ### Community 3 - "MemoryStorage"
-Cohesion: 0.20
-Nodes (4): APP_ROOT, installBrowserStubs(), MemoryStorage, withModules()
+Cohesion: 0.17
+Nodes (5): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules()
 
 ### Community 4 - "validate.mjs"
 Cohesion: 0.16
@@ -107,11 +111,11 @@ Nodes (16): EXPECTED_INVALID, APPROVAL, CODE_ALLOW, CODE_TYPES, CODE_ZONES, CONT
 
 ### Community 5 - "package.json"
 Cohesion: 0.06
-Nodes (32): author, description, devDependencies, @playwright/test, @types/node, @types/react, @types/react-dom, typescript (+24 more)
+Nodes (32): author, dependencies, react, react-dom, @react-three/drei, @react-three/fiber, @react-three/postprocessing, three (+24 more)
 
-### Community 6 - "dependencies"
-Cohesion: 0.13
-Nodes (15): dependencies, react, react-dom, @react-three/drei, @react-three/fiber, @react-three/postprocessing, three, zustand (+7 more)
+### Community 6 - "localData.ts"
+Cohesion: 0.14
+Nodes (32): CAPTION_SCALES, emptyWorkspace(), exportLocalData(), ImportedSettings, JourneySession, LearnerWorkspace, loadJourneySession(), loadLearnerWorkspace() (+24 more)
 
 ### Community 7 - "license-inventory.mjs"
 Cohesion: 0.20
@@ -123,7 +127,7 @@ Nodes (13): compilerOptions, lib, module, moduleResolution, noEmit, skipLibCheck
 
 ### Community 9 - "VoyageScene.tsx"
 Cohesion: 0.07
-Nodes (36): App(), SceneBoundary, SceneBoundaryState, AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, ROUTE_LOOKUP (+28 more)
+Nodes (35): App(), SceneBoundary, SceneBoundaryState, AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, ROUTE_LOOKUP (+27 more)
 
 ### Community 10 - "gen-npm-records.mjs"
 Cohesion: 0.22
@@ -142,8 +146,8 @@ Cohesion: 0.19
 Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Direct Dependency License Bundle (+5 more)
 
 ### Community 17 - "settings.ts"
-Cohesion: 0.15
-Nodes (15): DiagnosticInput, diagnosticReport(), CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier (+7 more)
+Cohesion: 0.16
+Nodes (14): DiagnosticInput, diagnosticReport(), CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier (+6 more)
 
 ### Community 18 - "test-release.mjs"
 Cohesion: 0.17
@@ -217,25 +221,41 @@ Nodes (4): Boundary, PalDawn Foundation+2, Six high-confidence features, Verific
 Cohesion: 0.33
 Nodes (5): Automated gates, Browser observation, Council corrections, Foundation+2 acceptance evidence, Known limits
 
+### Community 40 - "devDependencies"
+Cohesion: 0.13
+Nodes (15): devDependencies, @playwright/test, @types/node, @types/react, @types/react-dom, typescript, vite, @vitejs/plugin-react (+7 more)
+
+### Community 41 - "test-foundation-plus-3.mjs"
+Cohesion: 0.29
+Nodes (5): deck, experience, localData, ROOT, study
+
+### Community 42 - "Foundation+3 acceptance evidence"
+Cohesion: 0.33
+Nodes (5): Automated gates, Browser observation, Foundation+3 acceptance evidence, Known limits, Storage and import boundary
+
+### Community 43 - "PalDawn Foundation+3"
+Cohesion: 0.40
+Nodes (4): Boundary, PalDawn Foundation+3, Six high-confidence features, Verification contract
+
 ## Knowledge Gaps
-- **172 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+167 more)
+- **191 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+186 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `replaceLocalDataFromImport()` connect `localData.ts` to `FlightDeck.tsx`, `MemoryStorage`?**
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Why does `PalDawn Project Plan` connect `PalDawn Project Plan` to `PalDawn Engineering Scaffold`, `PalDawn Overview`, `Credits and Prior Art`, `Codex Reconnaissance Prompt`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **Why does `PalDawn Engineering Scaffold` connect `PalDawn Engineering Scaffold` to `PalDawn Project Plan`, `PalDawn Overview`, `Contributing to PalDawn`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `useSettings` connect `VoyageScene.tsx` to `settings.ts`, `FlightDeck.tsx`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _172 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _191 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `FlightDeck.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.08360655737704918 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0963265306122449 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._
+- **Should `localData.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.13636363636363635 - nodes in this community are weakly interconnected._
