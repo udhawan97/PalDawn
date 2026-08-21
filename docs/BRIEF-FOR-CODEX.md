@@ -1,5 +1,10 @@
 # PalDawn — full project brief for Codex
 
+> **Historical handoff — superseded by v0.1.0.** This file preserves the
+> pre-build foundation snapshot and its original counts. For current product,
+> provenance, and performance status, use the root `README.md`, `docs/PLAN.md`,
+> `docs/releases/v0.1.0.md`, and `docs/performance/v0.1.0.md`.
+
 **How to use:** paste everything below the line into Codex. It transfers the founder's vision, all research and decisions to date, the current repository state, and the working model. Codex's reply should follow §10 and end with a **"PROMPT BACK TO CLAUDE"** block you bring back here.
 
 ---

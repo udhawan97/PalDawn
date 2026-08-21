@@ -77,7 +77,7 @@ Do not introduce libraries outside the locked stack or the adoption-candidate li
 | First interactive scene | < 5 s (declared fast-4G profile) | < 8 s |
 | KTX2 textures | ≤ 2K hero / ≤ 1K standard | ≤ 1K |
 
-**A valid performance report must name:** hardware, OS, browser + version, viewport, DPR, build SHA, quality tier, network profile, warm-up procedure, run count, raw results, and measurement method. Browser CPU/GPU memory is reported **as an estimate** whenever direct measurement is unavailable. Particle counts, pathology RGBA packing, and GLB pack-size figures remain **provisional until measured**. No performance results exist yet — none are claimed. *(Foundation-pass build facts, which are measurements of the build not the runtime: typecheck pass; production build pass; core JS 316.62 KB gzipped.)*
+**A valid performance report must name:** hardware, OS, browser + version, viewport, DPR, build SHA, quality tier, network profile, warm-up procedure, run count, raw results, and measurement method. Browser CPU/GPU memory is reported **as an estimate** whenever direct measurement is unavailable. Particle counts, pathology RGBA packing, and GLB pack-size figures remain **provisional until measured**. The v0.1.0 desktop WebKit measurements and their explicit unproven gates are recorded in `docs/performance/v0.1.0.md`; they do not validate physical-mobile, fast-4G, Safari, anatomy, or clinical-content performance.
 
 **Comfort/accessibility gates (preserved):** reduced motion, FOV/vignette comfort controls, captions/transcripts, keyboard operation, color-independent pathology cues, respectful no-gore presentation.
 

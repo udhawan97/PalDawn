@@ -9,6 +9,7 @@ coverage/
 *.log
 app/_to_delete/
 output/
+.playwright-cli/
 graphify-out/.*
 graphify-out/2026-08-20/
 graphify-out/cache/
