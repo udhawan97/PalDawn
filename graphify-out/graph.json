@@ -838,8 +838,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_app",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "app.tsx"
     },
     {
@@ -849,8 +849,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_app_sceneboundarystate",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "sceneboundarystate"
     },
     {
@@ -861,7 +861,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary",
       "community": 3,
-      "community_name": "App.tsx",
+      "community_name": "SceneBoundary",
       "norm_label": "sceneboundary"
     },
     {
@@ -872,7 +872,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_getderivedstatefromerror",
       "community": 3,
-      "community_name": "App.tsx",
+      "community_name": "SceneBoundary",
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -883,7 +883,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_componentdidcatch",
       "community": 3,
-      "community_name": "App.tsx",
+      "community_name": "SceneBoundary",
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -894,7 +894,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_render",
       "community": 3,
-      "community_name": "App.tsx",
+      "community_name": "SceneBoundary",
       "norm_label": ".render()"
     },
     {
@@ -904,8 +904,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_src_app_renderfallback",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "renderfallback()"
     },
     {
@@ -915,8 +915,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_src_app_app",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "app()"
     },
     {
@@ -926,7 +926,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_journey",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "journey.ts"
     },
@@ -937,7 +937,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_journey_journey_narrationmode",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "narrationmode"
     },
@@ -948,7 +948,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeystage",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "journeystage"
     },
@@ -959,7 +959,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeydefinition",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "journeydefinition"
     },
@@ -970,7 +970,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_journey_journey_journey",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "journey"
     },
@@ -981,7 +981,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_src_journey_journey_clampprogress",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "clampprogress()"
     },
@@ -992,7 +992,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageindexat",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "stageindexat()"
     },
@@ -1003,7 +1003,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageat",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "stageat()"
     },
@@ -1014,7 +1014,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatjourneytime",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "formatjourneytime()"
     },
@@ -1026,7 +1026,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "route.ts"
     },
     {
@@ -1037,7 +1037,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_author_points",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "author_points"
     },
     {
@@ -1048,7 +1048,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_authoredcurve",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "authoredcurve"
     },
     {
@@ -1059,7 +1059,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_route_lookup",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "route_lookup"
     },
     {
@@ -1070,7 +1070,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "normalizedlookupcurve"
     },
     {
@@ -1081,7 +1081,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_constructor",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".constructor()"
     },
     {
@@ -1092,7 +1092,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_getpoint",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".getpoint()"
     },
     {
@@ -1103,7 +1103,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_voyageroute",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "voyageroute"
     },
     {
@@ -1114,7 +1114,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_frames",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "frames"
     },
     {
@@ -1125,7 +1125,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_routeframe",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "routeframe"
     },
     {
@@ -1136,7 +1136,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_routeframeat",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "routeframeat()"
     },
     {
@@ -1147,7 +1147,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "routeslice"
     },
     {
@@ -1158,7 +1158,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_constructor",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".constructor()"
     },
     {
@@ -1169,7 +1169,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_getpoint",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".getpoint()"
     },
     {
@@ -1180,7 +1180,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_smoothrange",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "smoothrange()"
     },
     {
@@ -1190,8 +1190,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_main",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "main.tsx"
     },
     {
@@ -1201,8 +1201,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_main_rootel",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "rootel"
     },
     {
@@ -1213,7 +1213,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield.tsx"
     },
     {
@@ -1224,7 +1224,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "instance_counts"
     },
     {
@@ -1235,7 +1235,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "seededrandom()"
     },
     {
@@ -1246,7 +1246,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield()"
     },
     {
@@ -1257,7 +1257,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "voyagescene.tsx"
     },
     {
@@ -1268,7 +1268,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_deep_ink",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "deep_ink"
     },
     {
@@ -1279,7 +1279,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridor_ink",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "corridor_ink"
     },
     {
@@ -1290,7 +1290,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_journeyclock",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "journeyclock()"
     },
     {
@@ -1301,7 +1301,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_cameradirector",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "cameradirector()"
     },
     {
@@ -1312,7 +1312,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_fogdirector",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "fogdirector()"
     },
     {
@@ -1323,7 +1323,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_runtimeprobe",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "runtimeprobe()"
     },
     {
@@ -1334,7 +1334,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_syntheticcore",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "syntheticcore()"
     },
     {
@@ -1345,7 +1345,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_dawnroute",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "dawnroute()"
     },
     {
@@ -1356,7 +1356,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridorrings",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "corridorrings()"
     },
     {
@@ -1367,7 +1367,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_arrivalbeacon",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "arrivalbeacon()"
     },
     {
@@ -1378,7 +1378,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridor",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "corridor()"
     },
     {
@@ -1389,7 +1389,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalpreview",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "portalpreview()"
     },
     {
@@ -1400,7 +1400,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalgate",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "portalgate()"
     },
     {
@@ -1411,7 +1411,7 @@
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_signaldust",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "signaldust()"
     },
     {
@@ -1421,8 +1421,8 @@
       "source_location": "L375",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "voyagescene()"
     },
     {
@@ -1432,7 +1432,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_state_experience",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "experience.ts"
     },
@@ -1443,7 +1443,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_state_experience_openpanel",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "openpanel"
     },
@@ -1454,7 +1454,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_state_experience_experiencestate",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "experiencestate"
     },
@@ -1465,7 +1465,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_state_experience_stageentryprogress",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "stageentryprogress()"
     },
@@ -1476,7 +1476,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_state_experience_useexperience",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "useexperience"
     },
@@ -1487,8 +1487,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_state_settings",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "settings.ts"
     },
     {
@@ -1498,8 +1498,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_state_settings_qualitytier",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "qualitytier"
     },
     {
@@ -1509,8 +1509,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvedtier",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "resolvedtier"
     },
     {
@@ -1520,8 +1520,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_state_settings_prefersreducedmotion",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "prefersreducedmotion()"
     },
     {
@@ -1531,8 +1531,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "resolvetier()"
     },
     {
@@ -1542,8 +1542,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_src_state_settings_tier_dpr",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "tier_dpr"
     },
     {
@@ -1553,8 +1553,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_src_state_settings_settingsstate",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "settingsstate"
     },
     {
@@ -1565,7 +1565,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_usesettings",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "usesettings"
     },
     {
@@ -1576,7 +1576,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "telemetry.ts"
     },
     {
@@ -1587,7 +1587,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry_runtimetelemetry",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "runtimetelemetry"
     },
     {
@@ -1598,7 +1598,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry_telemetrystate",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "telemetrystate"
     },
     {
@@ -1609,7 +1609,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry_usetelemetry",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "usetelemetry"
     },
     {
@@ -1619,7 +1619,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "flightdeck.tsx"
     },
@@ -1630,7 +1630,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_tiers",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "tiers"
     },
@@ -1641,7 +1641,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_istypingtarget",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "istypingtarget()"
     },
@@ -1652,7 +1652,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_spdmark",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "spdmark()"
     },
@@ -1663,7 +1663,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panelbutton",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "panelbutton()"
     },
@@ -1674,7 +1674,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "intro()"
     },
@@ -1685,7 +1685,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_phaserail",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "phaserail()"
     },
@@ -1696,7 +1696,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_companioncaption",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "companioncaption()"
     },
@@ -1707,7 +1707,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_controldeck",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "controldeck()"
     },
@@ -1718,7 +1718,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_missionpanel",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "missionpanel()"
     },
@@ -1729,7 +1729,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_transcriptpanel",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "transcriptpanel()"
     },
@@ -1740,7 +1740,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingtoggle",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "settingtoggle()"
     },
@@ -1752,7 +1752,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "settingspanel()"
     },
     {
@@ -1762,7 +1762,7 @@
       "source_location": "L283",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_drawer",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "drawer()"
     },
@@ -1774,7 +1774,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
       "community": 9,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "VoyageScene.tsx",
       "norm_label": "telemetry()"
     },
     {
@@ -1784,7 +1784,7 @@
       "source_location": "L322",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_flightdeck",
-      "community": 9,
+      "community": 1,
       "community_name": "FlightDeck.tsx",
       "norm_label": "flightdeck()"
     },
@@ -1806,8 +1806,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_webgl",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "webgl.ts"
     },
     {
@@ -1817,8 +1817,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "app_src_webgl_webgl2available",
-      "community": 3,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "webgl2available()"
     },
     {
@@ -3230,114 +3230,59 @@
       "norm_label": "source nodes"
     },
     {
-      "label": "query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "file_type": "document",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor",
-      "community": 16,
-      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "norm_label": "query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md"
-    },
-    {
-      "label": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "file_type": "document",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
-      "community": 16,
-      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "norm_label": "q: how do paldawn per-object anatomy provenance records enforce fail-closed adoption for this audit?"
-    },
-    {
-      "label": "Answer",
-      "file_type": "document",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_answer",
-      "community": 16,
-      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "norm_label": "answer"
-    },
-    {
-      "label": "Outcome",
-      "file_type": "document",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_outcome",
-      "community": 16,
-      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "norm_label": "outcome"
-    },
-    {
-      "label": "Source Nodes",
-      "file_type": "document",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_source_nodes",
-      "community": 16,
-      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
-      "norm_label": "source nodes"
-    },
-    {
       "label": "Locked WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked webgl2 stack",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "app_readme_locked_webgl2_stack"
     },
     {
       "label": "Antaryaan to PalDawn Rename",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "antaryaan to paldawn rename",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_antaryaan_to_paldawn_rename"
     },
     {
       "label": "Founder Vision",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "founder vision",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_founder_vision"
     },
     {
       "label": "Per-Object Asset Audit Mission",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "per-object asset audit mission",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "docs_brief_for_codex_per_object_asset_audit_mission"
     },
     {
@@ -3358,14 +3303,14 @@
       "label": "Locked Three.js and WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked three.js and webgl2 stack",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_plan_locked_webgl2_stack"
     },
     {
@@ -3498,42 +3443,42 @@
       "label": "Planned BodyParts3D to Z-Anatomy Chain",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "planned bodyparts3d to z-anatomy chain",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "notice_planned_bodyparts3d_z_anatomy_chain"
     },
     {
       "label": "Unpublished Medical Content",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "unpublished medical content",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "notice_unpublished_medical_content"
     },
     {
       "label": "Evidence-Linked Causal Voyage",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "evidence-linked causal voyage",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "readme_evidence_linked_causal_voyage"
     },
     {
@@ -3554,14 +3499,14 @@
       "label": "SPD Companion",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "spd companion",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "readme_spd_companion"
     },
     {
@@ -3596,28 +3541,28 @@
       "label": "Credits and Prior Art",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "document",
       "norm_label": "credits and prior art",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "credits_credits_and_prior_art"
     },
     {
       "label": "PalDawn Full Project Brief",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn full project brief",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_full_project_brief"
     },
     {
@@ -3638,28 +3583,28 @@
       "label": "Attribution and Licensing Chain",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "document",
       "norm_label": "attribution and licensing chain",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "notice_attribution_and_licensing_chain"
     },
     {
       "label": "PalDawn Overview",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn overview",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "readme_paldawn_overview"
     },
     {
@@ -3680,42 +3625,42 @@
       "label": "Named Medical Review Gate",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "named medical review gate",
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "contributing_named_medical_review_gate"
     },
     {
       "label": "Clean-Room Influences",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room influences",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "credits_clean_room_influences"
     },
     {
       "label": "Engine Council Evidence",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "engine council evidence",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_engine_council_evidence"
     },
     {
@@ -3750,28 +3695,28 @@
       "label": "Clean-Room Rejection Rule",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room rejection rule",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "docs_research_github_recon_evidence_clean_room_rejection_rule"
     },
     {
       "label": "Evidence-Linked Causal Voyage Positioning",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "evidence-linked causal voyage positioning",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning"
     },
     {
@@ -3792,140 +3737,140 @@
       "label": "Per-Object Anatomy Asset Provenance",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "per-object anatomy asset provenance",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "docs_research_github_recon_evidence_per_object_anatomy_asset_provenance"
     },
     {
       "label": "Per-Object Anatomy Approval",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 23,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "per-object anatomy approval",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Attribution and Licensing Chain",
       "id": "notice_per_object_anatomy_approval"
     },
     {
       "label": "CI Workflow",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "code",
       "norm_label": "ci workflow",
       "source_file": ".github/workflows/ci.yml",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "_github_workflows_ci_ci_workflow"
     },
     {
       "label": "GitHub Pages Deploy Workflow",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "code",
       "norm_label": "github pages deploy workflow",
       "source_file": ".github/workflows/deploy.yml",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "_github_workflows_deploy_github_pages_deploy_workflow"
     },
     {
       "label": "PalDawn HTML Shell",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "code",
       "norm_label": "paldawn html shell",
       "source_file": "app/index.html",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_index_paldawn_html_shell"
     },
     {
       "label": "Pull Request Quality Gate",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "pull request quality gate",
       "source_file": ".github/workflows/ci.yml",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "_github_workflows_ci_pull_request_quality_gate"
     },
     {
       "label": "Static Pages Deployment",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "static pages deployment",
       "source_file": ".github/workflows/deploy.yml",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "_github_workflows_deploy_static_pages_deployment"
     },
     {
       "label": "WebGL2 Browser Requirement",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "webgl2 browser requirement",
       "source_file": "app/index.html",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_index_webgl2_browser_requirement"
     },
     {
       "label": "GitHub Pages Base Path",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "github pages base path",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_github_pages_base_path"
     },
     {
       "label": "Non-Anatomical Calibration Object",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "non-anatomical calibration object",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_non_anatomical_calibration_object"
     },
     {
@@ -3946,42 +3891,42 @@
       "label": "Direct Dependency License Bundle",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "direct dependency license bundle",
       "source_file": "app/THIRD_PARTY_LICENSES.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_third_party_licenses_direct_dependency_license_bundle"
     },
     {
       "label": "Code and Content Licensing Split",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "code and content licensing split",
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "contributing_code_content_licensing_split"
     },
     {
       "label": "Used Direct Dependencies",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "used direct dependencies",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "credits_used_direct_dependencies"
     },
     {
@@ -4002,196 +3947,196 @@
       "label": "Passing Provenance Record",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "passing provenance record",
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "pipeline_provenance_readme_passing_provenance_record"
     },
     {
       "label": "Transitive Dependency Coverage",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "transitive dependency coverage",
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "pipeline_provenance_readme_transitive_dependency_coverage"
     },
     {
       "label": "Foundation Status",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "foundation status",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "readme_foundation_status"
     },
     {
       "label": "Bug Report",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "document",
       "norm_label": "bug report",
       "source_file": ".github/ISSUE_TEMPLATE/bug_report.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "_github_issue_template_bug_report_bug_report"
     },
     {
       "label": "PalDawn Engineering Scaffold",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn engineering scaffold",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_engineering_scaffold"
     },
     {
       "label": "Third-Party License Compendium",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "document",
       "norm_label": "third-party license compendium",
       "source_file": "app/THIRD_PARTY_LICENSES.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_third_party_licenses_third_party_license_compendium"
     },
     {
       "label": "Contributing to PalDawn",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "document",
       "norm_label": "contributing to paldawn",
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "contributing_contributing_guide"
     },
     {
       "label": "Provenance System",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "document",
       "norm_label": "provenance system",
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "pipeline_provenance_readme_provenance_system"
     },
     {
       "label": "Provenance Precedes Contribution",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 22,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "provenance precedes contribution",
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Contributing to PalDawn",
       "id": "contributing_provenance_precedes_contribution"
     },
     {
       "label": "Candidate Adoption Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "candidate adoption boundary",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "credits_candidate_adoption_boundary"
     },
     {
       "label": "Provenance Precedes Adoption",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "provenance precedes adoption",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "docs_plan_provenance_precedes_adoption"
     },
     {
       "label": "License Adoption Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 21,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "license adoption boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Codex Reconnaissance Prompt",
       "id": "docs_research_github_recon_evidence_license_adoption_boundary"
     },
     {
       "label": "Fail-Closed Validator Rules",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "fail-closed validator rules",
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Credits and Prior Art",
       "id": "pipeline_provenance_readme_fail_closed_validator_rules"
     },
     {
       "label": "Codex-Claude Working Model",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "codex-claude working model",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_codex_claude_working_model"
     },
     {
@@ -8930,50 +8875,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor",
-      "target": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
-      "target": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_answer",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
-      "target": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_outcome",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
-      "target": "graphify_out_memory_query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor_source_nodes",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -10210,5 +10111,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "ba0786a1101d41637cce8d71c75e805e817c1707"
+  "built_at_commit": "786b09c540338bddbf35b207d7fed51eee0f7f08"
 }

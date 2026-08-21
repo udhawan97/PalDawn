@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787283243.6024497,
+    "mtime": 1787284182.0576558,
     "ast_hash": "74a06ae2a104e670f15a0361c9c0335f",
     "semantic_hash": ""
   },
@@ -382,11 +382,6 @@
   "pipeline/provenance/fixtures/invalid/z-anatomy-asset-missing-container-evidence.json": {
     "mtime": 1787277240.0708039,
     "ast_hash": "784cd7966a9da5e8f2bcf3dfe735096b",
-    "semantic_hash": ""
-  },
-  "graphify-out/memory/query_20260821_013119_how_do_paldawn_per_object_anatomy_provenance_recor.md": {
-    "mtime": 1787275879.4522853,
-    "ast_hash": "b0b6f83843f98a7dc8a9536139ab8e8a",
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
