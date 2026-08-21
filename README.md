@@ -20,8 +20,8 @@ curated source.
 ## What current main offers
 
 Current `main` extends the immutable v0.1.0 First Light snapshot with the
-post-release Foundation+ and Foundation+2 continuity waves described below.
-These additions are not part of the v0.1.0 tag.
+post-release Foundation+, Foundation+2, and Foundation+3 continuity waves
+described below. These additions are not part of the v0.1.0 tag.
 
 - A five-stage WebGL2 voyage: Approach → Surface trace → Portal → Flow
   corridor → Arrival.
@@ -32,6 +32,9 @@ These additions are not part of the v0.1.0 tag.
   navigation, and SPD as the co-pilot.
 - Local resume and saved stages, transcript phrase search, direct stage links,
   user-triggered sharing, and `0.5×`/`1×`/`1.5×` route pacing.
+- A local learner workspace with Guide ↔ Engineering comparison, bounded
+  private notes, personal checkpoints, Markdown export, and validated backup
+  replacement.
 - Keyboard operation, system-aware reduced motion, stage-by-stage reduced
   route, comfort vignette, high contrast, and an honest WebGL failure screen.
 - A first-party offline shell with update and installation guidance, plus text
@@ -77,7 +80,9 @@ node pipeline/provenance/run-checks.mjs
 | `.github/workflows/` | CI and GitHub Pages publication |
 
 The application is a static site: no account, analytics SDK, backend, paid
-service, or patient-data path is present.
+service, or patient-data collection or transmission path is present. Private
+notes remain in local browser storage and explicitly warn against entering
+patient or personal health information.
 
 ## Medical and licensing boundary
 

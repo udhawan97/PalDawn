@@ -6,6 +6,7 @@ const APP_ROOT = fileURLToPath(new URL('..', import.meta.url))
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const JOURNEY_KEY = 'paldawn:journey:v1'
 const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
+const WORKSPACE_KEY = 'paldawn:workspace:v1'
 const RESET_KEY = 'paldawn:reset:v1'
 
 class MemoryStorage {
@@ -17,6 +18,10 @@ class MemoryStorage {
   setItem(key, value) { this.#values.set(key, String(value)) }
   removeItem(key) { this.#values.delete(key) }
   clear() { this.#values.clear() }
+}
+
+class FailingStorage extends MemoryStorage {
+  setItem() { throw new Error('storage blocked') }
 }
 
 const installBrowserStubs = (localStorage) => {
@@ -64,15 +69,65 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.42)
   localData.saveStageBookmarks(['portal', 'portal', 'not-a-stage'])
   assert.deepEqual(localData.loadStageBookmarks(), ['portal'], 'unknown stage IDs must fail closed')
+  localData.saveLearnerWorkspace({
+    notes: { portal: 'Compare the handoff.', arrival: 'x'.repeat(1300), 'not-a-stage': 'reject' },
+    checkpoints: ['portal', 'portal', 'not-a-stage'],
+  })
+  assert.deepEqual(localData.loadLearnerWorkspace().checkpoints, ['portal'])
+  assert.deepEqual(Object.keys(localData.loadLearnerWorkspace().notes), ['portal', 'arrival'])
+  assert.equal(localData.loadLearnerWorkspace().notes.arrival.length, 1200)
   otherTabLocalData.resetLocalData()
   localData.saveJourneySession({ progress: 0.75, narrationMode: 'guide' })
   localData.saveStageBookmarks(['arrival'])
+  localData.saveLearnerWorkspace({ notes: { arrival: 'stale' }, checkpoints: ['arrival'] })
   assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'reset must suppress a stale tab flush')
   assert.equal(localStorage.getItem(BOOKMARKS_KEY), null, 'reset must suppress stale bookmark writes')
+  assert.equal(localStorage.getItem(WORKSPACE_KEY), null, 'reset must suppress stale workspace writes')
   assert.ok(localStorage.getItem(RESET_KEY), 'reset must publish a cross-tab token')
   localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.75, narrationMode: 'guide', resetToken: null }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
   assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'stale-generation records must be removed on load')
+})
+
+await withModules(new MemoryStorage(), async (load) => {
+  const localData = await load('/src/platform/localData.ts?import')
+  assert.equal(JSON.parse(localData.exportLocalData()).schema_version, 2)
+  assert.equal(localData.parseLocalDataImport('{broken').ok, false)
+  assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 99, local_only: true })).ok, false)
+  assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 2, local_only: true })).ok, false)
+
+  const parsed = localData.parseLocalDataImport(JSON.stringify({
+    schema_version: 1,
+    local_only: true,
+    settings: { state: { qualityTier: 'low', reducedMotion: true, playbackRate: 1.5 }, version: 1 },
+    journey: { progress: 4, narrationMode: 'engineering' },
+    bookmarks: { stageIds: ['portal', 'not-a-stage'] },
+    workspace: {
+      notes: { portal: 'Imported note', 'not-a-stage': 'reject' },
+      checkpoints: ['arrival', 'not-a-stage'],
+    },
+  }))
+  assert.equal(parsed.ok, true)
+  assert.equal(parsed.preview.progressPercent, 100)
+  assert.deepEqual(parsed.data.bookmarks, ['portal'])
+  assert.deepEqual(parsed.data.workspace, { notes: { portal: 'Imported note' }, checkpoints: ['arrival'] })
+  assert.equal(localData.replaceLocalDataFromImport(parsed.data), true)
+  const resetToken = localStorage.getItem(RESET_KEY)
+  assert.ok(resetToken)
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).resetToken, resetToken)
+  assert.equal(JSON.parse(localStorage.getItem(WORKSPACE_KEY)).resetToken, resetToken)
+  assert.equal(JSON.parse(localStorage.getItem(SETTINGS_KEY)).state.qualityTier, 'low')
+})
+
+await withModules(new FailingStorage(), async (load) => {
+  const localData = await load('/src/platform/localData.ts?blocked-import')
+  const parsed = localData.parseLocalDataImport(JSON.stringify({
+    schema_version: 2,
+    local_only: true,
+    workspace: { notes: { approach: 'Bounded' }, checkpoints: [] },
+  }))
+  assert.equal(parsed.ok, true)
+  assert.equal(localData.replaceLocalDataFromImport(parsed.data), false, 'blocked storage must fail without reloading')
 })
 
 await withModules(new MemoryStorage(), async (load) => {
@@ -116,4 +171,4 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(useSettings.getState().highContrast, false)
 })
 
-console.log('foundation runtime checks: corrupt state safe · cross-tab reset durable · completion restores')
+console.log('foundation runtime checks: corrupt state safe · cross-tab reset durable · workspace/import bounded · completion restores')

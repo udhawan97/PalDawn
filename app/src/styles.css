@@ -59,7 +59,8 @@ button {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
   outline: 2px solid var(--aqua);
   outline-offset: 4px;
 }
@@ -1008,6 +1009,216 @@ kbd {
   font-size: 0.78rem;
 }
 
+.workspace-stage-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin: 24px 0;
+}
+
+.workspace-stage-nav button {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  min-height: 56px;
+  padding: 8px 4px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: transparent;
+  font-size: 0.58rem;
+  line-height: 1.2;
+}
+
+.workspace-stage-nav button span {
+  color: var(--aqua);
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.52rem;
+}
+
+.workspace-stage-nav button[aria-current='step'] {
+  border-color: var(--dawn);
+  color: var(--bone);
+  background: rgba(240, 170, 84, 0.08);
+}
+
+.track-comparison {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.workspace-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.workspace-heading p {
+  margin: 0 !important;
+  color: var(--aqua) !important;
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.55rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace-heading h3 {
+  margin: 5px 0 0;
+  color: var(--bone);
+  font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+}
+
+.track-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.track-columns article {
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: rgba(12, 20, 31, 0.58);
+}
+
+.track-columns h4,
+.import-preview h4 {
+  margin: 0 0 8px;
+  color: var(--dawn);
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.track-columns p {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.workspace-note {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.workspace-note > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--bone);
+  font-size: 0.72rem;
+}
+
+.workspace-note small {
+  color: var(--dim);
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-weight: 400;
+}
+
+.workspace-note textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--bone);
+  background: var(--ink-1);
+  font: inherit;
+  line-height: 1.55;
+}
+
+.workspace-checkpoint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.workspace-checkpoint output {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.workspace-summary {
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.workspace-summary h3 {
+  margin: 0 0 10px;
+  color: var(--bone);
+  font-size: 0.82rem;
+}
+
+.workspace-summary ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workspace-summary li {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) auto auto;
+  gap: 9px;
+  align-items: center;
+  min-height: 48px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 0.58rem;
+}
+
+.workspace-summary li button {
+  justify-self: start;
+}
+
+.local-import {
+  margin-top: 16px;
+}
+
+.file-action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  color: var(--bone);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.file-action:focus-within {
+  outline: 2px solid var(--dawn);
+  outline-offset: 3px;
+}
+
+.file-action input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.import-preview {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid rgba(240, 170, 84, 0.45);
+  background: rgba(240, 170, 84, 0.06);
+}
+
+.import-preview p {
+  margin: 0;
+}
+
 .quality-setting,
 .setting-toggle {
   display: flex;
@@ -1447,6 +1658,23 @@ html[data-contrast='high'] {
 
   .drawer-scroll {
     padding: 75px 24px 48px;
+  }
+
+  .workspace-stage-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .track-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-summary li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .workspace-summary li span:last-child {
+    grid-column: 1 / -1;
+    padding-bottom: 8px;
   }
 
   .boundary-list div {

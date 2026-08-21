@@ -26,11 +26,19 @@ import { copyText, downloadText } from '../platform/downloads'
 import {
   PALDAWN_BOOKMARKS_KEY,
   PALDAWN_RESET_KEY,
+  PALDAWN_WORKSPACE_KEY,
+  MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
+  loadLearnerWorkspace,
   loadStageBookmarks,
+  parseLocalDataImport,
+  replaceLocalDataFromImport,
   resetLocalData,
+  saveLearnerWorkspace,
   saveJourneySession,
   saveStageBookmarks,
+  type LearnerWorkspace,
+  type LocalDataImportResult,
 } from '../platform/localData'
 import {
   activatePwaUpdate,
@@ -40,6 +48,7 @@ import {
   type PwaInstallState,
 } from '../platform/pwa'
 import { shareOrCopy, type ShareOutcome } from '../platform/share'
+import { studyWorkspaceMarkdown } from '../platform/study'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
 const CAPTION_SCALES: CaptionScale[] = ['standard', 'large', 'largest']
@@ -162,9 +171,11 @@ function PhaseRail() {
 function CompanionCaption({
   bookmarks,
   onToggleBookmark,
+  onOpenWorkspace,
 }: {
   bookmarks: string[]
   onToggleBookmark: (id: string) => void
+  onOpenWorkspace: (focusNote: boolean) => void
 }) {
   const entered = useExperience((state) => state.entered)
   const progress = useExperience((state) => state.progress)
@@ -202,6 +213,12 @@ function CompanionCaption({
         ))}
       </div>
       <div className="companion-actions">
+        <button className="quiet-action" type="button" onClick={() => onOpenWorkspace(false)}>
+          Compare tracks
+        </button>
+        <button className="quiet-action" type="button" onClick={() => onOpenWorkspace(true)}>
+          Private note
+        </button>
         <button
           className="quiet-action"
           type="button"
@@ -426,6 +443,130 @@ function TranscriptPanel({
   )
 }
 
+function WorkspacePanel({
+  workspace,
+  onUpdateWorkspace,
+}: {
+  workspace: LearnerWorkspace
+  onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
+}) {
+  const progress = useExperience((state) => state.progress)
+  const setProgress = useExperience((state) => state.setProgress)
+  const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const [selectedStageId, setSelectedStageId] = useState(stageAt(progress).id)
+  const [status, setStatus] = useState('')
+  const selectedStage = JOURNEY.stages.find((stage) => stage.id === selectedStageId) ?? JOURNEY.stages[0]
+  const note = workspace.notes[selectedStage.id] ?? ''
+  const checkpointed = workspace.checkpoints.includes(selectedStage.id)
+  const markdown = () => studyWorkspaceMarkdown(workspace)
+
+  useEffect(() => {
+    setSelectedStageId(stageAt(progress).id)
+  }, [progress])
+
+  const updateNote = (value: string) => {
+    onUpdateWorkspace((current) => {
+      const notes = { ...current.notes }
+      const bounded = value.replaceAll('\0', '').slice(0, MAX_STAGE_NOTE_LENGTH)
+      if (bounded.trim()) notes[selectedStage.id] = bounded
+      else delete notes[selectedStage.id]
+      return { ...current, notes }
+    })
+  }
+
+  const toggleCheckpoint = () => {
+    onUpdateWorkspace((current) => ({
+      ...current,
+      checkpoints: current.checkpoints.includes(selectedStage.id)
+        ? current.checkpoints.filter((id) => id !== selectedStage.id)
+        : [...current.checkpoints, selectedStage.id],
+    }))
+  }
+
+  return (
+    <>
+      <p className="panel-kicker">Private learner workspace</p>
+      <h2 id="panel-title">Compare, note, and continue.</h2>
+      <p className="panel-note">
+        Stored only in this browser. Do not enter patient or personal health information.
+        Personal checkpoints are not evidence, approval, or medical review.
+      </p>
+      <nav className="workspace-stage-nav" aria-label="Workspace stages">
+        {JOURNEY.stages.map((stage, index) => (
+          <button
+            key={stage.id}
+            type="button"
+            aria-current={stage.id === selectedStage.id ? 'step' : undefined}
+            onClick={() => setSelectedStageId(stage.id)}
+          >
+            <span>{String(index + 1).padStart(2, '0')}</span>{stage.label}
+          </button>
+        ))}
+      </nav>
+      <section className="track-comparison" aria-labelledby="track-comparison-title">
+        <div className="workspace-heading">
+          <div>
+            <p>{selectedStage.level}</p>
+            <h3 id="track-comparison-title">{selectedStage.label}</h3>
+          </div>
+          <button type="button" onClick={() => {
+            const next = progressForStageId(selectedStage.id)
+            if (next === null) return
+            replaceStageHash(selectedStage.id)
+            setProgress(next)
+            setOpenPanel(null)
+          }}>Go to stage</button>
+        </div>
+        <div className="track-columns">
+          <article><h4>Guide</h4><p>{selectedStage.guide}</p></article>
+          <article><h4>Engineering</h4><p>{selectedStage.engineering}</p></article>
+        </div>
+      </section>
+      <label className="workspace-note" htmlFor="workspace-note">
+        <span><strong>Private note for {selectedStage.label}</strong><small>{note.length} / {MAX_STAGE_NOTE_LENGTH}</small></span>
+        <textarea
+          id="workspace-note"
+          value={note}
+          maxLength={MAX_STAGE_NOTE_LENGTH}
+          rows={5}
+          onChange={(event) => updateNote(event.target.value)}
+          placeholder="Add a local reminder in your own words"
+        />
+      </label>
+      <div className="workspace-checkpoint">
+        <button type="button" aria-pressed={checkpointed} onClick={toggleCheckpoint}>
+          {checkpointed ? 'Personal checkpoint complete' : 'Mark personal checkpoint'}
+        </button>
+        <output aria-live="polite">
+          {workspace.checkpoints.length} of {JOURNEY.stages.length} personal checkpoints
+        </output>
+      </div>
+      <section className="workspace-summary" aria-labelledby="workspace-summary-title">
+        <h3 id="workspace-summary-title">Study summary</h3>
+        <ol>
+          {JOURNEY.stages.map((stage) => (
+            <li key={stage.id}>
+              <button type="button" onClick={() => setSelectedStageId(stage.id)}>{stage.label}</button>
+              <span>{workspace.checkpoints.includes(stage.id) ? 'Checkpoint complete' : 'Open'}</span>
+              <span>{workspace.notes[stage.id]?.trim() ? 'Private note saved' : 'No note'}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <div className="panel-actions" aria-label="Workspace actions">
+        <button type="button" onClick={() => {
+          void copyText(markdown()).then((copied) => setStatus(copied ? 'Study workspace copied.' : 'Copy unavailable.'))
+        }}>Copy study Markdown</button>
+        <button type="button" onClick={() => {
+          downloadText('paldawn-first-light-study.md', markdown(), 'text/markdown;charset=utf-8')
+          setStatus('Private study Markdown downloaded.')
+        }}>Download study Markdown</button>
+      </div>
+      <p className="action-status" aria-live="polite">{status}</p>
+    </>
+  )
+}
+
 function SettingToggle({
   id,
   label,
@@ -460,6 +601,7 @@ function HelpPanel() {
         <div><dt><kbd>T</kbd></dt><dd>Open the complete transcript</dd></div>
         <div><dt><kbd>/</kbd></dt><dd>Open the transcript and focus its search</dd></div>
         <div><dt><kbd>B</kbd></dt><dd>Save or remove the current stage on this device</dd></div>
+        <div><dt><kbd>N</kbd></dt><dd>Open the private workspace and focus the current stage note</dd></div>
         <div><dt><kbd>?</kbd></dt><dd>Open this help panel</dd></div>
         <div><dt><kbd>Esc</kbd></dt><dd>Close the open panel</dd></div>
       </dl>
@@ -471,9 +613,11 @@ function HelpPanel() {
 function SettingsPanel({
   textVoyage,
   onTextVoyageChange,
+  workspace,
 }: {
   textVoyage: boolean
   onTextVoyageChange: (enabled: boolean) => void
+  workspace: LearnerWorkspace
 }) {
   const qualityTier = useSettings((state) => state.qualityTier)
   const reducedMotion = useSettings((state) => state.reducedMotion)
@@ -494,6 +638,7 @@ function SettingsPanel({
   const [status, setStatus] = useState('')
   const [confirmReset, setConfirmReset] = useState(false)
   const [confirmRestart, setConfirmRestart] = useState(false)
+  const [pendingImport, setPendingImport] = useState<Extract<LocalDataImportResult, { ok: true }> | null>(null)
   const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
 
@@ -521,6 +666,8 @@ function SettingsPanel({
     textVoyage,
     playbackRate,
     bookmarkCount: orderedBookmarks(loadStageBookmarks()).length,
+    noteCount: Object.keys(workspace.notes).length,
+    checkpointCount: workspace.checkpoints.length,
     telemetry: useTelemetry.getState(),
   })
 
@@ -598,7 +745,7 @@ function SettingsPanel({
       </section>
       <section className="settings-subsection" aria-labelledby="local-data-title">
         <h3 id="local-data-title">Local data</h3>
-        <p>Only display preferences, one First Light resume position, and saved stage IDs are stored.</p>
+        <p>Only display preferences, one First Light resume position, saved stage IDs, private notes, and personal checkpoints are stored.</p>
         <div className="panel-actions">
           <button type="button" onClick={() => {
             downloadText('paldawn-local-data.json', exportLocalData(), 'application/json')
@@ -616,6 +763,60 @@ function SettingsPanel({
             <button type="button" onClick={() => setConfirmReset(true)}>Reset local data</button>
           )}
           {confirmReset ? <button type="button" onClick={() => setConfirmReset(false)}>Cancel</button> : null}
+        </div>
+        <div className="local-import">
+          <label className="file-action" htmlFor="local-data-import">
+            Check a local-data backup
+            <input
+              id="local-data-import"
+              type="file"
+              accept="application/json,.json"
+              onChange={(event) => {
+                const file = event.target.files?.[0]
+                event.target.value = ''
+                if (!file) return
+                void file.text().then((text) => {
+                  const result = parseLocalDataImport(text)
+                  if (!result.ok) {
+                    setPendingImport(null)
+                    setStatus(result.error)
+                    return
+                  }
+                  setPendingImport(result)
+                  setStatus('Backup validated. Review the preview before replacing local data.')
+                }).catch(() => {
+                  setPendingImport(null)
+                  setStatus('That backup could not be read.')
+                })
+              }}
+            />
+          </label>
+          {pendingImport ? (
+            <section className="import-preview" aria-labelledby="import-preview-title">
+              <h4 id="import-preview-title">Replacement preview</h4>
+              <p>
+                {pendingImport.preview.progressPercent}% route progress · {pendingImport.preview.bookmarkCount} saved stages ·{' '}
+                {pendingImport.preview.noteCount} private notes · {pendingImport.preview.checkpointCount} personal checkpoints ·{' '}
+                {pendingImport.preview.hasSettings ? 'preferences included' : 'no preferences'}
+              </p>
+              <div className="panel-actions">
+                <button className="danger-action" type="button" onClick={() => {
+                  if (!replaceLocalDataFromImport(pendingImport.data)) {
+                    setStatus('Local data could not be replaced in this browser context.')
+                    return
+                  }
+                  const importUrl = new URL(window.location.href)
+                  importUrl.hash = ''
+                  window.history.replaceState(null, '', importUrl)
+                  window.location.reload()
+                }}>Confirm replace local data</button>
+                <button type="button" onClick={() => {
+                  setPendingImport(null)
+                  setStatus('Backup import cancelled. Nothing changed.')
+                }}>Cancel import</button>
+              </div>
+            </section>
+          ) : null}
         </div>
       </section>
       <section className="settings-subsection" aria-labelledby="restart-title">
@@ -646,11 +847,15 @@ function Drawer({
   onTextVoyageChange,
   bookmarks,
   onToggleBookmark,
+  workspace,
+  onUpdateWorkspace,
 }: {
   textVoyage: boolean
   onTextVoyageChange: (enabled: boolean) => void
   bookmarks: string[]
   onToggleBookmark: (id: string) => void
+  workspace: LearnerWorkspace
+  onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
 }) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
@@ -677,7 +882,8 @@ function Drawer({
       <div className="drawer-scroll">
         {openPanel === 'mission' && <MissionPanel />}
         {openPanel === 'transcript' && <TranscriptPanel bookmarks={bookmarks} onToggleBookmark={onToggleBookmark} />}
-        {openPanel === 'settings' && <SettingsPanel textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />}
+        {openPanel === 'workspace' && <WorkspacePanel workspace={workspace} onUpdateWorkspace={onUpdateWorkspace} />}
+        {openPanel === 'settings' && <SettingsPanel textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} workspace={workspace} />}
         {openPanel === 'help' && <HelpPanel />}
       </div>
     </aside>
@@ -770,6 +976,7 @@ export function FlightDeck({
   const [online, setOnline] = useState(navigator.onLine)
   const [visibilityPaused, setVisibilityPaused] = useState(false)
   const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
+  const [workspace, setWorkspace] = useState(loadLearnerWorkspace)
   const [bookmarkStatus, setBookmarkStatus] = useState('')
   const pausedForVisibility = useRef(false)
 
@@ -783,6 +990,19 @@ export function FlightDeck({
       return next
     })
   }, [])
+
+  const updateWorkspace = useCallback((update: (current: LearnerWorkspace) => LearnerWorkspace) => {
+    setWorkspace((current) => {
+      const next = update(current)
+      saveLearnerWorkspace(next)
+      return next
+    })
+  }, [])
+
+  const openWorkspace = useCallback((focusNote: boolean) => {
+    setOpenPanel('workspace')
+    if (focusNote) window.setTimeout(() => document.getElementById('workspace-note')?.focus(), 0)
+  }, [setOpenPanel])
 
   useEffect(() => {
     document.documentElement.dataset.contrast = highContrast ? 'high' : 'standard'
@@ -813,6 +1033,10 @@ export function FlightDeck({
     const onStorage = (event: StorageEvent) => {
       if (event.key === PALDAWN_BOOKMARKS_KEY) {
         setBookmarks(orderedBookmarks(loadStageBookmarks()))
+        return
+      }
+      if (event.key === PALDAWN_WORKSPACE_KEY) {
+        setWorkspace(loadLearnerWorkspace())
         return
       }
       if (event.key !== PALDAWN_RESET_KEY || event.newValue === null) return
@@ -903,6 +1127,11 @@ export function FlightDeck({
         setOpenPanel('transcript')
         return
       }
+      if (!isTextEntry && event.key.toLowerCase() === 'n') {
+        event.preventDefault()
+        openWorkspace(true)
+        return
+      }
       if (!isTextEntry && event.code === 'Slash' && !event.shiftKey) {
         event.preventDefault()
         setOpenPanel('transcript')
@@ -949,7 +1178,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [reducedMotion, setOpenPanel, toggleStageBookmark])
+  }, [openWorkspace, reducedMotion, setOpenPanel, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
@@ -979,10 +1208,11 @@ export function FlightDeck({
         <a className="wordmark" href="./" aria-label="PalDawn home">
           <span>Pal</span>Dawn <i>पाल</i>
         </a>
-        <p className="build-mark">FIRST LIGHT / FOUNDATION+2</p>
+        <p className="build-mark">FIRST LIGHT / FOUNDATION+3</p>
         <nav className="utility-nav" aria-label="Release information">
           <PanelButton panel="mission">Mission</PanelButton>
           <PanelButton panel="transcript">Transcript</PanelButton>
+          <PanelButton panel="workspace">Study</PanelButton>
           <PanelButton panel="settings">Settings</PanelButton>
           <PanelButton panel="help">Help</PanelButton>
         </nav>
@@ -1014,7 +1244,7 @@ export function FlightDeck({
       ) : (
         <>
           <PhaseRail />
-          <CompanionCaption bookmarks={bookmarks} onToggleBookmark={toggleStageBookmark} />
+          <CompanionCaption bookmarks={bookmarks} onToggleBookmark={toggleStageBookmark} onOpenWorkspace={openWorkspace} />
           <ControlDeck />
           <Telemetry />
         </>
@@ -1024,6 +1254,8 @@ export function FlightDeck({
         onTextVoyageChange={onTextVoyageChange}
         bookmarks={bookmarks}
         onToggleBookmark={toggleStageBookmark}
+        workspace={workspace}
+        onUpdateWorkspace={updateWorkspace}
       />
       {entered && !textVoyage ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
       {entered && comfortVignette && !textVoyage ? <div className="comfort-vignette" aria-hidden="true" /> : null}

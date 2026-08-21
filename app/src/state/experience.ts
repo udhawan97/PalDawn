@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { JOURNEY, clampProgress, stageIndexAt, type NarrationMode } from '../journey/journey'
 import { loadJourneySession, saveJourneySession } from '../platform/localData'
 
-export type OpenPanel = 'mission' | 'transcript' | 'settings' | 'help' | null
+export type OpenPanel = 'mission' | 'transcript' | 'workspace' | 'settings' | 'help' | null
 
 interface ExperienceState {
   entered: boolean

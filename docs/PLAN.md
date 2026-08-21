@@ -182,6 +182,17 @@ preference-preserving voyage restart. See `docs/FOUNDATION-PLUS-2.md` for the
 exact boundary and verification contract. No dependency or medical-content gate
 is reopened.
 
+### Foundation+3 learner-workspace phase
+
+The following mainline pass adds six local-first study and portability tools:
+side-by-side comparison of the existing Guide and Engineering tracks, bounded
+private notes, personal checkpoints, workspace stage navigation with note focus,
+user-triggered Markdown export, and validated two-step local-backup replacement.
+See `docs/FOUNDATION-PLUS-3.md` for the exact boundary and verification contract.
+User notes are never app evidence or medical review, and the phase adds no
+anatomy, clinical content, dependency, external service, or patient-data
+collection path.
+
 ---
 
 ## 9. Medical guardrails

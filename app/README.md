@@ -35,13 +35,16 @@ Use `npm ci`, not `npm install`, for a clean verification run.
   transcript, settings, disclosure, and emergency-services safety line.
 - Zustand stores keep journey state, comfort settings, and sampled telemetry
   separate.
-- Foundation+ persists only display preferences and one bounded First Light
-  resume position under versioned local keys. It adds no account or backend.
+- The Foundation continuity waves persist only allowlisted display preferences,
+  one bounded First Light resume position, known stage IDs, bounded private
+  notes, and personal checkpoints under versioned local keys. They add no
+  account or backend.
 - `public/sw.js` is a first-party same-origin offline shell. Update activation is
   user-triggered; no service-worker dependency was added.
 - The accessible HTML layer also provides stage deep links, transcript and local
   diagnostics exports, a text-only voyage, keyboard help, local-data controls,
-  fullscreen support, background pausing, and a completion summary.
+  fullscreen support, background pausing, a completion summary, and a private
+  learner workspace with validated backup replacement.
 
 Quality tiers use 750 / 2,000 / 4,000 analytic markers and DPR 1 / 1.25 /
 1.75. `auto` is a small device heuristic, not a validated performance claim.
