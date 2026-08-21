@@ -163,6 +163,16 @@ and qualified-human review.
 9. ✅ Bounded five-stage linear journey data, deterministic next/previous, two narration depths, transcript, and stage-cut reduced-motion route. Clinical claims/references are absent by design.
 10. 🔄 v0.1 exterior/portal/corridor measurements are recorded in `docs/performance/v0.1.0.md`; pathology-channel transport and reviewed pathology authoring remain deferred.
 
+### Foundation+ continuity wave
+
+The post-v0.1 mainline adds fourteen architecture-safe continuity features:
+versioned local preferences, bounded resume, stage hashes, transcript export,
+first-party offline support and updates, keyboard help, user-triggered local
+diagnostics, scene recovery, an always-available text voyage, caption scaling,
+background pause, local-data export/reset, fullscreen support, and a completion
+summary. See `docs/FOUNDATION-PLUS.md` for the exact boundary and verification
+contract. This work does not reopen P1 anatomy or medical-content gates.
+
 ---
 
 ## 9. Medical guardrails

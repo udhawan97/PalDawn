@@ -1,0 +1,70 @@
+export const PALDAWN_SETTINGS_KEY = 'paldawn:settings:v1'
+export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
+
+export interface JourneySession {
+  progress: number
+  narrationMode: 'guide' | 'engineering'
+}
+
+let resetInProgress = false
+
+const storage = (): Storage | null => {
+  try {
+    return typeof window === 'undefined' ? null : window.localStorage
+  } catch {
+    return null
+  }
+}
+
+const readJson = (key: string): unknown => {
+  try {
+    const value = storage()?.getItem(key)
+    return value ? JSON.parse(value) : null
+  } catch {
+    return null
+  }
+}
+
+export function loadJourneySession(): JourneySession {
+  const value = readJson(PALDAWN_JOURNEY_KEY)
+  if (!value || typeof value !== 'object') return { progress: 0, narrationMode: 'guide' }
+
+  const candidate = value as Partial<JourneySession>
+  const progress = typeof candidate.progress === 'number' && Number.isFinite(candidate.progress)
+    ? Math.min(1, Math.max(0, candidate.progress))
+    : 0
+  const narrationMode = candidate.narrationMode === 'engineering' ? 'engineering' : 'guide'
+  return { progress, narrationMode }
+}
+
+export function saveJourneySession(session: JourneySession): void {
+  if (resetInProgress) return
+  try {
+    storage()?.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({
+      progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
+      narrationMode: session.narrationMode,
+    }))
+  } catch {
+    // Persistence is an enhancement. The voyage remains fully usable without it.
+  }
+}
+
+export function exportLocalData(): string {
+  return JSON.stringify({
+    schema_version: 1,
+    local_only: true,
+    settings: readJson(PALDAWN_SETTINGS_KEY),
+    journey: readJson(PALDAWN_JOURNEY_KEY),
+  }, null, 2)
+}
+
+export function resetLocalData(): void {
+  resetInProgress = true
+  try {
+    const localStorage = storage()
+    localStorage?.removeItem(PALDAWN_SETTINGS_KEY)
+    localStorage?.removeItem(PALDAWN_JOURNEY_KEY)
+  } catch {
+    // A blocked storage API already behaves like a reset state.
+  }
+}

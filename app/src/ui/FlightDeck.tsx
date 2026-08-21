@@ -1,11 +1,33 @@
-import { useEffect } from 'react'
-import { JOURNEY, formatJourneyTime, stageAt, stageIndexAt, type NarrationMode } from '../journey/journey'
+import { useEffect, useRef, useState } from 'react'
+import {
+  JOURNEY,
+  formatDuration,
+  formatJourneyTime,
+  progressForStageId,
+  stageAt,
+  stageIdFromHash,
+  stageIndexAt,
+  stageUrl,
+  transcriptText,
+  type NarrationMode,
+} from '../journey/journey'
 import { PORTAL_CENTER, PORTAL_END, PORTAL_START, smoothRange } from '../journey/route'
 import { useExperience, type OpenPanel } from '../state/experience'
-import { resolveTier, useSettings, type QualityTier } from '../state/settings'
+import { resolveTier, useSettings, type CaptionScale, type QualityTier } from '../state/settings'
 import { useTelemetry } from '../state/telemetry'
+import { diagnosticReport } from '../platform/diagnostics'
+import { copyText, downloadText } from '../platform/downloads'
+import { exportLocalData, resetLocalData, saveJourneySession } from '../platform/localData'
+import { activatePwaUpdate, checkForPwaUpdate } from '../platform/pwa'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
+const CAPTION_SCALES: CaptionScale[] = ['standard', 'large', 'largest']
+
+const replaceStageHash = (id: string): void => {
+  const url = new URL(window.location.href)
+  url.hash = `stage/${encodeURIComponent(id)}`
+  window.history.replaceState(null, '', url)
+}
 
 function isTypingTarget(target: EventTarget | null): boolean {
   return target instanceof HTMLElement &&
@@ -32,6 +54,7 @@ function PanelButton({ panel, children }: { panel: Exclude<OpenPanel, null>; chi
     <button
       className="text-button"
       type="button"
+      data-panel={panel}
       aria-expanded={openPanel === panel}
       onClick={() => setOpenPanel(openPanel === panel ? null : panel)}
     >
@@ -42,7 +65,10 @@ function PanelButton({ panel, children }: { panel: Exclude<OpenPanel, null>; chi
 
 function Intro() {
   const start = useExperience((state) => state.start)
+  const resume = useExperience((state) => state.resume)
+  const progress = useExperience((state) => state.progress)
   const reducedMotion = useSettings((state) => state.reducedMotion)
+  const resumeAvailable = progress > 0.01 && progress < 0.999
 
   return (
     <section className="intro" aria-labelledby="intro-title">
@@ -57,6 +83,11 @@ function Intro() {
           {reducedMotion ? 'Enter step mode' : 'Begin the voyage'}
           <span aria-hidden="true">↗</span>
         </button>
+        {resumeAvailable ? (
+          <button className="secondary-action" type="button" onClick={resume}>
+            Resume at {stageAt(progress).label}
+          </button>
+        ) : null}
         <PanelButton panel="mission">Read the mission</PanelButton>
       </div>
       <p className="synthetic-stamp">
@@ -82,7 +113,10 @@ function PhaseRail() {
           type="button"
           className="phase-stop"
           aria-current={index === currentIndex ? 'step' : undefined}
-          onClick={() => setProgress(stage.start + 0.002)}
+          onClick={() => {
+            replaceStageHash(stage.id)
+            setProgress(stage.start + 0.002)
+          }}
         >
           <span className="phase-index">{String(index + 1).padStart(2, '0')}</span>
           <span className="phase-name">{stage.label}</span>
@@ -97,6 +131,7 @@ function CompanionCaption() {
   const progress = useExperience((state) => state.progress)
   const narrationMode = useExperience((state) => state.narrationMode)
   const setNarrationMode = useExperience((state) => state.setNarrationMode)
+  const [linkStatus, setLinkStatus] = useState('')
   const stage = stageAt(progress)
 
   if (!entered) return null
@@ -126,6 +161,19 @@ function CompanionCaption() {
           </button>
         ))}
       </div>
+      <button
+        className="quiet-action"
+        type="button"
+        onClick={() => {
+          replaceStageHash(stage.id)
+          void copyText(stageUrl(stage.id)).then((copied) => {
+            setLinkStatus(copied ? 'Stage link copied.' : 'Copy unavailable. The stage URL is now in the address bar.')
+          })
+        }}
+      >
+        Copy this stage link
+      </button>
+      <p className="action-status" aria-live="polite">{linkStatus}</p>
     </section>
   )
 }
@@ -144,10 +192,15 @@ function ControlDeck() {
   if (!entered) return null
 
   const finished = progress >= 1
+  const moveToStage = (direction: -1 | 1) => {
+    const target = Math.min(JOURNEY.stages.length - 1, Math.max(0, currentIndex + direction))
+    replaceStageHash(JOURNEY.stages[target].id)
+    moveStage(direction)
+  }
   return (
     <section className="control-deck" id="flight-controls" aria-label="Voyage controls">
       <div className="transport-controls">
-        <button type="button" aria-label="Skip to previous stage" onClick={() => moveStage(-1)}>←</button>
+        <button type="button" aria-label="Skip to previous stage" onClick={() => moveToStage(-1)}>←</button>
         <button
           className="play-control"
           type="button"
@@ -156,12 +209,12 @@ function ControlDeck() {
           <span aria-hidden="true">{finished ? '↺' : reducedMotion ? '→' : playing ? 'Ⅱ' : '▶'}</span>
           {finished ? 'Replay' : reducedMotion ? 'Advance stage' : playing ? 'Pause' : 'Continue'}
         </button>
-        <button type="button" aria-label="Skip to next stage" onClick={() => moveStage(1)}>→</button>
+        <button type="button" aria-label="Skip to next stage" onClick={() => moveToStage(1)}>→</button>
       </div>
       <div className="scrubber-block">
         <div className="scrubber-meta">
           <span>{JOURNEY.stages[currentIndex].label}</span>
-          <output>{formatJourneyTime(progress)} / 0:42</output>
+          <output>{formatJourneyTime(progress)} / {formatDuration(JOURNEY.duration_seconds)}</output>
         </div>
         <input
           aria-label="Journey position"
@@ -212,6 +265,8 @@ function MissionPanel() {
 
 function TranscriptPanel() {
   const narrationMode = useExperience((state) => state.narrationMode)
+  const [status, setStatus] = useState('')
+  const transcript = transcriptText(narrationMode)
   return (
     <>
       <p className="panel-kicker">Text route · {narrationMode}</p>
@@ -225,6 +280,17 @@ function TranscriptPanel() {
           </li>
         ))}
       </ol>
+      <div className="panel-actions" aria-label="Transcript actions">
+        <button type="button" onClick={() => {
+          void copyText(transcript).then((copied) => setStatus(copied ? 'Transcript copied.' : 'Copy unavailable.'))
+        }}>Copy transcript</button>
+        <button type="button" onClick={() => {
+          downloadText(`paldawn-first-light-${narrationMode}.txt`, transcript)
+          setStatus('Transcript downloaded.')
+        }}>Download text</button>
+        <button type="button" onClick={() => window.print()}>Print</button>
+      </div>
+      <p className="action-status" aria-live="polite">{status}</p>
     </>
   )
 }
@@ -250,17 +316,63 @@ function SettingToggle({
   )
 }
 
-function SettingsPanel() {
+function HelpPanel() {
+  return (
+    <>
+      <p className="panel-kicker">Controls and access</p>
+      <h2 id="panel-title">Fly without guessing.</h2>
+      <dl className="shortcut-list">
+        <div><dt><kbd>Space</kbd></dt><dd>Play or pause; advance in reduced-motion mode</dd></div>
+        <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Seek through the route</dd></div>
+        <div><dt><kbd>Shift</kbd> + <kbd>←</kbd> <kbd>→</kbd></dt><dd>Move one complete stage</dd></div>
+        <div><dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>Move to the first or final route position</dd></div>
+        <div><dt><kbd>T</kbd></dt><dd>Open the complete transcript</dd></div>
+        <div><dt><kbd>?</kbd></dt><dd>Open this help panel</dd></div>
+        <div><dt><kbd>Esc</kbd></dt><dd>Close the open panel</dd></div>
+      </dl>
+      <p className="panel-note">All controls remain local. PalDawn does not send interaction or diagnostic data anywhere.</p>
+    </>
+  )
+}
+
+function SettingsPanel({
+  textVoyage,
+  onTextVoyageChange,
+}: {
+  textVoyage: boolean
+  onTextVoyageChange: (enabled: boolean) => void
+}) {
   const qualityTier = useSettings((state) => state.qualityTier)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const comfortVignette = useSettings((state) => state.comfortVignette)
   const highContrast = useSettings((state) => state.highContrast)
   const showTelemetry = useSettings((state) => state.showTelemetry)
+  const captionScale = useSettings((state) => state.captionScale)
   const setQualityTier = useSettings((state) => state.setQualityTier)
   const setReducedMotion = useSettings((state) => state.setReducedMotion)
   const setComfortVignette = useSettings((state) => state.setComfortVignette)
   const setHighContrast = useSettings((state) => state.setHighContrast)
   const setShowTelemetry = useSettings((state) => state.setShowTelemetry)
+  const setCaptionScale = useSettings((state) => state.setCaptionScale)
+  const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
+  const [status, setStatus] = useState('')
+  const [confirmReset, setConfirmReset] = useState(false)
+  const fullscreenAvailable = document.fullscreenEnabled
+
+  useEffect(() => {
+    const onFullscreenChange = () => setFullscreen(Boolean(document.fullscreenElement))
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [])
+
+  const report = () => diagnosticReport({
+    qualityTier,
+    resolvedTier: resolveTier(qualityTier),
+    reducedMotion,
+    highContrast,
+    textVoyage,
+    telemetry: useTelemetry.getState(),
+  })
 
   return (
     <>
@@ -276,22 +388,104 @@ function SettingsPanel() {
       <SettingToggle id="comfort-vignette" label="Comfort vignette" description="Narrows peripheral motion during flight." checked={comfortVignette} onChange={setComfortVignette} />
       <SettingToggle id="high-contrast" label="High contrast" description="Strengthens type and control boundaries." checked={highContrast} onChange={setHighContrast} />
       <SettingToggle id="show-telemetry" label="Runtime telemetry" description="Shows an on-device frame-time estimate." checked={showTelemetry} onChange={setShowTelemetry} />
+      <label className="quality-setting" htmlFor="caption-scale">
+        <span><strong>Caption size</strong><small>Scales SPD narration without changing scene geometry.</small></span>
+        <select id="caption-scale" value={captionScale} onChange={(event) => setCaptionScale(event.target.value as CaptionScale)}>
+          {CAPTION_SCALES.map((scale) => <option key={scale} value={scale}>{scale}</option>)}
+        </select>
+      </label>
+      <div className="settings-actions">
+        <button type="button" onClick={() => onTextVoyageChange(!textVoyage)}>
+          {textVoyage ? 'Return to 3D scene' : 'Use text voyage'}
+        </button>
+        <button
+          type="button"
+          disabled={!fullscreenAvailable}
+          onClick={() => {
+            const action = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()
+            void action.catch(() => setStatus('Fullscreen is unavailable in this browser context.'))
+          }}
+        >
+          {fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+        </button>
+        <button type="button" onClick={() => {
+          void checkForPwaUpdate().then(() => setStatus('Update check complete.'))
+        }}>Check for app update</button>
+      </div>
+      <section className="settings-subsection" aria-labelledby="diagnostics-title">
+        <h3 id="diagnostics-title">Local diagnostics</h3>
+        <p>Generated only when requested. Nothing is uploaded automatically.</p>
+        <div className="panel-actions">
+          <button type="button" onClick={() => {
+            void copyText(report()).then((copied) => setStatus(copied ? 'Diagnostics copied.' : 'Copy unavailable.'))
+          }}>Copy diagnostics</button>
+          <button type="button" onClick={() => {
+            downloadText('paldawn-diagnostics.json', report(), 'application/json')
+            setStatus('Diagnostics downloaded.')
+          }}>Download diagnostics</button>
+        </div>
+      </section>
+      <section className="settings-subsection" aria-labelledby="local-data-title">
+        <h3 id="local-data-title">Local data</h3>
+        <p>Only display preferences and one First Light resume position are stored.</p>
+        <div className="panel-actions">
+          <button type="button" onClick={() => {
+            downloadText('paldawn-local-data.json', exportLocalData(), 'application/json')
+            setStatus('Local data downloaded.')
+          }}>Download local data</button>
+          {confirmReset ? (
+            <button className="danger-action" type="button" onClick={() => {
+              resetLocalData()
+              const resetUrl = new URL(window.location.href)
+              resetUrl.hash = ''
+              window.history.replaceState(null, '', resetUrl)
+              window.location.reload()
+            }}>Confirm reset</button>
+          ) : (
+            <button type="button" onClick={() => setConfirmReset(true)}>Reset local data</button>
+          )}
+          {confirmReset ? <button type="button" onClick={() => setConfirmReset(false)}>Cancel</button> : null}
+        </div>
+      </section>
+      <p className="action-status" aria-live="polite">{status}</p>
     </>
   )
 }
 
-function Drawer() {
+function Drawer({
+  textVoyage,
+  onTextVoyageChange,
+}: {
+  textVoyage: boolean
+  onTextVoyageChange: (enabled: boolean) => void
+}) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const drawerRef = useRef<HTMLElement>(null)
+  const previousFocus = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (!openPanel) return
+    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    drawerRef.current?.focus()
+    return () => {
+      const target = previousFocus.current && previousFocus.current !== document.body
+        ? previousFocus.current
+        : document.querySelector<HTMLElement>(`[data-panel="${openPanel}"]`)
+      target?.focus()
+    }
+  }, [openPanel])
+
   if (!openPanel) return null
 
   return (
-    <aside className="drawer" role="dialog" aria-modal="false" aria-labelledby="panel-title">
+    <aside ref={drawerRef} className="drawer" role="dialog" aria-modal="false" aria-labelledby="panel-title" tabIndex={-1}>
       <button className="drawer-close" type="button" aria-label="Close panel" onClick={() => setOpenPanel(null)}>×</button>
       <div className="drawer-scroll">
         {openPanel === 'mission' && <MissionPanel />}
         {openPanel === 'transcript' && <TranscriptPanel />}
-        {openPanel === 'settings' && <SettingsPanel />}
+        {openPanel === 'settings' && <SettingsPanel textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />}
+        {openPanel === 'help' && <HelpPanel />}
       </div>
     </aside>
   )
@@ -319,47 +513,176 @@ function Telemetry() {
   )
 }
 
-export function FlightDeck() {
+function CompletionSummary() {
+  const narrationMode = useExperience((state) => state.narrationMode)
+  const replay = useExperience((state) => state.replay)
+  const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
+  const [status, setStatus] = useState('')
+
+  return (
+    <section className="completion-summary" aria-labelledby="completion-title">
+      <p className="eyebrow">Route complete · five synthetic stages</p>
+      <h2 id="completion-title">First light reached.</h2>
+      <p>You completed the {narrationMode} track. Anatomy and clinical teaching remain locked behind separate evidence and review.</p>
+      <div className="completion-actions">
+        <button type="button" onClick={() => replay(reducedMotion)}>Replay voyage</button>
+        <button type="button" onClick={() => setOpenPanel('transcript')}>Open transcript</button>
+        <button type="button" onClick={() => {
+          replaceStageHash('arrival')
+          void copyText(stageUrl('arrival')).then((copied) => setStatus(copied ? 'Arrival link copied.' : 'Copy unavailable.'))
+        }}>Copy arrival link</button>
+      </div>
+      <p className="action-status" aria-live="polite">{status}</p>
+    </section>
+  )
+}
+
+export function FlightDeck({
+  textVoyage,
+  onTextVoyageChange,
+}: {
+  textVoyage: boolean
+  onTextVoyageChange: (enabled: boolean) => void
+}) {
   const entered = useExperience((state) => state.entered)
   const progress = useExperience((state) => state.progress)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const comfortVignette = useSettings((state) => state.comfortVignette)
   const highContrast = useSettings((state) => state.highContrast)
+  const captionScale = useSettings((state) => state.captionScale)
+  const [updateReady, setUpdateReady] = useState(false)
+  const [offlineReady, setOfflineReady] = useState(false)
+  const [online, setOnline] = useState(navigator.onLine)
+  const [visibilityPaused, setVisibilityPaused] = useState(false)
+  const pausedForVisibility = useRef(false)
 
   useEffect(() => {
     document.documentElement.dataset.contrast = highContrast ? 'high' : 'standard'
   }, [highContrast])
 
   useEffect(() => {
+    document.documentElement.dataset.captionSize = captionScale
+  }, [captionScale])
+
+  useEffect(() => {
     if (reducedMotion) useExperience.getState().pause()
   }, [reducedMotion])
 
   useEffect(() => {
+    const followHash = () => {
+      const id = stageIdFromHash(window.location.hash)
+      if (!id) return
+      const next = progressForStageId(id)
+      if (next !== null) useExperience.getState().setProgress(next)
+    }
+    followHash()
+    window.addEventListener('hashchange', followHash)
+    return () => window.removeEventListener('hashchange', followHash)
+  }, [])
+
+  useEffect(() => {
+    const flush = () => {
+      const state = useExperience.getState()
+      if (!state.entered) return
+      saveJourneySession({ progress: state.progress, narrationMode: state.narrationMode })
+    }
+    const timer = window.setInterval(flush, 3000)
+    window.addEventListener('pagehide', flush)
+    return () => {
+      window.clearInterval(timer)
+      window.removeEventListener('pagehide', flush)
+      flush()
+    }
+  }, [])
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      const state = useExperience.getState()
+      if (document.hidden) {
+        pausedForVisibility.current = state.playing
+        if (state.playing) state.pause()
+        return
+      }
+      if (pausedForVisibility.current) {
+        pausedForVisibility.current = false
+        setVisibilityPaused(true)
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange)
+  }, [])
+
+  useEffect(() => {
+    const onUpdate = () => setUpdateReady(true)
+    const onOfflineReady = () => setOfflineReady(true)
+    const onOnline = () => setOnline(true)
+    const onOffline = () => setOnline(false)
+    window.addEventListener('paldawn:update-ready', onUpdate)
+    window.addEventListener('paldawn:offline-ready', onOfflineReady)
+    window.addEventListener('online', onOnline)
+    window.addEventListener('offline', onOffline)
+    return () => {
+      window.removeEventListener('paldawn:update-ready', onUpdate)
+      window.removeEventListener('paldawn:offline-ready', onOfflineReady)
+      window.removeEventListener('online', onOnline)
+      window.removeEventListener('offline', onOffline)
+    }
+  }, [])
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isTypingTarget(event.target)) return
       if (event.key === 'Escape') {
         setOpenPanel(null)
         return
       }
+      const isTextEntry = event.target instanceof HTMLElement &&
+        (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName) || event.target.isContentEditable)
+      if (!isTextEntry && (event.key === '?' || (event.code === 'Slash' && event.shiftKey))) {
+        event.preventDefault()
+        setOpenPanel('help')
+        return
+      }
+      if (!isTextEntry && event.key.toLowerCase() === 't') {
+        setOpenPanel('transcript')
+        return
+      }
+      if (isTypingTarget(event.target)) return
       if (!useExperience.getState().entered) return
       if (event.code === 'Space') {
         event.preventDefault()
         useExperience.getState().togglePlayback(reducedMotion)
       } else if (event.key === 'ArrowRight') {
         event.preventDefault()
-        if (event.shiftKey || reducedMotion) useExperience.getState().moveStage(1)
-        else useExperience.getState().setProgress(useExperience.getState().progress + 0.02)
+        const state = useExperience.getState()
+        if (event.shiftKey || reducedMotion) {
+          const target = Math.min(JOURNEY.stages.length - 1, stageIndexAt(state.progress) + 1)
+          replaceStageHash(JOURNEY.stages[target].id)
+          state.moveStage(1)
+        } else {
+          const next = Math.min(1, state.progress + 0.02)
+          replaceStageHash(stageAt(next).id)
+          state.setProgress(next)
+        }
       } else if (event.key === 'ArrowLeft') {
         event.preventDefault()
-        if (event.shiftKey || reducedMotion) useExperience.getState().moveStage(-1)
-        else useExperience.getState().setProgress(useExperience.getState().progress - 0.02)
+        const state = useExperience.getState()
+        if (event.shiftKey || reducedMotion) {
+          const target = Math.max(0, stageIndexAt(state.progress) - 1)
+          replaceStageHash(JOURNEY.stages[target].id)
+          state.moveStage(-1)
+        } else {
+          const next = Math.max(0, state.progress - 0.02)
+          replaceStageHash(stageAt(next).id)
+          state.setProgress(next)
+        }
       } else if (event.key === 'Home') {
+        replaceStageHash(JOURNEY.stages[0].id)
         useExperience.getState().setProgress(0)
       } else if (event.key === 'End') {
+        replaceStageHash(JOURNEY.stages[JOURNEY.stages.length - 1].id)
         useExperience.getState().setProgress(1)
-      } else if (event.key.toLowerCase() === 't') {
-        setOpenPanel('transcript')
       }
     }
     window.addEventListener('keydown', onKeyDown)
@@ -372,31 +695,48 @@ export function FlightDeck() {
       (1 - smoothRange(progress, PORTAL_CENTER, PORTAL_END))
 
   return (
-    <div className="flight-ui" data-entered={entered}>
+    <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage}>
       <a className="skip-link" href="#flight-controls">Skip to voyage controls</a>
       <header className="masthead">
         <a className="wordmark" href="./" aria-label="PalDawn home">
           <span>Pal</span>Dawn <i>पाल</i>
         </a>
-        <p className="build-mark">FIRST LIGHT / v0.1.0</p>
+        <p className="build-mark">FIRST LIGHT / FOUNDATION+</p>
         <nav className="utility-nav" aria-label="Release information">
           <PanelButton panel="mission">Mission</PanelButton>
           <PanelButton panel="transcript">Transcript</PanelButton>
           <PanelButton panel="settings">Settings</PanelButton>
+          <PanelButton panel="help">Help</PanelButton>
         </nav>
       </header>
+      <div className="system-banners" aria-live="polite">
+        {!online ? <p className="system-banner">Offline mode · cached voyage controls remain available.</p> : null}
+        {offlineReady ? (
+          <p className="system-banner">Offline voyage ready.<button type="button" onClick={() => setOfflineReady(false)}>Dismiss</button></p>
+        ) : null}
+        {updateReady ? (
+          <p className="system-banner">A new local build is ready.<button type="button" onClick={activatePwaUpdate}>Update now</button></p>
+        ) : null}
+        {visibilityPaused ? (
+          <p className="system-banner">Voyage paused while this page was in the background.<button type="button" onClick={() => {
+            setVisibilityPaused(false)
+            useExperience.getState().togglePlayback(false)
+          }}>Resume</button></p>
+        ) : null}
+      </div>
       <div className="canvas-label" aria-hidden="true">
-        <span>SYNTHETIC MODEL</span>
-        <span>NO ANATOMICAL SCALE</span>
+        <span>{textVoyage ? 'TEXT VOYAGE' : 'SYNTHETIC MODEL'}</span>
+        <span>{textVoyage ? 'SCENE-FREE ROUTE' : 'NO ANATOMICAL SCALE'}</span>
       </div>
       {!entered && <Intro />}
       <PhaseRail />
       <CompanionCaption />
       <ControlDeck />
       <Telemetry />
-      <Drawer />
-      <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} />
-      {comfortVignette && <div className="comfort-vignette" aria-hidden="true" />}
+      {entered && progress >= 1 ? <CompletionSummary /> : null}
+      <Drawer textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} />
+      {entered && !textVoyage ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
+      {entered && comfortVignette && !textVoyage ? <div className="comfort-vignette" aria-hidden="true" /> : null}
       <p className="safety-line">
         Education only · never diagnosis. Suspected heart attack? Contact local
         emergency services immediately.
