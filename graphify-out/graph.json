@@ -2884,8 +2884,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "performance/v0.1.0.md"
     },
     {
@@ -2895,8 +2895,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0_paldawn_v0_1_0_performance_report",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "paldawn v0.1.0 performance report"
     },
     {
@@ -2906,8 +2906,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0_environment",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "environment"
     },
     {
@@ -2917,8 +2917,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0_method",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "method"
     },
     {
@@ -2928,8 +2928,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0_raw_frame_results",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "raw frame results"
     },
     {
@@ -2939,8 +2939,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "docs_performance_v0_1_0_build_and_gate_result",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 24,
+      "community_name": "PalDawn v0.1.0 performance report",
       "norm_label": "build and gate result"
     },
     {
@@ -2950,8 +2950,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "releases/v0.1.0.md"
     },
     {
@@ -2961,8 +2961,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0_paldawn_v0_1_0_first_light",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "paldawn v0.1.0 \u2014 first light"
     },
     {
@@ -2972,8 +2972,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0_what_to_try",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "what to try"
     },
     {
@@ -2983,8 +2983,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0_safety_and_provenance_boundary",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "safety and provenance boundary"
     },
     {
@@ -2994,8 +2994,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0_verification",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "verification"
     },
     {
@@ -3005,8 +3005,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "docs_releases_v0_1_0_known_limits",
-      "community": 11,
-      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "community": 28,
+      "community_name": "PalDawn v0.1.0 \u2014 First Light",
       "norm_label": "known limits"
     },
     {
@@ -8556,17 +8556,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/releases/v0.1.0.md",
-      "source_location": "L38",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_releases_v0_1_0",
-      "target": "docs_performance_v0_1_0",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/performance/v0.1.0.md",
@@ -8619,17 +8608,6 @@
       "_origin": "ast",
       "source": "docs_releases_v0_1_0",
       "target": "docs_releases_v0_1_0_paldawn_v0_1_0_first_light",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/releases/v0.1.0.md",
-      "source_location": "L28",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_releases_v0_1_0",
-      "target": "docs_research_paldawn_heart_coronary_asset_audit",
       "confidence_score": 1.0
     },
     {
@@ -10111,5 +10089,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "786b09c540338bddbf35b207d7fed51eee0f7f08"
+  "built_at_commit": "2b1e901085082861a8f58b0436930bd33cdc8dc0"
 }

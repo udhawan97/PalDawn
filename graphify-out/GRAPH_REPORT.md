@@ -1,16 +1,16 @@
 # Graph Report - PalDawn  (2026-08-20)
 
 ## Corpus Check
-- 88 files · ~59,767 words
+- 88 files · ~59,810 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 361 nodes · 525 edges · 27 communities (25 shown, 2 thin omitted)
+- 361 nodes · 523 edges · 29 communities (27 shown, 2 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 39 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `786b09c5`
+- Built from commit: `2b1e9010`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,9 +37,11 @@
 - Codex Reconnaissance Prompt
 - Contributing to PalDawn
 - Attribution and Licensing Chain
+- PalDawn v0.1.0 performance report
 - [0.1.0] — 2026-08-20
 - Community conduct
 - Security policy
+- PalDawn v0.1.0 — First Light
 
 ## God Nodes (most connected - your core abstractions)
 1. `PalDawn Project Plan` - 18 edges
@@ -73,7 +75,7 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (27 total, 2 thin omitted)
+## Communities (29 total, 2 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
@@ -116,8 +118,8 @@ Cohesion: 0.22
 Nodes (8): APP, CREATORS, direct, lock, pkg, RECORDS, SPDX_URLS, STAMP
 
 ### Community 11 - "PalDawn backlog #3: heart/coronary per-object asset audit dossier"
-Cohesion: 0.07
-Nodes (24): Build and gate result, Environment, Method, PalDawn v0.1.0 performance report, Raw frame results, Known limits, PalDawn v0.1.0 — First Light, Safety and provenance boundary (+16 more)
+Cohesion: 0.13
+Nodes (14): Decision summary, Digest evidence and a safe future method, Direct BodyParts3D geometry candidates (not Z lineage proof), Draft provenance-record set, Evidence required to reopen approval, Exact Z-Anatomy object inventory and disposition, Geometry and mesh-defect risks, License and lineage gate (+6 more)
 
 ### Community 15 - "audit_z_anatomy_blend.py"
 Cohesion: 0.29
@@ -155,6 +157,10 @@ Nodes (6): Bug Report, CI Workflow, Pull Request Quality Gate, Contributing to P
 Cohesion: 0.47
 Nodes (6): Per-Object Asset Audit Mission, Per-Object Anatomy Asset Provenance, Attribution and Licensing Chain, Per-Object Anatomy Approval, Planned BodyParts3D to Z-Anatomy Chain, Unpublished Medical Content
 
+### Community 24 - "PalDawn v0.1.0 performance report"
+Cohesion: 0.33
+Nodes (5): Build and gate result, Environment, Method, PalDawn v0.1.0 performance report, Raw frame results
+
 ### Community 25 - "[0.1.0] — 2026-08-20"
 Cohesion: 0.50
 Nodes (3): [0.1.0] — 2026-08-20, Changelog, First Light
@@ -166,6 +172,10 @@ Nodes (3): Community conduct, Expected, Not acceptable
 ### Community 27 - "Security policy"
 Cohesion: 0.50
 Nodes (3): Report a vulnerability, Security policy, Supported version
+
+### Community 28 - "PalDawn v0.1.0 — First Light"
+Cohesion: 0.33
+Nodes (5): Known limits, PalDawn v0.1.0 — First Light, Safety and provenance boundary, Verification, What to try
 
 ## Knowledge Gaps
 - **125 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+120 more)
