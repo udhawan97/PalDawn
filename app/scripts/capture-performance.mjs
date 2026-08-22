@@ -75,7 +75,7 @@ try {
   const captures = []
   for (const stage of stages) {
     await page.goto(`${BASE_URL}#stage/${stage}`, { waitUntil: 'networkidle' })
-    await page.getByRole('button', { name: /Begin the voyage|Resume at/ }).first().click().catch(() => {})
+    await page.getByRole('button', { name: /Begin the voyage|Resume at/ }).first().click({ timeout: 1_000 }).catch(() => {})
     await page.waitForTimeout(250)
     const runs = []
     for (let run = 1; run <= 3; run += 1) {
@@ -114,6 +114,13 @@ try {
     platform: navigator.platform,
     viewport: `${window.innerWidth}x${window.innerHeight}`,
     device_pixel_ratio: window.devicePixelRatio,
+    renderer: (() => {
+      const context = document.querySelector('canvas')?.getContext('webgl2')
+      const extension = context?.getExtension('WEBGL_debug_renderer_info')
+      return context && extension
+        ? context.getParameter(extension.UNMASKED_RENDERER_WEBGL)
+        : 'unavailable'
+    })(),
   }))
   const report = {
     report: 'PalDawn local performance capture',
@@ -121,6 +128,7 @@ try {
     build_sha: buildSha,
     browser: BROWSER_NAME,
     browser_version: browserVersion,
+    quality_tier: 'balanced',
     network_profile: 'local loopback, unthrottled',
     method: { warmup_frames: 120, runs_per_stage: 3, frames_per_run: 180 },
     environment,

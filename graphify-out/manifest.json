@@ -560,13 +560,13 @@
     "semantic_hash": ""
   },
   "app/scripts/capture-performance.mjs": {
-    "mtime": 1787359593.7576392,
-    "ast_hash": "0608d629fa24cd8b47015baef4cdd243",
+    "mtime": 1787359787.1013281,
+    "ast_hash": "45aba81d55b3afa984147ca8fbbc09a1",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus-4.mjs": {
-    "mtime": 1787359593.757921,
-    "ast_hash": "fd20977f48a45c0ad77202f4f7ad2d26",
+    "mtime": 1787359782.5839972,
+    "ast_hash": "2e334bb108d1446ac2be9a46853e73bb",
     "semantic_hash": ""
   },
   "app/src/scene/SceneCanvas.tsx": {

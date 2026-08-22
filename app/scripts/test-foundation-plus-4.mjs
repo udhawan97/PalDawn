@@ -26,6 +26,7 @@ assert.match(playwrightConfig, /Desktop Safari/)
 assert.match(performanceCapture, /warmupFrames: 120/)
 assert.match(performanceCapture, /frames_per_run: 180/)
 assert.match(performanceCapture, /batchTimeoutMs: 30_000/)
+assert.match(performanceCapture, /quality_tier: 'balanced'/)
 assert.match(scene, /RuntimeProbe/)
 assert.match(app, /lazy\(\(\) => import\('\.\/scene\/SceneCanvas'\)\)/)
 
