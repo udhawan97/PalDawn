@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title description">
+  <title id="title">PalDawn resting mark</title>
+  <desc id="description">A protective passage reaches a dawn disc.</desc>
+  <rect width="96" height="96" fill="#04070c"/>
+  <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+  <path d="M62 10 C62 26 60 32 50 37.5" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="68" cy="58" r="11" fill="#f0aa54"/>
+</svg>

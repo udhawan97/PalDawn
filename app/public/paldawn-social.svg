@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">PalDawn — a protected passage at first light</title>
+  <desc id="description">The PalDawn living mark beside the words evidence-first 3D voyage systems, on a predawn field.</desc>
+  <defs>
+    <radialGradient id="dawn" cx="74%" cy="34%" r="58%">
+      <stop offset="0" stop-color="#f0aa54" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#04070c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#04070c"/>
+  <rect width="1200" height="630" fill="url(#dawn)"/>
+  <path d="M88 96 H1112 M88 534 H1112" stroke="#ebe6db" stroke-opacity=".16"/>
+  <g transform="translate(86 172) scale(2.9)">
+    <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+    <path d="M62 10 C62 26 60 32 50 37.5" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="68" cy="58" r="11" fill="#f0aa54"/>
+  </g>
+  <text x="418" y="272" fill="#ebe6db" font-family="Iowan Old Style, Baskerville, Georgia, serif" font-size="92" letter-spacing="-4">PalDawn</text>
+  <text x="422" y="330" fill="#f0aa54" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="5">A PROTECTED PASSAGE AT FIRST LIGHT</text>
+  <text x="422" y="399" fill="#9ca8b4" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="30">Evidence-first 3D voyage systems.</text>
+  <text x="88" y="574" fill="#75d9d2" font-family="SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2">CURRENT MAIN · SYNTHETIC SYSTEMS MODEL · NOT ANATOMY</text>
+</svg>

@@ -1,66 +1,115 @@
-# PalDawn
+<p align="center">
+  <a href="https://udhawan97.github.io/PalDawn/">
+    <img src="app/public/icon.svg" width="136" height="136" alt="PalDawn living mark: a protected passage reaching a dawn disc">
+  </a>
+</p>
 
-[![CI](https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg)](https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml)
-[![MIT licensed](https://img.shields.io/badge/code-MIT-f0aa54.svg)](LICENSE)
+<h1 align="center">PalDawn</h1>
 
-**A companion voyage through the human body—built evidence first.** PalDawn’s
-long-term promise is to let a learner fly a disease journey from cause to
-effect, switch the narration depth, and resolve every factual claim to a
-curated source.
+<p align="center"><strong>A protected passage at first light.</strong></p>
 
-[Launch **First Light**](https://udhawan97.github.io/PalDawn/) ·
-[Read the release notes](docs/releases/v0.1.0.md) ·
-[Inspect the evidence gate](pipeline/provenance/README.md)
+PalDawn is an evidence-first 3D voyage system for curious learners. Today it
+lets you fly, study, and revisit a five-stage synthetic route while the project
+proves the interaction, accessibility, local-data, and provenance systems that
+must work before anatomy or clinical teaching is allowed aboard.
 
-> **v0.1.0 is deliberately not anatomy.** First Light is a project-authored,
-> visibly synthetic systems voyage. It contains no anatomy assets, patient
-> data, diagnostic logic, pathology, symptoms, or clinical teaching. The
-> audited heart/coronary candidates remain blocked.
+<p align="center">
+  <a href="https://udhawan97.github.io/PalDawn/"><strong>Launch the web app</strong></a>
+  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.1.0">First Light release</a>
+  · <a href="pipeline/provenance/README.md">Evidence gate</a>
+</p>
 
-## What current main offers
+<p align="center">
+  <a href="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-f0aa54.svg"></a>
+  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.1.0"><img alt="Latest tagged release: v0.1.0" src="https://img.shields.io/badge/release-v0.1.0-75d9d2.svg"></a>
+</p>
 
-Current `main` extends the immutable v0.1.0 First Light snapshot with the
-post-release Foundation+, Foundation+2, and Foundation+3 continuity waves
-described below. These additions are not part of the v0.1.0 tag.
+> [!IMPORTANT]
+> **Current PalDawn is a synthetic systems model, not anatomy.** It contains no
+> anatomy assets, patient data, diagnosis, pathology, symptoms, treatment
+> advice, or clinical teaching. PalDawn is an educational project, not a
+> medical device. If you think you may be having a medical emergency, contact
+> your local emergency services immediately.
 
-- A five-stage WebGL2 voyage: Approach → Surface trace → Portal → Flow
-  corridor → Arrival.
-- One normalized route lookup shared by the camera rail, swept corridor,
-  world-space guide, and GPU-driven flow markers.
-- A bounded drei portal preview with an opaque fog-swap fallback.
-- Guide ↔ Engineering narration, a complete transcript, scrubber, stage
-  navigation, and SPD as the co-pilot.
-- Local resume and saved stages, transcript phrase search, direct stage links,
-  user-triggered sharing, and `0.5×`/`1×`/`1.5×` route pacing.
-- A local learner workspace with Guide ↔ Engineering comparison, bounded
-  private notes, personal checkpoints, Markdown export, and validated backup
-  replacement.
-- Keyboard operation, system-aware reduced motion, stage-by-stage reduced
-  route, comfort vignette, high contrast, and an honest WebGL failure screen.
-- A first-party offline shell with update and installation guidance, plus text
-  voyage, local-data export/reset, and preference-preserving voyage restart.
-- Auto/high/balanced/low tiers, on-device telemetry, a 500 KB gzip JavaScript
-  release gate, and static GitHub Pages deployment.
-- A fail-closed provenance system: current `main` has 24 live records that
-  pass; all 10 audited
-  Z-Anatomy targets remain planned/pending/blocked with null adoption output.
+## Choose how to start
 
-The v0.1.0 release proved the product’s flight and governance architecture. It
-does not satisfy the later medical-content milestone.
+| Path | What you get | Requirement | Start |
+|---|---|---|---|
+| Web app | Current `main`, deployed as a static installable web app | JavaScript; WebGL2 for the 3D scene | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
+| Text voyage | The same five authored stages without the 3D scene | JavaScript; choose **Use text voyage** in Settings or from the WebGL recovery screen | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
+| Release snapshot | Immutable First Light source at `v0.1.0` | Git or GitHub | [View v0.1.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.1.0) |
+| Local source | Current code, tests, and provenance checks | Node.js 22+; WebGL2 for 3D | [Run locally](#run-locally) |
 
-## Run it locally
+There is no packaged desktop or mobile download. If your browser supports web
+app installation, open **Settings → Installation help**; the browser remains
+in charge of whether it offers **Install App** or **Add to Home Screen**.
 
-Requirements: Node.js 22+ and a WebGL2-capable browser.
+The live website follows current `main`. The `v0.1.0` tag is the older,
+immutable First Light release snapshot; post-release Foundation+, Foundation+2,
+and Foundation+3 work is not retroactively part of that tag.
+
+## What you can do today
+
+- **Follow one coherent route.** Move through Approach → Surface trace → Portal
+  → Flow corridor → Arrival using play, scrub, stage, or keyboard controls.
+- **Change the explanation, not the scene.** Switch between Guide and
+  Engineering narration, search the complete transcript, or compare both
+  tracks side by side.
+- **Make the voyage yours—locally.** Resume, save stages, write bounded private
+  notes, mark personal checkpoints, and export study Markdown or a validated
+  local backup. PalDawn warns against entering patient or personal health data.
+- **Choose a calmer route.** Use reduced motion, a stage-by-stage text voyage,
+  caption sizing, high contrast, a comfort vignette, and keyboard navigation.
+- **Inspect the boundary.** On-device diagnostics, quality controls, evidence
+  records, and fail-closed adoption checks stay visible rather than becoming
+  invisible implementation detail.
+
+![PalDawn First Light introduction showing the synthetic route, five-stage journey, and local-first controls](docs/assets/paldawn-first-light.png)
+
+*Current local refresh build based on `main`, at the First Light introduction.
+The geometry is deliberately project-authored and synthetic; it is not an
+anatomical reconstruction.*
+
+## How the voyage works
+
+1. **Approach** — establish the synthetic route and its limits.
+2. **Surface trace** — follow one normalized path shared by the scene systems.
+3. **Portal** — cross a bounded transition with a non-transparent fallback.
+4. **Flow corridor** — observe route-driven analytic markers without treating
+   them as blood flow or anatomy.
+5. **Arrival** — review the route, transcript, saved stages, and private study
+   material on your device.
+
+## Trust boundary
+
+| Area | Current behavior |
+|---|---|
+| Data | No account or backend. Resume state, preferences, bookmarks, private notes, and checkpoints stay in browser storage until you export or reset them. |
+| Network | The deployed app loads static same-origin files. It has no analytics SDK or outbound telemetry path; the offline shell caches only PalDawn-owned assets. |
+| AI | No runtime AI provider, model call, or API key is used. SPD is authored interface guidance, not a diagnostic agent. |
+| Medical content | No current anatomy, clinical lesson, pathology, diagnosis, or treatment guidance is published. |
+| Provenance | Candidate assets and content fail closed until license, lineage, source, and—where medical—named qualified-human review requirements pass. |
+| Updates | PalDawn shows an update banner when a new build is waiting; choose **Update now** to activate it immediately. The browser may also activate it after all PalDawn tabs close. |
+
+The audited Z-Anatomy heart and coronary candidates remain
+planned/pending/blocked with null adoption output. See the
+[asset audit](docs/research/paldawn-heart-coronary-asset-audit.md),
+[project plan](docs/PLAN.md), [NOTICE](NOTICE.md), and [credits](CREDITS.md).
+
+## Run locally
 
 ```bash
-cd app
+git clone https://github.com/udhawan97/PalDawn.git
+cd PalDawn/app
 npm ci
 npm test
 npm run dev
 ```
 
 Open the URL printed by Vite. `npm test` type-checks, builds, validates the
-five-stage journey and synthetic-only boundary, and enforces the gzip budget.
+five-stage journey and synthetic-only boundary, checks the offline/local-data
+contracts, and enforces the 500 KB gzip JavaScript budget.
 
 Run the independent provenance gate from the repository root:
 
@@ -68,33 +117,36 @@ Run the independent provenance gate from the repository root:
 node pipeline/provenance/run-checks.mjs
 ```
 
-## Repository map
+For a project-site production build, use the same base path as GitHub Pages:
+
+```bash
+cd app
+VITE_BASE_PATH=/PalDawn/ npm test
+```
+
+<details>
+<summary><strong>Repository map</strong></summary>
 
 | Path | Purpose |
 |---|---|
-| `app/` | Vite, React, TypeScript, Three/R3F application |
-| `app/src/data/p0-journey.json` | Bounded v0.1 journey data |
+| `app/` | Vite, React, TypeScript, Three.js, React Three Fiber, PWA shell, and browser tests |
+| `app/src/data/p0-journey.json` | Bounded five-stage journey data |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |
 | `docs/PLAN.md` | Product architecture, medical gates, and roadmap |
 | `docs/research/` | Primary-source reconnaissance and asset-audit dossiers |
 | `.github/workflows/` | CI and GitHub Pages publication |
 
-The application is a static site: no account, analytics SDK, backend, paid
-service, or patient-data collection or transmission path is present. Private
-notes remain in local browser storage and explicitly warn against entering
-patient or personal health information.
+</details>
 
-## Medical and licensing boundary
+## Contribute
 
-PalDawn is an educational project, not a medical device. It never diagnoses.
-If you think you may be having a heart attack or another emergency, contact
-your local emergency services immediately.
+Start with [CONTRIBUTING.md](CONTRIBUTING.md). Code changes must pass the app
+and provenance checks. Art, model, and medical-content proposals must preserve
+the repository’s license zones and evidence-before-adoption rule.
 
-Code is MIT licensed. Future PalDawn-authored educational content and approved
-derived asset packs are intended for CC BY-SA 4.0, while each adopted upstream
-retains its exact license and lineage. No third-party 3D asset is incorporated
-in v0.1.0. See [NOTICE.md](NOTICE.md), [CREDITS.md](CREDITS.md), and the
-[heart/coronary asset audit](docs/research/paldawn-heart-coronary-asset-audit.md).
+Code is MIT licensed. Future PalDawn-authored educational content and compatible
+derived asset packs are intended for CC BY-SA 4.0; each adopted upstream keeps
+its own exact license and lineage.
 
-PalDawn was formerly named Antaryaan. Historical research prompts keep their
+PalDawn was formerly named Antaryaan. Historical research prompts retain their
 original wording where changing it would damage the audit trail.

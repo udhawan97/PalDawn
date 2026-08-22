@@ -1,7 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PalDawn dawn-line mark">
-  <rect width="64" height="64" rx="12" fill="#04070c"/>
-  <circle cx="32" cy="32" r="20" fill="none" stroke="#75d9d2" stroke-opacity=".55"/>
-  <ellipse cx="32" cy="32" rx="25" ry="8" fill="none" stroke="#f0aa54"/>
-  <path d="M19 32h26" stroke="#ebe6db" stroke-width="2"/>
-  <circle cx="32" cy="32" r="5" fill="#e85c65"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title description">
+  <title id="title">PalDawn living mark</title>
+  <desc id="description">A light travels through a protective passage and reaches a dawn disc. Motion stops when reduced motion is preferred.</desc>
+  <style>
+    @keyframes passage {
+      0% { offset-distance: 0%; opacity: 0; }
+      7% { offset-distance: 8%; opacity: 1; }
+      52% { offset-distance: 100%; opacity: 1; }
+      58%, 100% { offset-distance: 100%; opacity: 0; }
+    }
+    @keyframes arrival {
+      0%, 46%, 68%, 100% { transform: scale(1); }
+      54% { transform: scale(1.13); }
+    }
+    @keyframes echo {
+      0%, 49% { transform: scale(.82); opacity: 0; }
+      55% { opacity: .5; }
+      88%, 100% { transform: scale(1.9); opacity: 0; }
+    }
+    @keyframes breathe {
+      from { transform: rotate(-.7deg); }
+      to { transform: rotate(.8deg); }
+    }
+    .mark {
+      transform-box: view-box;
+      transform-origin: 50% 50%;
+      animation: breathe 9s ease-in-out infinite alternate;
+    }
+    .traveler {
+      offset-path: path("M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68 C67.5 64.5 67.8 61.5 68 58");
+      offset-rotate: 0deg;
+      animation: passage 7.5s linear infinite;
+    }
+    .arrival,
+    .echo {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .arrival { animation: arrival 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
+    .echo { animation: echo 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .mark,
+      .traveler,
+      .arrival,
+      .echo { animation: none; }
+      .traveler,
+      .echo { display: none; }
+    }
+  </style>
+  <rect width="96" height="96" fill="#04070c"/>
+  <g class="mark">
+    <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+    <path d="M62 10 C62 26 60 32 50 37.5" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
+    <circle class="echo" cx="68" cy="58" r="11" fill="none" stroke="#f0aa54" stroke-width="2" opacity="0"/>
+    <circle class="traveler" cx="0" cy="0" r="4.5" fill="#f0aa54" opacity="0"/>
+    <circle class="arrival" cx="68" cy="58" r="11" fill="#f0aa54"/>
+  </g>
 </svg>

@@ -1206,7 +1206,14 @@ export function FlightDeck({
       </a>
       <header className="masthead">
         <a className="wordmark" href="./" aria-label="PalDawn home">
-          <span>Pal</span>Dawn <i>पाल</i>
+          <img
+            className="brand-icon"
+            src={`${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`}
+            alt=""
+            aria-hidden="true"
+          />
+          <span className="wordmark-name"><strong>Pal</strong>Dawn</span>
+          <i>पाल</i>
         </a>
         <p className="build-mark">FIRST LIGHT / FOUNDATION+3</p>
         <nav className="utility-nav" aria-label="Release information">

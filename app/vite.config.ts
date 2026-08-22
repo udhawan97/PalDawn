@@ -13,7 +13,19 @@ function stampServiceWorker() {
     closeBundle() {
       const distRoot = resolve(process.cwd(), 'dist')
       const workerPath = resolve(distRoot, 'sw.js')
-      const buildInputs = ['index.html', 'sw.js', 'site.webmanifest', 'icon.svg']
+      const buildInputs = [
+        'index.html',
+        'sw.js',
+        'site.webmanifest',
+        'icon.svg',
+        'icon-static.svg',
+        'icon-192.png',
+        'icon-512.png',
+        'icon-maskable-192.png',
+        'icon-maskable-512.png',
+        'apple-touch-icon.png',
+        'paldawn-social.png',
+      ]
         .map((filename) => readFileSync(resolve(distRoot, filename)))
       const buildId = createHash('sha256')
         .update(Buffer.concat(buildInputs))

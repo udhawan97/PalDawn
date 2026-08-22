@@ -615,7 +615,7 @@
       "label": "sameOriginAssetsFrom()",
       "file_type": "code",
       "source_file": "app/public/sw.js",
-      "source_location": "L6",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "app_public_sw_sameoriginassetsfrom",
       "community": 34,
@@ -1107,6 +1107,39 @@
       "norm_label": "manifest"
     },
     {
+      "label": "icon",
+      "file_type": "code",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "app_scripts_test_foundation_plus_icon",
+      "community": 29,
+      "community_name": "test-foundation-plus.mjs",
+      "norm_label": "icon"
+    },
+    {
+      "label": "staticIcon",
+      "file_type": "code",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "app_scripts_test_foundation_plus_staticicon",
+      "community": 29,
+      "community_name": "test-foundation-plus.mjs",
+      "norm_label": "staticicon"
+    },
+    {
+      "label": "indexHtml",
+      "file_type": "code",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "app_scripts_test_foundation_plus_indexhtml",
+      "community": 29,
+      "community_name": "test-foundation-plus.mjs",
+      "norm_label": "indexhtml"
+    },
+    {
       "label": "test-foundation-runtime.mjs",
       "file_type": "code",
       "source_file": "app/scripts/test-foundation-runtime.mjs",
@@ -1462,7 +1495,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "app/src/App.tsx",
-      "source_location": "L59",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "app_src_app_app",
       "community": 9,
@@ -1982,8 +2015,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_platform_localdata_localdataimportresult",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 6,
+      "community_name": "localData.ts",
       "norm_label": "localdataimportresult"
     },
     {
@@ -2763,8 +2796,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_src_state_settings_tier_dpr",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 17,
+      "community_name": "settings.ts",
       "norm_label": "tier_dpr"
     },
     {
@@ -2994,8 +3027,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_istypingtarget",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 6,
+      "community_name": "localData.ts",
       "norm_label": "istypingtarget()"
     },
     {
@@ -3027,8 +3060,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 1,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "intro()"
     },
     {
@@ -3206,6 +3239,28 @@
       "community": 9,
       "community_name": "VoyageScene.tsx",
       "norm_label": "webgl2available()"
+    },
+    {
+      "label": "brand.spec.mjs",
+      "file_type": "code",
+      "source_file": "app/tests/brand.spec.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_tests_brand_spec",
+      "community": 48,
+      "community_name": "brand.spec.mjs",
+      "norm_label": "brand.spec.mjs"
+    },
+    {
+      "label": ".getContext()",
+      "file_type": "code",
+      "source_file": "app/tests/brand.spec.mjs",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "app_tests_brand_spec_htmlcanvaselement_getcontext",
+      "community": 49,
+      "community_name": ".getContext",
+      "norm_label": ".getcontext()"
     },
     {
       "label": "foundation-plus-2.spec.mjs",
@@ -5023,6 +5078,171 @@
       "norm_label": "local enforcement status"
     },
     {
+      "label": "query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor",
+      "community": 46,
+      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "norm_label": "query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md"
+    },
+    {
+      "label": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
+      "community": 46,
+      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "norm_label": "q: how do paldawn per-object anatomy provenance records enforce fail-closed adoption for this audit?"
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_answer",
+      "community": 46,
+      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Outcome",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_outcome",
+      "community": 46,
+      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "norm_label": "outcome"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_source_nodes",
+      "community": 46,
+      "community_name": "Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?",
+      "norm_label": "source nodes"
+    },
+    {
+      "label": "query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence",
+      "community": 47,
+      "community_name": "Q: what else can be implemented with high confidence",
+      "norm_label": "query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md"
+    },
+    {
+      "label": "Q: what else can be implemented with high confidence",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_q_what_else_can_be_implemented_with_high_confidence",
+      "community": 47,
+      "community_name": "Q: what else can be implemented with high confidence",
+      "norm_label": "q: what else can be implemented with high confidence"
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_answer",
+      "community": 47,
+      "community_name": "Q: what else can be implemented with high confidence",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Outcome",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_outcome",
+      "community": 47,
+      "community_name": "Q: what else can be implemented with high confidence",
+      "norm_label": "outcome"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_source_nodes",
+      "community": 47,
+      "community_name": "Q: what else can be implemented with high confidence",
+      "norm_label": "source nodes"
+    },
+    {
+      "label": "query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place",
+      "community": 45,
+      "community_name": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "norm_label": "query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md"
+    },
+    {
+      "label": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_q_verify_the_refreshed_paldawn_brand_icon_app_placements_pwa_metadata_reduced_motion_behavior_and_release_boundary",
+      "community": 45,
+      "community_name": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "norm_label": "q: verify the refreshed paldawn brand icon, app placements, pwa metadata, reduced-motion behavior, and release boundary."
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_answer",
+      "community": 45,
+      "community_name": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Outcome",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_outcome",
+      "community": 45,
+      "community_name": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "norm_label": "outcome"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_source_nodes",
+      "community": 45,
+      "community_name": "Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.",
+      "norm_label": "source nodes"
+    },
+    {
       "label": "Locked WebGL2 Stack",
       "author": null,
       "captured_at": null,
@@ -6567,7 +6787,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/public/sw.js",
-      "source_location": "L6",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_public_sw",
@@ -7001,6 +7221,28 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_scripts_test_foundation_plus",
+      "target": "app_scripts_test_foundation_plus_icon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_scripts_test_foundation_plus",
+      "target": "app_scripts_test_foundation_plus_indexhtml",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
@@ -7083,6 +7325,17 @@
       "_origin": "ast",
       "source": "app_scripts_test_foundation_plus",
       "target": "app_scripts_test_foundation_plus_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/scripts/test-foundation-plus.mjs",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_scripts_test_foundation_plus",
+      "target": "app_scripts_test_foundation_plus_staticicon",
       "confidence_score": 1.0
     },
     {
@@ -7366,7 +7619,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/App.tsx",
-      "source_location": "L59",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_app",
@@ -7577,7 +7830,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/App.tsx",
-      "source_location": "L67",
+      "source_location": "L75",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_app_app",
@@ -7589,7 +7842,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/App.tsx",
-      "source_location": "L65",
+      "source_location": "L73",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_app_app",
@@ -7601,7 +7854,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/App.tsx",
-      "source_location": "L61",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_app_app",
@@ -14033,6 +14286,138 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor",
+      "target": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
+      "target": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
+      "target": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_outcome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_q_how_do_paldawn_per_object_anatomy_provenance_records_enforce_fail_closed_adoption_for_this_audit",
+      "target": "graphify_out_memory_query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor_source_nodes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence",
+      "target": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_q_what_else_can_be_implemented_with_high_confidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_q_what_else_can_be_implemented_with_high_confidence",
+      "target": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_q_what_else_can_be_implemented_with_high_confidence",
+      "target": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_outcome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260821_230950_what_else_can_be_implemented_with_high_confidence.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_q_what_else_can_be_implemented_with_high_confidence",
+      "target": "graphify_out_memory_query_20260821_230950_what_else_can_be_implemented_with_high_confidence_source_nodes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place",
+      "target": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_q_verify_the_refreshed_paldawn_brand_icon_app_placements_pwa_metadata_reduced_motion_behavior_and_release_boundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_q_verify_the_refreshed_paldawn_brand_icon_app_placements_pwa_metadata_reduced_motion_behavior_and_release_boundary",
+      "target": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_q_verify_the_refreshed_paldawn_brand_icon_app_placements_pwa_metadata_reduced_motion_behavior_and_release_boundary",
+      "target": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_outcome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260822_005132_verify_the_refreshed_paldawn_brand_icon__app_place.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_q_verify_the_refreshed_paldawn_brand_icon_app_placements_pwa_metadata_reduced_motion_behavior_and_release_boundary",
+      "target": "graphify_out_memory_query_20260822_005132_verify_the_refreshed_paldawn_brand_icon_app_place_source_nodes",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -15269,5 +15654,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "839aaa50ae18316477d977fb27c6f7bf60720e92"
+  "built_at_commit": "1a785cd07c0446cb0d5acaedd22bc2141348674f"
 }

@@ -1,4 +1,4 @@
-import { Component, useState, type ErrorInfo, type ReactNode } from 'react'
+import { Component, useEffect, useState, type ErrorInfo, type ReactNode } from 'react'
 import { Canvas, type RootState } from '@react-three/fiber'
 import { VoyageScene } from './scene/VoyageScene'
 import { FlightDeck } from './ui/FlightDeck'
@@ -31,15 +31,23 @@ class SceneBoundary extends Component<{ children: ReactNode; onFailure: (reason:
 
 function RenderFallback({
   reason,
+  reducedMotion,
   onRetry,
   onTextVoyage,
 }: {
   reason: string
+  reducedMotion: boolean
   onRetry: () => void
   onTextVoyage: () => void
 }) {
   return (
     <main className="fallback" role="alert">
+      <img
+        className="fallback-brand-icon"
+        src={`${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`}
+        alt=""
+        aria-hidden="true"
+      />
       <p className="eyebrow">PalDawn · first light</p>
       <h1>The voyage could not start.</h1>
       <p>{reason} Your saved position and settings remain on this device.</p>
@@ -66,6 +74,13 @@ export default function App() {
   const reducedMotion = useSettings((s) => s.reducedMotion)
   const tier = resolveTier(qualityTier)
 
+  useEffect(() => {
+    const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
+    if (favicon) {
+      favicon.href = `${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`
+    }
+  }, [reducedMotion])
+
   const retryScene = () => {
     const available = webgl2Available()
     setWebgl2(available)
@@ -89,6 +104,7 @@ export default function App() {
     return (
       <RenderFallback
         reason={sceneIssue ?? 'This browser or device did not provide the WebGL2 context required by this release.'}
+        reducedMotion={reducedMotion}
         onRetry={retryScene}
         onTextVoyage={() => setTextVoyage(true)}
       />

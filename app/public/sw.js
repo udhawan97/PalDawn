@@ -1,7 +1,17 @@
 const CACHE_PREFIX = 'paldawn-foundation-'
 const BUILD_ID = '__PALDAWN_BUILD_ID__'
 const CACHE_NAME = `${CACHE_PREFIX}${BUILD_ID}`
-const SHELL = ['./', './site.webmanifest', './icon.svg']
+const SHELL = [
+  './',
+  './site.webmanifest',
+  './icon.svg',
+  './icon-static.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-192.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png',
+]
 
 const sameOriginAssetsFrom = async (response) => {
   const html = await response.clone().text()

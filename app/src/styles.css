@@ -137,6 +137,7 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-self: start;
+  gap: 9px;
   min-height: 44px;
   color: var(--bone);
   font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif;
@@ -145,12 +146,24 @@ textarea:focus-visible {
   text-decoration: none;
 }
 
-.wordmark span {
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+}
+
+.wordmark-name {
+  color: var(--bone);
+}
+
+.wordmark-name strong {
   color: var(--dawn);
+  font-weight: inherit;
 }
 
 .wordmark i {
-  margin-left: 7px;
+  margin-left: -2px;
   color: var(--muted);
   font-family: 'Avenir Next', Avenir, sans-serif;
   font-size: 0.58rem;
@@ -1399,6 +1412,14 @@ html[data-caption-size='largest'] .caption-copy {
   line-height: 1.65;
 }
 
+.fallback-brand-icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 22px;
+  border-radius: 16px;
+}
+
 .fallback h1 {
   margin: 12px 0;
   font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif;
@@ -1589,6 +1610,11 @@ html[data-contrast='high'] {
     font-size: 1.18rem;
   }
 
+  .brand-icon {
+    width: 30px;
+    height: 30px;
+  }
+
   .utility-nav {
     gap: 7px;
   }
@@ -1687,6 +1713,34 @@ html[data-contrast='high'] {
 
   .completion-summary {
     padding: 18px;
+  }
+}
+
+@media (max-width: 350px) {
+  .masthead {
+    padding-inline: 12px;
+  }
+
+  .wordmark {
+    gap: 6px;
+    font-size: 1.05rem;
+  }
+
+  .wordmark i {
+    display: none;
+  }
+
+  .brand-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .utility-nav {
+    gap: 3px;
+  }
+
+  .text-button {
+    font-size: 0.58rem;
   }
 }
 
