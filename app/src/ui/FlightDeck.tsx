@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import {
   JOURNEY,
   formatDuration,
@@ -27,6 +27,7 @@ import {
   PALDAWN_BOOKMARKS_KEY,
   PALDAWN_RESET_KEY,
   PALDAWN_WORKSPACE_KEY,
+  MAX_LOCAL_DATA_IMPORT_BYTES,
   MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
   loadLearnerWorkspace,
@@ -147,7 +148,12 @@ function PhaseRail() {
   const currentIndex = stageIndexAt(progress)
 
   return (
-    <nav className="phase-rail" aria-label="Journey stages" data-visible={entered}>
+    <nav
+      className="phase-rail"
+      aria-label="Journey stages"
+      data-visible={entered}
+      style={{ '--route-progress': `${progress * 100}%` } as React.CSSProperties}
+    >
       <span className="phase-axis" aria-hidden="true" />
       {JOURNEY.stages.map((stage, index) => (
         <button
@@ -454,7 +460,18 @@ function WorkspacePanel({
   const setProgress = useExperience((state) => state.setProgress)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const [selectedStageId, setSelectedStageId] = useState(stageAt(progress).id)
+  const [query, setQuery] = useState('')
   const [status, setStatus] = useState('')
+  const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase())
+  const searchResults = useMemo(() => deferredQuery
+    ? JOURNEY.stages.filter((stage) => [
+      stage.label,
+      stage.level,
+      stage.guide,
+      stage.engineering,
+      workspace.notes[stage.id] ?? '',
+    ].join(' ').toLocaleLowerCase().includes(deferredQuery))
+    : [], [deferredQuery, workspace.notes])
   const selectedStage = JOURNEY.stages.find((stage) => stage.id === selectedStageId) ?? JOURNEY.stages[0]
   const note = workspace.notes[selectedStage.id] ?? ''
   const checkpointed = workspace.checkpoints.includes(selectedStage.id)
@@ -491,6 +508,35 @@ function WorkspacePanel({
         Stored only in this browser. Do not enter patient or personal health information.
         Personal checkpoints are not evidence, approval, or medical review.
       </p>
+      <label className="workspace-search" htmlFor="workspace-search">
+        <span>Find authored text or a private note</span>
+        <input
+          id="workspace-search"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search this local workspace"
+        />
+      </label>
+      {query.trim() ? (
+        <section className="workspace-search-results" aria-labelledby="workspace-search-results-title">
+          <div className="workspace-search-meta">
+            <h3 id="workspace-search-results-title">Matches</h3>
+            <output aria-live="polite">{searchResults.length} {searchResults.length === 1 ? 'stage' : 'stages'}</output>
+          </div>
+          {searchResults.length ? (
+            <div>
+              {searchResults.map((stage) => (
+                <button key={stage.id} type="button" onClick={() => setSelectedStageId(stage.id)}>
+                  <span>{stage.level}</span>
+                  <strong>{stage.label}</strong>
+                  <small>{workspace.notes[stage.id]?.trim() ? 'Authored tracks + private note' : 'Authored tracks'}</small>
+                </button>
+              ))}
+            </div>
+          ) : <p>No authored stage or private note matches that phrase.</p>}
+        </section>
+      ) : null}
       <nav className="workspace-stage-nav" aria-label="Workspace stages">
         {JOURNEY.stages.map((stage, index) => (
           <button
@@ -775,6 +821,11 @@ function SettingsPanel({
                 const file = event.target.files?.[0]
                 event.target.value = ''
                 if (!file) return
+                if (file.size > MAX_LOCAL_DATA_IMPORT_BYTES) {
+                  setPendingImport(null)
+                  setStatus('That backup is larger than the 256 KiB local-data limit.')
+                  return
+                }
                 void file.text().then((text) => {
                   const result = parseLocalDataImport(text)
                   if (!result.ok) {
@@ -797,7 +848,7 @@ function SettingsPanel({
               <p>
                 {pendingImport.preview.progressPercent}% route progress · {pendingImport.preview.bookmarkCount} saved stages ·{' '}
                 {pendingImport.preview.noteCount} private notes · {pendingImport.preview.checkpointCount} personal checkpoints ·{' '}
-                {pendingImport.preview.hasSettings ? 'preferences included' : 'no preferences'}
+                {pendingImport.preview.hasSettings ? 'preferences included' : 'no preferences'} · {pendingImport.preview.compatibility}
               </p>
               <div className="panel-actions">
                 <button className="danger-action" type="button" onClick={() => {
@@ -900,6 +951,10 @@ function Telemetry() {
       className="telemetry"
       id="runtime-telemetry"
       data-samples={telemetry.samples}
+      data-fps={telemetry.fps}
+      data-p95-ms={telemetry.p95Ms}
+      data-draw-calls={telemetry.drawCalls}
+      data-triangles={telemetry.triangles}
       aria-label="Estimated runtime telemetry"
     >
       <span>live estimate</span>
@@ -1208,7 +1263,7 @@ export function FlightDeck({
         <a className="wordmark" href="./" aria-label="PalDawn home">
           <span>Pal</span>Dawn <i>पाल</i>
         </a>
-        <p className="build-mark">FIRST LIGHT / FOUNDATION+3</p>
+        <p className="build-mark">FIRST LIGHT / FOUNDATION+4</p>
         <nav className="utility-nav" aria-label="Release information">
           <PanelButton panel="mission">Mission</PanelButton>
           <PanelButton panel="transcript">Transcript</PanelButton>

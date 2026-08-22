@@ -94,7 +94,13 @@ content/
 └─ schema/      # JSON Schemas; CI-validated
 ```
 
-**Journey schema v0 (minimal linear; backlog item 9):** schema version; immutable pack IDs + digests; prefetch list; entry/exit actions; timeline/rail reference; scene parameters; two-depth narration; **claim-level references**; deterministic gates/`next`; and a **reduced-motion route** (a non-fly-through path through the same beats). **Deferred:** branches, variables, choices, quizzes, assessment, general checkpointing.
+**Journey schema v1 (minimal linear systems slice):** First Light now has a
+fail-closed JSON Schema, immutable pack ID/version/digest, bounded stages,
+two-depth narration, and an explicit reduced-motion route. Prefetch lists,
+entry/exit actions, scene parameters, deterministic gates, and claim-level
+references remain required before a future medical content pack can be
+adopted. **Deferred:** branches, variables, choices, quizzes, assessment, and
+general content-authored checkpointing.
 
 **Content state:** every factual beat is a clearly marked **unpublished placeholder** until reviewed by a named qualified human — recording reviewer, date, status, claim scope, and sources. **Citations do not constitute medical approval.** The assistant building this project cannot self-certify medical or anatomical accuracy.
 
@@ -192,6 +198,18 @@ See `docs/FOUNDATION-PLUS-3.md` for the exact boundary and verification contract
 User notes are never app evidence or medical review, and the phase adds no
 anatomy, clinical content, dependency, external service, or patient-data
 collection path.
+
+### Foundation+4 pack-integrity and interface phase
+
+The current mainline phase moves First Light into a repository-owned,
+digest-verified content pack; scopes local state and backup compatibility to
+the journey/pack; adds local search across authored tracks and private notes;
+splits the WebGL dependency graph from the immediate interface; records
+reproducible local performance artifacts; and runs browser acceptance in both
+Chromium and WebKit. The visual system gains a restrained dawn/cyan instrument
+layer and route beacon without changing the synthetic geometry boundary. See
+`docs/FOUNDATION-PLUS-4.md`. This is not P1 medical content and not a release
+tag.
 
 ---
 

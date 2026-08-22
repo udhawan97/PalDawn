@@ -4,10 +4,11 @@ import { createServer } from 'vite'
 
 const APP_ROOT = fileURLToPath(new URL('..', import.meta.url))
 const SETTINGS_KEY = 'paldawn:settings:v1'
-const JOURNEY_KEY = 'paldawn:journey:v1'
-const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
-const WORKSPACE_KEY = 'paldawn:workspace:v1'
-const RESET_KEY = 'paldawn:reset:v1'
+const LEGACY_JOURNEY_KEY = 'paldawn:journey:v1'
+const JOURNEY_KEY = 'paldawn:journey:p0.first-light:session:v3'
+const BOOKMARKS_KEY = 'paldawn:journey:p0.first-light:bookmarks:v3'
+const WORKSPACE_KEY = 'paldawn:journey:p0.first-light:workspace:v3'
+const RESET_KEY = 'paldawn:journey:p0.first-light:reset:v3'
 
 class MemoryStorage {
   #values = new Map()
@@ -62,8 +63,9 @@ await withModules(new MemoryStorage(), async (load) => {
 
   const localData = await load('/src/platform/localData.ts?tab=a')
   const otherTabLocalData = await load('/src/platform/localData.ts?tab=b')
-  localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 4, narrationMode: 'invalid' }))
+  localStorage.setItem(LEGACY_JOURNEY_KEY, JSON.stringify({ progress: 4, narrationMode: 'invalid' }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 1, narrationMode: 'guide' })
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).journeyId, 'journey:p0.first-light')
 
   localData.saveJourneySession({ progress: 0.42, narrationMode: 'engineering' })
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.42)
@@ -84,17 +86,34 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(localStorage.getItem(BOOKMARKS_KEY), null, 'reset must suppress stale bookmark writes')
   assert.equal(localStorage.getItem(WORKSPACE_KEY), null, 'reset must suppress stale workspace writes')
   assert.ok(localStorage.getItem(RESET_KEY), 'reset must publish a cross-tab token')
-  localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.75, narrationMode: 'guide', resetToken: null }))
+  const staleRecord = JSON.parse(localStorage.getItem(JOURNEY_KEY) ?? '{}')
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify({ ...staleRecord, progress: 0.75, resetToken: null }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
-  assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'stale-generation records must be removed on load')
 })
 
 await withModules(new MemoryStorage(), async (load) => {
   const localData = await load('/src/platform/localData.ts?import')
-  assert.equal(JSON.parse(localData.exportLocalData()).schema_version, 2)
+  const journey = await load('/src/journey/journey.ts?import')
+  const exported = JSON.parse(localData.exportLocalData())
+  assert.equal(exported.schema_version, 3)
+  assert.equal(exported.product, 'PalDawn')
+  assert.equal(exported.journey_id, journey.JOURNEY.id)
+  assert.equal(exported.pack_id, journey.JOURNEY.pack_id)
+  assert.equal(exported.pack_digest, journey.JOURNEY.pack_digest)
   assert.equal(localData.parseLocalDataImport('{broken').ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 99, local_only: true })).ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 2, local_only: true })).ok, false)
+  assert.equal(localData.parseLocalDataImport('x'.repeat(localData.MAX_LOCAL_DATA_IMPORT_BYTES + 1)).ok, false)
+  assert.equal(localData.parseLocalDataImport(JSON.stringify({
+    ...exported,
+    journey_id: 'p9.somewhere-else',
+    journey: { progress: 0.5, narrationMode: 'guide' },
+  })).ok, false)
+  assert.equal(localData.parseLocalDataImport(JSON.stringify({
+    ...exported,
+    pack_digest: `sha256:${'0'.repeat(64)}`,
+    journey: { progress: 0.5, narrationMode: 'guide' },
+  })).ok, false)
 
   const parsed = localData.parseLocalDataImport(JSON.stringify({
     schema_version: 1,
@@ -108,6 +127,7 @@ await withModules(new MemoryStorage(), async (load) => {
     },
   }))
   assert.equal(parsed.ok, true)
+  assert.equal(parsed.preview.compatibility, 'legacy backup migrated')
   assert.equal(parsed.preview.progressPercent, 100)
   assert.deepEqual(parsed.data.bookmarks, ['portal'])
   assert.deepEqual(parsed.data.workspace, { notes: { portal: 'Imported note' }, checkpoints: ['arrival'] })
@@ -131,7 +151,7 @@ await withModules(new FailingStorage(), async (load) => {
 })
 
 await withModules(new MemoryStorage(), async (load) => {
-  localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.42, narrationMode: 'engineering' }))
+  localStorage.setItem(LEGACY_JOURNEY_KEY, JSON.stringify({ progress: 0.42, narrationMode: 'engineering' }))
   const { useExperience } = await load('/src/state/experience.ts')
   assert.deepEqual(
     (({ entered, playing, progress, narrationMode }) => ({ entered, playing, progress, narrationMode }))(useExperience.getState()),

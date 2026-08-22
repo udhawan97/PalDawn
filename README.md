@@ -20,7 +20,7 @@ curated source.
 ## What current main offers
 
 Current `main` extends the immutable v0.1.0 First Light snapshot with the
-post-release Foundation+, Foundation+2, and Foundation+3 continuity waves
+post-release Foundation+, Foundation+2, Foundation+3, and Foundation+4 continuity waves
 described below. These additions are not part of the v0.1.0 tag.
 
 - A five-stage WebGL2 voyage: Approach → Surface trace → Portal → Flow
@@ -33,14 +33,19 @@ described below. These additions are not part of the v0.1.0 tag.
 - Local resume and saved stages, transcript phrase search, direct stage links,
   user-triggered sharing, and `0.5×`/`1×`/`1.5×` route pacing.
 - A local learner workspace with Guide ↔ Engineering comparison, bounded
-  private notes, personal checkpoints, Markdown export, and validated backup
-  replacement.
+  private notes, personal checkpoints, authored/private search, Markdown export,
+  and validated backup replacement.
+- A fail-closed, repository-owned First Light content pack with a JSON Schema,
+  immutable pack identity, and canonical digest verification.
+- Journey-and-pack-scoped local-data v3 records with automatic v1 migration,
+  schema 1/2 backup compatibility, and incompatible-pack rejection.
 - Keyboard operation, system-aware reduced motion, stage-by-stage reduced
   route, comfort vignette, high contrast, and an honest WebGL failure screen.
 - A first-party offline shell with update and installation guidance, plus text
   voyage, local-data export/reset, and preference-preserving voyage restart.
 - Auto/high/balanced/low tiers, on-device telemetry, a 500 KB gzip JavaScript
-  release gate, and static GitHub Pages deployment.
+  release gate, lazy-loaded WebGL scene, reproducible local performance capture,
+  Chromium/WebKit acceptance, and static GitHub Pages deployment.
 - A fail-closed provenance system: current `main` has 24 live records that
   pass; all 10 audited
   Z-Anatomy targets remain planned/pending/blocked with null adoption output.
@@ -73,7 +78,8 @@ node pipeline/provenance/run-checks.mjs
 | Path | Purpose |
 |---|---|
 | `app/` | Vite, React, TypeScript, Three/R3F application |
-| `app/src/data/p0-journey.json` | Bounded v0.1 journey data |
+| `content/journeys/first-light.v1.json` | Immutable First Light content pack |
+| `content/schema/journey-v1.schema.json` | Fail-closed journey-pack contract |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |
 | `docs/PLAN.md` | Product architecture, medical gates, and roadmap |
 | `docs/research/` | Primary-source reconnaissance and asset-audit dossiers |

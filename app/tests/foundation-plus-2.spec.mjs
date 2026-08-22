@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
-const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
+const BOOKMARKS_KEY = 'paldawn:journey:p0.first-light:bookmarks:v3'
 
 test('playback speed persists and stays visible in the flight controls', async ({ page }) => {
   await page.goto('./')

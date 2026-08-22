@@ -1,5 +1,8 @@
 {
   "schema_version": 1,
+  "pack_id": "pack:p0.first-light@1",
+  "pack_version": 1,
+  "pack_digest": "sha256:5b4882953c74adb621312e496d591d0389b623c14ddf5830003f6e3c1e96e965",
   "id": "journey:p0.first-light",
   "title": "First light",
   "release": "0.1.0",

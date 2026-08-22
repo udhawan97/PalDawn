@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+
+const ROOT = new URL('..', import.meta.url)
+const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
+const journey = JSON.parse(read('../content/journeys/first-light.v1.json'))
+const journeySchema = JSON.parse(read('../content/schema/journey-v1.schema.json'))
+const localData = read('src/platform/localData.ts')
+const deck = read('src/ui/FlightDeck.tsx')
+const scene = read('src/scene/VoyageScene.tsx')
+const app = read('src/App.tsx')
+const playwrightConfig = read('playwright.config.mjs')
+const performanceCapture = read('scripts/capture-performance.mjs')
+
+assert.equal(journey.schema_version, 1)
+assert.match(journey.pack_digest, /^sha256:[a-f0-9]{64}$/)
+assert.equal(journeySchema.additionalProperties, false)
+assert.match(localData, /schema_version: 3/)
+assert.match(localData, /journey_id: JOURNEY\.id/)
+assert.match(localData, /MAX_LOCAL_DATA_IMPORT_BYTES/)
+assert.match(localData, /legacy backup migrated/)
+assert.match(deck, /Find authored text or a private note/)
+assert.match(deck, /pendingImport\.preview\.compatibility/)
+assert.match(playwrightConfig, /Desktop Chrome/)
+assert.match(playwrightConfig, /Desktop Safari/)
+assert.match(performanceCapture, /warmupFrames: 120/)
+assert.match(performanceCapture, /frames_per_run: 180/)
+assert.match(scene, /RuntimeProbe/)
+assert.match(app, /lazy\(\(\) => import\('\.\/scene\/SceneCanvas'\)\)/)
+
+console.log('foundation+4 checks: pack integrity · scoped storage · search · browser matrix · performance capture')

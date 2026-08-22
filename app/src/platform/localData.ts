@@ -1,22 +1,37 @@
 import { JOURNEY } from '../journey/journey'
 
+const PRODUCT = 'PalDawn'
+const STORAGE_SCOPE = `paldawn:${JOURNEY.id}`
+const LEGACY_JOURNEY_KEY = 'paldawn:journey:v1'
+const LEGACY_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
+const LEGACY_WORKSPACE_KEY = 'paldawn:workspace:v1'
+const LEGACY_RESET_KEY = 'paldawn:reset:v1'
+
 export const PALDAWN_SETTINGS_KEY = 'paldawn:settings:v1'
-export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
-export const PALDAWN_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
-export const PALDAWN_WORKSPACE_KEY = 'paldawn:workspace:v1'
-export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
+export const PALDAWN_JOURNEY_KEY = `${STORAGE_SCOPE}:session:v3`
+export const PALDAWN_BOOKMARKS_KEY = `${STORAGE_SCOPE}:bookmarks:v3`
+export const PALDAWN_WORKSPACE_KEY = `${STORAGE_SCOPE}:workspace:v3`
+export const PALDAWN_RESET_KEY = `${STORAGE_SCOPE}:reset:v3`
 export const MAX_STAGE_NOTE_LENGTH = 1200
+export const MAX_LOCAL_DATA_IMPORT_BYTES = 256 * 1024
+
+interface PersistedIdentity {
+  product: typeof PRODUCT
+  journeyId: string
+  packId: string
+  packDigest: string
+}
 
 export interface JourneySession {
   progress: number
   narrationMode: 'guide' | 'engineering'
 }
 
-interface PersistedJourneySession extends JourneySession {
+interface PersistedJourneySession extends JourneySession, Partial<PersistedIdentity> {
   resetToken?: string | null
 }
 
-interface PersistedStageBookmarks {
+interface PersistedStageBookmarks extends Partial<PersistedIdentity> {
   stageIds?: unknown
   resetToken?: string | null
 }
@@ -26,7 +41,7 @@ export interface LearnerWorkspace {
   checkpoints: string[]
 }
 
-interface PersistedLearnerWorkspace {
+interface PersistedLearnerWorkspace extends Partial<PersistedIdentity> {
   notes?: unknown
   checkpoints?: unknown
   resetToken?: string | null
@@ -55,6 +70,7 @@ export interface LocalDataImportPreview {
   noteCount: number
   checkpointCount: number
   hasSettings: boolean
+  compatibility: 'current pack' | 'legacy backup migrated'
 }
 
 export type LocalDataImportResult =
@@ -67,6 +83,21 @@ const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
 const QUALITY_TIERS = new Set(['auto', 'high', 'balanced', 'low'])
 const CAPTION_SCALES = new Set(['standard', 'large', 'largest'])
 const PLAYBACK_RATES = new Set([0.5, 1, 1.5])
+
+const identity = (): PersistedIdentity => ({
+  product: PRODUCT,
+  journeyId: JOURNEY.id,
+  packId: JOURNEY.pack_id,
+  packDigest: JOURNEY.pack_digest,
+})
+
+const hasCurrentIdentity = (value: object): boolean => {
+  const candidate = value as Partial<PersistedIdentity>
+  return candidate.product === PRODUCT &&
+    candidate.journeyId === JOURNEY.id &&
+    candidate.packId === JOURNEY.pack_id &&
+    candidate.packDigest === JOURNEY.pack_digest
+}
 
 const emptyWorkspace = (): LearnerWorkspace => ({ notes: {}, checkpoints: [] })
 
@@ -103,8 +134,6 @@ const readString = (key: string): string | null => {
   }
 }
 
-resetTokenAtLoad = readString(PALDAWN_RESET_KEY)
-
 const readJson = (key: string): unknown => {
   try {
     const value = storage()?.getItem(key)
@@ -114,99 +143,94 @@ const readJson = (key: string): unknown => {
   }
 }
 
-export function loadJourneySession(): JourneySession {
-  const value = readJson(PALDAWN_JOURNEY_KEY)
-  if (!value || typeof value !== 'object') return { progress: 0, narrationMode: 'guide' }
-
-  const candidate = value as Partial<PersistedJourneySession>
-  const currentResetToken = readString(PALDAWN_RESET_KEY)
-  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
-    try {
-      storage()?.removeItem(PALDAWN_JOURNEY_KEY)
-    } catch {
-      // The stale record is still ignored when storage cannot be changed.
-    }
-    return { progress: 0, narrationMode: 'guide' }
+const writeJson = (key: string, value: unknown): boolean => {
+  try {
+    const localStorage = storage()
+    if (!localStorage) return false
+    localStorage.setItem(key, JSON.stringify(value))
+    return true
+  } catch {
+    return false
   }
+}
+
+resetTokenAtLoad = readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)
+
+const currentOrLegacy = (currentKey: string, legacyKey: string): { value: unknown; legacy: boolean } => {
+  const current = readJson(currentKey)
+  return current === null ? { value: readJson(legacyKey), legacy: true } : { value: current, legacy: false }
+}
+
+const recordIsCurrent = (value: unknown, legacy: boolean): value is Record<string, unknown> =>
+  Boolean(value && typeof value === 'object' && (legacy || hasCurrentIdentity(value)))
+
+export function loadJourneySession(): JourneySession {
+  const source = currentOrLegacy(PALDAWN_JOURNEY_KEY, LEGACY_JOURNEY_KEY)
+  if (!recordIsCurrent(source.value, source.legacy)) return { progress: 0, narrationMode: 'guide' }
+  const candidate = source.value as Partial<PersistedJourneySession>
+  const currentResetToken = readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) return { progress: 0, narrationMode: 'guide' }
   const progress = typeof candidate.progress === 'number' && Number.isFinite(candidate.progress)
     ? Math.min(1, Math.max(0, candidate.progress))
     : 0
   const narrationMode = candidate.narrationMode === 'engineering' ? 'engineering' : 'guide'
-  return { progress, narrationMode }
+  const session = { progress, narrationMode } as JourneySession
+  if (source.legacy) writeJson(PALDAWN_JOURNEY_KEY, { ...identity(), ...session, resetToken: resetTokenAtLoad })
+  return session
 }
 
 export function saveJourneySession(session: JourneySession): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
-  try {
-    storage()?.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({
-      progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
-      narrationMode: session.narrationMode,
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Persistence is an enhancement. The voyage remains fully usable without it.
-  }
+  if (resetInProgress || (readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)) !== resetTokenAtLoad) return
+  writeJson(PALDAWN_JOURNEY_KEY, {
+    ...identity(),
+    progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
+    narrationMode: session.narrationMode,
+    resetToken: resetTokenAtLoad,
+  })
 }
 
 export function loadStageBookmarks(): string[] {
-  const value = readJson(PALDAWN_BOOKMARKS_KEY)
-  if (!value || typeof value !== 'object') return []
-
-  const candidate = value as PersistedStageBookmarks
-  const currentResetToken = readString(PALDAWN_RESET_KEY)
-  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
-    try {
-      storage()?.removeItem(PALDAWN_BOOKMARKS_KEY)
-    } catch {
-      // The stale record is still ignored when storage cannot be changed.
-    }
-    return []
-  }
-  if (!Array.isArray(candidate.stageIds)) return []
-  return [...new Set(candidate.stageIds.filter(
-    (id): id is string => typeof id === 'string' && STAGE_IDS.has(id),
-  ))]
+  const source = currentOrLegacy(PALDAWN_BOOKMARKS_KEY, LEGACY_BOOKMARKS_KEY)
+  if (!recordIsCurrent(source.value, source.legacy)) return []
+  const candidate = source.value as PersistedStageBookmarks
+  const currentResetToken = readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) return []
+  const stageIds = Array.isArray(candidate.stageIds)
+    ? [...new Set(candidate.stageIds.filter(
+      (id): id is string => typeof id === 'string' && STAGE_IDS.has(id),
+    ))]
+    : []
+  if (source.legacy) writeJson(PALDAWN_BOOKMARKS_KEY, { ...identity(), stageIds, resetToken: resetTokenAtLoad })
+  return stageIds
 }
 
 export function saveStageBookmarks(stageIds: string[]): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
-  try {
-    storage()?.setItem(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
-      stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Bookmarks remain usable in memory when persistence is blocked.
-  }
+  if (resetInProgress || (readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)) !== resetTokenAtLoad) return
+  writeJson(PALDAWN_BOOKMARKS_KEY, {
+    ...identity(),
+    stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
+    resetToken: resetTokenAtLoad,
+  })
 }
 
 export function loadLearnerWorkspace(): LearnerWorkspace {
-  const value = readJson(PALDAWN_WORKSPACE_KEY)
-  if (!value || typeof value !== 'object') return emptyWorkspace()
-  const candidate = value as PersistedLearnerWorkspace
-  const currentResetToken = readString(PALDAWN_RESET_KEY)
-  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
-    try {
-      storage()?.removeItem(PALDAWN_WORKSPACE_KEY)
-    } catch {
-      // The stale record is still ignored when storage cannot be changed.
-    }
-    return emptyWorkspace()
-  }
-  return normalizeWorkspace(candidate)
+  const source = currentOrLegacy(PALDAWN_WORKSPACE_KEY, LEGACY_WORKSPACE_KEY)
+  if (!recordIsCurrent(source.value, source.legacy)) return emptyWorkspace()
+  const candidate = source.value as PersistedLearnerWorkspace
+  const currentResetToken = readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) return emptyWorkspace()
+  const workspace = normalizeWorkspace(candidate)
+  if (source.legacy) writeJson(PALDAWN_WORKSPACE_KEY, { ...identity(), ...workspace, resetToken: resetTokenAtLoad })
+  return workspace
 }
 
 export function saveLearnerWorkspace(workspace: LearnerWorkspace): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
-  const normalized = normalizeWorkspace(workspace)
-  try {
-    storage()?.setItem(PALDAWN_WORKSPACE_KEY, JSON.stringify({
-      ...normalized,
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Notes and checkpoints remain usable in memory when persistence is blocked.
-  }
+  if (resetInProgress || (readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)) !== resetTokenAtLoad) return
+  writeJson(PALDAWN_WORKSPACE_KEY, {
+    ...identity(),
+    ...normalizeWorkspace(workspace),
+    resetToken: resetTokenAtLoad,
+  })
 }
 
 const normalizeImportedSettings = (value: unknown): ImportedSettings | null => {
@@ -243,7 +267,19 @@ const normalizeImportedJourney = (value: unknown): JourneySession | null => {
   }
 }
 
+const incompatibleV3Backup = (candidate: Record<string, unknown>): string | null => {
+  if (candidate.product !== PRODUCT) return 'That file was not created by PalDawn.'
+  if (candidate.journey_id !== JOURNEY.id) return 'That backup belongs to a different PalDawn journey.'
+  if (candidate.pack_id !== JOURNEY.pack_id || candidate.pack_digest !== JOURNEY.pack_digest) {
+    return 'That backup belongs to a different version of this journey pack.'
+  }
+  return null
+}
+
 export function parseLocalDataImport(text: string): LocalDataImportResult {
+  if (new Blob([text]).size > MAX_LOCAL_DATA_IMPORT_BYTES) {
+    return { ok: false, error: 'That backup is larger than the 256 KiB local-data limit.' }
+  }
   let value: unknown
   try {
     value = JSON.parse(text)
@@ -254,8 +290,13 @@ export function parseLocalDataImport(text: string): LocalDataImportResult {
     return { ok: false, error: 'That file is not a PalDawn local-data backup.' }
   }
   const candidate = value as Record<string, unknown>
-  if (candidate.local_only !== true || ![1, 2].includes(candidate.schema_version as number)) {
+  const schemaVersion = candidate.schema_version
+  if (candidate.local_only !== true || ![1, 2, 3].includes(schemaVersion as number)) {
     return { ok: false, error: 'That file does not use a supported PalDawn local-data schema.' }
+  }
+  if (schemaVersion === 3) {
+    const incompatibility = incompatibleV3Backup(candidate)
+    if (incompatibility) return { ok: false, error: incompatibility }
   }
   if (!['settings', 'journey', 'bookmarks', 'workspace'].some((key) => Object.hasOwn(candidate, key))) {
     return { ok: false, error: 'That backup does not contain any recognized PalDawn local data.' }
@@ -280,6 +321,7 @@ export function parseLocalDataImport(text: string): LocalDataImportResult {
       noteCount: Object.keys(workspace.notes).length,
       checkpointCount: workspace.checkpoints.length,
       hasSettings: data.settings !== null,
+      compatibility: schemaVersion === 3 ? 'current pack' : 'legacy backup migrated',
     },
   }
 }
@@ -297,27 +339,30 @@ export function replaceLocalDataFromImport(data: LocalDataImport): boolean {
     PALDAWN_BOOKMARKS_KEY,
     PALDAWN_WORKSPACE_KEY,
     PALDAWN_RESET_KEY,
+    LEGACY_JOURNEY_KEY,
+    LEGACY_BOOKMARKS_KEY,
+    LEGACY_WORKSPACE_KEY,
+    LEGACY_RESET_KEY,
   ]
   const previous = new Map(keys.map((key) => [key, localStorage.getItem(key)]))
   try {
     const resetToken = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
     resetTokenAtLoad = resetToken
+    for (const key of keys) localStorage.removeItem(key)
     localStorage.setItem(PALDAWN_RESET_KEY, resetToken)
-    localStorage.removeItem(PALDAWN_SETTINGS_KEY)
-    localStorage.removeItem(PALDAWN_JOURNEY_KEY)
-    localStorage.removeItem(PALDAWN_BOOKMARKS_KEY)
-    localStorage.removeItem(PALDAWN_WORKSPACE_KEY)
     if (data.settings) {
       localStorage.setItem(PALDAWN_SETTINGS_KEY, JSON.stringify({ state: data.settings, version: 1 }))
     }
     if (data.journey) {
-      localStorage.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({ ...data.journey, resetToken }))
+      localStorage.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({ ...identity(), ...data.journey, resetToken }))
     }
     localStorage.setItem(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
+      ...identity(),
       stageIds: data.bookmarks,
       resetToken,
     }))
     localStorage.setItem(PALDAWN_WORKSPACE_KEY, JSON.stringify({
+      ...identity(),
       ...normalizeWorkspace(data.workspace),
       resetToken,
     }))
@@ -331,7 +376,7 @@ export function replaceLocalDataFromImport(data: LocalDataImport): boolean {
     } catch {
       // A blocked store remains unavailable; the caller keeps the current page.
     }
-    resetTokenAtLoad = readString(PALDAWN_RESET_KEY)
+    resetTokenAtLoad = readString(PALDAWN_RESET_KEY) ?? readString(LEGACY_RESET_KEY)
     resetInProgress = false
     return false
   }
@@ -339,7 +384,11 @@ export function replaceLocalDataFromImport(data: LocalDataImport): boolean {
 
 export function exportLocalData(): string {
   return JSON.stringify({
-    schema_version: 2,
+    schema_version: 3,
+    product: PRODUCT,
+    journey_id: JOURNEY.id,
+    pack_id: JOURNEY.pack_id,
+    pack_digest: JOURNEY.pack_digest,
     local_only: true,
     settings: readJson(PALDAWN_SETTINGS_KEY),
     journey: readJson(PALDAWN_JOURNEY_KEY),
@@ -355,10 +404,16 @@ export function resetLocalData(): void {
     const resetToken = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
     localStorage?.setItem(PALDAWN_RESET_KEY, resetToken)
     resetTokenAtLoad = resetToken
-    localStorage?.removeItem(PALDAWN_SETTINGS_KEY)
-    localStorage?.removeItem(PALDAWN_JOURNEY_KEY)
-    localStorage?.removeItem(PALDAWN_BOOKMARKS_KEY)
-    localStorage?.removeItem(PALDAWN_WORKSPACE_KEY)
+    for (const key of [
+      PALDAWN_SETTINGS_KEY,
+      PALDAWN_JOURNEY_KEY,
+      PALDAWN_BOOKMARKS_KEY,
+      PALDAWN_WORKSPACE_KEY,
+      LEGACY_JOURNEY_KEY,
+      LEGACY_BOOKMARKS_KEY,
+      LEGACY_WORKSPACE_KEY,
+      LEGACY_RESET_KEY,
+    ]) localStorage?.removeItem(key)
   } catch {
     // A blocked storage API already behaves like a reset state.
   }

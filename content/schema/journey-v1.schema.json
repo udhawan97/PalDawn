@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://udhawan97.github.io/PalDawn/schema/journey-v1.schema.json",
+  "title": "PalDawn journey pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pack_id",
+    "pack_version",
+    "pack_digest",
+    "id",
+    "title",
+    "release",
+    "duration_seconds",
+    "content_status",
+    "published_medical_claims",
+    "reduced_motion_route",
+    "disclosure",
+    "stages"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "pack_id": { "type": "string", "pattern": "^pack:[a-z0-9.-]+@1$" },
+    "pack_version": { "const": 1 },
+    "pack_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "id": { "type": "string", "pattern": "^journey:[a-z0-9.-]+$" },
+    "title": { "type": "string", "minLength": 1 },
+    "release": { "type": "string", "minLength": 1 },
+    "duration_seconds": { "type": "number", "exclusiveMinimum": 0 },
+    "content_status": { "const": "synthetic_engineering_only" },
+    "published_medical_claims": { "const": false },
+    "reduced_motion_route": { "const": "stage_steps" },
+    "disclosure": { "type": "string", "minLength": 1 },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/stage" }
+    }
+  },
+  "$defs": {
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "level", "start", "end", "guide", "engineering"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "label": { "type": "string", "minLength": 1 },
+        "level": { "type": "string", "minLength": 1 },
+        "start": { "type": "number", "minimum": 0, "maximum": 1 },
+        "end": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "guide": { "type": "string", "minLength": 1 },
+        "engineering": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

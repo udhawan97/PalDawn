@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
-const WORKSPACE_KEY = 'paldawn:workspace:v1'
+const WORKSPACE_KEY = 'paldawn:journey:p0.first-light:workspace:v3'
 
 test('compare view and N shortcut open the current private note', async ({ page }) => {
   await page.goto('./')
@@ -40,6 +40,24 @@ test('private notes and personal checkpoints persist and synchronize across tabs
   await page.keyboard.press('n')
   await expect(page.getByLabel('Private note for Approach')).toHaveValue(note)
   await expect(page.getByRole('button', { name: 'Personal checkpoint complete' })).toBeVisible()
+})
+
+test('workspace search finds authored tracks and private notes without leaving the drawer', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Study' }).click()
+  await page.getByLabel('Private note for Approach').fill('Review the local beacon handoff.')
+
+  const search = page.getByLabel('Find authored text or a private note')
+  await search.fill('beacon handoff')
+  await expect(page.locator('.workspace-search-results output')).toHaveText('1 stage')
+  await expect(page.locator('.workspace-search-results button')).toContainText('Approach')
+  await expect(page.locator('.workspace-search-results button')).toContainText('Authored tracks + private note')
+
+  await search.fill('vertex shader')
+  await expect(page.locator('.workspace-search-results output')).toHaveText('1 stage')
+  await page.locator('.workspace-search-results button').click()
+  await expect(page.locator('#track-comparison-title')).toHaveText('Flow corridor')
+  await expect(page.locator('.drawer')).toBeVisible()
 })
 
 test('study Markdown export contains both authored tracks and private workspace data', async ({ page }) => {

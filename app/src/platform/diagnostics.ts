@@ -1,5 +1,6 @@
 import type { RuntimeTelemetry } from '../state/telemetry'
 import type { PlaybackRate, QualityTier, ResolvedTier } from '../state/settings'
+import { JOURNEY } from '../journey/journey'
 
 interface DiagnosticInput {
   qualityTier: QualityTier
@@ -18,7 +19,10 @@ export function diagnosticReport(input: DiagnosticInput): string {
   return JSON.stringify({
     report: 'PalDawn local diagnostics',
     base_release: '0.1.0',
-    build: 'foundation+3',
+    build: 'foundation+4',
+    journey_id: JOURNEY.id,
+    pack_id: JOURNEY.pack_id,
+    pack_digest: JOURNEY.pack_digest,
     local_only: true,
     viewport: `${window.innerWidth}x${window.innerHeight}`,
     device_pixel_ratio: window.devicePixelRatio,

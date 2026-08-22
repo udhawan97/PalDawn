@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-const JOURNEY_KEY = 'paldawn:journey:v1'
+const JOURNEY_KEY = 'paldawn:journey:p0.first-light:session:v3'
 const SETTINGS_KEY = 'paldawn:settings:v1'
-const RESET_KEY = 'paldawn:reset:v1'
+const RESET_KEY = 'paldawn:journey:p0.first-light:reset:v3'
 
 test('skip navigation moves focus before and after entry', async ({ page }) => {
   await page.goto('./')
@@ -37,7 +37,7 @@ test('completion becomes the focused view on a narrow screen', async ({ page }) 
 test('a persisted completed journey restores the summary', async ({ page }) => {
   await page.addInitScript(({ key }) => {
     localStorage.setItem(key, JSON.stringify({ progress: 1, narrationMode: 'engineering' }))
-  }, { key: JOURNEY_KEY })
+  }, { key: 'paldawn:journey:v1' })
   await page.goto('./')
 
   await expect(page.locator('#completion-summary')).toBeVisible()
@@ -84,7 +84,7 @@ test('reset in one tab cannot be undone by another open tab', async ({ page }) =
       settings: localStorage.getItem(settingsKey),
       bookmarks: localStorage.getItem(bookmarksKey),
       reset: localStorage.getItem(resetKey),
-    }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY, bookmarksKey: 'paldawn:bookmarks:v1', resetKey: RESET_KEY })
+    }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY, bookmarksKey: 'paldawn:journey:p0.first-light:bookmarks:v3', resetKey: RESET_KEY })
     expect(stored.journey).toBeNull()
     expect(stored.settings).toBeNull()
     expect(stored.bookmarks).toBeNull()

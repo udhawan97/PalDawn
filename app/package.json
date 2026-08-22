@@ -4,13 +4,14 @@
   "description": "PalDawn First Light — a synthetic WebGL2 technical voyage",
   "main": "index.js",
   "scripts": {
-    "test": "npm run typecheck && npm run build && node scripts/test-release.mjs && node scripts/test-foundation-plus.mjs && node scripts/test-foundation-plus-2.mjs && node scripts/test-foundation-plus-3.mjs && node scripts/test-foundation-runtime.mjs",
+    "test": "npm run typecheck && npm run build && node scripts/test-release.mjs && node scripts/test-foundation-plus.mjs && node scripts/test-foundation-plus-2.mjs && node scripts/test-foundation-plus-3.mjs && node scripts/test-foundation-plus-4.mjs && node scripts/test-foundation-runtime.mjs",
     "test:browser": "playwright test",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
-    "licenses": "node scripts/license-inventory.mjs"
+    "licenses": "node scripts/license-inventory.mjs",
+    "measure:performance": "npm run build && node scripts/capture-performance.mjs"
   },
   "keywords": [],
   "author": "",

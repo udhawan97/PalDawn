@@ -2,14 +2,33 @@ import assert from 'node:assert/strict'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { gzipSync } from 'node:zlib'
+import { createHash } from 'node:crypto'
 
 const ROOT = new URL('..', import.meta.url)
 const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
 const packageJson = JSON.parse(read('package.json'))
-const journey = JSON.parse(read('src/data/p0-journey.json'))
+const journey = JSON.parse(read('../content/journeys/first-light.v1.json'))
+const journeySchema = JSON.parse(read('../content/schema/journey-v1.schema.json'))
+
+const canonicalize = (value) => {
+  if (Array.isArray(value)) return `[${value.map(canonicalize).join(',')}]`
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalize(value[key])}`).join(',')}}`
+  }
+  return JSON.stringify(value)
+}
+
+const { pack_digest: declaredDigest, ...digestInput } = journey
+const computedDigest = `sha256:${createHash('sha256').update(canonicalize(digestInput)).digest('hex')}`
 
 assert.equal(packageJson.version, '0.1.0', 'package version must match the release')
 assert.equal(journey.release, packageJson.version, 'journey and package versions must match')
+assert.equal(journeySchema.$id, 'https://udhawan97.github.io/PalDawn/schema/journey-v1.schema.json')
+assert.equal(journeySchema.additionalProperties, false, 'journey schema must fail closed on unknown root fields')
+assert.equal(journey.schema_version, 1)
+assert.equal(journey.pack_version, 1)
+assert.match(journey.pack_id, /^pack:[a-z0-9.-]+@1$/)
+assert.equal(declaredDigest, computedDigest, 'journey pack digest must match its canonical content')
 assert.equal(journey.content_status, 'synthetic_engineering_only')
 assert.equal(journey.published_medical_claims, false)
 assert.equal(journey.reduced_motion_route, 'stage_steps')

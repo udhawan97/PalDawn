@@ -152,6 +152,10 @@ function SyntheticCore() {
         <icosahedronGeometry args={[1.52, 2]} />
         <meshBasicMaterial color="#d55f68" wireframe transparent opacity={0.29} />
       </mesh>
+      <mesh scale={[0.58, 0.68, 0.52]}>
+        <icosahedronGeometry args={[1.52, 3]} />
+        <meshBasicMaterial color="#e8a15b" transparent opacity={0.09} depthWrite={false} />
+      </mesh>
       <mesh rotation={[Math.PI / 2.7, 0.18, 0]} scale={[1, 0.82, 1.06]}>
         <torusGeometry args={[2.02, 0.018, 6, 160]} />
         <meshBasicMaterial color="#75d9d2" transparent opacity={0.32} />
@@ -160,6 +164,56 @@ function SyntheticCore() {
         <torusGeometry args={[2.18, 0.012, 6, 160]} />
         <meshBasicMaterial color="#f0aa54" transparent opacity={0.24} />
       </mesh>
+    </group>
+  )
+}
+
+function DawnInstrument() {
+  const group = useRef<Group>(null)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
+
+  useFrame((_, delta) => {
+    if (!group.current || reducedMotion) return
+    group.current.rotation.y += delta * 0.035
+    group.current.rotation.z -= delta * 0.018
+  })
+
+  return (
+    <group ref={group} position={[-1.42, 0.28, 1.55]} rotation={[0.08, -0.28, -0.12]}>
+      <mesh rotation={[0.18, 0.42, 0.9]} scale={[1.32, 1, 1]}>
+        <torusGeometry args={[2.52, 0.008, 4, 192]} />
+        <meshBasicMaterial color="#e8a15b" transparent opacity={0.2} depthWrite={false} />
+      </mesh>
+      <mesh rotation={[1.1, -0.35, 0.2]} scale={[1, 0.78, 1]}>
+        <torusGeometry args={[2.78, 0.006, 4, 192]} />
+        <meshBasicMaterial color="#72d8d1" transparent opacity={0.16} depthWrite={false} />
+      </mesh>
+      <mesh rotation={[-0.55, 0.12, -0.4]} scale={[1.12, 0.86, 1]}>
+        <torusGeometry args={[3.04, 0.004, 4, 192]} />
+        <meshBasicMaterial color="#f5e6cf" transparent opacity={0.09} depthWrite={false} />
+      </mesh>
+    </group>
+  )
+}
+
+function RouteBeacon() {
+  const group = useRef<Group>(null)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
+
+  useFrame(({ clock }) => {
+    if (!group.current) return
+    const progress = useExperience.getState().progress
+    const beaconProgress = reducedMotion ? progress : (progress + clock.elapsedTime * 0.028) % 1
+    group.current.position.copy(routeFrameAt(beaconProgress).position)
+  })
+
+  return (
+    <group ref={group}>
+      <mesh>
+        <octahedronGeometry args={[0.055, 0]} />
+        <meshBasicMaterial color="#f5e6cf" toneMapped={false} />
+      </mesh>
+      <pointLight color="#e8a15b" intensity={3.5} distance={2.4} />
     </group>
   )
 }
@@ -389,8 +443,10 @@ export function VoyageScene() {
       <FogDirector />
       <RuntimeProbe />
       <SignalDust />
+      <DawnInstrument />
       <SyntheticCore />
       <DawnRoute />
+      <RouteBeacon />
       <Corridor />
       <PortalGate />
       {tier === 'high' && !reducedMotion && (

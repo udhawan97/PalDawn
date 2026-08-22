@@ -16,6 +16,8 @@ logic, or medical claim.
 | `npm run typecheck` | Check app and Vite configuration types |
 | `npm run build` | Build `dist/` for production |
 | `npm test` | Type-check, build, validate journey/release invariants, and enforce the gzip budget |
+| `npm run test:browser` | Run the Chromium and WebKit interaction matrix |
+| `npm run measure:performance` | Build and capture local Chromium frame-time artifacts |
 | `npm run preview` | Serve the current production build locally |
 | `npm run licenses` | Rebuild the transitive dependency license inventory |
 
@@ -23,9 +25,12 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 
 ## Release architecture
 
-- `src/data/p0-journey.json` defines the bounded five-stage voyage and its
-  reduced-motion route.
+- `../content/journeys/first-light.v1.json` defines the bounded five-stage
+  content pack; `../content/schema/journey-v1.schema.json` and the canonical
+  digest gate make unknown or mutated pack content fail closed.
 - `src/journey/route.ts` produces the immutable normalized route lookup.
+- `src/scene/SceneCanvas.tsx` is lazy-loaded so the accessible interface and
+  text fallback do not wait on the WebGL dependency graph.
 - `src/scene/VoyageScene.tsx` consumes that route for camera ownership,
   guide geometry, corridor sweep, portal, lighting, and runtime telemetry.
 - `src/scene/FlowField.tsx` samples the route in the vertex shader using
@@ -37,8 +42,9 @@ Use `npm ci`, not `npm install`, for a clean verification run.
   separate.
 - The Foundation continuity waves persist only allowlisted display preferences,
   one bounded First Light resume position, known stage IDs, bounded private
-  notes, and personal checkpoints under versioned local keys. They add no
-  account or backend.
+  notes, and personal checkpoints under versioned, journey-scoped local keys.
+  Legacy data migrates locally; current backups are bound to the exact pack.
+  They add no account or backend.
 - `public/sw.js` is a first-party same-origin offline shell. Update activation is
   user-triggered; no service-worker dependency was added.
 - The accessible HTML layer also provides stage deep links, transcript and local
@@ -49,6 +55,9 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 Quality tiers use 750 / 2,000 / 4,000 analytic markers and DPR 1 / 1.25 /
 1.75. `auto` is a small device heuristic, not a validated performance claim.
 Formal measurements belong in `../docs/performance/`.
+`scripts/capture-performance.mjs` records three warmed runs at three authored
+stages and labels the results as local measurement artifacts rather than device
+or release claims.
 
 ## GitHub Pages
 
