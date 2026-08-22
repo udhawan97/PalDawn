@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1787359111.42099,
-    "ast_hash": "fe47f2008e8f095d7b7b5b65b73a53fd",
+    "mtime": 1787360081.3340895,
+    "ast_hash": "32a24c8c8cb13637d02f187c202ea4a9",
     "semantic_hash": ""
   },
   "app/THIRD_PARTY_LICENSES.md": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "app/scripts/capture-performance.mjs": {
-    "mtime": 1787359787.1013281,
-    "ast_hash": "45aba81d55b3afa984147ca8fbbc09a1",
+    "mtime": 1787360081.3337343,
+    "ast_hash": "0a394c50177ff40b707ff9d9ecdf9788",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus-4.mjs": {
@@ -592,6 +592,11 @@
   "graphify-out/memory/query_20260822_003909_how_does_foundation_4_connect_content_identity__lo.md": {
     "mtime": 1787359149.154135,
     "ast_hash": "4f98f6535c8f2575f793e6d9f592bf75",
+    "semantic_hash": ""
+  },
+  "docs/FOUNDATION-PLUS-4-QA.md": {
+    "mtime": 1787360081.3342662,
+    "ast_hash": "5824930e91626c729a045fe062e47483",
     "semantic_hash": ""
   }
 }

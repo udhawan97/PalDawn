@@ -1608,8 +1608,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_app",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "app.tsx"
     },
     {
@@ -1619,8 +1619,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_app_scenecanvas",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "scenecanvas"
     },
     {
@@ -1630,8 +1630,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_app_sceneboundarystate",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "sceneboundarystate"
     },
     {
@@ -1641,8 +1641,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "sceneboundary"
     },
     {
@@ -1652,8 +1652,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_getderivedstatefromerror",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -1663,8 +1663,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_componentdidcatch",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -1674,8 +1674,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_render",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": ".render()"
     },
     {
@@ -1685,8 +1685,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_src_app_renderfallback",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "renderfallback()"
     },
     {
@@ -1696,8 +1696,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_src_app_app",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "app()"
     },
     {
@@ -1905,8 +1905,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_route",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "route.ts"
     },
     {
@@ -1916,8 +1916,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_journey_route_author_points",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "author_points"
     },
     {
@@ -1927,8 +1927,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_journey_route_authoredcurve",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "authoredcurve"
     },
     {
@@ -1949,8 +1949,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "normalizedlookupcurve"
     },
     {
@@ -1960,8 +1960,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_constructor",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -1971,8 +1971,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_getpoint",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -1982,8 +1982,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "app_src_journey_route_voyageroute",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "voyageroute"
     },
     {
@@ -1993,8 +1993,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_src_journey_route_frames",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "frames"
     },
     {
@@ -2004,8 +2004,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframe",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "routeframe"
     },
     {
@@ -2026,8 +2026,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": "routeslice"
     },
     {
@@ -2037,8 +2037,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_constructor",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -2048,8 +2048,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_getpoint",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 51,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -2070,8 +2070,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_main",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "main.tsx"
     },
     {
@@ -2081,8 +2081,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_src_main_rootel",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "rootel"
     },
     {
@@ -2092,8 +2092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "diagnostics.ts"
     },
     {
@@ -2103,8 +2103,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticinput",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "diagnosticinput"
     },
     {
@@ -2114,8 +2114,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticreport",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "diagnosticreport()"
     },
     {
@@ -2576,8 +2576,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_pwa",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "pwa.ts"
     },
     {
@@ -2587,8 +2587,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_platform_pwa_beforeinstallpromptevent",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "beforeinstallpromptevent"
     },
     {
@@ -2598,8 +2598,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_platform_pwa_pwainstallstate",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "pwainstallstate"
     },
     {
@@ -2609,8 +2609,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_src_platform_pwa_isstandalone",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "isstandalone()"
     },
     {
@@ -2620,8 +2620,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_platform_pwa_dispatch",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "dispatch()"
     },
     {
@@ -2631,8 +2631,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_platform_pwa_registerpwa",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "registerpwa()"
     },
     {
@@ -2642,8 +2642,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_src_platform_pwa_getpwainstallstate",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "getpwainstallstate()"
     },
     {
@@ -2653,8 +2653,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_platform_pwa_requestpwainstall",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "requestpwainstall()"
     },
     {
@@ -2664,8 +2664,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_src_platform_pwa_activatepwaupdate",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "activatepwaupdate()"
     },
     {
@@ -2675,8 +2675,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_src_platform_pwa_checkforpwaupdate",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 52,
+      "community_name": "pwa.ts",
       "norm_label": "checkforpwaupdate()"
     },
     {
@@ -2752,8 +2752,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "flowfield.tsx"
     },
     {
@@ -2763,8 +2763,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "instance_counts"
     },
     {
@@ -2774,8 +2774,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "seededrandom()"
     },
     {
@@ -2785,8 +2785,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "flowfield()"
     },
     {
@@ -2796,8 +2796,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 56,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas.tsx"
     },
     {
@@ -2807,8 +2807,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvasprops",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 56,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvasprops"
     },
     {
@@ -2818,8 +2818,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvas",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 56,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas()"
     },
     {
@@ -2895,8 +2895,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_runtimeprobe",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "runtimeprobe()"
     },
     {
@@ -3016,8 +3016,8 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 56,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "voyagescene()"
     },
     {
@@ -3093,8 +3093,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_state_settings",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "settings.ts"
     },
     {
@@ -3104,8 +3104,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_state_settings_qualitytier",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "qualitytier"
     },
     {
@@ -3115,8 +3115,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvedtier",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "resolvedtier"
     },
     {
@@ -3126,8 +3126,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_src_state_settings_captionscale",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "captionscale"
     },
     {
@@ -3137,8 +3137,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_state_settings_playbackrate",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "playbackrate"
     },
     {
@@ -3148,8 +3148,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_src_state_settings_prefersreducedmotion",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "prefersreducedmotion()"
     },
     {
@@ -3159,8 +3159,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "resolvetier()"
     },
     {
@@ -3170,8 +3170,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_src_state_settings_tier_dpr",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "tier_dpr"
     },
     {
@@ -3181,8 +3181,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_state_settings_settingsstate",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "settingsstate"
     },
     {
@@ -3192,8 +3192,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_src_state_settings_persistedsettings",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "persistedsettings"
     },
     {
@@ -3203,8 +3203,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "app_src_state_settings_qualitytiers",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "qualitytiers"
     },
     {
@@ -3214,8 +3214,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_src_state_settings_captionscales",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "captionscales"
     },
     {
@@ -3225,8 +3225,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_state_settings_playbackrates",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "playbackrates"
     },
     {
@@ -3236,8 +3236,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "app_src_state_settings_mergepersistedsettings",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "mergepersistedsettings()"
     },
     {
@@ -3247,8 +3247,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "app_src_state_settings_safestorage",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "safestorage"
     },
     {
@@ -3269,8 +3269,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_state_telemetry",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "telemetry.ts"
     },
     {
@@ -3280,8 +3280,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_state_telemetry_runtimetelemetry",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "runtimetelemetry"
     },
     {
@@ -3291,8 +3291,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_state_telemetry_telemetrystate",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 40,
+      "community_name": "settings.ts",
       "norm_label": "telemetrystate"
     },
     {
@@ -3302,8 +3302,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_state_telemetry_usetelemetry",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "usetelemetry"
     },
     {
@@ -3368,8 +3368,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_orderedbookmarks",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 17,
+      "community_name": "localData.ts",
       "norm_label": "orderedbookmarks()"
     },
     {
@@ -3533,8 +3533,8 @@
       "source_location": "L659",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
-      "community": 1,
-      "community_name": "FlightDeck.tsx",
+      "community": 17,
+      "community_name": "localData.ts",
       "norm_label": "settingspanel()"
     },
     {
@@ -3555,8 +3555,8 @@
       "source_location": "L944",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 54,
+      "community_name": "FlowField.tsx",
       "norm_label": "telemetry()"
     },
     {
@@ -3599,8 +3599,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_webgl",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "webgl.ts"
     },
     {
@@ -3610,8 +3610,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "app_src_webgl_webgl2available",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 48,
+      "community_name": "App.tsx",
       "norm_label": "webgl2available()"
     },
     {
@@ -5991,6 +5991,83 @@
       "norm_label": "verification contract"
     },
     {
+      "label": "FOUNDATION-PLUS-4-QA.md",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "foundation-plus-4-qa.md"
+    },
+    {
+      "label": "Foundation+4 acceptance evidence",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "foundation+4 acceptance evidence"
+    },
+    {
+      "label": "Automated gates",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_automated_gates",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "automated gates"
+    },
+    {
+      "label": "Browser and visual observation",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_browser_and_visual_observation",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "browser and visual observation"
+    },
+    {
+      "label": "Performance artifact",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_performance_artifact",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "performance artifact"
+    },
+    {
+      "label": "Storage and content boundary",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_storage_and_content_boundary",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "storage and content boundary"
+    },
+    {
+      "label": "Known limits",
+      "file_type": "document",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "docs_foundation_plus_4_qa_known_limits",
+      "community": 55,
+      "community_name": "Foundation+4 acceptance evidence",
+      "norm_label": "known limits"
+    },
+    {
       "label": "FOUNDATION-PLUS-4.md",
       "file_type": "document",
       "source_file": "docs/FOUNDATION-PLUS-4.md",
@@ -6522,14 +6599,14 @@
       "label": "Locked WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked webgl2 stack",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "app_readme_locked_webgl2_stack"
     },
     {
@@ -6592,28 +6669,28 @@
       "label": "Locked Three.js and WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked three.js and webgl2 stack",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_locked_webgl2_stack"
     },
     {
       "label": "Minimal Linear Journey Schema",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "minimal linear journey schema",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_minimal_linear_journey_schema"
     },
     {
@@ -6648,14 +6725,14 @@
       "label": "Product Pillars",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "product pillars",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_product_pillars"
     },
     {
@@ -6746,14 +6823,14 @@
       "label": "Unpublished Medical Content",
       "author": null,
       "captured_at": null,
-      "community": 23,
+      "community": 53,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "unpublished medical content",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Attribution and Licensing Chain",
+      "community_name": "Medical Guardrails",
       "id": "notice_unpublished_medical_content"
     },
     {
@@ -6774,14 +6851,14 @@
       "label": "Journeys, Inside, Atlas, and Research Modes",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "journeys, inside, atlas, and research modes",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "readme_product_modes"
     },
     {
@@ -6802,35 +6879,35 @@
       "label": "Medical Accuracy Report",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "document",
       "norm_label": "medical accuracy report",
       "source_file": ".github/ISSUE_TEMPLATE/accuracy_report.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "_github_issue_template_accuracy_report_medical_accuracy_report"
     },
     {
       "label": "Journey Proposal",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "document",
       "norm_label": "journey proposal",
       "source_file": ".github/ISSUE_TEMPLATE/journey_proposal.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "_github_issue_template_journey_proposal_journey_proposal"
     },
     {
       "label": "Credits and Prior Art",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 57,
       "contributor": null,
       "file_type": "document",
       "norm_label": "credits and prior art",
@@ -6844,14 +6921,14 @@
       "label": "PalDawn Full Project Brief",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn full project brief",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_brief_for_codex_full_project_brief"
     },
     {
@@ -6928,7 +7005,7 @@
       "label": "Clean-Room Influences",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 57,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room influences",
@@ -6942,49 +7019,49 @@
       "label": "Engine Council Evidence",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "engine council evidence",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_brief_for_codex_engine_council_evidence"
     },
     {
       "label": "Medical Content Source Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical content source boundary",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_content_source_boundary"
     },
     {
       "label": "Medical Guardrails",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical guardrails",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_medical_guardrails"
     },
     {
       "label": "Clean-Room Rejection Rule",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 57,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room rejection rule",
@@ -7012,14 +7089,14 @@
       "label": "Medical Harvest and Content-Reuse Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 53,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical harvest and content-reuse boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_research_github_recon_evidence_medical_harvest_and_content_reuse_boundary"
     },
     {
@@ -7166,14 +7243,14 @@
       "label": "Quality and Reduced-Motion Settings",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "quality and reduced-motion settings",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_quality_and_reduced_motion_settings"
     },
     {
@@ -7201,35 +7278,35 @@
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "contributing_code_content_licensing_split"
     },
     {
       "label": "Used Direct Dependencies",
       "author": null,
       "captured_at": null,
-      "community": 16,
+      "community": 57,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "used direct dependencies",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Engineering Scaffold",
+      "community_name": "Credits and Prior Art",
       "id": "credits_used_direct_dependencies"
     },
     {
       "label": "Performance Proof Protocol",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "performance proof protocol",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "docs_plan_performance_proof_protocol"
     },
     {
@@ -7243,7 +7320,7 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "pipeline_provenance_readme_passing_provenance_record"
     },
     {
@@ -7369,7 +7446,7 @@
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "credits_candidate_adoption_boundary"
     },
     {
@@ -7383,21 +7460,21 @@
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_plan_provenance_precedes_adoption"
     },
     {
       "label": "License Adoption Boundary",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "license adoption boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_research_github_recon_evidence_license_adoption_boundary"
     },
     {
@@ -7411,21 +7488,21 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "pipeline_provenance_readme_fail_closed_validator_rules"
     },
     {
       "label": "Codex-Claude Working Model",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 21,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "codex-claude working model",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "Codex Reconnaissance Prompt",
       "id": "docs_brief_for_codex_codex_claude_working_model"
     },
     {
@@ -7516,14 +7593,14 @@
       "label": "Attribution and License Compliance Mission",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "attribution and license compliance mission",
       "source_file": "docs/PROMPT-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_prompt_for_codex_attribution_compliance_mission"
     }
   ],
@@ -16852,6 +16929,72 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa",
+      "target": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "target": "docs_foundation_plus_4_qa_automated_gates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "target": "docs_foundation_plus_4_qa_browser_and_visual_observation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "target": "docs_foundation_plus_4_qa_known_limits",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "target": "docs_foundation_plus_4_qa_performance_artifact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FOUNDATION-PLUS-4-QA.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_foundation_plus_4_qa_foundation_4_acceptance_evidence",
+      "target": "docs_foundation_plus_4_qa_storage_and_content_boundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/FOUNDATION-PLUS-4.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -18537,5 +18680,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "dcabc16fdd37c20ba967181b11142d0f25463b78"
+  "built_at_commit": "2ec16b5cc504386da33f48d9f4763844d2c6a97a"
 }

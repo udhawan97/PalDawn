@@ -5,7 +5,7 @@ import { chromium, webkit } from 'playwright'
 const PORT = Number(process.env.PALDAWN_PERF_PORT ?? 4174)
 const BASE_PATH = process.env.VITE_BASE_PATH ?? '/PalDawn/'
 const BASE_URL = new URL(BASE_PATH.endsWith('/') ? BASE_PATH : `${BASE_PATH}/`, `http://127.0.0.1:${PORT}`).href
-const BROWSER_NAME = process.env.PALDAWN_PERF_BROWSER ?? 'chromium'
+const BROWSER_NAME = process.env.PALDAWN_PERF_BROWSER ?? 'webkit'
 const browserType = { chromium, webkit }[BROWSER_NAME]
 
 if (!browserType) {
@@ -146,6 +146,7 @@ try {
     '# PalDawn local performance capture',
     '',
     `Build: \`${buildSha}\` · Browser: ${BROWSER_NAME} ${browserVersion}`,
+    `Quality: balanced · Renderer: ${environment.renderer} · Viewport: ${environment.viewport} @ ${environment.device_pixel_ratio}× DPR`,
     '',
     '> Measurement artifact only. This does not prove Safari, physical-mobile, fast-4G, anatomy, or clinical-content performance.',
     '',

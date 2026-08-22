@@ -17,7 +17,7 @@ logic, or medical claim.
 | `npm run build` | Build `dist/` for production |
 | `npm test` | Type-check, build, validate journey/release invariants, and enforce the gzip budget |
 | `npm run test:browser` | Run the Chromium and WebKit interaction matrix |
-| `npm run measure:performance` | Build and capture local Chromium frame-time artifacts |
+| `npm run measure:performance` | Build and capture local WebKit frame-time artifacts |
 | `npm run preview` | Serve the current production build locally |
 | `npm run licenses` | Rebuild the transitive dependency license inventory |
 
@@ -57,7 +57,9 @@ Quality tiers use 750 / 2,000 / 4,000 analytic markers and DPR 1 / 1.25 /
 Formal measurements belong in `../docs/performance/`.
 `scripts/capture-performance.mjs` records three warmed runs at three authored
 stages and labels the results as local measurement artifacts rather than device
-or release claims.
+or release claims. Set `PALDAWN_PERF_BROWSER=chromium` for a Chromium attempt;
+the command fails explicitly if the environment cannot deliver the bounded
+sample window.
 
 ## GitHub Pages
 
