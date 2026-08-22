@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "app/src/journey/journey.ts": {
-    "mtime": 1787357867.2158735,
-    "ast_hash": "107850b7afb258a1ddc2296f1d47289b",
+    "mtime": 1787359159.5015523,
+    "ast_hash": "666010044072d12ff533486ba1dfec89",
     "semantic_hash": ""
   },
   "app/src/journey/route.ts": {
@@ -560,13 +560,13 @@
     "semantic_hash": ""
   },
   "app/scripts/capture-performance.mjs": {
-    "mtime": 1787358237.9404156,
-    "ast_hash": "17558fc3db2f2f17cc1b5d4bef81c608",
+    "mtime": 1787359593.7576392,
+    "ast_hash": "0608d629fa24cd8b47015baef4cdd243",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus-4.mjs": {
-    "mtime": 1787358909.8357322,
-    "ast_hash": "ccda0f86231b4b16914103556ee9ecba",
+    "mtime": 1787359593.757921,
+    "ast_hash": "fd20977f48a45c0ad77202f4f7ad2d26",
     "semantic_hash": ""
   },
   "app/src/scene/SceneCanvas.tsx": {
@@ -587,6 +587,11 @@
   "docs/FOUNDATION-PLUS-4.md": {
     "mtime": 1787359111.4217262,
     "ast_hash": "d2f71a351e5deb773037a70c1a4cf7c7",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260822_003909_how_does_foundation_4_connect_content_identity__lo.md": {
+    "mtime": 1787359149.154135,
+    "ast_hash": "4f98f6535c8f2575f793e6d9f592bf75",
     "semantic_hash": ""
   }
 }

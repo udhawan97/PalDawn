@@ -79,12 +79,20 @@ try {
     await page.waitForTimeout(250)
     const runs = []
     for (let run = 1; run <= 3; run += 1) {
-      const samples = await page.evaluate(async ({ warmupFrames, sampleFrames }) => {
-        const frames = (count) => new Promise((resolve) => {
+      console.log(`measuring ${BROWSER_NAME} · ${stage} · run ${run}/3`)
+      const samples = await page.evaluate(async ({ warmupFrames, sampleFrames, batchTimeoutMs }) => {
+        const frames = (count) => new Promise((resolve, reject) => {
           const timestamps = []
+          const timeout = window.setTimeout(
+            () => reject(new Error(`Timed out while waiting for ${count} animation frames`)),
+            batchTimeoutMs,
+          )
           const next = (timestamp) => {
             timestamps.push(timestamp)
-            if (timestamps.length >= count + 1) resolve(timestamps)
+            if (timestamps.length >= count + 1) {
+              window.clearTimeout(timeout)
+              resolve(timestamps)
+            }
             else requestAnimationFrame(next)
           }
           requestAnimationFrame(next)
@@ -92,7 +100,7 @@ try {
         await frames(warmupFrames)
         const timestamps = await frames(sampleFrames)
         return timestamps.slice(1).map((timestamp, index) => timestamp - timestamps[index])
-      }, { warmupFrames: 120, sampleFrames: 180 })
+      }, { warmupFrames: 120, sampleFrames: 180, batchTimeoutMs: 30_000 })
       runs.push({ run, ...summarize(samples), raw_frame_ms: samples.map((value) => Number(value.toFixed(3))) })
     }
     const runtime = await page.locator('#runtime-telemetry').evaluate((element) => ({ ...element.dataset }))
