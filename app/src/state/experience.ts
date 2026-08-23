@@ -10,6 +10,7 @@ interface ExperienceState {
   progress: number
   narrationMode: NarrationMode
   openPanel: OpenPanel
+  resumeAfterSettings: boolean
   start: (reducedMotion: boolean) => void
   resume: () => void
   pause: () => void
@@ -20,7 +21,7 @@ interface ExperienceState {
   setProgress: (progress: number) => void
   setNarrationMode: (mode: NarrationMode) => void
   moveStage: (direction: -1 | 1) => void
-  setOpenPanel: (panel: OpenPanel) => void
+  setOpenPanel: (panel: OpenPanel, options?: { resumePlayback?: boolean }) => void
 }
 
 const initialSession = loadJourneySession()
@@ -36,12 +37,13 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
   progress: initialSession.progress,
   narrationMode: initialSession.narrationMode,
   openPanel: null,
+  resumeAfterSettings: false,
   start: (reducedMotion) => {
     const progress = 0.002
     saveJourneySession({ progress, narrationMode: get().narrationMode })
-    set({ entered: true, playing: !reducedMotion, progress })
+    set({ entered: true, playing: !reducedMotion, progress, resumeAfterSettings: false })
   },
-  resume: () => set({ entered: true, playing: false, openPanel: null }),
+  resume: () => set({ entered: true, playing: false, openPanel: null, resumeAfterSettings: false }),
   pause: () => set({ playing: false }),
   togglePlayback: (reducedMotion) => {
     if (reducedMotion) {
@@ -58,11 +60,11 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
   replay: (reducedMotion) => {
     const progress = 0.002
     saveJourneySession({ progress, narrationMode: get().narrationMode })
-    set({ entered: true, playing: !reducedMotion, progress, openPanel: null })
+    set({ entered: true, playing: !reducedMotion, progress, openPanel: null, resumeAfterSettings: false })
   },
   restart: () => {
     saveJourneySession({ progress: 0, narrationMode: get().narrationMode })
-    set({ entered: false, playing: false, progress: 0, openPanel: null })
+    set({ entered: false, playing: false, progress: 0, openPanel: null, resumeAfterSettings: false })
   },
   advance: (deltaSeconds, playbackRate = 1) => {
     const { playing, progress } = get()
@@ -92,5 +94,26 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
     saveJourneySession({ progress, narrationMode: get().narrationMode })
     set({ entered: true, playing: false, progress })
   },
-  setOpenPanel: (openPanel) => set({ openPanel }),
+  setOpenPanel: (openPanel, options) => set((state) => {
+    if (openPanel === 'settings' && state.openPanel !== 'settings') {
+      return {
+        openPanel,
+        playing: false,
+        resumeAfterSettings: state.playing,
+      }
+    }
+    if (state.openPanel === 'settings' && openPanel !== 'settings') {
+      const shouldResume = openPanel === null &&
+        options?.resumePlayback !== false &&
+        state.resumeAfterSettings &&
+        state.entered &&
+        state.progress < 1
+      return {
+        openPanel,
+        playing: shouldResume,
+        resumeAfterSettings: false,
+      }
+    }
+    return { openPanel }
+  }),
 }))

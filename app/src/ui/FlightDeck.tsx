@@ -49,11 +49,20 @@ import {
 } from '../platform/pwa'
 import { shareOrCopy, type ShareOutcome } from '../platform/share'
 import { studyWorkspaceMarkdown } from '../platform/study'
+import { syncAtlasFromHistory, useAtlas } from '../state/atlas'
+import { DiseaseExplorer, TopDiseasesRail } from './DiseaseExplorer'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
 const CAPTION_SCALES: CaptionScale[] = ['standard', 'large', 'largest']
 const PLAYBACK_RATES: PlaybackRate[] = [0.5, 1, 1.5]
 const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
+const PANEL_LABELS: Record<Exclude<OpenPanel, null>, string> = {
+  mission: 'Mission',
+  transcript: 'Transcript',
+  workspace: 'Study',
+  settings: 'Settings',
+  help: 'Help',
+}
 
 const orderedBookmarks = (ids: string[]): string[] =>
   JOURNEY.stages.filter((stage) => ids.includes(stage.id)).map((stage) => stage.id)
@@ -68,7 +77,7 @@ const shareStatus = (outcome: ShareOutcome, subject: string): string => {
 const replaceStageHash = (id: string): void => {
   const url = new URL(window.location.href)
   url.hash = `stage/${encodeURIComponent(id)}`
-  window.history.replaceState(null, '', url)
+  window.history.replaceState(window.history.state, '', url)
 }
 
 function isTypingTarget(target: EventTarget | null): boolean {
@@ -92,13 +101,14 @@ function SpdMark() {
 function PanelButton({ panel, children }: { panel: Exclude<OpenPanel, null>; children: React.ReactNode }) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
   return (
     <button
       className="text-button"
       type="button"
       data-panel={panel}
       aria-expanded={openPanel === panel}
-      onClick={() => setOpenPanel(openPanel === panel ? null : panel)}
+      onClick={() => setOpenPanel(openPanel === panel ? null : panel, { resumePlayback: !reducedMotion })}
     >
       {children}
     </button>
@@ -110,20 +120,24 @@ function Intro() {
   const resume = useExperience((state) => state.resume)
   const progress = useExperience((state) => state.progress)
   const reducedMotion = useSettings((state) => state.reducedMotion)
+  const openDisease = useAtlas((state) => state.openDisease)
   const resumeAvailable = progress > 0.01 && progress < 0.999
 
   return (
     <section className="intro" aria-labelledby="intro-title">
-      <p className="eyebrow">P0 technical voyage · v0.1</p>
-      <h1 id="intro-title" tabIndex={-1}>Follow the<br /><em>first light.</em></h1>
+      <p className="eyebrow">Whole-body systems preview · Foundation+4</p>
+      <h1 id="intro-title" tabIndex={-1}>See disease<br /><em>move through us.</em></h1>
       <p className="intro-copy">
-        Enter a project-authored synthetic route that proves PalDawn’s flight
-        system before any anatomy or clinical teaching is allowed aboard.
+        Follow ten high-impact conditions across a fully interactive 3D systems
+        map. Start with diabetes—from digestion and insulin to whole-body effects.
       </p>
       <div className="intro-actions">
-        <button className="primary-action" type="button" onClick={() => start(reducedMotion)}>
-          {reducedMotion ? 'Enter step mode' : 'Begin the voyage'}
+        <button className="primary-action" type="button" onClick={() => openDisease('diabetes')}>
+          Explore diabetes
           <span aria-hidden="true">↗</span>
+        </button>
+        <button className="secondary-action" type="button" onClick={() => start(reducedMotion)}>
+          {reducedMotion ? 'Enter step mode' : 'Begin the voyage'}
         </button>
         {resumeAvailable ? (
           <button className="secondary-action" type="button" onClick={resume}>
@@ -134,7 +148,7 @@ function Intro() {
       </div>
       <p className="synthetic-stamp">
         <span aria-hidden="true">◇</span>
-        Synthetic systems model · not anatomy
+        Procedural 3D model · source-backed preview · not diagnosis
       </p>
     </section>
   )
@@ -614,10 +628,12 @@ function SettingsPanel({
   textVoyage,
   onTextVoyageChange,
   workspace,
+  setStatus,
 }: {
   textVoyage: boolean
   onTextVoyageChange: (enabled: boolean) => void
   workspace: LearnerWorkspace
+  setStatus: (status: string) => void
 }) {
   const qualityTier = useSettings((state) => state.qualityTier)
   const reducedMotion = useSettings((state) => state.reducedMotion)
@@ -635,12 +651,21 @@ function SettingsPanel({
   const setPlaybackRate = useSettings((state) => state.setPlaybackRate)
   const restart = useExperience((state) => state.restart)
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
-  const [status, setStatus] = useState('')
   const [confirmReset, setConfirmReset] = useState(false)
   const [confirmRestart, setConfirmRestart] = useState(false)
   const [pendingImport, setPendingImport] = useState<Extract<LocalDataImportResult, { ok: true }> | null>(null)
   const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
+  const mounted = useRef(true)
+
+  useEffect(() => {
+    mounted.current = true
+    return () => { mounted.current = false }
+  }, [])
+
+  const reportStatus = (status: string) => {
+    if (mounted.current) setStatus(status)
+  }
 
   useEffect(() => {
     const onFullscreenChange = () => setFullscreen(Boolean(document.fullscreenElement))
@@ -706,13 +731,13 @@ function SettingsPanel({
           disabled={!fullscreenAvailable}
           onClick={() => {
             const action = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()
-            void action.catch(() => setStatus('Fullscreen is unavailable in this browser context.'))
+            void action.catch(() => reportStatus('Fullscreen is unavailable in this browser context.'))
           }}
         >
           {fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
         </button>
         <button type="button" onClick={() => {
-          void checkForPwaUpdate().then(() => setStatus('Update check complete.'))
+          void checkForPwaUpdate().then(() => reportStatus('Update check complete.'))
         }}>Check for app update</button>
         <button
           type="button"
@@ -720,10 +745,10 @@ function SettingsPanel({
           onClick={() => {
             void requestPwaInstall().then((outcome) => {
               setInstallState(getPwaInstallState())
-              if (outcome === 'accepted') setStatus('Install request accepted. Your browser will finish adding PalDawn.')
-              else if (outcome === 'dismissed') setStatus('Install cancelled. Nothing changed.')
-              else if (outcome === 'installed') setStatus('PalDawn is already running as an installed app.')
-              else setStatus('If your browser offers Install App or Add to Home Screen, use that command to install PalDawn.')
+              if (outcome === 'accepted') reportStatus('Install request accepted. Your browser will finish adding PalDawn.')
+              else if (outcome === 'dismissed') reportStatus('Install cancelled. Nothing changed.')
+              else if (outcome === 'installed') reportStatus('PalDawn is already running as an installed app.')
+              else reportStatus('If your browser offers Install App or Add to Home Screen, use that command to install PalDawn.')
             })
           }}
         >
@@ -735,11 +760,11 @@ function SettingsPanel({
         <p>Generated only when requested. Nothing is uploaded automatically.</p>
         <div className="panel-actions">
           <button type="button" onClick={() => {
-            void copyText(report()).then((copied) => setStatus(copied ? 'Diagnostics copied.' : 'Copy unavailable.'))
+            void copyText(report()).then((copied) => reportStatus(copied ? 'Diagnostics copied.' : 'Copy unavailable.'))
           }}>Copy diagnostics</button>
           <button type="button" onClick={() => {
             downloadText('paldawn-diagnostics.json', report(), 'application/json')
-            setStatus('Diagnostics downloaded.')
+            reportStatus('Diagnostics downloaded.')
           }}>Download diagnostics</button>
         </div>
       </section>
@@ -749,7 +774,7 @@ function SettingsPanel({
         <div className="panel-actions">
           <button type="button" onClick={() => {
             downloadText('paldawn-local-data.json', exportLocalData(), 'application/json')
-            setStatus('Local data downloaded.')
+            reportStatus('Local data downloaded.')
           }}>Download local data</button>
           {confirmReset ? (
             <button className="danger-action" type="button" onClick={() => {
@@ -779,14 +804,14 @@ function SettingsPanel({
                   const result = parseLocalDataImport(text)
                   if (!result.ok) {
                     setPendingImport(null)
-                    setStatus(result.error)
+                    reportStatus(result.error)
                     return
                   }
                   setPendingImport(result)
-                  setStatus('Backup validated. Review the preview before replacing local data.')
+                  reportStatus('Backup validated. Review the preview before replacing local data.')
                 }).catch(() => {
                   setPendingImport(null)
-                  setStatus('That backup could not be read.')
+                  reportStatus('That backup could not be read.')
                 })
               }}
             />
@@ -802,7 +827,7 @@ function SettingsPanel({
               <div className="panel-actions">
                 <button className="danger-action" type="button" onClick={() => {
                   if (!replaceLocalDataFromImport(pendingImport.data)) {
-                    setStatus('Local data could not be replaced in this browser context.')
+                    reportStatus('Local data could not be replaced in this browser context.')
                     return
                   }
                   const importUrl = new URL(window.location.href)
@@ -812,7 +837,7 @@ function SettingsPanel({
                 }}>Confirm replace local data</button>
                 <button type="button" onClick={() => {
                   setPendingImport(null)
-                  setStatus('Backup import cancelled. Nothing changed.')
+                  reportStatus('Backup import cancelled. Nothing changed.')
                 }}>Cancel import</button>
               </div>
             </section>
@@ -837,7 +862,6 @@ function SettingsPanel({
           {confirmRestart ? <button type="button" onClick={() => setConfirmRestart(false)}>Cancel restart</button> : null}
         </div>
       </section>
-      <p className="action-status" aria-live="polite">{status}</p>
     </>
   )
 }
@@ -859,8 +883,14 @@ function Drawer({
 }) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
   const drawerRef = useRef<HTMLElement>(null)
   const previousFocus = useRef<HTMLElement | null>(null)
+  const [settingsStatus, setSettingsStatus] = useState('')
+
+  useEffect(() => {
+    if (openPanel !== 'settings') setSettingsStatus('')
+  }, [openPanel])
 
   useEffect(() => {
     if (!openPanel) return
@@ -878,12 +908,30 @@ function Drawer({
 
   return (
     <aside ref={drawerRef} className="drawer" role="dialog" aria-modal="false" aria-labelledby="panel-title" tabIndex={-1}>
-      <button className="drawer-close" type="button" aria-label="Close panel" onClick={() => setOpenPanel(null)}>×</button>
+      <div className="drawer-header">
+        <div className="drawer-header-bar">
+          <span className="drawer-header-label" aria-hidden="true">{PANEL_LABELS[openPanel]}</span>
+          <button className="drawer-close" type="button" aria-label="Close panel" onClick={() => {
+            setSettingsStatus('')
+            setOpenPanel(null, { resumePlayback: !reducedMotion })
+          }}>×</button>
+        </div>
+        {openPanel === 'settings' ? (
+          <p className="action-status settings-status" aria-live="polite" aria-atomic="true">{settingsStatus}</p>
+        ) : null}
+      </div>
       <div className="drawer-scroll">
         {openPanel === 'mission' && <MissionPanel />}
         {openPanel === 'transcript' && <TranscriptPanel bookmarks={bookmarks} onToggleBookmark={onToggleBookmark} />}
         {openPanel === 'workspace' && <WorkspacePanel workspace={workspace} onUpdateWorkspace={onUpdateWorkspace} />}
-        {openPanel === 'settings' && <SettingsPanel textVoyage={textVoyage} onTextVoyageChange={onTextVoyageChange} workspace={workspace} />}
+        {openPanel === 'settings' && (
+          <SettingsPanel
+            textVoyage={textVoyage}
+            onTextVoyageChange={onTextVoyageChange}
+            workspace={workspace}
+            setStatus={setSettingsStatus}
+          />
+        )}
         {openPanel === 'help' && <HelpPanel />}
       </div>
     </aside>
@@ -967,6 +1015,8 @@ export function FlightDeck({
   const progress = useExperience((state) => state.progress)
   const playing = useExperience((state) => state.playing)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const atlasOpen = useAtlas((state) => state.open)
+  const openDisease = useAtlas((state) => state.openDisease)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const comfortVignette = useSettings((state) => state.comfortVignette)
   const highContrast = useSettings((state) => state.highContrast)
@@ -1015,6 +1065,15 @@ export function FlightDeck({
   useEffect(() => {
     if (reducedMotion) useExperience.getState().pause()
   }, [reducedMotion])
+
+  useEffect(() => {
+    const followAtlasHistory = (event?: PopStateEvent) => {
+      syncAtlasFromHistory(event ? event.state : window.history.state)
+    }
+    followAtlasHistory()
+    window.addEventListener('popstate', followAtlasHistory)
+    return () => window.removeEventListener('popstate', followAtlasHistory)
+  }, [])
 
   useEffect(() => {
     const followHash = () => {
@@ -1113,7 +1172,7 @@ export function FlightDeck({
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setOpenPanel(null)
+        setOpenPanel(null, { resumePlayback: !reducedMotion })
         return
       }
       const isTextEntry = event.target instanceof HTMLElement &&
@@ -1185,10 +1244,11 @@ export function FlightDeck({
     : smoothRange(progress, PORTAL_START, PORTAL_CENTER) *
       (1 - smoothRange(progress, PORTAL_CENTER, PORTAL_END))
   const completed = entered && progress >= 1
-  const skipTargetId = !entered ? 'intro-title' : completed ? 'completion-summary' : 'flight-controls'
+  const skipTargetId = atlasOpen ? 'atlas-title' : !entered ? 'intro-title' : completed ? 'completion-summary' : 'flight-controls'
+  const skipTargetLabel = atlasOpen ? 'disease explorer' : !entered ? 'introduction' : completed ? 'completion summary' : 'voyage controls'
 
   return (
-    <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage}>
+    <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage} data-atlas={atlasOpen}>
       <a
         className="skip-link"
         href={`#${skipTargetId}`}
@@ -1198,11 +1258,11 @@ export function FlightDeck({
           event.preventDefault()
           const skipUrl = new URL(window.location.href)
           skipUrl.hash = skipTargetId
-          window.history.replaceState(null, '', skipUrl)
+          window.history.replaceState(window.history.state, '', skipUrl)
           target.focus()
         }}
       >
-        Skip to {!entered ? 'introduction' : completed ? 'completion summary' : 'voyage controls'}
+        Skip to {skipTargetLabel}
       </a>
       <header className="masthead">
         <a className="wordmark" href="./" aria-label="PalDawn home">
@@ -1213,11 +1273,13 @@ export function FlightDeck({
             aria-hidden="true"
           />
           <span className="wordmark-name"><strong>Pal</strong>Dawn</span>
-          <i>पाल</i>
         </a>
-        <p className="build-mark">FIRST LIGHT / FOUNDATION+3</p>
+        <p className="build-mark">SYSTEMS PREVIEW / FOUNDATION+4</p>
         <nav className="utility-nav" aria-label="Release information">
-          <PanelButton panel="mission">Mission</PanelButton>
+          <button className="text-button" type="button" aria-expanded={atlasOpen} onClick={() => {
+            setOpenPanel(null, { resumePlayback: false })
+            openDisease('diabetes')
+          }}>Atlas</button>
           <PanelButton panel="transcript">Transcript</PanelButton>
           <PanelButton panel="workspace">Study</PanelButton>
           <PanelButton panel="settings">Settings</PanelButton>
@@ -1242,20 +1304,21 @@ export function FlightDeck({
         ) : null}
       </div>
       <div className="canvas-label" aria-hidden="true">
-        <span>{textVoyage ? 'TEXT VOYAGE' : 'SYNTHETIC MODEL'}</span>
-        <span>{textVoyage ? 'SCENE-FREE ROUTE' : 'NO ANATOMICAL SCALE'}</span>
+        <span>{textVoyage ? 'TEXT VOYAGE' : atlasOpen || !entered ? '3D SYSTEMS MAP' : 'SYNTHETIC MODEL'}</span>
+        <span>{textVoyage ? 'SCENE-FREE ROUTE' : atlasOpen || !entered ? 'CONCEPTUAL / NOT TO SCALE' : 'NO ANATOMICAL SCALE'}</span>
       </div>
-      {!entered && <Intro />}
-      {completed ? (
+      {atlasOpen ? <DiseaseExplorer /> : null}
+      {!atlasOpen && !entered ? <><Intro /><TopDiseasesRail /></> : null}
+      {!atlasOpen && completed ? (
         <CompletionSummary />
-      ) : (
+      ) : !atlasOpen && entered ? (
         <>
           <PhaseRail />
           <CompanionCaption bookmarks={bookmarks} onToggleBookmark={toggleStageBookmark} onOpenWorkspace={openWorkspace} />
           <ControlDeck />
           <Telemetry />
         </>
-      )}
+      ) : null}
       <Drawer
         textVoyage={textVoyage}
         onTextVoyageChange={onTextVoyageChange}
@@ -1264,14 +1327,14 @@ export function FlightDeck({
         workspace={workspace}
         onUpdateWorkspace={updateWorkspace}
       />
-      {entered && !textVoyage ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
-      {entered && comfortVignette && !textVoyage ? <div className="comfort-vignette" aria-hidden="true" /> : null}
+      {entered && !textVoyage && !atlasOpen ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
+      {entered && comfortVignette && !textVoyage && !atlasOpen ? <div className="comfort-vignette" aria-hidden="true" /> : null}
       <p className="safety-line">
-        Education only · never diagnosis. Suspected heart attack? Contact local
-        emergency services immediately.
+        Education only · never diagnosis. Source-backed disease content is an
+        unreviewed preview; urgent symptoms need real medical care.
       </p>
       <p className="sr-only" aria-live="polite">
-        {entered ? `${stageAt(progress).label}. ${stageAt(progress).guide}` : 'First light introduction.'}
+        {atlasOpen ? 'Disease systems explorer open.' : entered ? `${stageAt(progress).label}. ${stageAt(progress).guide}` : 'PalDawn disease systems introduction.'}
       </p>
       <p className="sr-only" aria-live="polite">{bookmarkStatus}</p>
     </div>

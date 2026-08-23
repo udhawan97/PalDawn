@@ -1,6 +1,6 @@
 {
   "name": "paldawn-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "PalDawn First Light — a synthetic WebGL2 technical voyage",
   "main": "index.js",
   "scripts": {

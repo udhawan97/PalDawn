@@ -1,18 +1,19 @@
-# 🌅 PalDawn (पाल · dawn) — The Companion Voyage
+# 🌅 PalDawn — The Companion Voyage
 
 **An evidence-linked causal voyage through disease.** PalDawn (formerly Antaryaan, renamed 2026-08-20) is not another general 3D anatomy atlas — organ explorers with hotspots, layers, and quizzes already exist in the open. Its narrow launch category: the learner **enters the body spatially, watches cause become effect over time**, switches the same visual beat between Layperson and Clinical narration, and can resolve **each factual claim to a curated source**.
 
 > Launch promise: **“Fly through a heart attack from plaque rupture to tissue death.”**
 
-> *pāl* (पाल) — guardian, protector, companion · *pal* (पल) — a moment · *dawn* — where every voyage begins. A family name lives inside this one, and its bearer flies every journey as **SPD**, the co-pilot.
+> A protected passage at first light. A family name lives inside this one, and its bearer flies every journey as **SPD**, the co-pilot.
 
 Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `docs/research/github-recon-evidence.md`) found no inspected open-source project providing this end-to-end combination; that is **not** asserted as proof that no competing product exists.
 
 - **License:** code MIT · PalDawn-authored and compatible derived content/asset packs CC BY-SA 4.0; upstream material additionally retains its exact source license and lineage record
 - **Hosting:** 100% free tier — static GitHub Pages; immutable versioned GLB packs later streamed from GitHub Releases; no backend, no paid services
-- **Status:** v0.1.0 First Light systems release complete: a synthetic five-stage
-  voyage plus provenance, test, and publication gates. No anatomy assets or
-  clinical content are included.
+- **Status:** v0.2.0 Systems Atlas release: ten source-linked disease previews,
+  an eleven-step diabetes mechanism, and a conceptual procedural body map sit
+  alongside the preserved five-stage First Light voyage. No reviewed anatomy,
+  patient data, diagnosis, or treatment selection is included.
 - **Not medical advice.** Education only — never diagnosis or personalized triage. Any user-facing context about a *suspected heart attack* must direct the person to **contact local emergency services immediately**.
 
 ---
@@ -28,7 +29,7 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 **Depth dial:** every beat carries two narration tracks (Layperson ↔ Clinical) over the same scene.
 
-**SPD — the co-pilot.** Every journey is flown with a companion character, **SPD** (in-universe: *Somatic Pathfinding Droid*; the initials privately honor the founder's father, the app's namesake). SPD narrates both depth tracks, points at what the camera is seeing, and carries the safety lines — wherever suspected-heart-attack symptoms are discussed, it is SPD who says **"contact your local emergency services immediately."** SPD explains; SPD never diagnoses. Foundation+ now provides a first-party offline shell for First Light. **Later:** EN + हिन्दी i18n and richer versioned content-pack offline support.
+**SPD — the co-pilot.** Every journey is flown with a companion character, **SPD** (in-universe: *Somatic Pathfinding Droid*; the initials privately honor the founder's father, the app's namesake). SPD narrates both depth tracks, points at what the camera is seeing, and carries the safety lines — wherever suspected-heart-attack symptoms are discussed, it is SPD who says **"contact your local emergency services immediately."** SPD explains; SPD never diagnoses. Foundation+ now provides a first-party offline shell for First Light. **Later:** richer versioned content-pack offline support.
 
 ---
 
@@ -228,6 +229,15 @@ Repo layout, immutable-action workflows (`ci.yml`, `deploy.yml`), owner CODEOWNE
 
 ## 12. Release status
 
+**v0.2.0 · Systems Atlas (2026-08-22):** the English-only Foundation+4 preview
+adds ten WHO-ranked starting journeys, an eleven-step diabetes mechanism,
+Plain English and Clinical terms reading depths, direct WHO and NIH/NIDDK
+links, and a project-authored procedural body map. Mobile discovery, guide
+focus, browser-history restoration, explicit journey completion, and Settings
+playback ownership are covered by browser acceptance tests. This is a released
+software preview, not a reviewed clinical lesson or anatomical model; the
+content remains visibly marked as unreviewed educational synthesis.
+
 **v0.1.0 · First Light (2026-08-20):** the foundation became a complete
 synthetic technical voyage. The release retains the locked WebGL2 stack and
 provenance gate; adds the shared route, procedural shell, portal/fog handoff,
@@ -236,10 +246,10 @@ transcript, accessibility/comfort controls, release-contract tests, CI, and
 Pages publication. The exact bundle and runtime measurements are in
 `docs/performance/v0.1.0.md`.
 
-Still absent by design: third-party 3D assets, approved anatomy, medical
-content, patient data, pathology, clinical claims, and qualified-human medical
-review. The release is P0 systems proof only; the P1 Heart Attack journey stays
-blocked.
+Still absent by design: third-party 3D assets, approved anatomy, patient data,
+diagnostic or treatment logic, published pathology simulation, and
+qualified-human medical review. The compact heart-disease preview is not the
+planned P1 Heart Attack journey; that deeper clinical journey stays blocked.
 
 ---
 

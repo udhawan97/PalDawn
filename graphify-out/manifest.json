@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1787351059.3987124,
-    "ast_hash": "dc91db768fd3e4c00452a4202087e34f",
+    "mtime": 1787451140.9445486,
+    "ast_hash": "b56c475a29cc176ff5c9c41bfe305363",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787339380.4179091,
+    "mtime": 1787451259.347172,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "CREDITS.md": {
-    "mtime": 1787339380.411598,
-    "ast_hash": "ba2a9ab8a1b8d15199f1138104fcbe13",
+    "mtime": 1787445014.932604,
+    "ast_hash": "7eff952b5f10175614f03f5390971278",
     "semantic_hash": ""
   },
   "NOTICE.md": {
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1787360530.4389164,
-    "ast_hash": "53cd9b05080bb74c1f0c9bd8026d33e2",
+    "mtime": 1787451140.9481199,
+    "ast_hash": "e44c01dea2b33fbb73ce56dd06c457d8",
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1787351059.3984601,
-    "ast_hash": "0b1cfc6b219c28597d4e924508a088fc",
+    "mtime": 1787451140.9485314,
+    "ast_hash": "aed8b431971a2af3d886d3aa96cbc345",
     "semantic_hash": ""
   },
   "app/THIRD_PARTY_LICENSES.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1787351059.4009423,
-    "ast_hash": "6569d8273499bdeff7265998c7ceadaf",
+    "mtime": 1787451611.2006357,
+    "ast_hash": "4bcab2bf2df36b6f0db3fe2da3323fc0",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -380,13 +380,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
-    "mtime": 1787339380.414459,
-    "ast_hash": "263f16e6f7ab7617d795777267d65b6c",
+    "mtime": 1787451636.9333057,
+    "ast_hash": "6e251ddee550b5eb6dff19fcf3165e32",
     "semantic_hash": ""
   },
   "app/src/data/p0-journey.json": {
-    "mtime": 1787280722.4560084,
-    "ast_hash": "714f8ec2a51580331c3136cb24146510",
+    "mtime": 1787451169.0016022,
+    "ast_hash": "89560803f0847f9e54177c2c4522d73e",
     "semantic_hash": ""
   },
   "app/src/journey/journey.ts": {
@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "app/src/scene/VoyageScene.tsx": {
-    "mtime": 1787346439.1708248,
-    "ast_hash": "3115acb0e2a7866a3e7217fc44a5e14d",
+    "mtime": 1787444155.0042255,
+    "ast_hash": "beed29b3e5de5bfa4937aa57b84d47a7",
     "semantic_hash": ""
   },
   "app/src/state/experience.ts": {
-    "mtime": 1787351059.3996856,
-    "ast_hash": "dee89ced01e2b8ea5f5b80ef08720dc7",
+    "mtime": 1787451778.5013583,
+    "ast_hash": "3e004211f901d6f6e546adce4e025d3e",
     "semantic_hash": ""
   },
   "app/src/state/telemetry.ts": {
@@ -420,13 +420,13 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1787360530.4395673,
-    "ast_hash": "d49be08b16a28ded8a7593f7be45f5c9",
+    "mtime": 1787450430.6536002,
+    "ast_hash": "f17eb8be11815895394fb9468390b47f",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787282167.6167054,
-    "ast_hash": "d12c58d4b4bcb1dfe5cf9f628d365bee",
+    "mtime": 1787451140.9478161,
+    "ast_hash": "b5591d85099e215c8f7fad2ff11dda5c",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
-    "mtime": 1787351059.3991508,
-    "ast_hash": "eb35b90204fa2e89e30bcebe686eb4a1",
+    "mtime": 1787451169.0019643,
+    "ast_hash": "e5bb5c61a999b9d21083499a88976633",
     "semantic_hash": ""
   },
   "app/src/platform/downloads.ts": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "paldawn-brand-and-site.html": {
-    "mtime": 1787327746.494002,
-    "ast_hash": "1ec235aff1b695a06761a7b6a90231e8",
+    "mtime": 1787451497.82735,
+    "ast_hash": "4d48b25e780486e22d3c24a53a9e13db",
     "semantic_hash": ""
   },
   "app/public/apple-touch-icon.png": {
@@ -637,6 +637,46 @@
   "app/public/icon-static.svg": {
     "mtime": 1787360530.4412975,
     "ast_hash": "0c810aefcb453291233e3761235efa18",
+    "semantic_hash": ""
+  },
+  "app/tests/userflow-design.spec.mjs": {
+    "mtime": 1787451778.5019789,
+    "ast_hash": "5aab2fc30de957c034d5a88b4050ab57",
+    "semantic_hash": ""
+  },
+  "app/src/data/diseases.ts": {
+    "mtime": 1787443975.173972,
+    "ast_hash": "928feee302cac700c1204af085acaafa",
+    "semantic_hash": ""
+  },
+  "app/src/scene/HumanSystemsScene.tsx": {
+    "mtime": 1787444404.6624486,
+    "ast_hash": "c90fb09cdf833077ddb52924004e57e7",
+    "semantic_hash": ""
+  },
+  "app/src/state/atlas.ts": {
+    "mtime": 1787450395.3820596,
+    "ast_hash": "f07239753501217b8c89a2f4b8e20041",
+    "semantic_hash": ""
+  },
+  "app/src/ui/DiseaseExplorer.tsx": {
+    "mtime": 1787450461.5862749,
+    "ast_hash": "9d6addb50da9add1fe4f386807d85bcb",
+    "semantic_hash": ""
+  },
+  "app/tests/disease-atlas.spec.mjs": {
+    "mtime": 1787450538.1795855,
+    "ast_hash": "abadf6d06a57ecfe564e5012ebef2a0b",
+    "semantic_hash": ""
+  },
+  "docs/FOUNDATION-PLUS-4.md": {
+    "mtime": 1787451140.9488752,
+    "ast_hash": "576dd0848196452a6d0b1d817244d38f",
+    "semantic_hash": ""
+  },
+  "docs/releases/v0.2.0.md": {
+    "mtime": 1787451140.9490883,
+    "ast_hash": "eea2574b5795c4989e7a78bce25039fe",
     "semantic_hash": ""
   }
 }

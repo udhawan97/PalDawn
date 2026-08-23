@@ -25,9 +25,11 @@ import {
   voyageRoute,
 } from '../journey/route'
 import { useExperience } from '../state/experience'
+import { useAtlas } from '../state/atlas'
 import { resolveTier, useSettings } from '../state/settings'
 import { useTelemetry } from '../state/telemetry'
 import { FlowField } from './FlowField'
+import { HumanSystemsScene } from './HumanSystemsScene'
 
 const DEEP_INK = new Color('#04070c')
 const CORRIDOR_INK = new Color('#12050b')
@@ -374,8 +376,12 @@ function SignalDust() {
 }
 
 export function VoyageScene() {
+  const entered = useExperience((state) => state.entered)
+  const atlasOpen = useAtlas((state) => state.open)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const tier = resolveTier(useSettings((state) => state.qualityTier))
+
+  if (!entered || atlasOpen) return <HumanSystemsScene />
 
   return (
     <>

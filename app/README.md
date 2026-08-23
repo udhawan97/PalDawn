@@ -1,12 +1,13 @@
-# PalDawn app — First Light v0.1.0
+# PalDawn app — v0.2.0 Systems Atlas
 
-The production app is a static WebGL2 technical voyage built with the locked
+The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +
 postprocessing stack.
 
-Every visible form is project-authored procedural geometry. This release has
-no anatomy asset, medical dataset, clinical content, patient data, diagnostic
-logic, or medical claim.
+Every visible form is project-authored procedural geometry. Foundation+4 adds
+source-linked disease education, but no third-party anatomy asset, medical
+dataset, patient data, diagnostic logic, or treatment recommender. The content
+is marked as an unreviewed educational preview.
 
 ## Commands
 
@@ -23,6 +24,15 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 
 ## Release architecture
 
+- `src/data/diseases.ts` defines the WHO-ranked condition library, claim-level
+  source routing, affected systems, and the eleven-stage diabetes journey.
+- `src/scene/HumanSystemsScene.tsx` renders the conceptual whole-body model and
+  active-system/exploded states from project-authored primitives.
+- `src/ui/DiseaseExplorer.tsx` provides the condition rail, explanation-depth
+  control, organ labels, evidence links, timeline, keyboard navigation, and
+  in-app how-to guide.
+- `src/state/atlas.ts` keeps disease navigation separate from First Light's
+  persisted learner state.
 - `src/data/p0-journey.json` defines the bounded five-stage voyage and its
   reduced-motion route.
 - `src/journey/route.ts` produces the immutable normalized route lookup.

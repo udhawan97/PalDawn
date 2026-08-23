@@ -59,6 +59,8 @@ unlicensed, license-ambiguous, GPL/AGPL, or simply studied as prior art:
 - Z-Anatomy Blender add-ons (GPL-3.0) — workflow ideas only; no GPL source copied. https://github.com/Z-Anatomy/Blender-addons
 - Cinematic Zoom by David Ronai (@makio64, MIT) — camera-channel/log-distance interpolation principles; if code is ever adapted, attribution and MIT notice land at the adaptation site. https://github.com/Makio64/threejs-cinematic-world-zoom
 - Theatre.js — editor/runtime-separation boundary idea only; AGPL Studio code is never copied. https://github.com/theatre-js/theatre
+- vtk.js and Kitware Glance — web medical-visualization and staged viewer vocabulary only; no dependency, source, volume, or geometry was copied. https://github.com/Kitware/vtk-js · https://github.com/Kitware/glance
+- Public Three.js anatomy-viewer experiments (Anatopedia, BodyExplorer, and Open Anatomy Atlas) — layered-selection and browser-fit reconnaissance only; no source or asset was copied, and their own asset/licensing statements are not PalDawn approval. https://github.com/doruksener/anatopedia · https://github.com/JohanBellander/BodyExplorer · https://github.com/desmond9986/open-anatomy-atlas
 
 ## 3D assets
 
