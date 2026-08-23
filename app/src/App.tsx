@@ -48,18 +48,18 @@ function RenderFallback({
         alt=""
         aria-hidden="true"
       />
-      <p className="eyebrow">PalDawn · first light</p>
-      <h1>The voyage could not start.</h1>
-      <p>{reason} Your saved position and settings remain on this device.</p>
+      <p className="eyebrow">PalDawn · Systems Atlas</p>
+      <h1>The 3D map could not start.</h1>
+      <p>{reason} The disease guides and First Light text voyage remain available, and your saved position and settings stay on this device.</p>
       <div className="fallback-actions">
         <button className="primary-action" type="button" onClick={onRetry}>
           Retry the scene <span aria-hidden="true">↻</span>
         </button>
         <button className="secondary-action" type="button" onClick={onTextVoyage}>
-          Continue with the text voyage
+          Continue without 3D
         </button>
       </div>
-      <p className="synthetic-stamp">Synthetic systems model · not anatomy</p>
+      <p className="synthetic-stamp">Conceptual systems map · education only · not diagnosis</p>
     </main>
   )
 }

@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1787451140.9445486,
-    "ast_hash": "b56c475a29cc176ff5c9c41bfe305363",
+    "mtime": 1787452492.877529,
+    "ast_hash": "3e019773e644434463a6e024a3907653",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -10,8 +10,8 @@
     "semantic_hash": "fb59e5a90b869a1ac49fba4787759918"
   },
   "app/src/App.tsx": {
-    "mtime": 1787360530.4391878,
-    "ast_hash": "24882e5df83aab64aa699815770f007a",
+    "mtime": 1787452363.9226835,
+    "ast_hash": "c38fdb0c250a44a37b7479e41a45141b",
     "semantic_hash": ""
   },
   "app/src/main.tsx": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/index.html": {
-    "mtime": 1787358976.4450603,
-    "ast_hash": "9d25ae47f6ecef859a23cbfe1b3fd149",
+    "mtime": 1787452363.9216092,
+    "ast_hash": "57e33d625ebf932d8f2ba8beb1d0db91",
     "semantic_hash": ""
   },
   "docs/BRIEF-FOR-CODEX.md": {
@@ -380,8 +380,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
-    "mtime": 1787451636.9333057,
-    "ast_hash": "6e251ddee550b5eb6dff19fcf3165e32",
+    "mtime": 1787452492.8779976,
+    "ast_hash": "334d09d0eb71e8df9712b6a160cbde20",
     "semantic_hash": ""
   },
   "app/src/data/p0-journey.json": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1787360530.4407263,
-    "ast_hash": "9e99becd049ee55c1e889070d21819d1",
+    "mtime": 1787452363.923278,
+    "ast_hash": "7b8d95fa8b7fd6e95ded02c60570cd2a",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -645,8 +645,8 @@
     "semantic_hash": ""
   },
   "app/src/data/diseases.ts": {
-    "mtime": 1787443975.173972,
-    "ast_hash": "928feee302cac700c1204af085acaafa",
+    "mtime": 1787451957.5456135,
+    "ast_hash": "4c8566f88469496f88e96b42de2b5792",
     "semantic_hash": ""
   },
   "app/src/scene/HumanSystemsScene.tsx": {

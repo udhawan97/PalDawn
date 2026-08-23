@@ -9,6 +9,7 @@ const packageJson = JSON.parse(read('package.json'))
 const journey = JSON.parse(read('src/data/p0-journey.json'))
 
 assert.equal(packageJson.version, '0.2.0', 'package version must match the release')
+assert.match(packageJson.description, /Systems Atlas/, 'package description must match the release identity')
 assert.equal(journey.release, packageJson.version, 'journey and package versions must match')
 assert.equal(journey.content_status, 'synthetic_engineering_only')
 assert.equal(journey.published_medical_claims, false)
@@ -49,7 +50,7 @@ assert.match(source, /'completion-summary'/)
 assert.match(source, /aria-live="polite"/)
 
 const distHtml = read('dist/index.html')
-assert.match(distHtml, /First Light/)
+assert.match(distHtml, /PalDawn — Systems Atlas/)
 assert.doesNotMatch(distHtml, /\/src\/main\.tsx/, 'production HTML must not reference source modules')
 
 const assetsDirectory = new URL('dist/assets', ROOT).pathname

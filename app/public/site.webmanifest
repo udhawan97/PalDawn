@@ -1,7 +1,7 @@
 {
-  "name": "PalDawn — First Light",
+  "name": "PalDawn — Systems Atlas",
   "short_name": "PalDawn",
-  "description": "A synthetic, non-anatomical technical voyage.",
+  "description": "An English-only 3D learning experience with source-linked disease journeys.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#04070c",
