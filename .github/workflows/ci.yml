@@ -23,7 +23,7 @@ jobs:
         working-directory: app
       - run: npm test
         working-directory: app
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium webkit
         working-directory: app
       - run: npm run test:browser
         working-directory: app

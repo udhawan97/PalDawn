@@ -9,26 +9,27 @@
 <p align="center"><strong>A protected passage at first light.</strong></p>
 
 PalDawn is an evidence-first 3D voyage system for curious learners. The current
-Foundation+4 preview pairs the preserved five-stage engineering voyage with an
-English-only disease systems explorer: ten WHO-ranked starting journeys, an
-interactive project-authored body map, and a detailed diabetes mechanism from
-digestion and insulin signalling through whole-body effects.
+Mechanism Lens release pairs the preserved five-stage engineering voyage with
+ten WHO-ranked starting journeys, a high-detail project-authored body map,
+organ-level close focus, and phase signals that make each mechanism change
+visible without presenting the model as reviewed anatomy.
 
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Launch the web app</strong></a>
-  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.2.0">Systems Atlas release</a>
+  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0">Mechanism Lens release</a>
   · <a href="pipeline/provenance/README.md">Evidence gate</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-f0aa54.svg"></a>
-  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.2.0"><img alt="Latest tagged release: v0.2.0" src="https://img.shields.io/badge/release-v0.2.0-75d9d2.svg"></a>
+  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0"><img alt="Latest tagged release: v0.3.0" src="https://img.shields.io/badge/release-v0.3.0-75d9d2.svg"></a>
 </p>
 
 > [!IMPORTANT]
-> **The 3D body is a conceptual systems map, not reviewed anatomy.** Foundation+4
-> adds source-linked educational synthesis, but it has not been reviewed by a
+> **The 3D body is a conceptual systems map, not reviewed anatomy.** Mechanism
+> Lens adds high-detail procedural layers and source-linked educational
+> synthesis, but neither has been reviewed by a
 > named qualified clinician and cannot diagnose symptoms, calculate personal
 > risk, or recommend treatment. No third-party anatomy asset or patient data is
 > incorporated. If you think you may be having a medical emergency, contact
@@ -40,22 +41,25 @@ digestion and insulin signalling through whole-body effects.
 |---|---|---|---|
 | Web app | Current `main`, deployed as a static installable web app | JavaScript; WebGL2 for the 3D scene | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
 | Text voyage | The same five authored stages without the 3D scene | JavaScript; choose **Use text voyage** in Settings or from the WebGL recovery screen | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
-| Release snapshot | Immutable Systems Atlas source at `v0.2.0` | Git or GitHub | [View v0.2.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.2.0) |
+| Release snapshot | Immutable Mechanism Lens source at `v0.3.0` | Git or GitHub | [View v0.3.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0) |
 | Local source | Current code, tests, and provenance checks | Node.js 22+; WebGL2 for 3D | [Run locally](#run-locally) |
 
 There is no packaged desktop or mobile download. If your browser supports web
 app installation, open **Settings → Installation help**; the browser remains
 in charge of whether it offers **Install App** or **Add to Home Screen**.
 
-The live website follows current `main`. The `v0.2.0` tag is the immutable
-Systems Atlas release snapshot. The original First Light systems release
-remains available at `v0.1.0`.
+The live website follows current `main`. The `v0.3.0` tag is the immutable
+Mechanism Lens release snapshot. Systems Atlas remains available at `v0.2.0`,
+and the original First Light systems release remains available at `v0.1.0`.
 
 ## What you can do today
 
 - **Explore ten disease pathways.** Start from the WHO 2021 top ten global
   causes of death and follow a compact, source-linked mechanism through the
   body. The ranking describes global mortality, not personal risk.
+- **See each phase change.** Follow a data-driven signal route across only the
+  structures named by the current step, then select a highlighted structure to
+  enter close focus with layered geometry and a visible phase lens.
 - **Follow diabetes in depth.** Move through digestion, glucose absorption,
   insulin release, cellular response, type 1/type 2/gestational divergence,
   hyperglycaemia, kidney response, ketones, and long-term vessel, eye, kidney,
@@ -103,7 +107,7 @@ anatomical reconstruction.*
 | Data | No account or backend. Resume state, preferences, bookmarks, private notes, and checkpoints stay in browser storage until you export or reset them. |
 | Network | The deployed app loads static same-origin files. It has no analytics SDK or outbound telemetry path; the offline shell caches only PalDawn-owned assets. |
 | AI | No runtime AI provider, model call, or API key is used. SPD is authored interface guidance, not a diagnostic agent. |
-| Medical content | Foundation+4 contains source-linked, unreviewed educational synthesis. It is visibly marked as a preview and never presented as diagnosis, treatment selection, reviewed anatomy, or professional clinical training. |
+| Medical content | Mechanism Lens contains source-linked, unreviewed educational synthesis and project-authored illustrative geometry. Both are visibly bounded and never presented as diagnosis, treatment selection, reviewed anatomy, or professional clinical training. |
 | Provenance | Candidate assets and content fail closed until license, lineage, source, and—where medical—named qualified-human review requirements pass. |
 | Updates | PalDawn shows an update banner when a new build is waiting; choose **Update now** to activate it immediately. The browser may also activate it after all PalDawn tabs close. |
 
@@ -147,7 +151,9 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `app/` | Vite, React, TypeScript, Three.js, React Three Fiber, PWA shell, and browser tests |
 | `app/src/data/p0-journey.json` | Bounded five-stage journey data |
 | `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
-| `app/src/scene/HumanSystemsScene.tsx` | Project-authored procedural whole-body systems map |
+| `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
+| `app/src/scene/SceneCanvas.tsx` | Lazy-loaded WebGL scene boundary kept available through the offline asset manifest |
+| `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
 | `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |
 | `docs/PLAN.md` | Product architecture, medical gates, and roadmap |

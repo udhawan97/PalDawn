@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, type RefObject } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
 import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId } from '../data/diseases'
 import { useAtlas } from '../state/atlas'
 import { useExperience } from '../state/experience'
@@ -55,7 +55,7 @@ function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonE
       <ol>
         <li><b>Choose a condition.</b><span>The condition index follows WHO’s 2021 global ranking; it does not estimate your risk.</span></li>
         <li><b>Advance the mechanism.</b><span>Use the numbered timeline or the Previous and Next controls. Highlighted organs change at each step.</span></li>
-        <li><b>Inspect the body.</b><span>Drag the 3D model to orbit, select an organ, or use Explode systems to separate overlapping structures.</span></li>
+        <li><b>Inspect the body.</b><span>Select a highlighted structure to enter close focus. The lens reveals layered geometry and the current phase signal; choose Whole body to return.</span></li>
         <li><b>Change reading depth.</b><span>Plain English explains the idea; Clinical terms adds vocabulary without turning this into professional training.</span></li>
         <li><b>Open the evidence.</b><span>Source links go directly to WHO and NIH/NIDDK pages. The synthesis itself has not received qualified medical review.</span></li>
         <li><b>Keep the boundary.</b><span>This experience cannot diagnose symptoms, calculate personal risk, or recommend treatment. Urgent warnings direct you to real care.</span></li>
@@ -105,7 +105,8 @@ export function DiseaseExplorer() {
   const disease = diseaseById(selectedDiseaseId)
   const step = disease.steps[stepIndex]
   const finalStep = stepIndex === disease.steps.length - 1
-  const activeParts = useMemo(() => new Set(step.bodyParts), [step.bodyParts])
+  const focusPart = (selectedBodyPart ?? step.bodyParts[0]) as BodyPartId
+  const focusLabel = BODY_PART_LABELS[focusPart]
 
   useEffect(() => {
     useExperience.getState().pause()
@@ -157,7 +158,12 @@ export function DiseaseExplorer() {
         </a>
       </aside>
 
-      <section className="atlas-stage" aria-label="Interactive 3D systems map">
+      <section
+        className="atlas-stage"
+        aria-label="Interactive 3D systems map"
+        data-phase-detail={step.id}
+        data-focus-part={selectedBodyPart ?? 'whole-body'}
+      >
         <div className="atlas-stage-heading">
           <div>
             <p className="eyebrow">3D systems map · visibly synthetic</p>
@@ -170,16 +176,19 @@ export function DiseaseExplorer() {
             <button type="button" aria-pressed={rotationPaused} onClick={toggleRotation}>
               {rotationPaused ? 'Resume drift' : 'Pause drift'}
             </button>
+            {selectedBodyPart ? (
+              <button type="button" onClick={() => setSelectedBodyPart(null)}>Whole body</button>
+            ) : null}
             <button ref={guideTriggerRef} type="button" onClick={() => setGuideOpen(true)}>How to use</button>
           </div>
         </div>
         <div className="atlas-active-parts">
-          <span>Visible systems</span>
-          {(Object.keys(BODY_PART_LABELS) as BodyPartId[]).map((part) => (
+          <span>Phase detail</span>
+          {step.bodyParts.map((part) => (
             <button
               key={part}
               type="button"
-              data-active={activeParts.has(part)}
+              data-active="true"
               aria-pressed={selectedBodyPart === part}
               onClick={() => setSelectedBodyPart(selectedBodyPart === part ? null : part)}
             >
@@ -189,8 +198,8 @@ export function DiseaseExplorer() {
         </div>
         <p className="atlas-structure-status" aria-live="polite">
           {selectedBodyPart
-            ? `${BODY_PART_LABELS[selectedBodyPart as BodyPartId] ?? selectedBodyPart} selected in the procedural model.`
-            : `${step.bodyParts.map((part) => BODY_PART_LABELS[part]).join(', ')} highlighted for this step.`}
+            ? `${focusLabel} in close focus. Layered geometry and phase signals are conceptual, not anatomical scale.`
+            : `${focusLabel} anchors this phase. Select any highlighted structure for close detail.`}
         </p>
       </section>
 
@@ -219,6 +228,22 @@ export function DiseaseExplorer() {
           </div>
           <p>{step.phase}</p>
           <h2 id="atlas-step-title" aria-live="polite">{step.label}</h2>
+          <aside className="atlas-mechanism-lens" aria-label="Mechanism lens" aria-live="polite">
+            <div>
+              <span>Mechanism lens</span>
+              <strong>{focusLabel} · {selectedBodyPart ? 'close focus' : 'phase anchor'}</strong>
+            </div>
+            <p>
+              {selectedBodyPart
+                ? 'The 3D view is holding this structure close while the current phase route remains visible.'
+                : 'Select a highlighted structure in the 3D view to reveal its layered detail.'}
+            </p>
+            <ul aria-label="Structures shown in this phase">
+              {step.bodyParts.map((part) => (
+                <li key={part} data-primary={part === focusPart}>{BODY_PART_LABELS[part]}</li>
+              ))}
+            </ul>
+          </aside>
           <p className="atlas-step-copy">{step[narration]}</p>
           {step.caution ? <p className="atlas-caution"><b>Care boundary</b>{step.caution}</p> : null}
           <SourceLinks sourceIds={step.sourceIds} />

@@ -381,7 +381,14 @@ export function VoyageScene() {
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const tier = resolveTier(useSettings((state) => state.qualityTier))
 
-  if (!entered || atlasOpen) return <HumanSystemsScene />
+  if (!entered || atlasOpen) {
+    return (
+      <>
+        <RuntimeProbe />
+        <HumanSystemsScene />
+      </>
+    )
+  }
 
   return (
     <>

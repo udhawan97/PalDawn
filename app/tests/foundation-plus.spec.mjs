@@ -4,6 +4,12 @@ const JOURNEY_KEY = 'paldawn:journey:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const RESET_KEY = 'paldawn:reset:v1'
 
+async function pauseOnCurrentStage(page) {
+  await page.bringToFront()
+  await page.getByLabel('Journey position').fill('2')
+  await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
+}
+
 test('skip navigation moves focus before and after entry', async ({ page }) => {
   await page.goto('./')
 
@@ -58,12 +64,15 @@ test('settings selects provide 44px activation targets', async ({ page }) => {
 })
 
 test('reset in one tab cannot be undone by another open tab', async ({ page }) => {
+  test.setTimeout(45_000)
   const otherPage = await page.context().newPage()
   await Promise.all([page.goto('./'), otherPage.goto('./')])
   await Promise.all([
     page.getByRole('button', { name: 'Begin the voyage' }).click(),
     otherPage.getByRole('button', { name: 'Begin the voyage' }).click(),
   ])
+  await pauseOnCurrentStage(page)
+  await pauseOnCurrentStage(otherPage)
   await otherPage.evaluate(() => document.activeElement?.blur())
   await otherPage.keyboard.press('b')
   await otherPage.getByRole('button', { name: 'Skip to next stage' }).click()

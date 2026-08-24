@@ -78,6 +78,14 @@ textarea:focus-visible {
   display: block;
 }
 
+.scene-loading {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(117, 217, 210, 0.08), transparent 26%),
+    var(--ink-0);
+}
+
 .flight-ui {
   position: absolute;
   z-index: 2;
@@ -1302,6 +1310,7 @@ kbd {
 }
 
 .quality-setting select {
+  height: 44px;
   min-width: 104px;
   min-height: 44px;
   padding: 7px 9px;
@@ -1933,7 +1942,7 @@ html[data-contrast='high'] {
   }
 }
 
-/* Foundation+4 disease systems explorer. All anatomy-like forms are
+/* Mechanism Lens disease systems explorer. All anatomy-like forms are
    project-authored procedural geometry, intentionally conceptual and not to scale. */
 
 .flight-ui[data-atlas='true']::before {
@@ -2201,6 +2210,15 @@ html[data-contrast='high'] {
   border: 1px solid rgba(117, 217, 210, 0.08);
   border-radius: 50%;
   box-shadow: inset 0 0 80px rgba(117, 217, 210, 0.035);
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 320ms ease;
+}
+
+.atlas-stage:not([data-focus-part='whole-body'])::before {
+  border-color: rgba(117, 217, 210, 0.22);
+  box-shadow:
+    inset 0 0 100px rgba(117, 217, 210, 0.07),
+    0 0 38px rgba(240, 170, 84, 0.08);
+  transform: scale(0.92);
 }
 
 .atlas-stage-heading {
@@ -2271,6 +2289,9 @@ html[data-contrast='high'] {
 }
 
 .atlas-active-parts button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   min-height: 27px;
   padding: 3px 7px;
   border: 1px solid transparent;
@@ -2291,6 +2312,8 @@ html[data-contrast='high'] {
 .atlas-active-parts button[aria-pressed='true'] {
   border-color: var(--aqua);
   color: var(--aqua);
+  background: rgba(117, 217, 210, 0.1);
+  box-shadow: 0 0 20px rgba(117, 217, 210, 0.08);
 }
 
 .atlas-structure-status {
@@ -2299,11 +2322,12 @@ html[data-contrast='high'] {
   bottom: 20px;
   left: 22px;
   margin: 0;
-  color: var(--dim);
+  color: #8394a0;
   font-family: 'SFMono-Regular', Menlo, monospace;
   font-size: 0.5rem;
   line-height: 1.45;
   text-align: center;
+  text-wrap: balance;
 }
 
 .atlas-detail {
@@ -2454,6 +2478,71 @@ html[data-contrast='high'] {
   font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1.1;
+}
+
+.atlas-mechanism-lens {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 15px;
+  padding: 11px 12px;
+  border: 1px solid rgba(117, 217, 210, 0.2);
+  border-left-color: var(--dawn);
+  background:
+    radial-gradient(circle at 94% 18%, rgba(117, 217, 210, 0.09), transparent 42%),
+    rgba(117, 217, 210, 0.035);
+}
+
+.atlas-mechanism-lens > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.atlas-mechanism-lens span,
+.atlas-mechanism-lens strong {
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.49rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.atlas-mechanism-lens span {
+  color: var(--aqua);
+}
+
+.atlas-mechanism-lens strong {
+  color: var(--bone);
+  font-weight: 560;
+  text-align: right;
+}
+
+.atlas-mechanism-lens p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.59rem;
+  line-height: 1.45;
+}
+
+.atlas-mechanism-lens ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 1px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atlas-mechanism-lens li {
+  padding: 3px 5px;
+  border: 1px solid rgba(235, 230, 219, 0.1);
+  color: var(--dim);
+  font-size: 0.48rem;
+}
+
+.atlas-mechanism-lens li[data-primary='true'] {
+  border-color: rgba(240, 170, 84, 0.36);
+  color: var(--dawn);
 }
 
 .atlas-step-copy {
@@ -2996,6 +3085,16 @@ html[data-contrast='high'] {
   .atlas-step-card {
     margin-top: 10px;
     padding-top: 10px;
+  }
+
+  .atlas-mechanism-lens {
+    margin: 8px 0 10px;
+    padding: 7px 9px;
+  }
+
+  .atlas-mechanism-lens p,
+  .atlas-mechanism-lens ul {
+    display: none;
   }
 
   .atlas-step-copy {

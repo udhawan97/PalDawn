@@ -8,8 +8,8 @@ const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
 const packageJson = JSON.parse(read('package.json'))
 const journey = JSON.parse(read('src/data/p0-journey.json'))
 
-assert.equal(packageJson.version, '0.2.0', 'package version must match the release')
-assert.match(packageJson.description, /Systems Atlas/, 'package description must match the release identity')
+assert.equal(packageJson.version, '0.3.0', 'package version must match the release')
+assert.match(packageJson.description, /Mechanism Lens/, 'package description must match the release identity')
 assert.equal(journey.release, packageJson.version, 'journey and package versions must match')
 assert.equal(journey.content_status, 'synthetic_engineering_only')
 assert.equal(journey.published_medical_claims, false)
@@ -40,8 +40,8 @@ const walk = (directory) => {
 }
 walk(new URL('src', ROOT).pathname)
 const source = sourceFiles.map((path) => readFileSync(path, 'utf8')).join('\n')
-assert.doesNotMatch(source, /\.(glb|gltf|fbx|obj|blend)(?:[?"'])/i, 'anatomy/binary assets are not allowed in v0.2')
-assert.doesNotMatch(source, /[\u0900-\u097f]/u, 'the v0.2 application surface must remain English-only')
+assert.doesNotMatch(source, /\.(glb|gltf|fbx|obj|blend)(?:[?"'])/i, 'unreviewed anatomy/binary assets are not allowed in v0.3')
+assert.doesNotMatch(source, /[\u0900-\u097f]/u, 'the v0.3 application surface must remain English-only')
 assert.match(source, /suspected heart attack\? contact local\s+emergency services immediately/i)
 assert.match(source, /className="skip-link"/)
 assert.match(source, /'flight-controls'/)
@@ -50,7 +50,7 @@ assert.match(source, /'completion-summary'/)
 assert.match(source, /aria-live="polite"/)
 
 const distHtml = read('dist/index.html')
-assert.match(distHtml, /PalDawn — Systems Atlas/)
+assert.match(distHtml, /PalDawn — Mechanism Lens/)
 assert.doesNotMatch(distHtml, /\/src\/main\.tsx/, 'production HTML must not reference source modules')
 
 const assetsDirectory = new URL('dist/assets', ROOT).pathname

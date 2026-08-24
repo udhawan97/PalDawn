@@ -17,8 +17,8 @@ interface DiagnosticInput {
 export function diagnosticReport(input: DiagnosticInput): string {
   return JSON.stringify({
     report: 'PalDawn local diagnostics',
-    base_release: '0.2.0',
-    build: 'systems-atlas',
+    base_release: '0.3.0',
+    build: 'mechanism-lens',
     local_only: true,
     viewport: `${window.innerWidth}x${window.innerHeight}`,
     device_pixel_ratio: window.devicePixelRatio,

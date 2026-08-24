@@ -3,6 +3,12 @@ import { expect, test } from '@playwright/test'
 
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
 
+async function pauseOnCurrentStage(page) {
+  await page.bringToFront()
+  await page.getByLabel('Journey position').fill('2')
+  await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
+}
+
 test('compare view and N shortcut open the current private note', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Begin the voyage' }).click()
@@ -26,13 +32,21 @@ test('private notes and personal checkpoints persist and synchronize across tabs
     page.getByRole('button', { name: 'Begin the voyage' }).click(),
     otherPage.getByRole('button', { name: 'Begin the voyage' }).click(),
   ])
-  await Promise.all([page.keyboard.press('n'), otherPage.keyboard.press('n')])
+  await pauseOnCurrentStage(page)
+  await pauseOnCurrentStage(otherPage)
+  await page.bringToFront()
+  await page.getByRole('button', { name: 'Private note' }).click()
+  await otherPage.bringToFront()
+  await otherPage.getByRole('button', { name: 'Private note' }).click()
 
   const note = 'Remember how the guide and engineering tracks describe the same authored stage.'
+  await page.bringToFront()
   await page.getByLabel('Private note for Approach').fill(note)
+  await otherPage.bringToFront()
   await expect(otherPage.getByLabel('Private note for Approach')).toHaveValue(note)
 
   await otherPage.getByRole('button', { name: 'Mark personal checkpoint' }).click()
+  await page.bringToFront()
   await expect(page.getByRole('button', { name: 'Personal checkpoint complete' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByText('1 of 5 personal checkpoints')).toBeVisible()
 
@@ -120,6 +134,35 @@ test('workspace remains readable without horizontal overflow at 320 pixels', asy
   await page.goto('./')
   await page.getByRole('button', { name: 'Study' }).click()
   await expect(page.locator('.track-columns article')).toHaveCount(2)
-  const overflow = await page.locator('.drawer-scroll').evaluate((element) => element.scrollWidth - element.clientWidth)
-  expect(overflow).toBeLessThanOrEqual(1)
+  const geometry = await page.evaluate(() => {
+    const elements = Array.from(document.body.querySelectorAll('*'))
+    const ownsOverflow = (element) => {
+      let parent = element.parentElement
+      while (parent) {
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(getComputedStyle(parent).overflowX)) return true
+        parent = parent.parentElement
+      }
+      return ['hidden', 'clip'].includes(getComputedStyle(element).overflowX)
+    }
+    return {
+      bodyOverflow: document.body.scrollWidth - document.body.clientWidth,
+      rootOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      drawerOverflow: document.querySelector('.drawer-scroll').scrollWidth - document.querySelector('.drawer-scroll').clientWidth,
+      scrollOwners: elements
+        .filter((element) => ['auto', 'scroll'].includes(getComputedStyle(element).overflowX) && element.scrollWidth > element.clientWidth + 1)
+        .map((element) => {
+          const rect = element.getBoundingClientRect()
+          return { left: rect.left, right: rect.right, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth }
+        }),
+      unownedEscapes: elements.filter((element) => {
+        const rect = element.getBoundingClientRect()
+        return (rect.left < -1 || rect.right > window.innerWidth + 1) && !ownsOverflow(element)
+      }).length,
+    }
+  })
+  expect(geometry.bodyOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.rootOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.drawerOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.scrollOwners.every((owner) => owner.left >= -1 && owner.right <= 321 && owner.scrollWidth > owner.clientWidth)).toBe(true)
+  expect(geometry.unownedEscapes).toBe(0)
 })

@@ -1,13 +1,14 @@
-# PalDawn app — v0.2.0 Systems Atlas
+# PalDawn app — v0.3.0 Mechanism Lens
 
 The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +
 postprocessing stack.
 
-Every visible form is project-authored procedural geometry. Foundation+4 adds
-source-linked disease education, but no third-party anatomy asset, medical
-dataset, patient data, diagnostic logic, or treatment recommender. The content
-is marked as an unreviewed educational preview.
+Every visible form is project-authored procedural geometry. Mechanism Lens adds
+layered surface detail, small same-origin phase signals, and organ close focus
+to the source-linked disease explorer, but no third-party anatomy asset,
+medical dataset, patient data, diagnostic logic, or treatment recommender. The
+content and visual model remain marked as an unreviewed educational preview.
 
 ## Commands
 
@@ -26,8 +27,11 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 
 - `src/data/diseases.ts` defines the WHO-ranked condition library, claim-level
   source routing, affected systems, and the eleven-stage diabetes journey.
-- `src/scene/HumanSystemsScene.tsx` renders the conceptual whole-body model and
-  active-system/exploded states from project-authored primitives.
+- `src/scene/HumanSystemsScene.tsx` renders the conceptual whole-body model,
+  layered organ surfaces, system scaffolds, step-driven signal routes, focus
+  lens, and close-focus camera from project-authored primitives.
+- `src/scene/SceneCanvas.tsx` keeps the WebGL dependency graph lazy so the
+  interface and recovery path load independently from the detailed scene.
 - `src/ui/DiseaseExplorer.tsx` provides the condition rail, explanation-depth
   control, organ labels, evidence links, timeline, keyboard navigation, and
   in-app how-to guide.
@@ -49,8 +53,9 @@ Use `npm ci`, not `npm install`, for a clean verification run.
   one bounded First Light resume position, known stage IDs, bounded private
   notes, and personal checkpoints under versioned local keys. They add no
   account or backend.
-- `public/sw.js` is a first-party same-origin offline shell. Update activation is
-  user-triggered; no service-worker dependency was added.
+- `public/sw.js` is a first-party same-origin offline shell. Its generated asset
+  manifest includes the lazy 3D chunk; update activation remains user-triggered
+  and no service-worker dependency was added.
 - The accessible HTML layer also provides stage deep links, transcript and local
   diagnostics exports, a text-only voyage, keyboard help, local-data controls,
   fullscreen support, background pausing, a completion summary, and a private

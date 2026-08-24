@@ -3,6 +3,7 @@ const BUILD_ID = '__PALDAWN_BUILD_ID__'
 const CACHE_NAME = `${CACHE_PREFIX}${BUILD_ID}`
 const SHELL = [
   './',
+  './asset-manifest.json',
   './site.webmanifest',
   './icon.svg',
   './icon-static.svg',
@@ -13,20 +14,15 @@ const SHELL = [
   './apple-touch-icon.png',
 ]
 
-const sameOriginAssetsFrom = async (response) => {
-  const html = await response.clone().text()
-  const urls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
-    .map((match) => new URL(match[1], self.registration.scope))
-    .filter((url) => url.origin === self.location.origin)
-  return [...new Set(urls.map((url) => url.href))]
-}
-
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME)
     await cache.addAll(SHELL)
-    const index = await fetch('./')
-    const assets = await sameOriginAssetsFrom(index)
+    const manifestResponse = await fetch('./asset-manifest.json')
+    const manifest = await manifestResponse.json()
+    const assets = Array.isArray(manifest.files)
+      ? manifest.files.filter((path) => typeof path === 'string' && path.startsWith('./assets/'))
+      : []
     await cache.addAll(assets)
   })())
 })

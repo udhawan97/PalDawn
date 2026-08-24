@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -13,9 +13,17 @@ function stampServiceWorker() {
     closeBundle() {
       const distRoot = resolve(process.cwd(), 'dist')
       const workerPath = resolve(distRoot, 'sw.js')
+      const assetFiles = readdirSync(resolve(distRoot, 'assets'))
+        .sort()
+        .map((filename) => `./assets/${filename}`)
+      writeFileSync(
+        resolve(distRoot, 'asset-manifest.json'),
+        `${JSON.stringify({ files: assetFiles }, null, 2)}\n`,
+      )
       const buildInputs = [
         'index.html',
         'sw.js',
+        'asset-manifest.json',
         'site.webmanifest',
         'icon.svg',
         'icon-static.svg',
@@ -25,6 +33,7 @@ function stampServiceWorker() {
         'icon-maskable-512.png',
         'apple-touch-icon.png',
         'paldawn-social.png',
+        ...assetFiles.map((filename) => filename.slice(2)),
       ]
         .map((filename) => readFileSync(resolve(distRoot, filename)))
       const buildId = createHash('sha256')

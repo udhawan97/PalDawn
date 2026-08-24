@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   JOURNEY,
   formatDuration,
@@ -125,7 +125,7 @@ function Intro() {
 
   return (
     <section className="intro" aria-labelledby="intro-title">
-      <p className="eyebrow">Whole-body systems preview · Foundation+4</p>
+      <p className="eyebrow">High-detail systems preview · Mechanism Lens</p>
       <h1 id="intro-title" tabIndex={-1}>See disease<br /><em>move through us.</em></h1>
       <p className="intro-copy">
         Follow ten high-impact conditions across a fully interactive 3D systems
@@ -1169,7 +1169,7 @@ export function FlightDeck({
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpenPanel(null, { resumePlayback: !reducedMotion })
@@ -1274,7 +1274,7 @@ export function FlightDeck({
           />
           <span className="wordmark-name"><strong>Pal</strong>Dawn</span>
         </a>
-        <p className="build-mark">SYSTEMS PREVIEW / FOUNDATION+4</p>
+        <p className="build-mark">MECHANISM LENS / V0.3</p>
         <nav className="utility-nav" aria-label="Release information">
           <button className="text-button" type="button" aria-expanded={atlasOpen} onClick={() => {
             setOpenPanel(null, { resumePlayback: false })

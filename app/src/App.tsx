@@ -1,9 +1,9 @@
-import { Component, useEffect, useState, type ErrorInfo, type ReactNode } from 'react'
-import { Canvas, type RootState } from '@react-three/fiber'
-import { VoyageScene } from './scene/VoyageScene'
+import { Component, lazy, Suspense, useEffect, useState, type ErrorInfo, type ReactNode } from 'react'
 import { FlightDeck } from './ui/FlightDeck'
 import { resolveTier, TIER_DPR, useSettings } from './state/settings'
 import { webgl2Available } from './webgl'
+
+const SceneCanvas = lazy(() => import('./scene/SceneCanvas'))
 
 interface SceneBoundaryState {
   failed: boolean
@@ -48,7 +48,7 @@ function RenderFallback({
         alt=""
         aria-hidden="true"
       />
-      <p className="eyebrow">PalDawn · Systems Atlas</p>
+      <p className="eyebrow">PalDawn · Mechanism Lens</p>
       <h1>The 3D map could not start.</h1>
       <p>{reason} The disease guides and First Light text voyage remain available, and your saved position and settings stay on this device.</p>
       <div className="fallback-actions">
@@ -111,26 +111,17 @@ export default function App() {
     )
   }
 
-  const handleCreated = ({ gl }: RootState) => {
-    gl.domElement.addEventListener('webglcontextlost', (event) => {
-      event.preventDefault()
-      setSceneIssue('The device reported a lost WebGL context.')
-    }, { once: true })
-  }
-
   return (
     <div className="app-root">
       <SceneBoundary key={sceneAttempt} onFailure={setSceneIssue}>
-        <Canvas
-          aria-hidden="true"
-          dpr={TIER_DPR[tier]}
-          frameloop={reducedMotion ? 'demand' : 'always'}
-          gl={{ antialias: tier !== 'low', powerPreference: 'high-performance', alpha: false }}
-          camera={{ position: [-5.8, 4.1, 8.8], fov: 43, near: 0.03, far: 80 }}
-          onCreated={handleCreated}
-        >
-          <VoyageScene />
-        </Canvas>
+        <Suspense fallback={<div className="scene-loading" aria-hidden="true" />}>
+          <SceneCanvas
+            dpr={TIER_DPR[tier]}
+            reducedMotion={reducedMotion}
+            antialias={tier !== 'low'}
+            onContextLost={() => setSceneIssue('The device reported a lost WebGL context.')}
+          />
+        </Suspense>
       </SceneBoundary>
       <FlightDeck textVoyage={false} onTextVoyageChange={setTextVoyage} />
     </div>

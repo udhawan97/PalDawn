@@ -2,6 +2,23 @@
 
 All notable changes to PalDawn are documented here.
 
+## [0.3.0] — 2026-08-24
+
+### Mechanism Lens
+
+- Added high-detail project-authored body and organ layers without adopting a
+  third-party anatomy asset or representing the model as reviewed anatomy.
+- Added step-driven signal paths and phase anchors across the exact structures
+  already named by each disease mechanism step.
+- Added organ close focus, stable Whole body exit, and automatic focus reset
+  when the learner changes disease or phase.
+- Added a Mechanism Lens readout joining the 3D focus state to the current
+  explanation and represented structures.
+- Lazy-loaded the WebGL scene and generated an offline asset manifest so the
+  split 3D chunk remains available in the first-party PWA shell.
+- Preserved English-only content, source dates, medical-review disclosure,
+  local-only data, reduced motion, and the complete v0.2/v0.1 journeys.
+
 ## [0.2.0] — 2026-08-22
 
 ### Systems Atlas

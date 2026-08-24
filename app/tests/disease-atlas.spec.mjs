@@ -28,6 +28,28 @@ test('diabetes controls connect the explanation depth, mechanism, and 3D state',
   await expect(page.getByRole('button', { name: 'Assemble body' })).toHaveAttribute('aria-pressed', 'true')
 })
 
+test('mechanism lens enters close focus and resets with each phase', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+
+  const stage = page.getByRole('region', { name: 'Interactive 3D systems map' })
+  const lens = page.getByRole('complementary', { name: 'Mechanism lens' })
+  await expect(stage).toHaveAttribute('data-phase-detail', 'meal')
+  await expect(stage).toHaveAttribute('data-focus-part', 'whole-body')
+  await expect(lens).toContainText('Stomach · phase anchor')
+
+  await page.locator('.atlas-active-parts').getByRole('button', { name: 'Pancreas' }).click()
+  await expect(stage).toHaveAttribute('data-focus-part', 'pancreas')
+  await expect(lens).toContainText('Pancreas · close focus')
+  await expect(page.getByRole('button', { name: 'Whole body' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Next step' }).click()
+  await expect(stage).toHaveAttribute('data-phase-detail', 'absorption')
+  await expect(stage).toHaveAttribute('data-focus-part', 'whole-body')
+  await expect(lens).toContainText('Intestines · phase anchor')
+  await expect(page.locator('.atlas-active-parts').getByRole('button')).toHaveCount(3)
+})
+
 test('mobile atlas and its how-to guide remain bounded and usable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
@@ -37,8 +59,36 @@ test('mobile atlas and its how-to guide remain bounded and usable', async ({ pag
   await expect(startingJourneys.getByRole('button')).toHaveCount(10)
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
-  expect(overflow).toBeLessThanOrEqual(1)
+  const geometry = await page.evaluate(() => {
+    const elements = Array.from(document.body.querySelectorAll('*'))
+    const ownsOverflow = (element) => {
+      let parent = element.parentElement
+      while (parent) {
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(getComputedStyle(parent).overflowX)) return true
+        parent = parent.parentElement
+      }
+      return ['hidden', 'clip'].includes(getComputedStyle(element).overflowX)
+    }
+    return {
+      bodyOverflow: document.body.scrollWidth - document.body.clientWidth,
+      rootOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      scrollOwners: elements
+        .filter((element) => ['auto', 'scroll'].includes(getComputedStyle(element).overflowX) && element.scrollWidth > element.clientWidth + 1)
+        .map((element) => {
+          const rect = element.getBoundingClientRect()
+          return { left: rect.left, right: rect.right, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth }
+        }),
+      unownedEscapes: elements.filter((element) => {
+        const rect = element.getBoundingClientRect()
+        return (rect.left < -1 || rect.right > window.innerWidth + 1) && !ownsOverflow(element)
+      }).length,
+    }
+  })
+  expect(geometry.bodyOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.rootOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.scrollOwners.length).toBeGreaterThan(0)
+  expect(geometry.scrollOwners.every((owner) => owner.left >= -1 && owner.right <= 391 && owner.scrollWidth > owner.clientWidth)).toBe(true)
+  expect(geometry.unownedEscapes).toBe(0)
   await expect(page.getByRole('button', { name: 'Next step' })).toBeVisible()
 
   const guideTrigger = page.getByRole('button', { name: 'How to use' })

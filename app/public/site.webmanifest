@@ -1,7 +1,7 @@
 {
-  "name": "PalDawn — Systems Atlas",
+  "name": "PalDawn — Mechanism Lens",
   "short_name": "PalDawn",
-  "description": "An English-only 3D learning experience with source-linked disease journeys.",
+  "description": "High-detail conceptual phase views across source-linked disease journeys.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#04070c",

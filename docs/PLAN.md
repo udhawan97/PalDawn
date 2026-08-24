@@ -10,10 +10,11 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 - **License:** code MIT · PalDawn-authored and compatible derived content/asset packs CC BY-SA 4.0; upstream material additionally retains its exact source license and lineage record
 - **Hosting:** 100% free tier — static GitHub Pages; immutable versioned GLB packs later streamed from GitHub Releases; no backend, no paid services
-- **Status:** v0.2.0 Systems Atlas release: ten source-linked disease previews,
-  an eleven-step diabetes mechanism, and a conceptual procedural body map sit
-  alongside the preserved five-stage First Light voyage. No reviewed anatomy,
-  patient data, diagnosis, or treatment selection is included.
+- **Status:** v0.3.0 Mechanism Lens release: the ten source-linked disease
+  previews and eleven-step diabetes mechanism now drive high-detail procedural
+  body layers, phase signals, and organ close focus alongside the preserved
+  First Light voyage. No reviewed anatomy, patient data, diagnosis, or
+  treatment selection is included.
 - **Not medical advice.** Education only — never diagnosis or personalized triage. Any user-facing context about a *suspected heart attack* must direct the person to **contact local emergency services immediately**.
 
 ---
@@ -228,6 +229,13 @@ Repo layout, immutable-action workflows (`ci.yml`, `deploy.yml`), owner CODEOWNE
 ---
 
 ## 12. Release status
+
+**v0.3.0 · Mechanism Lens (2026-08-24):** each disease phase now drives a
+project-authored visual signal path across its existing structure list. Learners
+can enter organ close focus, inspect layered conceptual geometry, and return to
+the whole body without carrying stale focus into the next phase. The WebGL scene
+loads separately and remains available offline through a generated same-origin
+asset manifest. The detail is illustrative, not reviewed anatomy or pathology.
 
 **v0.2.0 · Systems Atlas (2026-08-22):** the English-only Foundation+4 preview
 adds ten WHO-ranked starting journeys, an eleven-step diabetes mechanism,

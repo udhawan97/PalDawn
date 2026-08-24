@@ -3,6 +3,12 @@ import { expect, test } from '@playwright/test'
 
 const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 
+async function pauseOnCurrentStage(page) {
+  await page.bringToFront()
+  await page.getByLabel('Journey position').fill('2')
+  await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
+}
+
 test('playback speed persists and stays visible in the flight controls', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Settings' }).click()
@@ -75,6 +81,8 @@ test('saved stage changes synchronize across open tabs', async ({ page }) => {
     page.getByRole('button', { name: 'Begin the voyage' }).click(),
     otherPage.getByRole('button', { name: 'Begin the voyage' }).click(),
   ])
+  await pauseOnCurrentStage(page)
+  await pauseOnCurrentStage(otherPage)
 
   await page.getByRole('button', { name: 'Save stage' }).click()
   await expect(otherPage.getByRole('button', { name: 'Saved' })).toBeVisible()

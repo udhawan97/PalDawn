@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "journey:p0.first-light",
   "title": "First light",
-  "release": "0.2.0",
+  "release": "0.3.0",
   "duration_seconds": 42,
   "content_status": "synthetic_engineering_only",
   "published_medical_claims": false,
