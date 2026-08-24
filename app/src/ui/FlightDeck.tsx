@@ -892,10 +892,13 @@ function Drawer({
     if (openPanel !== 'settings') setSettingsStatus('')
   }, [openPanel])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!openPanel) return
     previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
-    drawerRef.current?.focus()
+    const focusTarget = openPanel === 'transcript'
+      ? drawerRef.current?.querySelector<HTMLElement>('#transcript-search')
+      : drawerRef.current
+    focusTarget?.focus()
     return () => {
       const target = previousFocus.current && previousFocus.current !== document.body
         ? previousFocus.current
@@ -1194,7 +1197,6 @@ export function FlightDeck({
       if (!isTextEntry && event.code === 'Slash' && !event.shiftKey) {
         event.preventDefault()
         setOpenPanel('transcript')
-        window.setTimeout(() => document.getElementById('transcript-search')?.focus(), 0)
         return
       }
       if (isTypingTarget(event.target)) return
