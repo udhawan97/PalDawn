@@ -29,7 +29,7 @@ jobs:
         working-directory: app
         env:
           VITE_BASE_PATH: /PalDawn/
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium webkit
         working-directory: app
       - run: npm run test:browser
         working-directory: app
