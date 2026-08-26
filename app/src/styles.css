@@ -3750,6 +3750,14 @@ html[data-contrast='high'] {
   .atlas-detail {
     background: rgba(10, 8, 32, 0.98);
   }
+
+  .atlas-reading-switch button,
+  .atlas-view-actions button,
+  .atlas-active-parts button,
+  .atlas-step-actions button,
+  .atlas-sources a {
+    min-height: 46px;
+  }
 }
 
 @media (max-width: 540px) {
@@ -4164,6 +4172,50 @@ html[data-contrast='high'] {
 @media (max-width: 820px) and (max-height: 560px) and (orientation: landscape) {
   .intro {
     top: 72px;
+  }
+}
+
+@media (min-height: 561px) and (max-height: 575px) and (max-width: 820px) and (orientation: landscape) {
+  .intro {
+    top: 72px;
+  }
+
+  .intro .eyebrow,
+  .intro-copy,
+  .intro-actions .text-button {
+    display: none;
+  }
+
+  .intro h1 {
+    margin-block: 0 2px;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+  }
+
+  .intro-brand-route {
+    height: 24px;
+    margin-block: 0;
+  }
+
+  .intro-brand-route img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .intro-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 6px;
+  }
+
+  .intro-actions[data-resume-available='true'] .begin-action {
+    display: none;
+  }
+
+  .synthetic-stamp {
+    display: flex;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.025em;
+    line-height: 1.35;
   }
 }
 
