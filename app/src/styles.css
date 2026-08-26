@@ -273,7 +273,7 @@ textarea:focus-visible {
   position: fixed !important;
   z-index: 10 !important;
   top: 15px;
-  left: clamp(168px, 22vw, 320px);
+  left: clamp(180px, 22vw, 320px);
   display: block;
   gap: 6px;
   width: auto;
@@ -1574,13 +1574,13 @@ html[data-contrast='high'] {
 }
 
 @keyframes intro-in {
-  from { opacity: 0; transform: translateY(-42%); }
-  to { opacity: 1; transform: translateY(-47%); }
+  from { transform: translateY(-42%); }
+  to { transform: translateY(-47%); }
 }
 
 @keyframes instrument-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
 }
 
 @keyframes drawer-in {
@@ -2950,8 +2950,8 @@ html[data-contrast='high'] {
 }
 
 @keyframes atlas-enter {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(7px); }
+  to { transform: translateY(0); }
 }
 
 @media (max-width: 1180px) {
@@ -3868,6 +3868,33 @@ html[data-contrast='high'] {
   }
 }
 
+@media (max-width: 540px) and (min-height: 681px) and (orientation: portrait) {
+  .intro {
+    top: 72px;
+    bottom: 196px;
+    transform: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .intro h1 {
+    margin-block: 4px 10px;
+    font-size: clamp(2.1rem, 10.5vw, 3.6rem);
+  }
+
+  .intro-copy {
+    line-height: 1.45;
+  }
+
+  .intro-actions {
+    margin-top: 12px;
+  }
+
+  .synthetic-stamp {
+    margin-top: 10px;
+  }
+}
+
 .flight-ui[data-reduced-motion='true'] .intro {
   animation: none;
 }
@@ -3907,7 +3934,7 @@ html[data-contrast='high'] {
   }
 }
 
-@media (max-width: 540px) and (orientation: portrait) {
+@media (max-width: 600px) and (orientation: portrait) {
   .flight-ui[data-system-notices='true'] .wordmark-name {
     display: none;
   }
@@ -3915,7 +3942,7 @@ html[data-contrast='high'] {
   .system-banners {
     top: 10px;
     right: auto;
-    left: 60px;
+    left: 64px;
     display: block;
     width: 44px;
     transform: none;
@@ -3942,6 +3969,16 @@ html[data-contrast='high'] {
   .system-banners[data-expanded='true'] .system-notice-list {
     top: 72px;
     max-height: calc(100vh - 90px);
+  }
+}
+
+@media (min-width: 541px) and (max-width: 600px) and (orientation: portrait) {
+  .flight-ui[data-system-notices='true'] .wordmark-name {
+    display: inline;
+  }
+
+  .system-banners {
+    left: 180px;
   }
 }
 
@@ -4109,6 +4146,10 @@ html[data-contrast='high'] {
   .intro-brand-route img {
     width: 24px;
     height: 24px;
+  }
+
+  .intro-actions[data-resume-available='true'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
