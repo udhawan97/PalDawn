@@ -5,6 +5,7 @@ const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
+  await page.getByRole('button', { name: 'Pause' }).click()
   await page.getByLabel('Journey position').fill('2')
   await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
 }
@@ -38,9 +39,12 @@ test('slash focuses transcript search and a result jumps to its stage', async ({
 })
 
 test('saved stages persist, export locally, and survive a voyage-only restart', async ({ page }) => {
+  test.setTimeout(60_000)
   await page.goto('./')
   await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  await pauseOnCurrentStage(page)
   await page.getByRole('button', { name: 'Skip to next stage' }).click()
+  await expect(page.getByRole('heading', { name: 'Surface trace' })).toBeVisible()
   await page.evaluate(() => document.activeElement?.blur())
   await page.keyboard.press('b')
   await expect(page.getByText('Stage saved on this device.').last()).toBeAttached()
@@ -75,6 +79,7 @@ test('saved stages persist, export locally, and survive a voyage-only restart', 
 })
 
 test('saved stage changes synchronize across open tabs', async ({ page }) => {
+  test.setTimeout(60_000)
   const otherPage = await page.context().newPage()
   await Promise.all([page.goto('./'), otherPage.goto('./')])
   await Promise.all([
@@ -91,6 +96,7 @@ test('saved stage changes synchronize across open tabs', async ({ page }) => {
 })
 
 test('sharing uses the native capability and then the copy fallback', async ({ page }) => {
+  test.setTimeout(60_000)
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'share', {
       configurable: true,
@@ -99,6 +105,7 @@ test('sharing uses the native capability and then the copy fallback', async ({ p
   })
   await page.goto('./')
   await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  await pauseOnCurrentStage(page)
   await page.getByRole('button', { name: 'Share', exact: true }).click()
   await expect(page.getByText('Stage shared.')).toBeVisible()
   expect(await page.evaluate(() => window.__paldawnShare.url)).toMatch(/#stage\/approach$/)

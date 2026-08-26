@@ -1,22 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
-  <title id="title">PalDawn — a protected passage at first light</title>
-  <desc id="description">The PalDawn living mark beside the words evidence-first 3D voyage systems, on a predawn field.</desc>
+  <title id="title">PalDawn — enter the body and follow what happens next</title>
+  <desc id="description">The porcelain PalDawn listening mark and gold disc beside the product promise on a royal-violet field. Conceptual systems map, not reviewed anatomy.</desc>
   <defs>
-    <radialGradient id="dawn" cx="74%" cy="34%" r="58%">
-      <stop offset="0" stop-color="#f0aa54" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#04070c" stop-opacity="0"/>
+    <radialGradient id="field" cx=".74" cy=".3" r=".82">
+      <stop offset="0" stop-color="#302968"/>
+      <stop offset=".38" stop-color="#151134"/>
+      <stop offset=".72" stop-color="#0a0820"/>
+      <stop offset="1" stop-color="#050412"/>
     </radialGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2=".72" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".44" stop-color="#efede4"/>
+      <stop offset="1" stop-color="#8f91a2"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1=".14" y1="0" x2=".86" y2="1">
+      <stop offset="0" stop-color="#fff8e4"/>
+      <stop offset=".3" stop-color="#e0b653"/>
+      <stop offset=".66" stop-color="#80631f"/>
+      <stop offset="1" stop-color="#3f2e0d"/>
+    </linearGradient>
+    <radialGradient id="disc" cx=".34" cy=".28" r=".82">
+      <stop offset="0" stop-color="#fff3c6"/>
+      <stop offset=".38" stop-color="#e0b653"/>
+      <stop offset=".8" stop-color="#6a4f18"/>
+      <stop offset="1" stop-color="#2f2108"/>
+    </radialGradient>
+    <mask id="tube-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="96" height="96">
+      <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round">
+        <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68"/>
+        <path d="M62 10 C62 26 60 32 50 37.5"/>
+      </g>
+    </mask>
   </defs>
-  <rect width="1200" height="630" fill="#04070c"/>
-  <rect width="1200" height="630" fill="url(#dawn)"/>
-  <path d="M88 96 H1112 M88 534 H1112" stroke="#ebe6db" stroke-opacity=".16"/>
-  <g transform="translate(86 172) scale(2.9)">
-    <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
-    <path d="M62 10 C62 26 60 32 50 37.5" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
-    <circle cx="68" cy="58" r="11" fill="#f0aa54"/>
+  <rect width="1200" height="630" fill="url(#field)"/>
+  <g fill="none" stroke="#bab2d8" stroke-width="2">
+    <ellipse cx="890" cy="674" rx="520" ry="248" opacity=".08"/>
+    <ellipse cx="890" cy="674" rx="420" ry="198" opacity=".11"/>
+    <ellipse cx="890" cy="674" rx="320" ry="148" opacity=".14"/>
   </g>
-  <text x="418" y="272" fill="#ebe6db" font-family="Iowan Old Style, Baskerville, Georgia, serif" font-size="92" letter-spacing="-4">PalDawn</text>
-  <text x="422" y="330" fill="#f0aa54" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="5">A PROTECTED PASSAGE AT FIRST LIGHT</text>
-  <text x="422" y="399" fill="#9ca8b4" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="30">Evidence-first 3D voyage systems.</text>
-  <text x="88" y="574" fill="#75d9d2" font-family="SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2">CURRENT MAIN · SYNTHETIC SYSTEMS MODEL · NOT ANATOMY</text>
+  <path d="M86 114 H1114" stroke="#ada4cc" stroke-opacity=".24"/>
+  <path d="M86 536 H1114" stroke="#ada4cc" stroke-opacity=".24"/>
+  <g transform="translate(80 58) scale(.66)">
+    <circle cx="34" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <circle cx="62" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <g mask="url(#tube-mask)"><rect width="96" height="96" fill="url(#tube)"/></g>
+    <circle cx="68" cy="58" r="11.9" fill="url(#bezel)"/>
+    <circle cx="68" cy="58" r="9.8" fill="url(#disc)"/>
+    <ellipse cx="64.8" cy="52.7" rx="7.4" ry="3.5" transform="rotate(-26 64.8 52.7)" fill="#fff" opacity=".42"/>
+  </g>
+  <text x="156" y="101" fill="#f2ede0" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Palatino, Georgia, serif" font-size="42" font-weight="600">PalDawn</text>
+  <text x="88" y="184" fill="#f3d98a" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="3">PAL · DAWN / MECHANISM LENS</text>
+  <text x="88" y="300" fill="#f2ede0" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Palatino, Georgia, serif" font-size="74" font-weight="600" letter-spacing="-1">Enter the body.</text>
+  <g transform="translate(88 324) scale(.54)">
+    <circle cx="34" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <circle cx="62" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <g mask="url(#tube-mask)"><rect width="96" height="96" fill="url(#tube)"/></g>
+    <circle cx="68" cy="58" r="11.9" fill="url(#bezel)"/>
+    <circle cx="68" cy="58" r="9.8" fill="url(#disc)"/>
+  </g>
+  <path d="M154 354 H562" stroke="#e0b653" stroke-opacity=".6"/>
+  <text x="88" y="452" fill="#f2ede0" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Palatino, Georgia, serif" font-size="68" font-weight="600" letter-spacing="-1">Follow what happens next.</text>
+  <text x="88" y="582" fill="#7fe9d5" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18" letter-spacing="2">SOURCE-LINKED · CONCEPTUAL SYSTEMS MAP · NOT REVIEWED ANATOMY</text>
 </svg>

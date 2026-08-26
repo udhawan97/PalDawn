@@ -127,8 +127,8 @@ export function FlowField() {
       uTime: { value: 0 },
       uReveal: { value: 0 },
       uRoute: { value: ROUTE_LOOKUP },
-      uColorA: { value: new Color('#d84959') },
-      uColorB: { value: new Color('#f6b45f') },
+      uColorA: { value: new Color('#45e6cf') },
+      uColorB: { value: new Color('#e0b653') },
     }),
     [],
   )

@@ -1,8 +1,15 @@
 # 🌅 PalDawn — The Companion Voyage
 
-**An evidence-linked causal voyage through disease.** PalDawn (formerly Antaryaan, renamed 2026-08-20) is not another general 3D anatomy atlas — organ explorers with hotspots, layers, and quizzes already exist in the open. Its narrow launch category: the learner **enters the body spatially, watches cause become effect over time**, switches the same visual beat between Layperson and Clinical narration, and can resolve **each factual claim to a curated source**.
+**Enter the body. Follow what happens next.** PalDawn (formerly Antaryaan,
+renamed 2026-08-20) is not another general 3D anatomy atlas — organ explorers
+with hotspots, layers, and quizzes already exist in the open. Its narrow launch
+category is an evidence-linked causal voyage: the learner **enters the body
+spatially, watches cause become effect over time**, switches the same visual
+beat between Plain English and Clinical terms, and can resolve **each factual
+claim to a curated source**. The broader body/disease/drug research direction
+and its validation levels are recorded in [`VISION.md`](VISION.md).
 
-> Launch promise: **“Fly through a heart attack from plaque rupture to tissue death.”**
+> Long-range heart-journey wedge: **“Fly through a heart attack from plaque rupture to tissue death.”**
 
 > A protected passage at first light. A family name lives inside this one, and its bearer flies every journey as **SPD**, the co-pilot.
 
@@ -229,6 +236,14 @@ Repo layout, immutable-action workflows (`ci.yml`, `deploy.yml`), owner CODEOWNE
 ---
 
 ## 12. Release status
+
+**Current `main` · living-instrument redesign (post-v0.3.0):** the
+user-supplied animated-logo concept now drives the Royal Void, porcelain,
+Imperial Gold, and Vital Cyan presentation across the introduction, controls,
+procedural scenes, installed-app icons, and link preview. The product promise is
+“Enter the body. Follow what happens next.” This visual refresh does not alter
+the v0.3.0 tag, add medical content, adopt anatomy assets, or satisfy the named
+qualified-human review gate. See [`BRAND-SYSTEM.md`](BRAND-SYSTEM.md).
 
 **v0.3.0 · Mechanism Lens (2026-08-24):** each disease phase now drives a
 project-authored visual signal path across its existing structure list. Learners

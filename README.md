@@ -6,13 +6,15 @@
 
 <h1 align="center">PalDawn</h1>
 
-<p align="center"><strong>A protected passage at first light.</strong></p>
+<p align="center"><strong>Enter the body. Follow what happens next.</strong></p>
 
-PalDawn is an evidence-first 3D voyage system for curious learners. The current
-Mechanism Lens release pairs the preserved five-stage engineering voyage with
-ten WHO-ranked starting journeys, a high-detail project-authored body map,
-organ-level close focus, and phase signals that make each mechanism change
-visible without presenting the model as reviewed anatomy.
+PalDawn is a source-linked 3D learning voyage for following cause and effect
+through the body. The live app on `main` pairs ten WHO-ranked starting journeys
+with a project-authored conceptual systems map, organ-level close focus, and
+phase signals that make each authored mechanism step visible. Its new
+living-instrument design carries the animated PalDawn mark through the intro,
+controls, scene materials, installed icon, and link preview without presenting
+the procedural model as reviewed anatomy.
 
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Launch the web app</strong></a>
@@ -84,10 +86,10 @@ and the original First Light systems release remains available at `v0.1.0`.
   records, and fail-closed adoption checks stay visible rather than becoming
   invisible implementation detail.
 
-![PalDawn First Light introduction showing the synthetic route, five-stage journey, and local-first controls](docs/assets/paldawn-first-light.png)
+![PalDawn introduction in Royal Void violet, with the porcelain-and-gold living mark, source-linked journey controls, and a visibly synthetic body map](docs/assets/paldawn-first-light.png)
 
-*Current local refresh build based on `main`, at the First Light introduction.
-The geometry is deliberately project-authored and synthetic; it is not an
+*Current `main` introduction after the animated-logo redesign. The body remains
+deliberately project-authored, conceptual, and visibly synthetic; it is not an
 anatomical reconstruction.*
 
 ## How the voyage works
@@ -153,7 +155,9 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
 | `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
 | `app/src/scene/SceneCanvas.tsx` | Lazy-loaded WebGL scene boundary kept available through the offline asset manifest |
+| `docs/BRAND-SYSTEM.md` | Living mark, palette, typography, motion, generated assets, and authority boundary |
 | `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
+| `docs/VISION.md` | Mission, body/disease/drug simulation north star, quality bar, and current limits |
 | `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |
 | `docs/PLAN.md` | Product architecture, medical gates, and roadmap |

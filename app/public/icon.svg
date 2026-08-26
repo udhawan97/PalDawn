@@ -1,58 +1,136 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title description">
   <title id="title">PalDawn living mark</title>
-  <desc id="description">A light travels through a protective passage and reaches a dawn disc. Motion stops when reduced motion is preferred.</desc>
+  <desc id="description">A cyan signal travels through a porcelain listening tube into a gold disc, which answers with two quiet rings. Motion stops when reduced motion is preferred.</desc>
+  <defs>
+    <linearGradient id="tube" x1="0" y1="0" x2=".72" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".44" stop-color="#efede4"/>
+      <stop offset="1" stop-color="#8f91a2"/>
+    </linearGradient>
+    <linearGradient id="tube-highlight" x1="0" y1="0" x2=".34" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".82"/>
+      <stop offset=".5" stop-color="#ffffff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tube-shadow" x1="0" y1="0" x2=".34" y2="1">
+      <stop offset="0" stop-color="#595b6c" stop-opacity="0"/>
+      <stop offset=".52" stop-color="#595b6c" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#303142" stop-opacity=".92"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1=".14" y1="0" x2=".86" y2="1">
+      <stop offset="0" stop-color="#fff8e4"/>
+      <stop offset=".3" stop-color="#e0b653"/>
+      <stop offset=".66" stop-color="#80631f"/>
+      <stop offset="1" stop-color="#3f2e0d"/>
+    </linearGradient>
+    <radialGradient id="disc" cx=".34" cy=".28" r=".82">
+      <stop offset="0" stop-color="#fff3c6"/>
+      <stop offset=".38" stop-color="#e0b653"/>
+      <stop offset=".8" stop-color="#6a4f18"/>
+      <stop offset="1" stop-color="#2f2108"/>
+    </radialGradient>
+    <radialGradient id="pulse" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#d8fff7" stop-opacity=".96"/>
+      <stop offset=".28" stop-color="#45e6cf" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#45e6cf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ground" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#000000" stop-opacity=".34"/>
+      <stop offset=".62" stop-color="#000000" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="tube-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="96" height="96">
+      <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round">
+        <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68"/>
+        <path d="M62 10 C62 26 60 32 50 37.5"/>
+      </g>
+    </mask>
+    <clipPath id="disc-clip"><circle cx="68" cy="58" r="9.8"/></clipPath>
+  </defs>
   <style>
     @keyframes passage {
       0% { offset-distance: 0%; opacity: 0; }
-      7% { offset-distance: 8%; opacity: 1; }
-      52% { offset-distance: 100%; opacity: 1; }
-      58%, 100% { offset-distance: 100%; opacity: 0; }
+      5% { offset-distance: 6%; opacity: 1; animation-timing-function: cubic-bezier(.45,.05,.35,.95); }
+      50% { offset-distance: 100%; opacity: 1; }
+      56%, 100% { offset-distance: 100%; opacity: 0; }
     }
     @keyframes arrival {
-      0%, 46%, 68%, 100% { transform: scale(1); }
-      54% { transform: scale(1.13); }
+      0%, 44% { transform: scale(1); }
+      52% { transform: scale(1.13); }
+      66%, 100% { transform: scale(1); }
     }
     @keyframes echo {
-      0%, 49% { transform: scale(.82); opacity: 0; }
-      55% { opacity: .5; }
-      88%, 100% { transform: scale(1.9); opacity: 0; }
+      0%, 48% { transform: scale(.9); opacity: 0; }
+      54% { opacity: .55; }
+      88%, 100% { transform: scale(2.1); opacity: 0; }
+    }
+    @keyframes echo-two {
+      0%, 54% { transform: scale(.9); opacity: 0; }
+      60% { opacity: .34; }
+      94%, 100% { transform: scale(2.7); opacity: 0; }
+    }
+    @keyframes gleam {
+      0%, 42% { opacity: .52; }
+      52% { opacity: 1; }
+      72%, 100% { opacity: .52; }
     }
     @keyframes breathe {
-      from { transform: rotate(-.7deg); }
-      to { transform: rotate(.8deg); }
+      from { transform: rotate(-1.1deg); }
+      to { transform: rotate(1.3deg); }
     }
-    .mark {
-      transform-box: view-box;
-      transform-origin: 50% 50%;
-      animation: breathe 9s ease-in-out infinite alternate;
-    }
+    .mark { transform-box: view-box; transform-origin: 50% 50%; animation: breathe 9s ease-in-out infinite alternate; }
     .traveler {
       offset-path: path("M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68 C67.5 64.5 67.8 61.5 68 58");
       offset-rotate: 0deg;
       animation: passage 7.5s linear infinite;
     }
-    .arrival,
-    .echo {
-      transform-box: fill-box;
-      transform-origin: center;
-    }
+    .arrival, .echo, .echo-two { transform-box: fill-box; transform-origin: center; }
     .arrival { animation: arrival 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
     .echo { animation: echo 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
+    .echo-two { animation: echo-two 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
+    .gleam { animation: gleam 7.5s cubic-bezier(.45,.05,.35,.95) infinite; }
     @media (prefers-reduced-motion: reduce) {
-      .mark,
-      .traveler,
-      .arrival,
-      .echo { animation: none; }
-      .traveler,
-      .echo { display: none; }
+      .mark, .traveler, .arrival, .echo, .echo-two, .gleam { animation: none; }
+      .traveler, .echo, .echo-two { display: none; }
     }
   </style>
-  <rect width="96" height="96" fill="#04070c"/>
   <g class="mark">
-    <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
-    <path d="M62 10 C62 26 60 32 50 37.5" fill="none" stroke="#ebe6db" stroke-width="9" stroke-linecap="round"/>
-    <circle class="echo" cx="68" cy="58" r="11" fill="none" stroke="#f0aa54" stroke-width="2" opacity="0"/>
-    <circle class="traveler" cx="0" cy="0" r="4.5" fill="#f0aa54" opacity="0"/>
-    <circle class="arrival" cx="68" cy="58" r="11" fill="#f0aa54"/>
+    <ellipse cx="69.6" cy="61.2" rx="15.5" ry="14.5" fill="url(#ground)"/>
+    <circle cx="34" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <circle cx="62" cy="10.4" r="5.3" fill="url(#tube)"/>
+    <g mask="url(#tube-mask)">
+      <rect width="96" height="96" fill="url(#tube)"/>
+      <g fill="none" stroke="url(#tube-highlight)" stroke-width="2.6" stroke-linecap="round" transform="translate(-1.5 -1.9)">
+        <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68"/>
+        <path d="M62 10 C62 26 60 32 50 37.5"/>
+      </g>
+      <g fill="none" stroke="url(#tube-shadow)" stroke-width="3.4" stroke-linecap="round" transform="translate(1.7 2.3)">
+        <path d="M34 10 C34 26 36 32 46 37.5 C47.5 52 26 54 26 68 C26 80 38 86 50 84 C60 82.5 66 76 67 68"/>
+        <path d="M62 10 C62 26 60 32 50 37.5"/>
+      </g>
+    </g>
+    <circle class="echo" cx="68" cy="58" r="11.8" fill="none" stroke="#45e6cf" stroke-width="1.5" opacity="0"/>
+    <circle class="echo-two" cx="68" cy="58" r="11.8" fill="none" stroke="#45e6cf" stroke-width=".9" opacity="0"/>
+    <g class="traveler" opacity="0">
+      <circle r="6.6" fill="url(#pulse)"/>
+      <circle r="2.1" fill="#d8fff7"/>
+    </g>
+    <g class="arrival">
+      <circle cx="68" cy="58" r="11.9" fill="url(#bezel)"/>
+      <circle cx="68" cy="58" r="11.9" fill="none" stroke="#fff8e4" stroke-opacity=".34" stroke-width=".9"/>
+      <circle cx="68" cy="58" r="9.8" fill="url(#disc)"/>
+      <g clip-path="url(#disc-clip)">
+        <g class="gleam">
+          <ellipse cx="64.8" cy="52.7" rx="7.4" ry="3.5" transform="rotate(-26 64.8 52.7)" fill="#fff" opacity=".48"/>
+        </g>
+        <ellipse cx="71.1" cy="64.9" rx="7.8" ry="3.7" transform="rotate(-16 71.1 64.9)" fill="#2f2108" opacity=".5"/>
+      </g>
+      <g fill="none" stroke="#4e390f">
+        <circle cx="68" cy="58" r="10.6" stroke-width=".45" opacity=".34"/>
+        <circle cx="68" cy="58" r="8.5" stroke-width=".4" opacity=".28"/>
+        <circle cx="68" cy="58" r="6.6" stroke-width=".35" opacity=".22"/>
+      </g>
+      <circle cx="68" cy="58" r="9.8" fill="none" stroke="#fff8e4" stroke-opacity=".28" stroke-width="1.1"/>
+    </g>
   </g>
 </svg>

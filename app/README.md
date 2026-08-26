@@ -10,6 +10,20 @@ to the source-linked disease explorer, but no third-party anatomy asset,
 medical dataset, patient data, diagnostic logic, or treatment recommender. The
 content and visual model remain marked as an unreviewed educational preview.
 
+## Living-instrument visual system
+
+The current `main` UI adapts the user-supplied animated PalDawn logo concept
+into one product system: Royal Void violet fields, porcelain type and tube
+materials, Imperial Gold arrival/selection, and Vital Cyan signal/evidence.
+The intro promise is **“Enter the body. Follow what happens next.”** See
+[`../docs/BRAND-SYSTEM.md`](../docs/BRAND-SYSTEM.md) for the token, typography,
+motion, icon-generation, reduced-motion, and medical-authority contracts.
+
+Editable vector masters live in `public/icon.svg`, `public/icon-static.svg`,
+`public/icon-app.svg`, `public/icon-maskable.svg`, and
+`public/paldawn-social.svg`. PNG icons and the social card are generated
+derivatives; do not hand-edit them.
+
 ## Commands
 
 | Command | Purpose |
@@ -29,7 +43,9 @@ Use `npm ci`, not `npm install`, for a clean verification run.
   source routing, affected systems, and the eleven-stage diabetes journey.
 - `src/scene/HumanSystemsScene.tsx` renders the conceptual whole-body model,
   layered organ surfaces, system scaffolds, step-driven signal routes, focus
-  lens, and close-focus camera from project-authored primitives.
+  lens, and close-focus camera from project-authored primitives. Porcelain,
+  violet, gold, and cyan carry the brand's instrument language while vessel and
+  system colors keep their semantic roles.
 - `src/scene/SceneCanvas.tsx` keeps the WebGL dependency graph lazy so the
   interface and recovery path load independently from the detailed scene.
 - `src/ui/DiseaseExplorer.tsx` provides the condition rail, explanation-depth
@@ -45,8 +61,9 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 - `src/scene/FlowField.tsx` samples the route in the vertex shader using
   static per-instance attributes plus uniform time; it performs no per-frame
   CPU matrix updates.
-- `src/ui/FlightDeck.tsx` owns the accessible HTML controls, SPD narration,
-  transcript, settings, disclosure, and emergency-services safety line.
+- `src/ui/FlightDeck.tsx` owns the accessible HTML controls, living-mark
+  introduction, SPD narration, transcript, settings, disclosure, and
+  emergency-services safety line.
 - Zustand stores keep journey state, comfort settings, and sampled telemetry
   separate.
 - The Foundation continuity waves persist only allowlisted display preferences,

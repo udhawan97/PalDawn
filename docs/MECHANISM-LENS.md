@@ -33,6 +33,15 @@ patient-data path is added. Existing source-linked prose and the 22 August 2026
 source-check date are unchanged. The synthesis still lacks named qualified
 clinical review.
 
+The current `main` presentation uses the
+[living-instrument brand system](BRAND-SYSTEM.md): Royal Void and chamber
+violets create depth; porcelain identifies the product and model shell;
+Imperial Gold marks arrival and selection; Vital Cyan marks signal, evidence,
+and focus. The 7.5-second passage → arrival → response motion language begins
+in the PalDawn mark and continues through the introduction and phase signal.
+This is a coherent interface treatment, not evidence that the underlying
+geometry is anatomical or that the explanation is clinically validated.
+
 ## Quality and accessibility
 
 - High and balanced tiers render layered organ shells and a bounded particle

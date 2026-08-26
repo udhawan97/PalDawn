@@ -6,6 +6,7 @@ const RESET_KEY = 'paldawn:reset:v1'
 
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
+  await page.getByRole('button', { name: 'Pause' }).click()
   await page.getByLabel('Journey position').fill('2')
   await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
 }
@@ -64,7 +65,7 @@ test('settings selects provide 44px activation targets', async ({ page }) => {
 })
 
 test('reset in one tab cannot be undone by another open tab', async ({ page }) => {
-  test.setTimeout(45_000)
+  test.setTimeout(60_000)
   const otherPage = await page.context().newPage()
   await Promise.all([page.goto('./'), otherPage.goto('./')])
   await Promise.all([

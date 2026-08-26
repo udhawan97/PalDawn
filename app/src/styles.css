@@ -1,16 +1,21 @@
 :root {
   color-scheme: dark;
-  --ink-0: #04070c;
-  --ink-1: #091019;
-  --ink-2: #111b27;
-  --bone: #ebe6db;
-  --muted: #9ca8b4;
-  --dim: #65727f;
-  --dawn: #f0aa54;
-  --signal: #e85c65;
-  --aqua: #75d9d2;
-  --line: rgba(235, 230, 219, 0.18);
-  --panel: rgba(5, 10, 16, 0.82);
+  --ink-0: #050412;
+  --ink-1: #0a0820;
+  --ink-2: #151134;
+  --ink-3: #1b1745;
+  --bone: #f2ede0;
+  --muted: #bab2d8;
+  --dim: #8b83aa;
+  --dawn: #e0b653;
+  --dawn-bright: #f3d98a;
+  --signal: #f07d86;
+  --aqua: #7fe9d5;
+  --vital: #45e6cf;
+  --line: rgba(173, 164, 204, 0.24);
+  --panel: rgba(10, 8, 32, 0.88);
+  --field-glow: rgba(224, 182, 83, 0.13);
+  --signal-glow: rgba(69, 230, 207, 0.12);
   font-family: 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,7 +39,8 @@ html {
 
 body {
   overflow: hidden;
-  background: var(--ink-0);
+  background:
+    radial-gradient(circle at 76% 18%, var(--ink-3) 0, var(--ink-1) 38%, var(--ink-0) 78%);
   color: var(--bone);
   -webkit-font-smoothing: antialiased;
 }
@@ -69,7 +75,8 @@ textarea:focus-visible {
   position: fixed;
   inset: 0;
   isolation: isolate;
-  background: var(--ink-0);
+  background:
+    radial-gradient(circle at 76% 18%, var(--ink-3) 0, var(--ink-1) 38%, var(--ink-0) 78%);
 }
 
 .app-root canvas {
@@ -82,7 +89,7 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 45%, rgba(117, 217, 210, 0.08), transparent 26%),
+    radial-gradient(circle at 50% 45%, var(--signal-glow), transparent 28%),
     var(--ink-0);
 }
 
@@ -99,8 +106,8 @@ textarea:focus-visible {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(90deg, rgba(4, 7, 12, 0.72) 0, transparent 25%, transparent 73%, rgba(4, 7, 12, 0.45) 100%),
-    linear-gradient(180deg, rgba(4, 7, 12, 0.5) 0, transparent 22%, transparent 72%, rgba(4, 7, 12, 0.82) 100%);
+    linear-gradient(90deg, rgba(5, 4, 18, 0.74) 0, transparent 27%, transparent 70%, rgba(5, 4, 18, 0.52) 100%),
+    linear-gradient(180deg, rgba(10, 8, 32, 0.58) 0, transparent 23%, transparent 70%, rgba(5, 4, 18, 0.88) 100%);
 }
 
 .flight-ui > *:not(.comfort-vignette, .portal-veil) {
@@ -265,13 +272,63 @@ textarea:focus-visible {
 .system-banners {
   position: fixed !important;
   z-index: 10 !important;
-  top: 84px;
-  left: 50%;
-  display: grid;
+  top: 15px;
+  left: clamp(168px, 22vw, 320px);
+  display: block;
   gap: 6px;
-  width: min(560px, calc(100vw - 36px));
-  transform: translateX(-50%);
+  width: auto;
+  transform: none;
   pointer-events: auto;
+}
+
+.system-notice-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 138px;
+  padding: 8px 10px;
+  overflow: hidden;
+  border: 1px solid rgba(69, 230, 207, 0.34);
+  color: var(--bone);
+  background: rgba(10, 8, 32, 0.96);
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.system-notice-signal {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--vital);
+  box-shadow: 0 0 10px rgba(69, 230, 207, 0.72);
+}
+
+.system-notice-count {
+  display: none;
+}
+
+.system-notice-list {
+  display: none;
+  gap: 6px;
+}
+
+.system-banners[data-expanded='true'] .system-notice-list {
+  position: fixed;
+  top: 80px;
+  right: 18px;
+  left: 18px;
+  display: grid;
+  max-height: calc(100vh - 98px);
+  padding: 6px;
+  overflow: auto;
+  border: 1px solid rgba(69, 230, 207, 0.34);
+  background: rgba(5, 4, 18, 0.98);
+  box-shadow: 0 18px 54px rgba(2, 1, 12, 0.5);
 }
 
 .system-banner {
@@ -409,6 +466,7 @@ textarea:focus-visible {
 
 .phase-rail {
   position: absolute !important;
+  z-index: 4 !important;
   top: 108px;
   bottom: 138px;
   left: 26px;
@@ -1546,10 +1604,6 @@ html[data-contrast='high'] {
     gap: 13px;
   }
 
-  .system-banners {
-    top: 72px;
-  }
-
   .utility-nav .text-button:first-child {
     display: none;
   }
@@ -1800,14 +1854,50 @@ html[data-contrast='high'] {
   }
 }
 
-@media (max-width: 820px) and (max-height: 560px) and (orientation: landscape) {
+@media (max-height: 560px) and (orientation: landscape) {
   .phase-rail {
-    top: 72px;
+    top: 80px;
+    right: 18px;
+    bottom: auto;
+    left: 18px;
+    flex-direction: row;
+    width: auto;
     height: 50px;
   }
 
+  .phase-axis {
+    top: 13px;
+    right: 13px;
+    bottom: auto;
+    left: 13px;
+    width: auto;
+    height: 1px;
+    background: linear-gradient(90deg, var(--dawn), rgba(240, 170, 84, 0.08));
+  }
+
+  .phase-stop {
+    display: block;
+    width: 46px;
+    padding: 25px 0 0;
+    text-align: center;
+  }
+
+  .phase-stop::before {
+    top: 9px;
+    left: 19px;
+  }
+
+  .phase-index {
+    display: block;
+  }
+
+  .phase-name,
+  .shortcut-hint {
+    display: none;
+  }
+
   .companion {
-    top: 128px;
+    top: 136px;
     right: 18px;
     bottom: auto;
     left: 18px;
@@ -1897,8 +1987,11 @@ html[data-contrast='high'] {
   }
 
   .control-deck {
+    right: 18px;
     bottom: 46px;
+    left: 18px;
     grid-template-columns: auto minmax(180px, 1fr);
+    gap: 14px;
     min-height: 72px;
     padding-top: 8px;
   }
@@ -1957,6 +2050,10 @@ html[data-contrast='high'] {
 }
 
 .flight-ui[data-atlas='true'] .system-banner button {
+  pointer-events: auto;
+}
+
+.flight-ui[data-atlas='true'] .system-notice-summary {
   pointer-events: auto;
 }
 
@@ -2029,7 +2126,7 @@ html[data-contrast='high'] {
   gap: 8px;
   width: 100%;
   height: 100%;
-  min-height: 36px;
+  min-height: 44px;
   padding: 3px 4px;
   border: 0;
   color: var(--muted);
@@ -2179,10 +2276,12 @@ html[data-contrast='high'] {
 
 .atlas-library > a {
   display: inline-flex;
+  align-items: center;
   gap: 6px;
+  min-height: 44px;
   margin: 17px 7px 0;
   color: var(--aqua);
-  font-size: 0.61rem;
+  font-size: 0.68rem;
   text-decoration: none;
 }
 
@@ -2250,13 +2349,13 @@ html[data-contrast='high'] {
 
 .atlas-view-actions button,
 .atlas-step-actions button {
-  min-height: 42px;
+  min-height: 44px;
   padding: 7px 10px;
   border: 1px solid var(--line);
   color: var(--muted);
   background: rgba(5, 10, 16, 0.72);
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: 0.68rem;
 }
 
 .atlas-view-actions button:hover,
@@ -2292,14 +2391,14 @@ html[data-contrast='high'] {
   display: flex;
   align-items: center;
   gap: 5px;
-  min-height: 27px;
-  padding: 3px 7px;
+  min-height: 44px;
+  padding: 7px 9px;
   border: 1px solid transparent;
   border-radius: 12px;
   color: #536574;
   background: rgba(5, 10, 16, 0.38);
   cursor: pointer;
-  font-size: 0.51rem;
+  font-size: 0.66rem;
   text-align: left;
 }
 
@@ -2324,7 +2423,7 @@ html[data-contrast='high'] {
   margin: 0;
   color: #8394a0;
   font-family: 'SFMono-Regular', Menlo, monospace;
-  font-size: 0.5rem;
+  font-size: 0.62rem;
   line-height: 1.45;
   text-align: center;
   text-wrap: balance;
@@ -2349,13 +2448,13 @@ html[data-contrast='high'] {
   gap: 16px;
   color: var(--muted);
   font-family: 'SFMono-Regular', Menlo, monospace;
-  font-size: 0.54rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .atlas-detail-topline button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 4px 0 4px 8px;
   border: 0;
   color: var(--muted);
@@ -2422,12 +2521,12 @@ html[data-contrast='high'] {
 }
 
 .atlas-reading-switch button {
-  min-height: 40px;
+  min-height: 44px;
   border: 0;
   color: var(--dim);
   background: transparent;
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: 0.72rem;
 }
 
 .atlas-reading-switch button[aria-pressed='true'] {
@@ -2559,7 +2658,7 @@ html[data-contrast='high'] {
   border-left: 2px solid var(--signal);
   color: #efc8cb;
   background: rgba(232, 92, 101, 0.08);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   line-height: 1.52;
 }
 
@@ -2568,7 +2667,7 @@ html[data-contrast='high'] {
   margin-bottom: 3px;
   color: var(--signal);
   font-family: 'SFMono-Regular', Menlo, monospace;
-  font-size: 0.48rem;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -2582,15 +2681,21 @@ html[data-contrast='high'] {
 .atlas-sources > span {
   color: var(--dim);
   font-family: 'SFMono-Regular', Menlo, monospace;
-  font-size: 0.48rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .atlas-sources a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid rgba(117, 217, 210, 0.16);
   color: var(--aqua);
-  font-size: 0.6rem;
-  line-height: 1.4;
+  background: rgba(117, 217, 210, 0.035);
+  font-size: 0.72rem;
+  line-height: 1.45;
   text-decoration: none;
 }
 
@@ -2646,10 +2751,22 @@ html[data-contrast='high'] {
 
 .atlas-review-boundary {
   margin: 17px 0 0;
-  color: var(--dim);
+  padding: 10px 12px;
+  border-left: 2px solid var(--dawn);
+  color: var(--muted);
+  background: rgba(240, 170, 84, 0.065);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.atlas-review-boundary strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--bone);
   font-family: 'SFMono-Regular', Menlo, monospace;
-  font-size: 0.49rem;
-  line-height: 1.5;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .atlas-timeline {
@@ -3033,19 +3150,19 @@ html[data-contrast='high'] {
   }
 
   .atlas-view-actions button {
-    min-height: 38px;
+    min-height: 44px;
     padding: 5px 7px;
-    font-size: 0.52rem;
+    font-size: 0.62rem;
   }
 
   .atlas-active-parts {
-    top: 55px;
+    top: 104px;
     left: 10px;
-    max-height: calc(100% - 82px);
+    max-height: calc(100% - 118px);
   }
 
   .atlas-active-parts button {
-    min-height: 25px;
+    min-height: 44px;
   }
 
   .atlas-structure-status {
@@ -3220,7 +3337,7 @@ html[data-contrast='high'] {
   }
 }
 
-@media (max-width: 820px) and (max-height: 560px) and (orientation: landscape) {
+@media (max-height: 560px) and (orientation: landscape) {
   .intro {
     top: 54%;
     left: 24px;
@@ -3259,7 +3376,7 @@ html[data-contrast='high'] {
   }
 
   .top-diseases {
-    top: 70px;
+    top: 80px;
     right: 12px;
     bottom: 40px;
     left: 52%;
@@ -3324,6 +3441,674 @@ html[data-contrast='high'] {
 
   .atlas-active-parts {
     display: none;
+  }
+}
+
+/* Living Instrument visual system
+   Adapted from the user-supplied PalDawn animated-logo concept. The gold is
+   reserved for arrival/listening; cyan is reserved for signal, evidence, and focus. */
+
+.masthead {
+  min-height: 78px;
+  padding-inline: clamp(18px, 2.4vw, 34px);
+  border-bottom-color: rgba(173, 164, 204, 0.28);
+  background:
+    linear-gradient(90deg, rgba(10, 8, 32, 0.98), rgba(18, 15, 48, 0.9) 54%, rgba(10, 8, 32, 0.98));
+  box-shadow: 0 12px 38px rgba(2, 1, 12, 0.18);
+}
+
+.wordmark {
+  gap: 11px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.wordmark-name,
+.wordmark-name strong {
+  color: var(--bone);
+}
+
+.build-mark {
+  color: var(--dawn-bright);
+  font-weight: 500;
+}
+
+.utility-nav {
+  gap: clamp(12px, 1.8vw, 24px);
+}
+
+.text-button {
+  color: var(--muted);
+}
+
+.text-button:hover,
+.text-button[aria-expanded='true'] {
+  border-bottom-color: var(--dawn-bright);
+}
+
+.canvas-label {
+  top: 99px;
+  color: var(--muted);
+}
+
+.intro {
+  left: clamp(28px, 6.8vw, 108px);
+  width: min(640px, calc(100vw - 390px));
+  transform: translateY(-46%);
+}
+
+.intro::before {
+  inset: -52px -58px;
+  background:
+    radial-gradient(ellipse at 34% 46%, rgba(10, 8, 32, 0.98) 0 43%, rgba(18, 15, 48, 0.78) 66%, transparent 82%);
+  filter: none;
+}
+
+.intro h1 {
+  display: grid;
+  gap: 0;
+  max-width: 620px;
+  margin: 12px 0 18px;
+  font-size: clamp(3rem, min(5.6vw, 9vh), 5.65rem);
+  font-weight: 600;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+}
+
+.intro h1 > span {
+  display: block;
+}
+
+.intro h1 > span:last-child {
+  max-width: 12ch;
+}
+
+.intro-brand-route {
+  display: flex !important;
+  align-items: center;
+  gap: 16px;
+  width: min(490px, 86%);
+  height: clamp(50px, 5vw, 68px);
+  margin: 3px 0 5px 8px;
+}
+
+.intro-brand-route img {
+  width: clamp(48px, 4.7vw, 64px);
+  height: clamp(48px, 4.7vw, 64px);
+  flex: 0 0 auto;
+}
+
+.intro-brand-route i {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(224, 182, 83, 0.72), rgba(173, 164, 204, 0.26));
+}
+
+.intro-brand-route i::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -8px;
+  width: 8px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--vital);
+  box-shadow: 0 0 14px rgba(69, 230, 207, 0.9);
+  animation: intro-signal 7.5s cubic-bezier(.45, .05, .35, .95) infinite;
+}
+
+.intro-copy {
+  max-width: 550px;
+  color: var(--muted);
+}
+
+.intro-actions {
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 24px;
+}
+
+.intro-actions .primary-action,
+.intro-actions .secondary-action {
+  min-width: 176px;
+}
+
+.primary-action {
+  border-color: var(--dawn);
+  color: #130d02;
+  background: linear-gradient(135deg, var(--dawn-bright), var(--dawn) 62%, #b88925);
+  box-shadow: 0 10px 32px rgba(224, 182, 83, 0.12);
+}
+
+.primary-action:hover {
+  border-color: var(--dawn-bright);
+  color: var(--dawn-bright);
+  background: rgba(10, 8, 32, 0.72);
+}
+
+.secondary-action,
+.quiet-action,
+.panel-actions button,
+.settings-actions button,
+.completion-actions button,
+.saved-stages button,
+.transcript-stage-actions button {
+  border-color: rgba(173, 164, 204, 0.3);
+  background: rgba(10, 8, 32, 0.76);
+}
+
+.synthetic-stamp,
+.safety-line {
+  color: var(--muted);
+}
+
+.system-banner,
+.drawer,
+.drawer-header,
+.completion-summary,
+.flight-ui[data-text-voyage='true'] .companion,
+.flight-ui[data-text-voyage='true'] .control-deck {
+  background: rgba(10, 8, 32, 0.97);
+}
+
+.drawer {
+  border-left-color: rgba(224, 182, 83, 0.38);
+  box-shadow: -24px 0 86px rgba(2, 1, 12, 0.48);
+}
+
+.drawer-header-label,
+.play-control span,
+.quiet-action[aria-pressed='true'] {
+  color: var(--dawn-bright);
+}
+
+.caption-copy {
+  color: var(--muted);
+}
+
+.spd-orbit,
+.level-tag,
+.action-status,
+.shortcut-hint output,
+.telemetry span {
+  color: var(--aqua);
+}
+
+.spd-orbit {
+  border-color: rgba(69, 230, 207, 0.52);
+}
+
+.spd-orbit-b {
+  border-color: rgba(224, 182, 83, 0.6);
+}
+
+.spd-core {
+  box-shadow: 0 0 22px rgba(224, 182, 83, 0.32);
+}
+
+.top-diseases {
+  border-top-color: rgba(69, 230, 207, 0.5);
+}
+
+.top-diseases button:hover {
+  background: rgba(69, 230, 207, 0.07);
+}
+
+.flight-ui[data-atlas='true']::before {
+  background:
+    linear-gradient(90deg, rgba(5, 4, 18, 0.8), transparent 29%, transparent 69%, rgba(5, 4, 18, 0.82)),
+    radial-gradient(circle at 52% 42%, transparent 0 24%, rgba(10, 8, 32, 0.26) 60%, rgba(5, 4, 18, 0.82));
+}
+
+.atlas-library,
+.atlas-detail,
+.atlas-guide {
+  background: rgba(10, 8, 32, 0.94);
+}
+
+.atlas-stage::after {
+  border-color: rgba(173, 164, 204, 0.2);
+}
+
+.text-voyage-backdrop {
+  background:
+    linear-gradient(rgba(69, 230, 207, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(69, 230, 207, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
+    radial-gradient(circle at 54% 46%, rgba(224, 182, 83, 0.12), transparent 42%),
+    var(--ink-0);
+}
+
+.telemetry {
+  background: rgba(10, 8, 32, 0.78);
+}
+
+.portal-veil {
+  background: radial-gradient(circle, #27113a 0, var(--ink-0) 64%);
+}
+
+.fallback-brand-icon {
+  border-radius: 0;
+}
+
+@keyframes intro-signal {
+  0%, 6% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  54% { transform: translateX(calc(100% + 330px)); opacity: 1; }
+  60%, 100% { transform: translateX(calc(100% + 330px)); opacity: 0; }
+}
+
+@media (max-width: 1180px) {
+  .intro {
+    width: min(500px, calc(100vw - 310px));
+  }
+
+  .intro h1 {
+    font-size: clamp(3rem, min(5.6vw, 9vh), 4.9rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .intro {
+    top: calc(50% - 64px);
+    width: min(610px, calc(100vw - 56px));
+  }
+
+  .intro h1 {
+    max-width: 570px;
+  }
+
+  .intro-actions[data-resume-available='true'] .begin-action {
+    display: none;
+  }
+
+  .top-diseases {
+    border-color: rgba(69, 230, 207, 0.3);
+    background: rgba(10, 8, 32, 0.95);
+    box-shadow: 0 18px 54px rgba(2, 1, 12, 0.42);
+  }
+}
+
+@media (max-width: 820px) {
+  .masthead {
+    min-height: 64px;
+  }
+
+  .build-mark {
+    color: var(--dawn-bright);
+  }
+
+  .atlas-library,
+  .atlas-detail {
+    background: rgba(10, 8, 32, 0.98);
+  }
+}
+
+@media (max-width: 540px) {
+  .intro {
+    top: calc(50% - 64px);
+    padding: 16px;
+    border-left-color: rgba(69, 230, 207, 0.34);
+    background: linear-gradient(100deg, rgba(10, 8, 32, 0.98), rgba(18, 15, 48, 0.88) 78%, rgba(10, 8, 32, 0.5));
+    animation: none;
+  }
+
+  .intro::before {
+    background: radial-gradient(ellipse at 36% 50%, rgba(10, 8, 32, 0.99) 0 60%, rgba(18, 15, 48, 0.66) 84%, transparent);
+  }
+
+  .intro h1 {
+    margin-top: 8px;
+    font-size: clamp(2.55rem, 11.5vw, 4.1rem);
+    line-height: 0.98;
+  }
+
+  .intro-brand-route {
+    width: 90%;
+    height: 42px;
+    margin-block: 1px 3px;
+  }
+
+  .intro-brand-route img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .intro-copy {
+    font-size: 0.78rem;
+    line-height: 1.52;
+  }
+
+  .intro-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .intro-actions .primary-action,
+  .intro-actions .secondary-action {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .intro-actions .text-button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 350px) {
+  .intro h1 {
+    font-size: 2.45rem;
+  }
+
+  .intro-brand-route {
+    height: 34px;
+  }
+
+  .intro-brand-route img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 540px) and (max-height: 680px) and (orientation: portrait) {
+  .intro {
+    top: 76px;
+    transform: none;
+    padding: 10px 12px;
+    animation: none;
+  }
+
+  .intro .eyebrow,
+  .intro-copy,
+  .intro-actions .text-button,
+  .synthetic-stamp {
+    display: none;
+  }
+
+  .intro h1 {
+    gap: 0;
+    margin: 0;
+    font-size: clamp(2.12rem, 11.3vw, 2.75rem);
+    line-height: 0.92;
+  }
+
+  .intro h1 > span:last-child {
+    max-width: 10.5ch;
+  }
+
+  .intro-brand-route {
+    width: 82%;
+    height: 28px;
+    margin-block: 1px 2px;
+  }
+
+  .intro-brand-route img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .intro-actions {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .intro-actions .primary-action,
+  .intro-actions .secondary-action {
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 0.62rem;
+  }
+}
+
+.flight-ui[data-reduced-motion='true'] .intro {
+  animation: none;
+}
+
+.flight-ui[data-reduced-motion='true'] .intro-brand-route i::after {
+  opacity: 0;
+  animation: none;
+}
+
+@media (max-height: 690px) and (orientation: landscape) {
+  .intro {
+    top: 82px;
+    width: min(520px, calc(100vw - 390px));
+    transform: none;
+    animation: none;
+  }
+
+  .intro h1 {
+    font-size: clamp(3rem, min(5.6vw, 8vh), 5.2rem);
+  }
+
+  .intro-brand-route {
+    height: clamp(40px, 8vh, 60px);
+  }
+
+  .intro-brand-route img {
+    width: clamp(40px, 8vh, 60px);
+    height: clamp(40px, 8vh, 60px);
+  }
+
+  .intro-actions {
+    margin-top: clamp(8px, 2vh, 16px);
+  }
+
+  .synthetic-stamp {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) and (orientation: portrait) {
+  .flight-ui[data-system-notices='true'] .wordmark-name {
+    display: none;
+  }
+
+  .system-banners {
+    top: 10px;
+    right: auto;
+    left: 60px;
+    display: block;
+    width: 44px;
+    transform: none;
+  }
+
+  .system-notice-summary {
+    justify-content: center;
+    gap: 4px;
+    width: 44px;
+    max-width: 44px;
+    padding: 0;
+  }
+
+  .system-notice-count {
+    display: block;
+    color: var(--bone);
+    font-size: 0.62rem;
+  }
+
+  .system-notice-label {
+    display: none;
+  }
+
+  .system-banners[data-expanded='true'] .system-notice-list {
+    top: 72px;
+    max-height: calc(100vh - 90px);
+  }
+}
+
+@media (min-height: 561px) and (max-height: 690px) and (max-width: 900px) and (orientation: landscape) {
+  .intro {
+    left: 24px;
+    width: min(520px, calc(52% - 42px));
+  }
+
+  .top-diseases {
+    top: 80px;
+    right: 12px;
+    bottom: 40px;
+    left: 52%;
+    height: auto;
+  }
+
+  .top-diseases-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .top-diseases ol {
+    display: grid;
+    overflow: auto;
+  }
+
+  .top-diseases li {
+    min-height: 48px;
+  }
+}
+
+@media (min-height: 561px) and (max-height: 690px) and (max-width: 819px) and (orientation: landscape) {
+  .intro h1 {
+    font-size: clamp(2.25rem, 6.7vw, 3.2rem);
+  }
+
+  .intro-copy {
+    display: -webkit-box;
+    margin-bottom: 10px;
+    overflow: hidden;
+    font-size: 0.68rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .intro-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .intro-actions .primary-action,
+  .intro-actions .secondary-action {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .intro-actions .text-button,
+  .synthetic-stamp {
+    display: none;
+  }
+
+  .intro-brand-route {
+    height: 30px;
+    margin-block: 0;
+  }
+
+  .intro-brand-route img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (min-height: 561px) and (max-height: 690px) and (max-width: 719px) and (orientation: landscape) {
+  .intro {
+    width: min(610px, calc(100vw - 48px));
+  }
+
+  .intro h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+  }
+
+  .intro h1 > span:last-child {
+    max-width: none;
+  }
+
+  .intro-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .top-diseases {
+    top: auto;
+    right: 18px;
+    bottom: 48px;
+    left: 18px;
+    height: 130px;
+  }
+
+  .top-diseases-heading {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .top-diseases ol {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .top-diseases li {
+    min-height: 0;
+  }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .intro {
+    top: 82px;
+    left: 24px;
+    width: min(520px, calc(52% - 42px));
+    transform: none;
+    animation: none;
+  }
+
+  .intro h1 {
+    font-size: clamp(2.25rem, 6.7vw, 3.2rem);
+  }
+
+  .intro-actions {
+    margin-top: 6px;
+  }
+
+  .intro-actions[data-resume-available='true'] .begin-action {
+    display: none;
+  }
+
+  .intro-brand-route {
+    height: 30px;
+    margin-block: 0;
+  }
+
+  .intro-brand-route img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .intro .eyebrow,
+  .intro-copy {
+    display: none;
+  }
+
+  .intro h1 {
+    margin-block: 0 2px;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+  }
+
+  .intro-brand-route {
+    height: 24px;
+  }
+
+  .intro-brand-route img {
+    width: 24px;
+    height: 24px;
   }
 }
 

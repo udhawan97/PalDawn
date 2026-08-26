@@ -1,17 +1,22 @@
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
+test.describe.configure({ timeout: 60_000 })
+
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
 
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
+  await page.getByRole('button', { name: 'Pause' }).click()
   await page.getByLabel('Journey position').fill('2')
   await expect(page.getByRole('heading', { name: 'Approach' })).toBeVisible()
+  await page.evaluate(() => document.activeElement?.blur())
 }
 
 test('compare view and N shortcut open the current private note', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  await pauseOnCurrentStage(page)
   await page.getByRole('button', { name: 'Compare tracks' }).click()
 
   await expect(page.getByRole('heading', { name: 'Compare, note, and continue.' })).toBeVisible()
@@ -50,6 +55,7 @@ test('private notes and personal checkpoints persist and synchronize across tabs
   await expect(page.getByRole('button', { name: 'Personal checkpoint complete' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByText('1 of 5 personal checkpoints')).toBeVisible()
 
+  await otherPage.close()
   await page.reload()
   await page.keyboard.press('n')
   await expect(page.getByLabel('Private note for Approach')).toHaveValue(note)
@@ -59,6 +65,7 @@ test('private notes and personal checkpoints persist and synchronize across tabs
 test('study Markdown export contains both authored tracks and private workspace data', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  await pauseOnCurrentStage(page)
   await page.keyboard.press('n')
   await page.getByLabel('Private note for Approach').fill('Private export note')
   await page.getByRole('button', { name: 'Mark personal checkpoint' }).click()

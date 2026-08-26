@@ -6,10 +6,10 @@ import { diseaseById, type BodyPartId } from '../data/diseases'
 import { useAtlas } from '../state/atlas'
 import { resolveTier, useSettings } from '../state/settings'
 
-const QUIET = '#263748'
-const BONE = '#d9e1df'
+const QUIET = '#292543'
+const BONE = '#efede4'
 const VESSEL = '#d85c64'
-const NERVE = '#e8bf65'
+const NERVE = '#e0b653'
 
 const BODY_DETAIL_POINTS: Record<BodyPartId, [number, number, number]> = {
   brain: [0, 3.68, 0.08],
@@ -101,7 +101,7 @@ function Organ({
         <OrganGeometry geometry={geometry} fine={fine} />
         <meshPhysicalMaterial
           color={active || selected ? color : QUIET}
-          emissive={active || selected ? color : '#05080c'}
+          emissive={active || selected ? color : '#050412'}
           emissiveIntensity={active ? 0.58 : selected ? 0.44 : 0.06}
           transparent
           opacity={active || selected ? 0.9 : 0.36}
@@ -156,7 +156,7 @@ function VesselNetwork({ active }: { active: boolean }) {
         <Line
           key={index}
           points={points}
-          color={active ? VESSEL : '#334554'}
+          color={active ? VESSEL : '#3a3154'}
           lineWidth={active ? 1.7 : 0.7}
           transparent
           opacity={active ? 0.8 : 0.3}
@@ -185,7 +185,7 @@ function NerveNetwork({ active }: { active: boolean }) {
         <Line
           key={index}
           points={points}
-          color={active ? NERVE : '#394451'}
+          color={active ? NERVE : '#403750'}
           lineWidth={active ? 1.3 : 0.55}
           transparent
           opacity={active ? 0.78 : 0.25}
@@ -214,8 +214,8 @@ function ShellSegment({
         ? <capsuleGeometry args={[0.72, 1.45, 10, 28]} />
         : <sphereGeometry args={[1, 36, 28]} />}
       <meshPhysicalMaterial
-        color="#87a8bc"
-        emissive="#142b38"
+        color="#9babd0"
+        emissive="#151134"
         emissiveIntensity={0.22}
         transparent
         opacity={opacity}
@@ -250,22 +250,22 @@ function BodyShell() {
       ))}
       <mesh position={[0, 0.72, 0]} scale={[1.31, 2.04, 0.74]}>
         <capsuleGeometry args={[0.72, 1.45, 8, 20]} />
-        <meshBasicMaterial color="#a9cfdd" wireframe transparent opacity={0.13} depthWrite={false} />
+        <meshBasicMaterial color="#ada4cc" wireframe transparent opacity={0.13} depthWrite={false} />
       </mesh>
       <mesh position={[0, 3.72, 0]} scale={[0.755, 0.925, 0.715]}>
         <sphereGeometry args={[1, 22, 16]} />
-        <meshBasicMaterial color="#a9cfdd" wireframe transparent opacity={0.17} depthWrite={false} />
+        <meshBasicMaterial color="#ada4cc" wireframe transparent opacity={0.17} depthWrite={false} />
       </mesh>
       <mesh position={[0, 3.6, 0.7]} scale={[0.13, 0.24, 0.12]} rotation={[0.5, 0, 0]}>
         <coneGeometry args={[1, 1.8, 12]} />
-        <meshBasicMaterial color="#a9cfdd" transparent opacity={0.12} depthWrite={false} />
+        <meshBasicMaterial color="#ada4cc" transparent opacity={0.12} depthWrite={false} />
       </mesh>
     </group>
   )
 }
 
 function Skeleton({ active }: { active: boolean }) {
-  const materialColor = active ? BONE : '#485866'
+  const materialColor = active ? BONE : '#5d5873'
   return (
     <group>
       <mesh position={[0, 3.7, -0.1]} scale={[0.54, 0.66, 0.5]}>
@@ -367,11 +367,11 @@ function PhaseSignal({
       {route ? (
         <>
           <Line points={points} color={accent} lineWidth={1.1} transparent opacity={0.42} dashed dashSize={0.12} gapSize={0.08} />
-          <Line points={points} color="#dceff2" lineWidth={0.34} transparent opacity={0.55} />
+          <Line points={points} color="#f2ede0" lineWidth={0.34} transparent opacity={0.55} />
           <group ref={marker}>
             <mesh>
               <sphereGeometry args={[0.075, 14, 10]} />
-              <meshBasicMaterial color="#f9efe0" toneMapped={false} />
+              <meshBasicMaterial color="#d8fff7" toneMapped={false} />
             </mesh>
             <pointLight color={accent} intensity={5.5} distance={1.8} />
           </group>
@@ -384,11 +384,11 @@ function PhaseSignal({
         </mesh>
         <mesh rotation={[0, Math.PI / 2, Math.PI / 5]}>
           <torusGeometry args={[0.9, 0.008, 5, 72]} />
-          <meshBasicMaterial color="#75d9d2" transparent opacity={0.36} toneMapped={false} />
+          <meshBasicMaterial color="#45e6cf" transparent opacity={0.36} toneMapped={false} />
         </mesh>
         <mesh rotation={[Math.PI / 3, 0, -Math.PI / 4]}>
           <torusGeometry args={[1.08, 0.006, 5, 72]} />
-          <meshBasicMaterial color="#dceff2" transparent opacity={0.2} toneMapped={false} />
+          <meshBasicMaterial color="#bab2d8" transparent opacity={0.2} toneMapped={false} />
         </mesh>
         <points>
           <bufferGeometry>
@@ -462,7 +462,7 @@ function SystemDetailLayer({ activeParts, selectedBodyPart }: { activeParts: Bod
         </mesh>
         <mesh scale={0.64} rotation={[Math.PI / 2, 0.2, 0]}>
           <torusGeometry args={[0.42, 0.018, 6, 48]} />
-          <meshBasicMaterial color="#f7d7a2" transparent opacity={cardiacActive ? 0.56 : 0.08} depthWrite={false} />
+          <meshBasicMaterial color="#f3d98a" transparent opacity={cardiacActive ? 0.56 : 0.08} depthWrite={false} />
         </mesh>
       </group>
     </group>
@@ -490,7 +490,7 @@ export function HumanSystemsScene() {
     camera.up.set(0, 1, 0)
     camera.lookAt(0, 0, 0)
     scene.fog = null
-    scene.background = new Color('#050a10')
+    scene.background = new Color('#050412')
     invalidate()
   }, [camera, invalidate, scene])
 
@@ -518,9 +518,9 @@ export function HumanSystemsScene() {
 
   return (
     <>
-      <color attach="background" args={['#050a10']} />
-      <ambientLight intensity={0.78} color="#b9cfdf" />
-      <directionalLight position={[5, 7, 8]} intensity={2.8} color="#d8e8ef" />
+      <color attach="background" args={['#050412']} />
+      <ambientLight intensity={0.78} color="#bab2d8" />
+      <directionalLight position={[5, 7, 8]} intensity={2.8} color="#efede4" />
       <directionalLight position={[-5, -1, 5]} intensity={1.7} color={disease.accent} />
       <pointLight position={[0, 1.1, 2.5]} intensity={18} distance={8} color={disease.accent} />
       <group
@@ -543,12 +543,12 @@ export function HumanSystemsScene() {
         <Organ id="heart" position={[-0.16, 1.22, 0.5]} explodedPosition={[-0.22, 1.25, 1.45]} scale={[0.38, 0.5, 0.35]} color="#f06f75" rotation={[0, 0, -0.35]} />
         <Organ id="liver" position={[0.42, 0.2, 0.34]} explodedPosition={[1.35, 0.15, 0.75]} scale={[0.88, 0.38, 0.42]} color="#b77862" />
         <Organ id="stomach" position={[-0.46, 0.02, 0.36]} explodedPosition={[-1.28, -0.05, 0.82]} scale={[0.44, 0.52, 0.3]} color="#d69a9e" geometry="torus" rotation={[0, 0.4, -0.35]} />
-        <Organ id="pancreas" position={[0, -0.18, 0.52]} explodedPosition={[0, -0.22, 1.55]} scale={[0.72, 0.16, 0.18]} color="#f0aa54" />
+        <Organ id="pancreas" position={[0, -0.18, 0.52]} explodedPosition={[0, -0.22, 1.55]} scale={[0.72, 0.16, 0.18]} color="#e0b653" />
         <Organ id="intestines" position={[0, -0.92, 0.3]} explodedPosition={[0, -1.12, 1.22]} scale={[0.68, 0.76, 0.38]} color="#de9cab" geometry="knot" />
         <Organ id="kidneys" position={[-0.55, -0.45, -0.12]} explodedPosition={[-1.3, -0.42, 0.2]} scale={[0.24, 0.42, 0.2]} color="#e6a6c3" />
         <Organ id="kidneys" position={[0.55, -0.45, -0.12]} explodedPosition={[1.3, -0.42, 0.2]} scale={[0.24, 0.42, 0.2]} color="#e6a6c3" />
         <Organ id="bladder" position={[0, -1.64, 0.14]} explodedPosition={[0, -1.8, 0.82]} scale={[0.3, 0.32, 0.25]} color="#b6d9dc" />
-        <Organ id="immune" position={[0.72, 0.86, -0.15]} explodedPosition={[1.65, 0.88, 0.1]} scale={[0.18, 0.34, 0.16]} color="#75d9d2" />
+        <Organ id="immune" position={[0.72, 0.86, -0.15]} explodedPosition={[1.65, 0.88, 0.1]} scale={[0.18, 0.34, 0.16]} color="#45e6cf" />
         <Organ id="muscles" position={[-0.6, -2.85, 0.15]} explodedPosition={[-1.05, -3, 0.55]} scale={[0.18, 0.82, 0.17]} color="#d77778" geometry="capsule" />
         <Organ id="fat" position={[0.74, -0.12, -0.18]} explodedPosition={[1.55, -0.12, -0.1]} scale={[0.28, 0.46, 0.18]} color="#e5ca7b" geometry="capsule" />
       </group>

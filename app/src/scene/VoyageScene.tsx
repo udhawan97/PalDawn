@@ -31,8 +31,8 @@ import { useTelemetry } from '../state/telemetry'
 import { FlowField } from './FlowField'
 import { HumanSystemsScene } from './HumanSystemsScene'
 
-const DEEP_INK = new Color('#04070c')
-const CORRIDOR_INK = new Color('#12050b')
+const DEEP_INK = new Color('#050412')
+const CORRIDOR_INK = new Color('#180722')
 
 function JourneyClock() {
   const playbackRate = useSettings((state) => state.playbackRate)
@@ -141,8 +141,8 @@ function SyntheticCore() {
       <mesh scale={[1.22, 1.4, 1]}>
         <icosahedronGeometry args={[1.52, 5]} />
         <meshPhysicalMaterial
-          color="#582030"
-          emissive="#260812"
+          color="#251c4e"
+          emissive="#100b2c"
           emissiveIntensity={1.15}
           roughness={0.48}
           metalness={0.04}
@@ -152,15 +152,15 @@ function SyntheticCore() {
       </mesh>
       <mesh scale={[1.235, 1.415, 1.015]}>
         <icosahedronGeometry args={[1.52, 2]} />
-        <meshBasicMaterial color="#d55f68" wireframe transparent opacity={0.29} />
+        <meshBasicMaterial color="#ada4cc" wireframe transparent opacity={0.25} />
       </mesh>
       <mesh rotation={[Math.PI / 2.7, 0.18, 0]} scale={[1, 0.82, 1.06]}>
         <torusGeometry args={[2.02, 0.018, 6, 160]} />
-        <meshBasicMaterial color="#75d9d2" transparent opacity={0.32} />
+        <meshBasicMaterial color="#45e6cf" transparent opacity={0.34} />
       </mesh>
       <mesh rotation={[0.2, Math.PI / 2.25, -0.4]} scale={[1, 0.84, 1]}>
         <torusGeometry args={[2.18, 0.012, 6, 160]} />
-        <meshBasicMaterial color="#f0aa54" transparent opacity={0.24} />
+        <meshBasicMaterial color="#e0b653" transparent opacity={0.28} />
       </mesh>
     </group>
   )
@@ -180,14 +180,14 @@ function DawnRoute() {
     <group>
       <Line
         points={guidePoints}
-        color="#f0aa54"
+        color="#e0b653"
         lineWidth={1.6}
         transparent
         opacity={(1 - smoothRange(progress, 0.43, 0.58)) * 0.9}
       />
       <Line
         points={guidePoints}
-        color="#f7d7a2"
+        color="#f3d98a"
         lineWidth={0.45}
         transparent
         opacity={(1 - smoothRange(progress, 0.43, 0.58)) * 0.9}
@@ -220,7 +220,7 @@ function CorridorRings() {
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, ringCount]}>
       <torusGeometry args={[1.08, 0.014, 5, 48]} />
-      <meshBasicMaterial color="#c7793c" transparent opacity={0.11} depthWrite={false} />
+      <meshBasicMaterial color="#e0b653" transparent opacity={0.1} depthWrite={false} />
     </instancedMesh>
   )
 }
@@ -240,13 +240,13 @@ function ArrivalBeacon() {
     <group ref={group} position={frame.position}>
       <mesh>
         <octahedronGeometry args={[0.24, 0]} />
-        <meshBasicMaterial color="#f7d7a2" toneMapped={false} />
+        <meshBasicMaterial color="#f3d98a" toneMapped={false} />
       </mesh>
       <mesh scale={1.75}>
         <octahedronGeometry args={[0.24, 0]} />
-        <meshBasicMaterial color="#f0aa54" wireframe transparent opacity={0.52} toneMapped={false} />
+        <meshBasicMaterial color="#e0b653" wireframe transparent opacity={0.52} toneMapped={false} />
       </mesh>
-      <pointLight color="#f0aa54" intensity={14} distance={5} />
+      <pointLight color="#e0b653" intensity={14} distance={5} />
     </group>
   )
 }
@@ -259,8 +259,8 @@ function Corridor() {
         <tubeGeometry args={[curve, 220, 1.24, 28, false]} />
         <meshPhysicalMaterial
           side={BackSide}
-          color="#4c111f"
-          emissive="#1b0309"
+          color="#241033"
+          emissive="#10071a"
           emissiveIntensity={0.8}
           roughness={0.72}
           metalness={0}
@@ -278,16 +278,16 @@ function Corridor() {
 function PortalPreview() {
   return (
     <>
-      <color attach="background" args={['#15060c']} />
-      <ambientLight intensity={0.7} color="#e85c65" />
+      <color attach="background" args={['#0a0820']} />
+      <ambientLight intensity={0.7} color="#ada4cc" />
       <group position={[0, 0, -3.2]}>
         {[0, 1, 2, 3].map((index) => (
           <mesh key={index} position={[0, 0, -index * 1.3]}>
             <torusGeometry args={[1.08 - index * 0.1, 0.024, 6, 64]} />
-            <meshBasicMaterial color={index % 2 ? '#75d9d2' : '#f0aa54'} />
+            <meshBasicMaterial color={index % 2 ? '#45e6cf' : '#e0b653'} />
           </mesh>
         ))}
-        <pointLight color="#e85c65" intensity={18} distance={10} />
+        <pointLight color="#45e6cf" intensity={18} distance={10} />
       </group>
     </>
   )
@@ -312,11 +312,11 @@ function PortalGate() {
     <group position={frame.position} quaternion={quaternion}>
       <mesh renderOrder={4}>
         <torusGeometry args={[1.25, 0.055, 10, 96]} />
-        <meshBasicMaterial color="#f0aa54" transparent opacity={0.74} toneMapped={false} />
+        <meshBasicMaterial color="#e0b653" transparent opacity={0.74} toneMapped={false} />
       </mesh>
       <mesh renderOrder={3}>
         <torusGeometry args={[1.37, 0.012, 6, 96]} />
-        <meshBasicMaterial color="#75d9d2" transparent opacity={0.48} toneMapped={false} />
+        <meshBasicMaterial color="#45e6cf" transparent opacity={0.48} toneMapped={false} />
       </mesh>
       {previewVisible ? (
         <mesh>
@@ -334,7 +334,7 @@ function PortalGate() {
       ) : (
         <mesh>
           <circleGeometry args={[1.2, 72]} />
-          <meshBasicMaterial color="#0b0509" transparent opacity={0.72} />
+          <meshBasicMaterial color="#050412" transparent opacity={0.72} />
         </mesh>
       )}
     </group>
@@ -364,7 +364,7 @@ function SignalDust() {
       </bufferGeometry>
       <pointsMaterial
         size={0.022}
-        color="#75d9d2"
+        color="#45e6cf"
         transparent
         opacity={0.38}
         depthWrite={false}
@@ -392,11 +392,11 @@ export function VoyageScene() {
 
   return (
     <>
-      <color attach="background" args={['#04070c']} />
-      <ambientLight intensity={0.34} color="#d6dfef" />
-      <directionalLight position={[5, 8, 7]} intensity={2.7} color="#f7d7a2" />
-      <directionalLight position={[-5, -2, 2]} intensity={1.1} color="#75d9d2" />
-      <pointLight position={[-0.4, 0, 0.2]} intensity={18} distance={8} color="#e85c65" />
+      <color attach="background" args={['#050412']} />
+      <ambientLight intensity={0.34} color="#bab2d8" />
+      <directionalLight position={[5, 8, 7]} intensity={2.7} color="#f3d98a" />
+      <directionalLight position={[-5, -2, 2]} intensity={1.1} color="#45e6cf" />
+      <pointLight position={[-0.4, 0, 0.2]} intensity={18} distance={8} color="#e0b653" />
       <JourneyClock />
       <CameraDirector />
       <FogDirector />
