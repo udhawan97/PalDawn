@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787741963.0951865,
+    "mtime": 1787769344.4603298,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1787740649.933781,
-    "ast_hash": "43ab73e14d47e9833231c0a9d304ad71",
+    "mtime": 1787743782.7993863,
+    "ast_hash": "d7495a39c9c5d72cd4d4efb5d7377968",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "app/tests/brand.spec.mjs": {
-    "mtime": 1787742546.735036,
-    "ast_hash": "7fd372d9c0b5f2e681668b254138b0cd",
+    "mtime": 1787769275.4274085,
+    "ast_hash": "44a3fc221117c90ec6a79f0157369294",
     "semantic_hash": ""
   },
   "paldawn-brand-and-site.html": {

@@ -4128,7 +4128,7 @@ html[data-contrast='high'] {
   }
 }
 
-@media (max-height: 480px) and (orientation: landscape) {
+@media (max-height: 560px) and (orientation: landscape) {
   .intro .eyebrow,
   .intro-copy {
     display: none;
@@ -4148,8 +4148,16 @@ html[data-contrast='high'] {
     height: 24px;
   }
 
-  .intro-actions[data-resume-available='true'] {
+  .intro-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .synthetic-stamp {
+    display: flex;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.025em;
+    line-height: 1.35;
   }
 }
 

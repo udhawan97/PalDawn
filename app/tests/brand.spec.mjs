@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test'
 
+const useFallbackHeadingFont = (page) => page.addStyleTag({
+  content: '.intro h1 { font-family: Georgia, serif !important; }',
+})
+
 test('the living mark is visible and honors reduced motion', async ({ page, context }) => {
   await page.goto('./')
 
@@ -137,6 +141,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   for (const viewport of viewports) {
     await page.setViewportSize(viewport)
     await page.goto('./')
+    await expect(page.locator('.flight-ui')).toBeVisible()
     await page.evaluate(() => window.dispatchEvent(new CustomEvent('paldawn:offline-ready')))
     const summary = page.locator('.system-notice-summary')
     const banner = page.locator('.system-banner-offline-ready')
@@ -165,6 +170,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   ]) {
     await page.setViewportSize(viewport)
     await page.goto('./')
+    await expect(page.locator('.flight-ui')).toBeVisible()
     await page.evaluate(() => {
       window.dispatchEvent(new Event('offline'))
       window.dispatchEvent(new CustomEvent('paldawn:update-ready'))
@@ -191,6 +197,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
 
   await page.setViewportSize({ width: 667, height: 375 })
   await page.goto('./')
+  await expect(page.locator('.flight-ui')).toBeVisible()
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
   await expect(page.locator('.flight-ui')).toHaveAttribute('data-atlas', 'true')
   await page.evaluate(() => window.dispatchEvent(new CustomEvent('paldawn:update-ready')))
@@ -213,6 +220,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
 
   await page.setViewportSize({ width: 320, height: 568 })
   await page.goto('./')
+  await expect(page.locator('.flight-ui')).toBeVisible()
   await page.evaluate(() => {
     window.dispatchEvent(new Event('offline'))
     window.dispatchEvent(new CustomEvent('paldawn:update-ready'))
@@ -232,6 +240,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   await firstPhase.click({ trial: true })
 
   await page.goto('./')
+  await expect(page.locator('.flight-ui')).toBeVisible()
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
   await expect(page.locator('.flight-ui')).toHaveAttribute('data-atlas', 'true')
   await page.evaluate(() => {
@@ -263,6 +272,11 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     { width: 414, height: 896 },
     { width: 667, height: 375 },
     { width: 720, height: 450 },
+    { width: 766, height: 480 },
+    { width: 766, height: 481 },
+    { width: 766, height: 559 },
+    { width: 766, height: 560 },
+    { width: 766, height: 561 },
     { width: 821, height: 480 },
     { width: 844, height: 390 },
     { width: 896, height: 414 },
@@ -303,6 +317,7 @@ test('the branded introduction does not overflow target viewports', async ({ pag
   for (const viewport of viewports) {
     await page.setViewportSize(viewport)
     await page.goto('./')
+    await useFallbackHeadingFont(page)
     await expect(page.locator('.brand-icon')).toBeVisible()
     await page.locator('.intro, .top-diseases').evaluateAll(async (elements) => {
       await Promise.all(elements.flatMap((element) => element.getAnimations()).map((animation) => animation.finished))
@@ -332,8 +347,14 @@ test('the branded introduction does not overflow target viewports', async ({ pag
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} bottom edge`).toBeLessThanOrEqual(viewport.height)
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} above safety line`).toBeLessThanOrEqual(safetyTop)
     }
-    if (viewport.height <= 480 && viewport.width > viewport.height) {
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
       expect(safetyTop - Math.max(...targetHeights.map((target) => target.bottom)), `${viewport.width}x${viewport.height} action-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
+      const boundary = page.locator('.synthetic-stamp')
+      await expect(boundary, `${viewport.width}x${viewport.height} conceptual boundary`).toBeVisible()
+      const boundaryFontSize = await boundary.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
+      expect(boundaryFontSize, `${viewport.width}x${viewport.height} conceptual boundary font size`).toBeGreaterThanOrEqual(12)
     }
 
     const mastheadBottom = await page.locator('.masthead').evaluate((element) => element.getBoundingClientRect().bottom)
@@ -367,6 +388,11 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
   const viewports = [
     { width: 667, height: 375 },
     { width: 720, height: 450 },
+    { width: 766, height: 480 },
+    { width: 766, height: 481 },
+    { width: 766, height: 559 },
+    { width: 766, height: 560 },
+    { width: 766, height: 561 },
     { width: 821, height: 480 },
     { width: 844, height: 390 },
     { width: 896, height: 414 },
@@ -397,6 +423,7 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
   for (const viewport of viewports) {
     await page.setViewportSize(viewport)
     await page.goto('./')
+    await useFallbackHeadingFont(page)
     await page.locator('.intro, .top-diseases').evaluateAll(async (elements) => {
       await Promise.all(elements.flatMap((element) => element.getAnimations()).map((animation) => animation.finished))
     })
@@ -425,8 +452,14 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     })
     const label = `${viewport.width}x${viewport.height}`
     expect(Math.max(...geometry.actionBottoms), `${label} saved actions above safety`).toBeLessThanOrEqual(geometry.safety.top)
-    if (viewport.height <= 480 && viewport.width > viewport.height) {
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
       expect(geometry.safety.top - Math.max(...geometry.actionBottoms), `${label} saved action-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
+      const boundary = page.locator('.synthetic-stamp')
+      await expect(boundary, `${label} saved conceptual boundary`).toBeVisible()
+      const boundaryFontSize = await boundary.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
+      expect(boundaryFontSize, `${label} saved conceptual boundary font size`).toBeGreaterThanOrEqual(12)
     }
     expect(geometry.intro.bottom, `${label} saved intro above safety`).toBeLessThanOrEqual(geometry.safety.top)
     expect(geometry.overlap.width * geometry.overlap.height, `${label} saved intro clear of disease rail`).toBe(0)

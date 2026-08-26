@@ -1,16 +1,16 @@
 # Graph Report - worktree  (2026-08-26)
 
 ## Corpus Check
-- 124 files · ~131,173 words
+- 124 files · ~131,803 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 647 nodes · 984 edges · 54 communities (52 shown, 2 thin omitted)
+- 648 nodes · 985 edges · 55 communities (53 shown, 2 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 43 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2bffebd2`
+- Built from commit: `e03a83cc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -59,6 +59,7 @@
 - PalDawn v0.3.0 — Mechanism Lens
 - PalDawn mission and future vision
 - pwa.ts
+- Medical Guardrails
 
 ## God Nodes (most connected - your core abstractions)
 1. `useSettings` - 25 edges
@@ -73,10 +74,10 @@
 10. `diseaseById()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Unpublished Medical Content` --semantically_similar_to--> `Medical Guardrails`  [INFERRED] [semantically similar]
-  NOTICE.md → docs/PLAN.md
 - `Named Medical Review Gate` --semantically_similar_to--> `Medical Guardrails`  [INFERRED] [semantically similar]
   CONTRIBUTING.md → docs/PLAN.md
+- `Unpublished Medical Content` --semantically_similar_to--> `Medical Guardrails`  [INFERRED] [semantically similar]
+  NOTICE.md → docs/PLAN.md
 - `Locked WebGL2 Stack` --semantically_similar_to--> `Locked Three.js and WebGL2 Stack`  [INFERRED] [semantically similar]
   app/README.md → docs/PLAN.md
 - `Founder Vision` --semantically_similar_to--> `Evidence-Linked Causal Voyage`  [INFERRED] [semantically similar]
@@ -92,11 +93,11 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (54 total, 2 thin omitted)
+## Communities (55 total, 2 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
-Cohesion: 0.15
-Nodes (20): Medical Accuracy Report, Journey Proposal, Quality and Reduced-Motion Settings, Canonical Coronary Route, Medical Content Source Boundary, Medical Guardrails, Minimal Linear Journey Schema, P0 Graphics Directives (+12 more)
+Cohesion: 0.24
+Nodes (13): Medical Accuracy Report, Canonical Coronary Route, Medical Content Source Boundary, P0 Graphics Directives, PalDawn Project Plan, P0 to P3 Phase Roadmap, Semantic-Stage State Machine, Deterministic glTF Asset Pipeline (+5 more)
 
 ### Community 1 - "FlightDeck.tsx"
 Cohesion: 0.06
@@ -147,8 +148,8 @@ Cohesion: 0.29
 Nodes (12): Namespace, Path, collection_audit(), curve_audit(), id_name(), layer_data(), linked_list(), main() (+4 more)
 
 ### Community 16 - "PalDawn Engineering Scaffold"
-Cohesion: 0.19
-Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Direct Dependency License Bundle (+5 more)
+Cohesion: 0.18
+Nodes (14): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Quality and Reduced-Motion Settings (+6 more)
 
 ### Community 17 - "diseases.ts"
 Cohesion: 0.06
@@ -159,24 +160,24 @@ Cohesion: 0.17
 Nodes (9): distHtml, gzipBytes, ids, javascriptAssets, journey, packageJson, ROOT, source (+1 more)
 
 ### Community 19 - "PalDawn Overview"
-Cohesion: 0.24
-Nodes (10): Locked WebGL2 Stack, Antaryaan to PalDawn Rename, Engine Council Evidence, Founder Vision, PalDawn Full Project Brief, Locked Three.js and WebGL2 Stack, Evidence-Linked Causal Voyage Positioning, Evidence-Linked Causal Voyage (+2 more)
+Cohesion: 0.22
+Nodes (11): Locked WebGL2 Stack, Antaryaan to PalDawn Rename, Codex-Claude Working Model, Engine Council Evidence, Founder Vision, PalDawn Full Project Brief, Locked Three.js and WebGL2 Stack, Evidence-Linked Causal Voyage Positioning (+3 more)
 
 ### Community 20 - "Credits and Prior Art"
-Cohesion: 0.29
-Nodes (8): Code and Content Licensing Split, Candidate Adoption Boundary, Clean-Room Influences, Credits and Prior Art, Provenance Precedes Adoption, Clean-Room Rejection Rule, Fail-Closed Validator Rules, Passing Provenance Record
+Cohesion: 0.25
+Nodes (9): Code and Content Licensing Split, Candidate Adoption Boundary, Clean-Room Influences, Credits and Prior Art, Used Direct Dependencies, Provenance Precedes Adoption, Clean-Room Rejection Rule, Fail-Closed Validator Rules (+1 more)
 
 ### Community 21 - "Codex Reconnaissance Prompt"
-Cohesion: 0.25
-Nodes (9): Codex-Claude Working Model, Attribution and License Compliance Mission, Codex Reconnaissance Prompt, GitHub Reconnaissance Mission, Prompt Back to Claude, Adversarial Graphics Design Review, Design Review Prompt, Prompt Back to Claude (+1 more)
+Cohesion: 0.29
+Nodes (8): Attribution and License Compliance Mission, Codex Reconnaissance Prompt, GitHub Reconnaissance Mission, Prompt Back to Claude, Adversarial Graphics Design Review, Design Review Prompt, Prompt Back to Claude, License Adoption Boundary
 
 ### Community 22 - "Contributing to PalDawn"
 Cohesion: 0.33
 Nodes (6): Bug Report, CI Workflow, Pull Request Quality Gate, Contributing to PalDawn, Named Medical Review Gate, Provenance Precedes Contribution
 
 ### Community 23 - "Attribution and Licensing Chain"
-Cohesion: 0.47
-Nodes (6): Per-Object Asset Audit Mission, Per-Object Anatomy Asset Provenance, Attribution and Licensing Chain, Per-Object Anatomy Approval, Planned BodyParts3D to Z-Anatomy Chain, Unpublished Medical Content
+Cohesion: 0.60
+Nodes (5): Per-Object Asset Audit Mission, Per-Object Anatomy Asset Provenance, Attribution and Licensing Chain, Per-Object Anatomy Approval, Planned BodyParts3D to Z-Anatomy Chain
 
 ### Community 24 - "PalDawn v0.1.0 performance report"
 Cohesion: 0.33
@@ -261,6 +262,10 @@ Nodes (6): Current boundary, Mission, North star, PalDawn mission and future vis
 ### Community 53 - "pwa.ts"
 Cohesion: 0.25
 Nodes (9): rootEl, activatePwaUpdate(), BeforeInstallPromptEvent, dispatch(), getPwaInstallState(), isStandalone(), PwaInstallState, registerPwa() (+1 more)
+
+### Community 54 - "Medical Guardrails"
+Cohesion: 0.33
+Nodes (6): Journey Proposal, Medical Guardrails, Minimal Linear Journey Schema, Product Pillars, Unpublished Medical Content, Journeys, Inside, Atlas, and Research Modes
 
 ## Knowledge Gaps
 - **260 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+255 more)
