@@ -278,6 +278,8 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     { width: 766, height: 559 },
     { width: 766, height: 560 },
     { width: 766, height: 561 },
+    { width: 766, height: 575 },
+    { width: 766, height: 576 },
     { width: 821, height: 480 },
     { width: 844, height: 390 },
     { width: 896, height: 414 },
@@ -292,8 +294,11 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     { width: 819, height: 690 },
     { width: 820, height: 560 },
     { width: 820, height: 561 },
+    { width: 820, height: 575 },
+    { width: 820, height: 576 },
     { width: 821, height: 560 },
     { width: 821, height: 561 },
+    { width: 821, height: 575 },
     { width: 844, height: 561 },
     { width: 896, height: 561 },
     { width: 900, height: 560 },
@@ -348,10 +353,12 @@ test('the branded introduction does not overflow target viewports', async ({ pag
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} bottom edge`).toBeLessThanOrEqual(viewport.height)
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} above safety line`).toBeLessThanOrEqual(safetyTop)
     }
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    const compactLandscape = viewport.width > viewport.height
+      && (viewport.height <= 560 || (viewport.height <= 575 && viewport.width <= 820))
+    if (compactLandscape) {
       expect(safetyTop - Math.max(...targetHeights.map((target) => target.bottom)), `${viewport.width}x${viewport.height} action-to-safety reserve`).toBeGreaterThanOrEqual(4)
     }
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    if (compactLandscape) {
       const boundary = page.locator('.synthetic-stamp')
       await expect(boundary, `${viewport.width}x${viewport.height} conceptual boundary`).toBeVisible()
       const boundaryFontSize = await boundary.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
@@ -373,7 +380,7 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     })
     expect(panels.intro.top, `${viewport.width}x${viewport.height} intro below masthead`).toBeGreaterThanOrEqual(mastheadBottom - 1)
     expect(panels.intro.bottom, `${viewport.width}x${viewport.height} intro above safety`).toBeLessThanOrEqual(safetyTop)
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    if (compactLandscape) {
       expect(safetyTop - panels.intro.bottom, `${viewport.width}x${viewport.height} intro-to-safety reserve`).toBeGreaterThanOrEqual(4)
     }
     expect(panels.overlap.width * panels.overlap.height, `${viewport.width}x${viewport.height} intro clear of disease rail`).toBe(0)
@@ -397,6 +404,8 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     { width: 766, height: 559 },
     { width: 766, height: 560 },
     { width: 766, height: 561 },
+    { width: 766, height: 575 },
+    { width: 766, height: 576 },
     { width: 821, height: 480 },
     { width: 844, height: 390 },
     { width: 896, height: 414 },
@@ -411,8 +420,11 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     { width: 819, height: 690 },
     { width: 820, height: 560 },
     { width: 820, height: 561 },
+    { width: 820, height: 575 },
+    { width: 820, height: 576 },
     { width: 821, height: 560 },
     { width: 821, height: 561 },
+    { width: 821, height: 575 },
     { width: 844, height: 561 },
     { width: 896, height: 561 },
     { width: 900, height: 560 },
@@ -458,17 +470,19 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     })
     const label = `${viewport.width}x${viewport.height}`
     expect(Math.max(...geometry.actionBottoms), `${label} saved actions above safety`).toBeLessThanOrEqual(geometry.safety.top)
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    const compactLandscape = viewport.width > viewport.height
+      && (viewport.height <= 560 || (viewport.height <= 575 && viewport.width <= 820))
+    if (compactLandscape) {
       expect(geometry.safety.top - Math.max(...geometry.actionBottoms), `${label} saved action-to-safety reserve`).toBeGreaterThanOrEqual(4)
     }
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    if (compactLandscape) {
       const boundary = page.locator('.synthetic-stamp')
       await expect(boundary, `${label} saved conceptual boundary`).toBeVisible()
       const boundaryFontSize = await boundary.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
       expect(boundaryFontSize, `${label} saved conceptual boundary font size`).toBeGreaterThanOrEqual(12)
     }
     expect(geometry.intro.bottom, `${label} saved intro above safety`).toBeLessThanOrEqual(geometry.safety.top)
-    if (viewport.height <= 560 && viewport.width > viewport.height) {
+    if (compactLandscape) {
       expect(geometry.safety.top - geometry.intro.bottom, `${label} saved intro-to-safety reserve`).toBeGreaterThanOrEqual(4)
     }
     expect(geometry.overlap.width * geometry.overlap.height, `${label} saved intro clear of disease rail`).toBe(0)

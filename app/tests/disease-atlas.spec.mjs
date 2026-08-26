@@ -109,7 +109,7 @@ test('mobile atlas and its how-to guide remain bounded and usable', async ({ pag
   })
   for (const [group, heights] of Object.entries(learningSurface).filter(([key]) => key !== 'reviewFont')) {
     expect(heights.length, `${group} controls exist`).toBeGreaterThan(0)
-    expect(heights.every((height) => height >= 44), `${group} controls meet the 44px target`).toBe(true)
+    expect(Math.min(...heights), `${group} minimum control height from ${heights.join(', ')}`).toBeGreaterThanOrEqual(44)
   }
   expect(learningSurface.reviewFont, 'medical review status remains readable').toBeGreaterThanOrEqual(12)
   await expect(page.getByRole('note', { name: 'Medical review status' })).toContainText('not yet been reviewed by a named qualified clinician')

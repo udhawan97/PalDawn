@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "app/tests/brand.spec.mjs": {
-    "mtime": 1787770578.6686585,
-    "ast_hash": "4556e779ae1a492babbf42453f66ec7a",
+    "mtime": 1787771663.611109,
+    "ast_hash": "d20bc238f5e8c9f67126d09d1bbaf368",
     "semantic_hash": ""
   },
   "paldawn-brand-and-site.html": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1787740649.934643,
-    "ast_hash": "165247bd3a9ce77118f7d8563361e588",
+    "mtime": 1787771663.6115553,
+    "ast_hash": "acaec532f61a24012016dda33f2b2956",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-4.md": {
