@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1787769344.4603298,
+    "mtime": 1787770389.2065997,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "app/tests/brand.spec.mjs": {
-    "mtime": 1787769275.4274085,
-    "ast_hash": "44a3fc221117c90ec6a79f0157369294",
+    "mtime": 1787770578.6686585,
+    "ast_hash": "4556e779ae1a492babbf42453f66ec7a",
     "semantic_hash": ""
   },
   "paldawn-brand-and-site.html": {
