@@ -262,8 +262,9 @@ export function DiseaseExplorer() {
             <button type="button" onClick={() => moveStep(1)}>Next step →</button>
           )}
         </div>
-        <p className="atlas-review-boundary">
-          Educational synthesis · sources checked 22 Aug 2026 · not yet reviewed by a named qualified clinician.
+        <p className="atlas-review-boundary" role="note" aria-label="Medical review status">
+          <strong>Medical review status</strong>
+          Sources checked 22 Aug 2026. This educational synthesis has not yet been reviewed by a named qualified clinician.
         </p>
       </article>
 

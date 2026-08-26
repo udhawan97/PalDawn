@@ -125,22 +125,32 @@ function Intro() {
 
   return (
     <section className="intro" aria-labelledby="intro-title">
-      <p className="eyebrow">High-detail systems preview · Mechanism Lens</p>
-      <h1 id="intro-title" tabIndex={-1}>See disease<br /><em>move through us.</em></h1>
+      <p className="eyebrow">A companion voyage through the human body</p>
+      <h1 id="intro-title" aria-label="Enter the body. Follow what happens next." tabIndex={-1}>
+        <span>Enter the body.</span>
+        <span className="intro-brand-route" aria-hidden="true">
+          <img
+            src={`${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`}
+            alt=""
+          />
+          <i />
+        </span>
+        <span>Follow what happens next.</span>
+      </h1>
       <p className="intro-copy">
-        Follow ten high-impact conditions across a fully interactive 3D systems
-        map. Start with diabetes—from digestion and insulin to whole-body effects.
+        Choose a source-linked condition, then follow its authored systems path
+        step by step. The 3D body is a conceptual learning map, not reviewed anatomy.
       </p>
-      <div className="intro-actions">
+      <div className="intro-actions" data-resume-available={resumeAvailable}>
         <button className="primary-action" type="button" onClick={() => openDisease('diabetes')}>
           Explore diabetes
           <span aria-hidden="true">↗</span>
         </button>
-        <button className="secondary-action" type="button" onClick={() => start(reducedMotion)}>
+        <button className="secondary-action begin-action" type="button" onClick={() => start(reducedMotion)}>
           {reducedMotion ? 'Enter step mode' : 'Begin the voyage'}
         </button>
         {resumeAvailable ? (
-          <button className="secondary-action" type="button" onClick={resume}>
+          <button className="secondary-action resume-action" type="button" onClick={resume}>
             Resume at {stageAt(progress).label}
           </button>
         ) : null}
@@ -148,7 +158,7 @@ function Intro() {
       </div>
       <p className="synthetic-stamp">
         <span aria-hidden="true">◇</span>
-        Procedural 3D model · source-backed preview · not diagnosis
+        Conceptual systems map · education only · not diagnosis
       </p>
     </section>
   )
@@ -1028,10 +1038,21 @@ export function FlightDeck({
   const [offlineReady, setOfflineReady] = useState(false)
   const [online, setOnline] = useState(navigator.onLine)
   const [visibilityPaused, setVisibilityPaused] = useState(false)
+  const [systemNoticesOpen, setSystemNoticesOpen] = useState(false)
   const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
   const [workspace, setWorkspace] = useState(loadLearnerWorkspace)
   const [bookmarkStatus, setBookmarkStatus] = useState('')
   const pausedForVisibility = useRef(false)
+  const systemNoticeLabels = [
+    !online ? 'Offline mode' : null,
+    offlineReady ? 'Offline ready' : null,
+    updateReady ? 'Update ready' : null,
+    visibilityPaused ? 'Voyage paused' : null,
+  ].filter((label): label is string => label !== null)
+  const systemNoticeCount = systemNoticeLabels.length
+  const systemNoticeSummary = systemNoticeCount > 1
+    ? `${systemNoticeCount} notices`
+    : systemNoticeLabels[0] ?? ''
 
   const toggleStageBookmark = useCallback((id: string) => {
     if (!STAGE_IDS.has(id)) return
@@ -1172,9 +1193,14 @@ export function FlightDeck({
     }
   }, [])
 
+  useEffect(() => {
+    if (systemNoticeCount === 0) setSystemNoticesOpen(false)
+  }, [systemNoticeCount])
+
   useLayoutEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        setSystemNoticesOpen(false)
         setOpenPanel(null, { resumePlayback: !reducedMotion })
         return
       }
@@ -1250,7 +1276,14 @@ export function FlightDeck({
   const skipTargetLabel = atlasOpen ? 'disease explorer' : !entered ? 'introduction' : completed ? 'completion summary' : 'voyage controls'
 
   return (
-    <div className="flight-ui" data-entered={entered} data-text-voyage={textVoyage} data-atlas={atlasOpen}>
+    <div
+      className="flight-ui"
+      data-entered={entered}
+      data-text-voyage={textVoyage}
+      data-atlas={atlasOpen}
+      data-reduced-motion={reducedMotion}
+      data-system-notices={systemNoticeCount > 0}
+    >
       <a
         className="skip-link"
         href={`#${skipTargetId}`}
@@ -1274,9 +1307,9 @@ export function FlightDeck({
             alt=""
             aria-hidden="true"
           />
-          <span className="wordmark-name"><strong>Pal</strong>Dawn</span>
+          <span className="wordmark-name">PalDawn</span>
         </a>
-        <p className="build-mark">MECHANISM LENS / V0.3</p>
+        <p className="build-mark">PAL · DAWN / MECHANISM LENS</p>
         <nav className="utility-nav" aria-label="Release information">
           <button className="text-button" type="button" aria-expanded={atlasOpen} onClick={() => {
             setOpenPanel(null, { resumePlayback: false })
@@ -1288,22 +1321,38 @@ export function FlightDeck({
           <PanelButton panel="help">Help</PanelButton>
         </nav>
       </header>
-      <div className="system-banners" aria-live="polite">
-        {!online ? <p className="system-banner">Offline mode · cached voyage controls remain available.</p> : null}
-        {offlineReady ? (
-          <p className="system-banner">Offline voyage ready.<button type="button" onClick={() => setOfflineReady(false)}>Dismiss</button></p>
+      <div className="system-banners" data-expanded={systemNoticesOpen} aria-live="polite">
+        {systemNoticeCount > 0 ? (
+          <button
+            className="system-notice-summary"
+            type="button"
+            aria-controls="system-notice-list"
+            aria-expanded={systemNoticesOpen}
+            aria-label={`${systemNoticeLabels.join(', ')}. ${systemNoticesOpen ? 'Hide' : 'Show'} system notice details.`}
+            onClick={() => setSystemNoticesOpen((open) => !open)}
+          >
+            <span className="system-notice-signal" aria-hidden="true" />
+            <span className="system-notice-count" aria-hidden="true">{systemNoticeCount}</span>
+            <span className="system-notice-label">{systemNoticeSummary}</span>
+          </button>
         ) : null}
-        {updateReady ? (
-          <p className="system-banner">A new local build is ready.<button type="button" onClick={activatePwaUpdate}>Update now</button></p>
-        ) : null}
-        {visibilityPaused ? (
-          <p className="system-banner">Voyage paused while this page was in the background.<button type="button" onClick={() => {
-            setVisibilityPaused(false)
-            pausedForVisibility.current = false
-            const state = useExperience.getState()
-            if (!state.playing && state.progress < 1 && !reducedMotion) state.togglePlayback(false)
-          }}>Resume</button></p>
-        ) : null}
+        <div className="system-notice-list" id="system-notice-list">
+          {!online ? <p className="system-banner">Offline mode · cached voyage controls remain available.</p> : null}
+          {offlineReady ? (
+            <p className="system-banner system-banner-offline-ready">Offline voyage ready.<button type="button" onClick={() => setOfflineReady(false)}>Dismiss</button></p>
+          ) : null}
+          {updateReady ? (
+            <p className="system-banner system-banner-update-ready">A new local build is ready.<button type="button" onClick={activatePwaUpdate}>Update now</button></p>
+          ) : null}
+          {visibilityPaused ? (
+            <p className="system-banner">Voyage paused while this page was in the background.<button type="button" onClick={() => {
+              setVisibilityPaused(false)
+              pausedForVisibility.current = false
+              const state = useExperience.getState()
+              if (!state.playing && state.progress < 1 && !reducedMotion) state.togglePlayback(false)
+            }}>Resume</button></p>
+          ) : null}
+        </div>
       </div>
       <div className="canvas-label" aria-hidden="true">
         <span>{textVoyage ? 'TEXT VOYAGE' : atlasOpen || !entered ? '3D SYSTEMS MAP' : 'SYNTHETIC MODEL'}</span>

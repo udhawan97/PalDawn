@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 
+test.describe.configure({ timeout: 60_000 })
+
 test('landing offers ten English-only disease journeys and opens diabetes', async ({ page }) => {
   await page.goto('./')
 
@@ -91,6 +93,27 @@ test('mobile atlas and its how-to guide remain bounded and usable', async ({ pag
   expect(geometry.unownedEscapes).toBe(0)
   await expect(page.getByRole('button', { name: 'Next step' })).toBeVisible()
 
+  const learningSurface = await page.evaluate(() => {
+    const visibleHeights = (selector) => [...document.querySelectorAll(selector)]
+      .filter((element) => element instanceof HTMLElement && element.offsetParent !== null)
+      .map((element) => element.getBoundingClientRect().height)
+    const review = document.querySelector('.atlas-review-boundary')
+    return {
+      reading: visibleHeights('.atlas-reading-switch button'),
+      view: visibleHeights('.atlas-view-actions button'),
+      structures: visibleHeights('.atlas-active-parts button'),
+      steps: visibleHeights('.atlas-step-actions button'),
+      evidence: visibleHeights('.atlas-sources a'),
+      reviewFont: Number.parseFloat(getComputedStyle(review).fontSize),
+    }
+  })
+  for (const [group, heights] of Object.entries(learningSurface).filter(([key]) => key !== 'reviewFont')) {
+    expect(heights.length, `${group} controls exist`).toBeGreaterThan(0)
+    expect(heights.every((height) => height >= 44), `${group} controls meet the 44px target`).toBe(true)
+  }
+  expect(learningSurface.reviewFont, 'medical review status remains readable').toBeGreaterThanOrEqual(12)
+  await expect(page.getByRole('note', { name: 'Medical review status' })).toContainText('not yet been reviewed by a named qualified clinician')
+
   const guideTrigger = page.getByRole('button', { name: 'How to use' })
   await guideTrigger.click()
   await expect(page.getByRole('heading', { name: 'How to use the systems map' })).toBeVisible()
@@ -119,14 +142,14 @@ test('atlas history keeps Back inside PalDawn and restores the current mechanism
   await expect(page).not.toHaveURL(/diabetes/i)
 
   await page.goBack()
-  await expect(page.getByRole('heading', { name: /See disease/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
 
   await page.goForward()
   await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
 
   await page.getByRole('button', { name: 'Back to overview' }).click()
-  await expect(page.getByRole('heading', { name: /See disease/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
   await expect(page.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
 })

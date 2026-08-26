@@ -18,6 +18,8 @@ const manifest = JSON.parse(read('public/site.webmanifest'))
 const icon = read('public/icon.svg')
 const staticIcon = read('public/icon-static.svg')
 const indexHtml = read('index.html')
+const viteConfig = read('vite.config.ts')
+const archivedBrandPage = read('../paldawn-brand-and-site.html')
 
 assert.match(settings, /persist<SettingsState/)
 assert.match(settings, /partialize:/)
@@ -78,5 +80,18 @@ assert.match(serviceWorker, /name\.startsWith\(CACHE_PREFIX\)/, 'cache cleanup m
 assert.match(serviceWorker, /__PALDAWN_BUILD_ID__/)
 assert.doesNotMatch(builtServiceWorker, /__PALDAWN_BUILD_ID__/, 'built worker must be fingerprinted')
 assert.match(builtServiceWorker, /const BUILD_ID = '[a-f0-9]{12}'/)
+
+const shellBlock = serviceWorker.match(/const SHELL = \[([\s\S]*?)\]/)?.[1] ?? ''
+const fingerprintBlock = viteConfig.match(/const buildInputs = \[([\s\S]*?)\]\s*\.map/)?.[1] ?? ''
+const shellAssets = [...shellBlock.matchAll(/'([^']+)'/g)].map((match) => match[1] === './' ? 'index.html' : match[1].replace(/^\.\//, ''))
+const fingerprintAssets = new Set([...fingerprintBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]))
+for (const asset of shellAssets) {
+  assert.ok(fingerprintAssets.has(asset), `offline shell asset must participate in the service-worker build fingerprint: ${asset}`)
+}
+
+assert.match(archivedBrandPage, /<body data-brand-status="superseded">/)
+assert.match(archivedBrandPage, /Do not export or reuse assets from this archived page\./)
+assert.match(archivedBrandPage, /body\[data-brand-status="superseded"\] \.asset-actions \{ display: none !important; \}/)
+assert.doesNotMatch(archivedBrandPage, /Brand Lab · recommended concept system/i)
 
 console.log('foundation+ checks: 14 features · versioned local-only storage · offline shell intact')

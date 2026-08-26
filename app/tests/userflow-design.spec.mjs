@@ -6,31 +6,47 @@ const overlap = (a, b) => ({
 })
 
 test('short landscape keeps route, narration, controls, and safety in separate bands', async ({ page }) => {
-  await page.setViewportSize({ width: 667, height: 375 })
-  await page.goto('./')
-  await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  test.setTimeout(60_000)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.addInitScript(() => localStorage.removeItem('paldawn:journey:v1'))
+  const viewports = [
+    { width: 667, height: 375 },
+    { width: 844, height: 390 },
+    { width: 896, height: 414 },
+    { width: 1200, height: 500 },
+  ]
 
-  const boxes = await page.evaluate(() => {
-    const box = (selector) => {
-      const bounds = document.querySelector(selector).getBoundingClientRect()
-      return { top: bounds.top, right: bounds.right, bottom: bounds.bottom, left: bounds.left }
-    }
-    return {
-      masthead: box('.masthead'),
-      rail: box('.phase-rail'),
-      companion: box('.companion'),
-      heading: box('.companion-heading'),
-      controls: box('.control-deck'),
-      safety: box('.safety-line'),
-    }
-  })
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport)
+    await page.goto('./')
+    await page.locator('.begin-action').click()
+    await page.locator('.phase-rail, .companion, .control-deck').evaluateAll(async (elements) => {
+      await Promise.all(elements.flatMap((element) => element.getAnimations()).map((animation) => animation.finished))
+    })
 
-  expect(boxes.heading.top).toBeGreaterThanOrEqual(0)
-  expect(boxes.companion.top).toBeGreaterThanOrEqual(boxes.rail.bottom)
-  expect(boxes.companion.bottom).toBeLessThanOrEqual(boxes.controls.top)
-  expect(boxes.controls.bottom).toBeLessThanOrEqual(boxes.safety.top)
-  expect(overlap(boxes.masthead, boxes.companion).height).toBe(0)
-  expect(overlap(boxes.rail, boxes.companion).height).toBe(0)
+    const boxes = await page.evaluate(() => {
+      const box = (selector) => {
+        const bounds = document.querySelector(selector).getBoundingClientRect()
+        return { top: bounds.top, right: bounds.right, bottom: bounds.bottom, left: bounds.left }
+      }
+      return {
+        masthead: box('.masthead'),
+        rail: box('.phase-rail'),
+        companion: box('.companion'),
+        heading: box('.companion-heading'),
+        controls: box('.control-deck'),
+        safety: box('.safety-line'),
+      }
+    })
+
+    const label = `${viewport.width}x${viewport.height}`
+    expect(boxes.heading.top, `${label} heading`).toBeGreaterThanOrEqual(0)
+    expect(boxes.companion.top, `${label} companion below rail`).toBeGreaterThanOrEqual(boxes.rail.bottom)
+    expect(boxes.companion.bottom, `${label} companion above controls`).toBeLessThanOrEqual(boxes.controls.top)
+    expect(boxes.controls.bottom, `${label} controls above safety`).toBeLessThanOrEqual(boxes.safety.top)
+    expect(overlap(boxes.masthead, boxes.companion).height, `${label} masthead separation`).toBe(0)
+    expect(overlap(boxes.rail, boxes.companion).height, `${label} rail separation`).toBe(0)
+  }
 })
 
 test('the drawer header keeps its close target separate from scrolled settings controls', async ({ page }) => {

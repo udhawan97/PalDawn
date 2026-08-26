@@ -1,14 +1,14 @@
 {
   "name": "PalDawn — Mechanism Lens",
   "short_name": "PalDawn",
-  "description": "High-detail conceptual phase views across source-linked disease journeys.",
+  "description": "Trace source-linked disease mechanisms through a conceptual 3D systems map, step by step.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#04070c",
-  "theme_color": "#04070c",
+  "background_color": "#050412",
+  "theme_color": "#0a0820",
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "icon-app.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

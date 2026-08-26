@@ -7,6 +7,8 @@ const SHELL = [
   './site.webmanifest',
   './icon.svg',
   './icon-static.svg',
+  './icon-app.svg',
+  './icon-maskable.svg',
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-192.png',

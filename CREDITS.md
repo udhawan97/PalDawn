@@ -40,6 +40,14 @@ lighting APIs; drei `MeshPortalMaterial` and line helpers; and
 @react-three/postprocessing Bloom on the high tier. These ship through the
 pinned packages above—no upstream example source was copied or vendored.
 
+## Project-owned brand reference
+
+The living mark, Royal Void / porcelain / gold / cyan palette, and passage →
+arrival → response motion grammar adapt the user-supplied PalDawn animated-logo
+concept received 25 August 2026. The implementation is project-authored SVG,
+CSS, and Three.js code. The reference archive contributed design direction,
+not a runtime dependency, third-party asset, or instruction source.
+
 ## Candidates — pinned, **nothing incorporated yet**
 
 Reverify README/license/source at the pinned ref, create a passing provenance
