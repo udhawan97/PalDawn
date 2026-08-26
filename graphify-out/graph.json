@@ -4022,10 +4022,21 @@
       "norm_label": "brand.spec.mjs"
     },
     {
+      "label": "useFallbackHeadingFont()",
+      "file_type": "code",
+      "source_file": "app/tests/brand.spec.mjs",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_tests_brand_spec_usefallbackheadingfont",
+      "community": 48,
+      "community_name": "brand.spec.mjs",
+      "norm_label": "usefallbackheadingfont()"
+    },
+    {
       "label": ".getContext()",
       "file_type": "code",
       "source_file": "app/tests/brand.spec.mjs",
-      "source_location": "L30",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "app_tests_brand_spec_htmlcanvaselement_getcontext",
       "community": 49,
@@ -6463,14 +6474,14 @@
       "label": "Minimal Linear Journey Schema",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 54,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "minimal linear journey schema",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_minimal_linear_journey_schema"
     },
     {
@@ -6505,14 +6516,14 @@
       "label": "Product Pillars",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 54,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "product pillars",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_product_pillars"
     },
     {
@@ -6603,14 +6614,14 @@
       "label": "Unpublished Medical Content",
       "author": null,
       "captured_at": null,
-      "community": 23,
+      "community": 54,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "unpublished medical content",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Attribution and Licensing Chain",
+      "community_name": "Medical Guardrails",
       "id": "notice_unpublished_medical_content"
     },
     {
@@ -6631,14 +6642,14 @@
       "label": "Journeys, Inside, Atlas, and Research Modes",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 54,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "journeys, inside, atlas, and research modes",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "readme_product_modes"
     },
     {
@@ -6673,14 +6684,14 @@
       "label": "Journey Proposal",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 54,
       "contributor": null,
       "file_type": "document",
       "norm_label": "journey proposal",
       "source_file": ".github/ISSUE_TEMPLATE/journey_proposal.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "_github_issue_template_journey_proposal_journey_proposal"
     },
     {
@@ -6827,14 +6838,14 @@
       "label": "Medical Guardrails",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 54,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical guardrails",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_medical_guardrails"
     },
     {
@@ -7023,14 +7034,14 @@
       "label": "Quality and Reduced-Motion Settings",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "quality and reduced-motion settings",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_quality_and_reduced_motion_settings"
     },
     {
@@ -7065,28 +7076,28 @@
       "label": "Used Direct Dependencies",
       "author": null,
       "captured_at": null,
-      "community": 16,
+      "community": 20,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "used direct dependencies",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Engineering Scaffold",
+      "community_name": "Credits and Prior Art",
       "id": "credits_used_direct_dependencies"
     },
     {
       "label": "Performance Proof Protocol",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "performance proof protocol",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "docs_plan_performance_proof_protocol"
     },
     {
@@ -7275,14 +7286,14 @@
       "label": "Codex-Claude Working Model",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "codex-claude working model",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_codex_claude_working_model"
     },
     {
@@ -14936,6 +14947,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "app/tests/brand.spec.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_tests_brand_spec",
+      "target": "app_tests_brand_spec_usefallbackheadingfont",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "app/tests/foundation-plus-2.spec.mjs",
       "source_location": "L169",
       "weight": 1.0,
@@ -18518,5 +18540,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "2bffebd2231ce86f8c40dd715f8785a1a1eb8e36"
+  "built_at_commit": "e03a83cc5db81ccffda6308b23c22279b1424660"
 }

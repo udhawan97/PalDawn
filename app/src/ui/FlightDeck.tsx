@@ -1176,7 +1176,7 @@ export function FlightDeck({
     setVisibilityPaused(false)
   }, [playing])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onUpdate = () => setUpdateReady(true)
     const onOfflineReady = () => setOfflineReady(true)
     const onOnline = () => setOnline(true)
