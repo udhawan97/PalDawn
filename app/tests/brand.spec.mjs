@@ -66,6 +66,21 @@ test('the living-instrument contract reaches the intro and install surfaces', as
   await page.emulateMedia({ reducedMotion: 'reduce' })
   const signalMotion = await page.locator('.intro-brand-route i').evaluate((element) => getComputedStyle(element, '::after').animationIterationCount)
   expect(signalMotion).toBe('1')
+
+  const hiddenLandingFrames = await page.locator('.intro, .top-diseases').evaluateAll((elements) =>
+    elements.flatMap((element) => element.getAnimations().flatMap((animation) =>
+      animation.effect?.getKeyframes().filter((frame) => Number(frame.opacity) < 1) ?? [],
+    )),
+  )
+  expect(hiddenLandingFrames, 'entrance motion must not make primary content transparent').toEqual([])
+
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  const hiddenAtlasFrames = await page.locator('.atlas').evaluate((element) =>
+    element.getAnimations().flatMap((animation) =>
+      animation.effect?.getKeyframes().filter((frame) => Number(frame.opacity) < 1) ?? [],
+    ),
+  )
+  expect(hiddenAtlasFrames, 'Atlas entrance motion must keep clinical content visible').toEqual([])
 })
 
 test('system notices stay collapsed until requested', async ({ page }) => {
@@ -89,11 +104,25 @@ test('system notices stay collapsed until requested', async ({ page }) => {
     expect(overlapArea(summaryBox, utilityBox), `${label} summary clear of utility navigation`).toBe(0)
     expect(overlapArea(summaryBox, introBox), `${label} summary clear of intro`).toBe(0)
     expect(overlapArea(summaryBox, diseasesBox), `${label} summary clear of disease rail`).toBe(0)
+    if (viewport.height > viewport.width && viewport.width <= 600) {
+      expect(summaryBox.x - (wordmarkBox.x + wordmarkBox.width), `${label} wordmark-to-summary reserve`).toBeGreaterThanOrEqual(4)
+      expect(utilityBox.x - (summaryBox.x + summaryBox.width), `${label} summary-to-utility reserve`).toBeGreaterThanOrEqual(8)
+    }
+    if (viewport.height > viewport.width && viewport.width >= 541 && viewport.width <= 600) {
+      await expect(page.locator('.wordmark-name'), `${label} wordmark name remains visible`).toBeVisible()
+    }
+    if (viewport.height > viewport.width && viewport.width >= 601 && viewport.width <= 620) {
+      expect(summaryBox.x - (wordmarkBox.x + wordmarkBox.width), `${label} wordmark-to-summary reserve`).toBeGreaterThanOrEqual(8)
+      expect(utilityBox.x - (summaryBox.x + summaryBox.width), `${label} summary-to-utility reserve`).toBeGreaterThanOrEqual(8)
+    }
   }
   const viewports = [
     { width: 320, height: 568 },
     { width: 320, height: 812 },
+    { width: 540, height: 800 },
     { width: 541, height: 800 },
+    { width: 560, height: 800 },
+    { width: 601, height: 800 },
     { width: 562, height: 561 },
     { width: 720, height: 561 },
     { width: 900, height: 561 },
@@ -124,6 +153,10 @@ test('system notices stay collapsed until requested', async ({ page }) => {
 
   for (const viewport of [
     { width: 320, height: 568 },
+    { width: 540, height: 800 },
+    { width: 541, height: 800 },
+    { width: 560, height: 800 },
+    { width: 601, height: 800 },
     { width: 562, height: 561 },
     { width: 667, height: 375 },
     { width: 844, height: 390 },
@@ -223,6 +256,9 @@ test('the branded introduction does not overflow target viewports', async ({ pag
   await page.emulateMedia({ reducedMotion: 'reduce' })
   const viewports = [
     { width: 320, height: 568 },
+    { width: 320, height: 812 },
+    { width: 350, height: 812 },
+    { width: 375, height: 801 },
     { width: 375, height: 812 },
     { width: 414, height: 896 },
     { width: 667, height: 375 },
@@ -296,6 +332,9 @@ test('the branded introduction does not overflow target viewports', async ({ pag
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} bottom edge`).toBeLessThanOrEqual(viewport.height)
       expect(target.bottom, `${viewport.width}x${viewport.height} ${target.label} above safety line`).toBeLessThanOrEqual(safetyTop)
     }
+    if (viewport.height <= 480 && viewport.width > viewport.height) {
+      expect(safetyTop - Math.max(...targetHeights.map((target) => target.bottom)), `${viewport.width}x${viewport.height} action-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
 
     const mastheadBottom = await page.locator('.masthead').evaluate((element) => element.getBoundingClientRect().bottom)
     const panels = await page.evaluate(() => {
@@ -303,6 +342,7 @@ test('the branded introduction does not overflow target viewports', async ({ pag
       const diseases = document.querySelector('.top-diseases').getBoundingClientRect()
       return {
         intro: { top: intro.top, right: intro.right, bottom: intro.bottom, left: intro.left },
+        diseaseTop: diseases.top,
         overlap: {
           width: Math.max(0, Math.min(intro.right, diseases.right) - Math.max(intro.left, diseases.left)),
           height: Math.max(0, Math.min(intro.bottom, diseases.bottom) - Math.max(intro.top, diseases.top)),
@@ -312,6 +352,9 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     expect(panels.intro.top, `${viewport.width}x${viewport.height} intro below masthead`).toBeGreaterThanOrEqual(mastheadBottom - 1)
     expect(panels.intro.bottom, `${viewport.width}x${viewport.height} intro above safety`).toBeLessThanOrEqual(safetyTop)
     expect(panels.overlap.width * panels.overlap.height, `${viewport.width}x${viewport.height} intro clear of disease rail`).toBe(0)
+    if (viewport.width <= 540 && viewport.height >= 681 && viewport.height > viewport.width) {
+      expect(panels.diseaseTop - panels.intro.bottom, `${viewport.width}x${viewport.height} intro-to-disease reserve`).toBeGreaterThanOrEqual(8)
+    }
   }
 })
 
@@ -382,6 +425,9 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     })
     const label = `${viewport.width}x${viewport.height}`
     expect(Math.max(...geometry.actionBottoms), `${label} saved actions above safety`).toBeLessThanOrEqual(geometry.safety.top)
+    if (viewport.height <= 480 && viewport.width > viewport.height) {
+      expect(geometry.safety.top - Math.max(...geometry.actionBottoms), `${label} saved action-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
     expect(geometry.intro.bottom, `${label} saved intro above safety`).toBeLessThanOrEqual(geometry.safety.top)
     expect(geometry.overlap.width * geometry.overlap.height, `${label} saved intro clear of disease rail`).toBe(0)
   }
