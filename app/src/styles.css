@@ -4161,6 +4161,12 @@ html[data-contrast='high'] {
   }
 }
 
+@media (max-width: 820px) and (max-height: 560px) and (orientation: landscape) {
+  .intro {
+    top: 72px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

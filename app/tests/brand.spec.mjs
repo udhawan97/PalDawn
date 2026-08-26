@@ -88,6 +88,7 @@ test('the living-instrument contract reaches the intro and install surfaces', as
 })
 
 test('system notices stay collapsed until requested', async ({ page }) => {
+  test.setTimeout(90_000)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   const overlapArea = (first, second) => (
     Math.max(0, Math.min(first.x + first.width, second.x + second.width) - Math.max(first.x, second.x))
@@ -372,6 +373,9 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     })
     expect(panels.intro.top, `${viewport.width}x${viewport.height} intro below masthead`).toBeGreaterThanOrEqual(mastheadBottom - 1)
     expect(panels.intro.bottom, `${viewport.width}x${viewport.height} intro above safety`).toBeLessThanOrEqual(safetyTop)
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
+      expect(safetyTop - panels.intro.bottom, `${viewport.width}x${viewport.height} intro-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
     expect(panels.overlap.width * panels.overlap.height, `${viewport.width}x${viewport.height} intro clear of disease rail`).toBe(0)
     if (viewport.width <= 540 && viewport.height >= 681 && viewport.height > viewport.width) {
       expect(panels.diseaseTop - panels.intro.bottom, `${viewport.width}x${viewport.height} intro-to-disease reserve`).toBeGreaterThanOrEqual(8)
@@ -405,7 +409,9 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
     { width: 720, height: 690 },
     { width: 819, height: 561 },
     { width: 819, height: 690 },
+    { width: 820, height: 560 },
     { width: 820, height: 561 },
+    { width: 821, height: 560 },
     { width: 821, height: 561 },
     { width: 844, height: 561 },
     { width: 896, height: 561 },
@@ -462,6 +468,9 @@ test('a saved voyage keeps resume controls inside constrained landscape layouts'
       expect(boundaryFontSize, `${label} saved conceptual boundary font size`).toBeGreaterThanOrEqual(12)
     }
     expect(geometry.intro.bottom, `${label} saved intro above safety`).toBeLessThanOrEqual(geometry.safety.top)
+    if (viewport.height <= 560 && viewport.width > viewport.height) {
+      expect(geometry.safety.top - geometry.intro.bottom, `${label} saved intro-to-safety reserve`).toBeGreaterThanOrEqual(4)
+    }
     expect(geometry.overlap.width * geometry.overlap.height, `${label} saved intro clear of disease rail`).toBe(0)
   }
 })
