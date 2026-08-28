@@ -69,9 +69,12 @@ export default function App() {
   const [webgl2, setWebgl2] = useState(webgl2Available)
   const [sceneIssue, setSceneIssue] = useState<string | null>(null)
   const [sceneAttempt, setSceneAttempt] = useState(0)
-  const [textVoyage, setTextVoyage] = useState(false)
+  const [recoveryTextVoyage, setRecoveryTextVoyage] = useState(false)
   const qualityTier = useSettings((s) => s.qualityTier)
   const reducedMotion = useSettings((s) => s.reducedMotion)
+  const textVoyagePreferred = useSettings((s) => s.textVoyagePreferred)
+  const setTextVoyagePreferred = useSettings((s) => s.setTextVoyagePreferred)
+  const textVoyage = textVoyagePreferred || recoveryTextVoyage
   const tier = resolveTier(qualityTier)
 
   useEffect(() => {
@@ -86,16 +89,21 @@ export default function App() {
     setWebgl2(available)
     setSceneIssue(available ? null : 'This browser or device still does not provide the WebGL2 context required by this release.')
     if (available) {
-      setTextVoyage(false)
+      setRecoveryTextVoyage(false)
       setSceneAttempt((attempt) => attempt + 1)
     }
+  }
+
+  const changeTextVoyagePreference = (enabled: boolean) => {
+    setTextVoyagePreferred(enabled)
+    if (!enabled) setRecoveryTextVoyage(false)
   }
 
   if (textVoyage) {
     return (
       <div className="app-root app-root--text">
         <div className="text-voyage-backdrop" aria-hidden="true" />
-        <FlightDeck textVoyage onTextVoyageChange={setTextVoyage} />
+        <FlightDeck textVoyage onTextVoyageChange={changeTextVoyagePreference} />
       </div>
     )
   }
@@ -106,7 +114,7 @@ export default function App() {
         reason={sceneIssue ?? 'This browser or device did not provide the WebGL2 context required by this release.'}
         reducedMotion={reducedMotion}
         onRetry={retryScene}
-        onTextVoyage={() => setTextVoyage(true)}
+        onTextVoyage={() => setRecoveryTextVoyage(true)}
       />
     )
   }
@@ -123,7 +131,7 @@ export default function App() {
           />
         </Suspense>
       </SceneBoundary>
-      <FlightDeck textVoyage={false} onTextVoyageChange={setTextVoyage} />
+      <FlightDeck textVoyage={false} onTextVoyageChange={changeTextVoyagePreference} />
     </div>
   )
 }

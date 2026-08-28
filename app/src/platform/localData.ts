@@ -5,7 +5,15 @@ export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
 export const PALDAWN_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 export const PALDAWN_WORKSPACE_KEY = 'paldawn:workspace:v1'
 export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
+export const PALDAWN_STORAGE_FAILURE_EVENT = 'paldawn:storage-failure'
+export const PALDAWN_STORAGE_SUCCESS_EVENT = 'paldawn:storage-success'
 export const MAX_STAGE_NOTE_LENGTH = 1200
+
+export interface StorageFailureDetail {
+  key: string
+}
+
+const failedStorageKeys = new Set<string>()
 
 export interface JourneySession {
   progress: number
@@ -40,6 +48,7 @@ interface ImportedSettings {
   showTelemetry: boolean
   captionScale: 'standard' | 'large' | 'largest'
   playbackRate: 0.5 | 1 | 1.5
+  textVoyagePreferred: boolean
 }
 
 export interface LocalDataImport {
@@ -95,6 +104,39 @@ const storage = (): Storage | null => {
   }
 }
 
+const reportStorageFailure = (key: string): void => {
+  if (typeof window === 'undefined') return
+  failedStorageKeys.add(key)
+  window.dispatchEvent(new CustomEvent<StorageFailureDetail>(PALDAWN_STORAGE_FAILURE_EVENT, {
+    detail: { key },
+  }))
+}
+
+const reportStorageSuccess = (key: string): void => {
+  if (typeof window === 'undefined' || !failedStorageKeys.delete(key)) return
+  window.dispatchEvent(new CustomEvent<StorageFailureDetail>(PALDAWN_STORAGE_SUCCESS_EVENT, {
+    detail: { key },
+  }))
+}
+
+export function writeLocalStorageValue(key: string, value: string): boolean {
+  const localStorage = storage()
+  if (!localStorage) {
+    reportStorageFailure(key)
+    return false
+  }
+  try {
+    localStorage.setItem(key, value)
+    const saved = localStorage.getItem(key) === value
+    if (saved) reportStorageSuccess(key)
+    else reportStorageFailure(key)
+    return saved
+  } catch {
+    reportStorageFailure(key)
+    return false
+  }
+}
+
 const readString = (key: string): string | null => {
   try {
     return storage()?.getItem(key) ?? null
@@ -135,17 +177,13 @@ export function loadJourneySession(): JourneySession {
   return { progress, narrationMode }
 }
 
-export function saveJourneySession(session: JourneySession): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
-  try {
-    storage()?.setItem(PALDAWN_JOURNEY_KEY, JSON.stringify({
-      progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
-      narrationMode: session.narrationMode,
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Persistence is an enhancement. The voyage remains fully usable without it.
-  }
+export function saveJourneySession(session: JourneySession): boolean {
+  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
+  return writeLocalStorageValue(PALDAWN_JOURNEY_KEY, JSON.stringify({
+    progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
+    narrationMode: session.narrationMode,
+    resetToken: resetTokenAtLoad,
+  }))
 }
 
 export function loadStageBookmarks(): string[] {
@@ -168,16 +206,12 @@ export function loadStageBookmarks(): string[] {
   ))]
 }
 
-export function saveStageBookmarks(stageIds: string[]): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
-  try {
-    storage()?.setItem(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
-      stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Bookmarks remain usable in memory when persistence is blocked.
-  }
+export function saveStageBookmarks(stageIds: string[]): boolean {
+  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
+  return writeLocalStorageValue(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
+    stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
+    resetToken: resetTokenAtLoad,
+  }))
 }
 
 export function loadLearnerWorkspace(): LearnerWorkspace {
@@ -196,17 +230,13 @@ export function loadLearnerWorkspace(): LearnerWorkspace {
   return normalizeWorkspace(candidate)
 }
 
-export function saveLearnerWorkspace(workspace: LearnerWorkspace): void {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return
+export function saveLearnerWorkspace(workspace: LearnerWorkspace): boolean {
+  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
   const normalized = normalizeWorkspace(workspace)
-  try {
-    storage()?.setItem(PALDAWN_WORKSPACE_KEY, JSON.stringify({
-      ...normalized,
-      resetToken: resetTokenAtLoad,
-    }))
-  } catch {
-    // Notes and checkpoints remain usable in memory when persistence is blocked.
-  }
+  return writeLocalStorageValue(PALDAWN_WORKSPACE_KEY, JSON.stringify({
+    ...normalized,
+    resetToken: resetTokenAtLoad,
+  }))
 }
 
 const normalizeImportedSettings = (value: unknown): ImportedSettings | null => {
@@ -228,6 +258,7 @@ const normalizeImportedSettings = (value: unknown): ImportedSettings | null => {
     playbackRate: PLAYBACK_RATES.has(state.playbackRate as number)
       ? state.playbackRate as ImportedSettings['playbackRate']
       : 1,
+    textVoyagePreferred: typeof state.textVoyagePreferred === 'boolean' ? state.textVoyagePreferred : false,
   }
 }
 

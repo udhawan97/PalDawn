@@ -26,6 +26,9 @@ import { copyText, downloadText } from '../platform/downloads'
 import {
   PALDAWN_BOOKMARKS_KEY,
   PALDAWN_RESET_KEY,
+  PALDAWN_SETTINGS_KEY,
+  PALDAWN_STORAGE_FAILURE_EVENT,
+  PALDAWN_STORAGE_SUCCESS_EVENT,
   PALDAWN_WORKSPACE_KEY,
   MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
@@ -39,6 +42,7 @@ import {
   saveStageBookmarks,
   type LearnerWorkspace,
   type LocalDataImportResult,
+  type StorageFailureDetail,
 } from '../platform/localData'
 import {
   activatePwaUpdate,
@@ -56,6 +60,8 @@ const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
 const CAPTION_SCALES: CaptionScale[] = ['standard', 'large', 'largest']
 const PLAYBACK_RATES: PlaybackRate[] = [0.5, 1, 1.5]
 const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
+const FULL_WIDTH_DRAWER_QUERY = '(max-width: 470px)'
+const DRAWER_FOCUSABLE_SELECTOR = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 const PANEL_LABELS: Record<Exclude<OpenPanel, null>, string> = {
   mission: 'Mission',
   transcript: 'Transcript',
@@ -66,6 +72,13 @@ const PANEL_LABELS: Record<Exclude<OpenPanel, null>, string> = {
 
 const orderedBookmarks = (ids: string[]): string[] =>
   JOURNEY.stages.filter((stage) => ids.includes(stage.id)).map((stage) => stage.id)
+
+const drawerFocusables = (drawer: HTMLElement): HTMLElement[] =>
+  [...drawer.querySelectorAll<HTMLElement>(DRAWER_FOCUSABLE_SELECTOR)]
+    .filter((element) => element.getClientRects().length > 0 && !element.closest('[inert]'))
+
+const visibleFocusTarget = (element: HTMLElement | null): element is HTMLElement =>
+  Boolean(element && element !== document.body && element.isConnected && element.getClientRects().length > 0 && !element.closest('[inert]'))
 
 const shareStatus = (outcome: ShareOutcome, subject: string): string => {
   if (outcome === 'shared') return `${subject} shared.`
@@ -198,7 +211,7 @@ function CompanionCaption({
   onOpenWorkspace,
 }: {
   bookmarks: string[]
-  onToggleBookmark: (id: string) => void
+  onToggleBookmark: (id: string) => boolean
   onOpenWorkspace: (focusNote: boolean) => void
 }) {
   const entered = useExperience((state) => state.entered)
@@ -248,8 +261,10 @@ function CompanionCaption({
           type="button"
           aria-pressed={bookmarked}
           onClick={() => {
-            onToggleBookmark(stage.id)
-            setLinkStatus(bookmarked ? 'Stage removed from saved stages.' : 'Stage saved on this device.')
+            const persisted = onToggleBookmark(stage.id)
+            setLinkStatus(persisted
+              ? bookmarked ? 'Stage removed from saved stages.' : 'Stage saved on this device.'
+              : 'Stage changed for this tab, but browser storage is unavailable. Reload may lose it.')
           }}
         >
           {bookmarked ? 'Saved' : 'Save stage'}
@@ -379,7 +394,7 @@ function TranscriptPanel({
   onToggleBookmark,
 }: {
   bookmarks: string[]
-  onToggleBookmark: (id: string) => void
+  onToggleBookmark: (id: string) => boolean
 }) {
   const narrationMode = useExperience((state) => state.narrationMode)
   const setProgress = useExperience((state) => state.setProgress)
@@ -469,10 +484,14 @@ function TranscriptPanel({
 
 function WorkspacePanel({
   workspace,
+  workspacePersisted,
   onUpdateWorkspace,
+  onRetryPersistence,
 }: {
   workspace: LearnerWorkspace
+  workspacePersisted: boolean
   onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
+  onRetryPersistence: () => boolean
 }) {
   const progress = useExperience((state) => state.progress)
   const setProgress = useExperience((state) => state.setProgress)
@@ -515,6 +534,17 @@ function WorkspacePanel({
         Stored only in this browser. Do not enter patient or personal health information.
         Personal checkpoints are not evidence, approval, or medical review.
       </p>
+      {!workspacePersisted ? (
+        <aside className="persistence-warning" role="alert">
+          <strong>Browser storage is unavailable.</strong>
+          <p>Keep this page open while editing. Reloading may lose these private notes and checkpoints; copy or download them before leaving.</p>
+          <button type="button" onClick={() => {
+            setStatus(onRetryPersistence()
+              ? 'Private workspace saved in this browser.'
+              : 'Browser storage is still unavailable. Keep this page open or export your work.')
+          }}>Retry saving</button>
+        </aside>
+      ) : null}
       <nav className="workspace-stage-nav" aria-label="Workspace stages">
         {JOURNEY.stages.map((stage, index) => (
           <button
@@ -572,7 +602,9 @@ function WorkspacePanel({
             <li key={stage.id}>
               <button type="button" onClick={() => setSelectedStageId(stage.id)}>{stage.label}</button>
               <span>{workspace.checkpoints.includes(stage.id) ? 'Checkpoint complete' : 'Open'}</span>
-              <span>{workspace.notes[stage.id]?.trim() ? 'Private note saved' : 'No note'}</span>
+              <span>{workspace.notes[stage.id]?.trim()
+                ? workspacePersisted ? 'Private note saved' : 'Private note not saved'
+                : 'No note'}</span>
             </li>
           ))}
         </ol>
@@ -652,6 +684,7 @@ function SettingsPanel({
   const showTelemetry = useSettings((state) => state.showTelemetry)
   const captionScale = useSettings((state) => state.captionScale)
   const playbackRate = useSettings((state) => state.playbackRate)
+  const textVoyagePreferred = useSettings((state) => state.textVoyagePreferred)
   const setQualityTier = useSettings((state) => state.setQualityTier)
   const setReducedMotion = useSettings((state) => state.setReducedMotion)
   const setComfortVignette = useSettings((state) => state.setComfortVignette)
@@ -733,9 +766,16 @@ function SettingsPanel({
         </select>
       </label>
       <div className="settings-actions">
-        <button type="button" onClick={() => onTextVoyageChange(!textVoyage)}>
-          {textVoyage ? 'Return to 3D scene' : 'Use text voyage'}
-        </button>
+        {textVoyage && !textVoyagePreferred ? (
+          <>
+            <button type="button" onClick={() => onTextVoyageChange(true)}>Prefer text voyage in this browser</button>
+            <button type="button" onClick={() => onTextVoyageChange(false)}>Try the 3D scene again</button>
+          </>
+        ) : (
+          <button type="button" onClick={() => onTextVoyageChange(!textVoyagePreferred)}>
+            {textVoyagePreferred ? 'Return to 3D scene' : 'Use text voyage'}
+          </button>
+        )}
         <button
           type="button"
           disabled={!fullscreenAvailable}
@@ -882,14 +922,18 @@ function Drawer({
   bookmarks,
   onToggleBookmark,
   workspace,
+  workspacePersisted,
   onUpdateWorkspace,
+  onRetryWorkspacePersistence,
 }: {
   textVoyage: boolean
   onTextVoyageChange: (enabled: boolean) => void
   bookmarks: string[]
-  onToggleBookmark: (id: string) => void
+  onToggleBookmark: (id: string) => boolean
   workspace: LearnerWorkspace
+  workspacePersisted: boolean
   onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
+  onRetryWorkspacePersistence: () => boolean
 }) {
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
@@ -897,9 +941,40 @@ function Drawer({
   const drawerRef = useRef<HTMLElement>(null)
   const previousFocus = useRef<HTMLElement | null>(null)
   const [settingsStatus, setSettingsStatus] = useState('')
+  const [fullWidth, setFullWidth] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia(FULL_WIDTH_DRAWER_QUERY).matches)
 
   useEffect(() => {
     if (openPanel !== 'settings') setSettingsStatus('')
+  }, [openPanel])
+
+  useEffect(() => {
+    const media = window.matchMedia(FULL_WIDTH_DRAWER_QUERY)
+    const sync = () => setFullWidth(media.matches)
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    const onStorageFailure = (event: Event) => {
+      const detail = (event as CustomEvent<StorageFailureDetail>).detail
+      if (openPanel === 'settings' && detail?.key === PALDAWN_SETTINGS_KEY) {
+        setSettingsStatus('This preference changed for this tab, but browser storage is unavailable. Reload may lose it.')
+      }
+    }
+    const onStorageSuccess = (event: Event) => {
+      const detail = (event as CustomEvent<StorageFailureDetail>).detail
+      if (openPanel === 'settings' && detail?.key === PALDAWN_SETTINGS_KEY) {
+        setSettingsStatus('Preference saved in this browser.')
+      }
+    }
+    window.addEventListener(PALDAWN_STORAGE_FAILURE_EVENT, onStorageFailure)
+    window.addEventListener(PALDAWN_STORAGE_SUCCESS_EVENT, onStorageSuccess)
+    return () => {
+      window.removeEventListener(PALDAWN_STORAGE_FAILURE_EVENT, onStorageFailure)
+      window.removeEventListener(PALDAWN_STORAGE_SUCCESS_EVENT, onStorageSuccess)
+    }
   }, [openPanel])
 
   useLayoutEffect(() => {
@@ -910,17 +985,70 @@ function Drawer({
       : drawerRef.current
     focusTarget?.focus()
     return () => {
-      const target = previousFocus.current && previousFocus.current !== document.body
-        ? previousFocus.current
-        : document.querySelector<HTMLElement>(`[data-panel="${openPanel}"]`)
-      target?.focus()
+      window.requestAnimationFrame(() => {
+        if (useExperience.getState().openPanel !== null) return
+        const panelTrigger = document.querySelector<HTMLElement>(`[data-panel="${openPanel}"]`)
+        const visiblePanelTrigger = [...document.querySelectorAll<HTMLElement>('[data-panel]')]
+          .find(visibleFocusTarget) ?? null
+        const target = [previousFocus.current, panelTrigger, visiblePanelTrigger].find(visibleFocusTarget)
+        target?.focus()
+      })
     }
   }, [openPanel])
+
+  useLayoutEffect(() => {
+    const drawer = drawerRef.current
+    const shell = drawer?.closest('.flight-ui')
+    if (!openPanel || !fullWidth || !drawer || !shell) return
+    const priorInert = new Map<HTMLElement, boolean>()
+    const makeBackgroundInert = () => {
+      for (const element of shell.children) {
+        if (!(element instanceof HTMLElement) || element === drawer) continue
+        if (!priorInert.has(element)) priorInert.set(element, element.inert)
+        element.inert = true
+      }
+    }
+    makeBackgroundInert()
+    const observer = new MutationObserver(makeBackgroundInert)
+    observer.observe(shell, { childList: true })
+    return () => {
+      observer.disconnect()
+      priorInert.forEach((inert, element) => { element.inert = inert })
+    }
+  }, [fullWidth, openPanel])
+
+  const trapFocus = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (!fullWidth || event.key !== 'Tab' || !drawerRef.current) return
+    const focusable = drawerFocusables(drawerRef.current)
+    if (focusable.length === 0) {
+      event.preventDefault()
+      drawerRef.current.focus()
+      return
+    }
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === drawerRef.current)) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
 
   if (!openPanel) return null
 
   return (
-    <aside ref={drawerRef} className="drawer" role="dialog" aria-modal="false" aria-labelledby="panel-title" tabIndex={-1}>
+    <aside
+      ref={drawerRef}
+      className="drawer"
+      role="dialog"
+      aria-modal={fullWidth ? 'true' : 'false'}
+      aria-labelledby="panel-title"
+      data-full-width={fullWidth}
+      tabIndex={-1}
+      onKeyDown={trapFocus}
+    >
       <div className="drawer-header">
         <div className="drawer-header-bar">
           <span className="drawer-header-label" aria-hidden="true">{PANEL_LABELS[openPanel]}</span>
@@ -936,7 +1064,14 @@ function Drawer({
       <div className="drawer-scroll">
         {openPanel === 'mission' && <MissionPanel />}
         {openPanel === 'transcript' && <TranscriptPanel bookmarks={bookmarks} onToggleBookmark={onToggleBookmark} />}
-        {openPanel === 'workspace' && <WorkspacePanel workspace={workspace} onUpdateWorkspace={onUpdateWorkspace} />}
+        {openPanel === 'workspace' && (
+          <WorkspacePanel
+            workspace={workspace}
+            workspacePersisted={workspacePersisted}
+            onUpdateWorkspace={onUpdateWorkspace}
+            onRetryPersistence={onRetryWorkspacePersistence}
+          />
+        )}
         {openPanel === 'settings' && (
           <SettingsPanel
             textVoyage={textVoyage}
@@ -1041,13 +1176,20 @@ export function FlightDeck({
   const [systemNoticesOpen, setSystemNoticesOpen] = useState(false)
   const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
   const [workspace, setWorkspace] = useState(loadLearnerWorkspace)
+  const [workspacePersisted, setWorkspacePersisted] = useState(true)
+  const [failedStorageKeys, setFailedStorageKeys] = useState<string[]>([])
   const [bookmarkStatus, setBookmarkStatus] = useState('')
+  const flightUiRef = useRef<HTMLDivElement>(null)
+  const safetyLineRef = useRef<HTMLParagraphElement>(null)
+  const bookmarksRef = useRef(bookmarks)
+  const workspaceRef = useRef(workspace)
   const pausedForVisibility = useRef(false)
   const systemNoticeLabels = [
     !online ? 'Offline mode' : null,
     offlineReady ? 'Offline ready' : null,
     updateReady ? 'Update ready' : null,
     visibilityPaused ? 'Voyage paused' : null,
+    failedStorageKeys.length ? 'Local storage unavailable' : null,
   ].filter((label): label is string => label !== null)
   const systemNoticeCount = systemNoticeLabels.length
   const systemNoticeSummary = systemNoticeCount > 1
@@ -1055,22 +1197,30 @@ export function FlightDeck({
     : systemNoticeLabels[0] ?? ''
 
   const toggleStageBookmark = useCallback((id: string) => {
-    if (!STAGE_IDS.has(id)) return
-    setBookmarks((current) => {
-      const saved = current.includes(id)
-      const next = orderedBookmarks(saved ? current.filter((candidate) => candidate !== id) : [...current, id])
-      saveStageBookmarks(next)
-      setBookmarkStatus(saved ? 'Stage removed from saved stages.' : 'Stage saved on this device.')
-      return next
-    })
+    if (!STAGE_IDS.has(id)) return false
+    const current = bookmarksRef.current
+    const wasSaved = current.includes(id)
+    const next = orderedBookmarks(wasSaved ? current.filter((candidate) => candidate !== id) : [...current, id])
+    bookmarksRef.current = next
+    setBookmarks(next)
+    const persisted = saveStageBookmarks(next)
+    setBookmarkStatus(persisted
+      ? wasSaved ? 'Stage removed from saved stages.' : 'Stage saved on this device.'
+      : 'Stage changed for this tab, but browser storage is unavailable. Reload may lose it.')
+    return persisted
   }, [])
 
   const updateWorkspace = useCallback((update: (current: LearnerWorkspace) => LearnerWorkspace) => {
-    setWorkspace((current) => {
-      const next = update(current)
-      saveLearnerWorkspace(next)
-      return next
-    })
+    const next = update(workspaceRef.current)
+    workspaceRef.current = next
+    setWorkspace(next)
+    setWorkspacePersisted(saveLearnerWorkspace(next))
+  }, [])
+
+  const retryWorkspacePersistence = useCallback(() => {
+    const persisted = saveLearnerWorkspace(workspaceRef.current)
+    setWorkspacePersisted(persisted)
+    return persisted
   }, [])
 
   const openWorkspace = useCallback((focusNote: boolean) => {
@@ -1085,6 +1235,42 @@ export function FlightDeck({
   useEffect(() => {
     document.documentElement.dataset.captionSize = captionScale
   }, [captionScale])
+
+  useEffect(() => {
+    const onStorageFailure = (event: Event) => {
+      const { key } = (event as CustomEvent<StorageFailureDetail>).detail
+      setFailedStorageKeys((current) => current.includes(key) ? current : [...current, key])
+    }
+    const onStorageSuccess = (event: Event) => {
+      const { key } = (event as CustomEvent<StorageFailureDetail>).detail
+      setFailedStorageKeys((current) => current.includes(key) ? current.filter((candidate) => candidate !== key) : current)
+    }
+    window.addEventListener(PALDAWN_STORAGE_FAILURE_EVENT, onStorageFailure)
+    window.addEventListener(PALDAWN_STORAGE_SUCCESS_EVENT, onStorageSuccess)
+    return () => {
+      window.removeEventListener(PALDAWN_STORAGE_FAILURE_EVENT, onStorageFailure)
+      window.removeEventListener(PALDAWN_STORAGE_SUCCESS_EVENT, onStorageSuccess)
+    }
+  }, [])
+
+  useLayoutEffect(() => {
+    const shell = flightUiRef.current
+    const safetyLine = safetyLineRef.current
+    if (!shell || !safetyLine) return
+    const updateReserve = () => {
+      const shellBounds = shell.getBoundingClientRect()
+      const safetyBounds = safetyLine.getBoundingClientRect()
+      shell.style.setProperty('--safety-line-reserve', `${Math.ceil(shellBounds.bottom - safetyBounds.top)}px`)
+    }
+    updateReserve()
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(updateReserve)
+    observer?.observe(safetyLine)
+    window.addEventListener('resize', updateReserve)
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', updateReserve)
+    }
+  }, [])
 
   useEffect(() => {
     if (reducedMotion) useExperience.getState().pause()
@@ -1115,11 +1301,16 @@ export function FlightDeck({
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
       if (event.key === PALDAWN_BOOKMARKS_KEY) {
-        setBookmarks(orderedBookmarks(loadStageBookmarks()))
+        const next = orderedBookmarks(loadStageBookmarks())
+        bookmarksRef.current = next
+        setBookmarks(next)
         return
       }
       if (event.key === PALDAWN_WORKSPACE_KEY) {
-        setWorkspace(loadLearnerWorkspace())
+        const next = loadLearnerWorkspace()
+        workspaceRef.current = next
+        setWorkspace(next)
+        setWorkspacePersisted(true)
         return
       }
       if (event.key !== PALDAWN_RESET_KEY || event.newValue === null) return
@@ -1277,6 +1468,7 @@ export function FlightDeck({
 
   return (
     <div
+      ref={flightUiRef}
       className="flight-ui"
       data-entered={entered}
       data-text-voyage={textVoyage}
@@ -1352,6 +1544,11 @@ export function FlightDeck({
               if (!state.playing && state.progress < 1 && !reducedMotion) state.togglePlayback(false)
             }}>Resume</button></p>
           ) : null}
+          {failedStorageKeys.length ? (
+            <p className="system-banner system-banner-storage">
+              Local changes are not being saved. Keep this page open. Use Study to copy or download private notes; saved-stage changes and preferences remain only in this tab until storage recovers.
+            </p>
+          ) : null}
         </div>
       </div>
       <div className="canvas-label" aria-hidden="true">
@@ -1376,11 +1573,13 @@ export function FlightDeck({
         bookmarks={bookmarks}
         onToggleBookmark={toggleStageBookmark}
         workspace={workspace}
+        workspacePersisted={workspacePersisted}
         onUpdateWorkspace={updateWorkspace}
+        onRetryWorkspacePersistence={retryWorkspacePersistence}
       />
       {entered && !textVoyage && !atlasOpen ? <div className="portal-veil" aria-hidden="true" style={{ opacity: portalVeil * 0.5 }} /> : null}
       {entered && comfortVignette && !textVoyage && !atlasOpen ? <div className="comfort-vignette" aria-hidden="true" /> : null}
-      <p className="safety-line">
+      <p ref={safetyLineRef} className="safety-line">
         Education only · never diagnosis. Source-backed disease content is an
         unreviewed preview; urgent symptoms need real medical care.
       </p>
