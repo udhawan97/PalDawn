@@ -11,7 +11,9 @@
 PalDawn is a source-linked 3D learning voyage for following cause and effect
 through the body. The live app on `main` pairs ten WHO-ranked starting journeys
 with a project-authored conceptual systems map, organ-level close focus, and
-phase signals that make each authored mechanism step visible. Its new
+phase signals that make each authored mechanism step visible. A local Atlas
+Wayfinder searches the existing conditions, phases, and structures, then opens
+the exact preview route without sending or storing the query. Its new
 living-instrument design carries the animated PalDawn mark through the intro,
 controls, scene materials, installed icon, and link preview without presenting
 the procedural model as reviewed anatomy.
@@ -56,6 +58,9 @@ and the original First Light systems release remains available at `v0.1.0`.
 
 ## What you can do today
 
+- **Find an existing route.** Search the Atlas for a condition, mechanism
+  phase, or highlighted structure, then arrive at the matching preview step and
+  close-focus target. Search stays local and only indexes bundled content.
 - **Explore ten disease pathways.** Start from the WHO 2021 top ten global
   causes of death and follow a compact, source-linked mechanism through the
   body. The ranking describes global mortality, not personal risk.
@@ -106,7 +111,7 @@ anatomical reconstruction.*
 
 | Area | Current behavior |
 |---|---|
-| Data | No account or backend. Resume state, preferences, bookmarks, private notes, and checkpoints stay in browser storage until you export or reset them. |
+| Data | No account or backend. Resume state, preferences, bookmarks, private notes, and checkpoints stay in browser storage until you export or reset them. Atlas search queries are transient and are neither stored nor sent. |
 | Network | The deployed app loads static same-origin files. It has no analytics SDK or outbound telemetry path; the offline shell caches only PalDawn-owned assets. |
 | AI | No runtime AI provider, model call, or API key is used. SPD is authored interface guidance, not a diagnostic agent. |
 | Medical content | Mechanism Lens contains source-linked, unreviewed educational synthesis and project-authored illustrative geometry. Both are visibly bounded and never presented as diagnosis, treatment selection, reviewed anatomy, or professional clinical training. |
@@ -130,7 +135,7 @@ npm run dev
 
 Open the URL printed by Vite. `npm test` type-checks, builds, validates the
 five-stage journey and synthetic-only boundary, checks the offline/local-data
-contracts, and enforces the 500 KB gzip JavaScript budget.
+and Atlas-wayfinding contracts, and enforces the 500 KB gzip JavaScript budget.
 
 Run the independent provenance gate from the repository root:
 
@@ -153,10 +158,12 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `app/` | Vite, React, TypeScript, Three.js, React Three Fiber, PWA shell, and browser tests |
 | `app/src/data/p0-journey.json` | Bounded five-stage journey data |
 | `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
+| `app/src/data/atlasSearch.ts` | Bounded local index over existing Atlas routes and structures |
 | `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
 | `app/src/scene/SceneCanvas.tsx` | Lazy-loaded WebGL scene boundary kept available through the offline asset manifest |
 | `docs/BRAND-SYSTEM.md` | Living mark, palette, typography, motion, generated assets, and authority boundary |
 | `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
+| `docs/ATLAS-WAYFINDING.md` | P2 route-search behavior, privacy boundary, and verification contract |
 | `docs/VISION.md` | Mission, body/disease/drug simulation north star, quality bar, and current limits |
 | `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |

@@ -202,6 +202,16 @@ User notes are never app evidence or medical review, and the phase adds no
 anatomy, clinical content, dependency, external service, or patient-data
 collection path.
 
+### Atlas Wayfinding slice
+
+The first code-owned P2 navigation slice adds deterministic local search over
+the existing ten conditions, mechanism phases, and highlighted structures.
+Search arrivals select an existing phase and focus only a structure already
+named by that phase; browser history restores the exact arrival. The bounded
+index adds no inferred medical associations, content, source, asset,
+dependency, analytics, persistence, or review claim. See
+`docs/ATLAS-WAYFINDING.md` for the feature and verification contract.
+
 ---
 
 ## 9. Medical guardrails

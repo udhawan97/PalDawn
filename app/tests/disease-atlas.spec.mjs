@@ -30,6 +30,77 @@ test('diabetes controls connect the explanation depth, mechanism, and 3D state',
   await expect(page.getByRole('button', { name: 'Assemble body' })).toHaveAttribute('aria-pressed', 'true')
 })
 
+test('Atlas Wayfinder searches existing routes and arrives at the matched structure', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+
+  await page.keyboard.press('/')
+  const search = page.getByRole('searchbox', { name: 'Find a route' })
+  await expect(search).toBeFocused()
+  await expect(page.getByRole('dialog', { name: 'Full transcript' })).toHaveCount(0)
+  await search.fill('pancreas')
+
+  const results = page.getByRole('region', { name: 'Atlas search results' })
+  await expect(results).toContainText(/route[s]? found/)
+  await results.locator('button[data-kind="pathway"]').first().click()
+
+  await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
+  await expect(page.getByRole('complementary', { name: 'Mechanism lens' })).toContainText('Pancreas · close focus')
+
+  await search.fill('kidney diseases')
+  await page.getByRole('button', { name: 'Go to Kidney diseases. Renal · WHO #9' }).click()
+  await expect(page.getByRole('heading', { name: 'Kidney diseases', level: 1 })).toBeVisible()
+
+  await search.fill('not a paldawn route')
+  await expect(page.getByText('No route found')).toBeVisible()
+  await search.press('Escape')
+  await expect(search).toHaveValue('')
+  await expect(page.getByRole('button', { name: '09 Kidney disease Renal' })).toHaveAttribute('aria-current', 'page')
+})
+
+test('Atlas Wayfinder focus survives browser history restoration', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  const search = page.getByRole('searchbox', { name: 'Find a route' })
+  await search.fill('pancreas')
+  await page.getByRole('region', { name: 'Atlas search results' }).locator('button[data-kind="pathway"]').first().click()
+  await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
+
+  await page.goBack()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await page.goForward()
+  await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
+})
+
+test('mobile Atlas Wayfinder keeps its result rail bounded and touchable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  await page.getByRole('searchbox', { name: 'Find a route' }).fill('pancreas')
+
+  const results = page.getByRole('region', { name: 'Atlas search results' })
+  const firstResult = results.locator('button[data-kind="pathway"]').first()
+  await expect(firstResult).toBeVisible()
+  const geometry = await page.evaluate(() => {
+    const library = document.querySelector('.atlas-library').getBoundingClientRect()
+    const result = document.querySelector('.atlas-search-results button').getBoundingClientRect()
+    return {
+      bodyOverflow: document.body.scrollWidth - document.body.clientWidth,
+      libraryLeft: library.left,
+      libraryRight: library.right,
+      resultHeight: result.height,
+    }
+  })
+  expect(geometry.bodyOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.libraryLeft).toBeGreaterThanOrEqual(-1)
+  expect(geometry.libraryRight).toBeLessThanOrEqual(391)
+  expect(geometry.resultHeight).toBeGreaterThanOrEqual(44)
+
+  await firstResult.click()
+  await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
+})
+
 test('mechanism lens enters close focus and resets with each phase', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Explore diabetes' }).click()

@@ -1,4 +1,5 @@
-import { useEffect, useRef, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
+import { searchAtlas, type AtlasSearchResult } from '../data/atlasSearch'
 import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId } from '../data/diseases'
 import { useAtlas } from '../state/atlas'
 import { useExperience } from '../state/experience'
@@ -47,12 +48,13 @@ function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonE
     <section className="atlas-guide" role="dialog" aria-modal="false" aria-labelledby="atlas-guide-title">
       <div className="atlas-guide-heading">
         <div>
-          <p className="eyebrow">Six controls · one learning loop</p>
+          <p className="eyebrow">Seven controls · one learning loop</p>
           <h2 id="atlas-guide-title">How to use the systems map</h2>
         </div>
         <button ref={closeButtonRef} type="button" aria-label="Close how-to guide" onClick={() => setGuideOpen(false)}>×</button>
       </div>
       <ol>
+        <li><b>Search the map.</b><span>Find an existing condition, phase, or highlighted structure. Results only route through this preview’s current content.</span></li>
         <li><b>Choose a condition.</b><span>The condition index follows WHO’s 2021 global ranking; it does not estimate your risk.</span></li>
         <li><b>Advance the mechanism.</b><span>Use the numbered timeline or the Previous and Next controls. Highlighted organs change at each step.</span></li>
         <li><b>Inspect the body.</b><span>Select a highlighted structure to enter close focus. The lens reveals layered geometry and the current phase signal; choose Whole body to return.</span></li>
@@ -61,10 +63,57 @@ function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonE
         <li><b>Keep the boundary.</b><span>This experience cannot diagnose symptoms, calculate personal risk, or recommend treatment. Urgent warnings direct you to real care.</span></li>
       </ol>
       <div className="atlas-guide-shortcuts">
+        <span><kbd>/</kbd> search</span>
         <span><kbd>←</kbd><kbd>→</kbd> steps</span>
         <span><kbd>Esc</kbd> close</span>
       </div>
     </section>
+  )
+}
+
+function AtlasSearchResults({ results }: { results: AtlasSearchResult[] }) {
+  const selectedDiseaseId = useAtlas((state) => state.selectedDiseaseId)
+  const stepIndex = useAtlas((state) => state.stepIndex)
+  const selectedBodyPart = useAtlas((state) => state.selectedBodyPart)
+  const setTarget = useAtlas((state) => state.setTarget)
+
+  if (results.length === 0) {
+    return (
+      <div className="atlas-search-empty" role="status">
+        <strong>No route found</strong>
+        <span>Try a condition, phase, or structure already shown in this preview.</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="atlas-search-results" role="region" aria-live="polite" aria-label="Atlas search results">
+      <p>{results.length} route{results.length === 1 ? '' : 's'} found</p>
+      <div>
+        {results.map((result) => {
+          const isCurrent = result.diseaseId === selectedDiseaseId
+            && (result.kind === 'condition'
+              || (result.stepIndex === stepIndex && result.bodyPartId === selectedBodyPart))
+          return (
+            <button
+              key={result.id}
+              type="button"
+              data-kind={result.kind}
+              aria-current={isCurrent ? 'location' : undefined}
+              aria-label={`Go to ${result.title}. ${result.context}`}
+              onClick={() => setTarget(result.diseaseId, result.stepIndex, result.bodyPartId)}
+            >
+              <span aria-hidden="true">{result.kind === 'condition' ? String(result.rank).padStart(2, '0') : '⌖'}</span>
+              <span>
+                <strong>{result.title}</strong>
+                <small>{result.context}</small>
+              </span>
+              <i aria-hidden="true" style={{ background: result.accent }} />
+            </button>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
@@ -85,6 +134,7 @@ function SourceLinks({ sourceIds }: { sourceIds: string[] }) {
 }
 
 export function DiseaseExplorer() {
+  const [searchQuery, setSearchQuery] = useState('')
   const selectedDiseaseId = useAtlas((state) => state.selectedDiseaseId)
   const stepIndex = useAtlas((state) => state.stepIndex)
   const narration = useAtlas((state) => state.narration)
@@ -102,18 +152,24 @@ export function DiseaseExplorer() {
   const setGuideOpen = useAtlas((state) => state.setGuideOpen)
   const setSelectedBodyPart = useAtlas((state) => state.setSelectedBodyPart)
   const guideTriggerRef = useRef<HTMLButtonElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
   const disease = diseaseById(selectedDiseaseId)
   const step = disease.steps[stepIndex]
   const finalStep = stepIndex === disease.steps.length - 1
   const focusPart = (selectedBodyPart ?? step.bodyParts[0]) as BodyPartId
   const focusLabel = BODY_PART_LABELS[focusPart]
+  const searching = searchQuery.trim().length > 0
+  const searchResults = searching ? searchAtlas(searchQuery) : []
 
   useEffect(() => {
     useExperience.getState().pause()
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target
       if (target instanceof HTMLElement && ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return
-      if (event.key === 'Escape') {
+      if (event.key === '/') {
+        event.preventDefault()
+        searchInputRef.current?.focus()
+      } else if (event.key === 'Escape') {
         if (useAtlas.getState().guideOpen) useAtlas.getState().setGuideOpen(false)
         else useAtlas.getState().close()
       } else if (event.key === 'ArrowRight') {
@@ -135,24 +191,57 @@ export function DiseaseExplorer() {
           <p className="eyebrow">WHO 2021 · global causes of death</p>
           <h2>Condition library</h2>
         </div>
-        <ol>
-          {DISEASES.map((candidate) => (
-            <li key={candidate.id}>
-              <button
-                type="button"
-                aria-current={candidate.id === disease.id ? 'page' : undefined}
-                onClick={() => setDisease(candidate.id)}
-              >
-                <span>{String(candidate.rank).padStart(2, '0')}</span>
-                <span>
-                  <strong>{candidate.shortTitle}</strong>
-                  <small>{candidate.category}</small>
-                </span>
-                <i aria-hidden="true" style={{ background: candidate.accent }} />
-              </button>
-            </li>
-          ))}
-        </ol>
+        <form className="atlas-search" role="search" onSubmit={(event) => event.preventDefault()}>
+          <label htmlFor="atlas-wayfinder">Find a route</label>
+          <div>
+            <span aria-hidden="true">⌕</span>
+            <input
+              ref={searchInputRef}
+              id="atlas-wayfinder"
+              type="search"
+              autoComplete="off"
+              spellCheck="false"
+              value={searchQuery}
+              placeholder="Kidneys, insulin, stroke…"
+              aria-describedby="atlas-search-boundary"
+              onChange={(event) => setSearchQuery(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key !== 'Escape' || !searchQuery) return
+                event.stopPropagation()
+                setSearchQuery('')
+              }}
+            />
+            {searchQuery ? (
+              <button type="button" aria-label="Clear Atlas search" onClick={() => {
+                setSearchQuery('')
+                searchInputRef.current?.focus()
+              }}>×</button>
+            ) : <kbd aria-label="Keyboard shortcut">/</kbd>}
+          </div>
+          <p id="atlas-search-boundary">Current preview only · no personal data</p>
+        </form>
+        {searching ? (
+          <AtlasSearchResults results={searchResults} />
+        ) : (
+          <ol>
+            {DISEASES.map((candidate) => (
+              <li key={candidate.id}>
+                <button
+                  type="button"
+                  aria-current={candidate.id === disease.id ? 'page' : undefined}
+                  onClick={() => setDisease(candidate.id)}
+                >
+                  <span>{String(candidate.rank).padStart(2, '0')}</span>
+                  <span>
+                    <strong>{candidate.shortTitle}</strong>
+                    <small>{candidate.category}</small>
+                  </span>
+                  <i aria-hidden="true" style={{ background: candidate.accent }} />
+                </button>
+              </li>
+            ))}
+          </ol>
+        )}
         <a href="https://www.who.int/news-room/fact-sheets/detail/the-top-10-causes-of-death" target="_blank" rel="noreferrer">
           Why these ten? <span aria-hidden="true">↗</span>
         </a>
