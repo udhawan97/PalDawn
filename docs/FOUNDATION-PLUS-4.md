@@ -9,7 +9,9 @@ diagnostic tool, or treatment guide.
 
 1. Open PalDawn and choose **Explore diabetes**, select one of the ten cards on
    the landing page, or open **Atlas** from the desktop header.
-2. Choose a condition from the **Condition library**. The order follows the
+2. Use **Find a route** to search the preview’s existing conditions, phases,
+   and highlighted structures, or choose a condition from the **Condition
+   library**. The order follows the
    World Health Organization's 2021 global causes-of-death ranking; it does not
    describe an individual's probability or severity.
 3. Use the numbered timeline, **Previous**, and **Next step** to follow the
@@ -25,6 +27,7 @@ diagnostic tool, or treatment guide.
 
 Keyboard controls in the explorer:
 
+- `/`: focus Find a route
 - `Left Arrow` / `Right Arrow`: previous or next mechanism step
 - `Escape`: close the how-to guide, then close the explorer
 

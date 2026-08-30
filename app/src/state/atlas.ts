@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { diseaseById } from '../data/diseases'
+import { diseaseById, type BodyPartId } from '../data/diseases'
 
 export type AtlasNarration = 'plain' | 'clinical'
 
@@ -15,6 +15,7 @@ interface AtlasState {
   openDisease: (id?: string) => void
   close: () => void
   setDisease: (id: string) => void
+  setTarget: (diseaseId: string, stepIndex: number, bodyPartId?: BodyPartId | null) => void
   setStep: (index: number) => void
   moveStep: (direction: -1 | 1) => void
   setNarration: (narration: AtlasNarration) => void
@@ -27,6 +28,7 @@ interface AtlasState {
 interface AtlasHistorySnapshot {
   diseaseId: string
   stepIndex: number
+  bodyPartId: string | null
 }
 
 const ATLAS_HISTORY_KEY = 'paldawnAtlas'
@@ -37,8 +39,10 @@ const historySnapshot = (value: unknown): AtlasHistorySnapshot | null => {
   if (!snapshot || typeof snapshot !== 'object') return null
   const diseaseId = (snapshot as Record<string, unknown>).diseaseId
   const stepIndex = (snapshot as Record<string, unknown>).stepIndex
+  const bodyPartId = (snapshot as Record<string, unknown>).bodyPartId
   if (typeof diseaseId !== 'string' || typeof stepIndex !== 'number' || !Number.isFinite(stepIndex)) return null
-  return { diseaseId, stepIndex }
+  if (bodyPartId !== undefined && bodyPartId !== null && typeof bodyPartId !== 'string') return null
+  return { diseaseId, stepIndex, bodyPartId: typeof bodyPartId === 'string' ? bodyPartId : null }
 }
 
 const boundedStep = (diseaseId: string, stepIndex: number): number => {
@@ -46,16 +50,24 @@ const boundedStep = (diseaseId: string, stepIndex: number): number => {
   return Math.min(disease.steps.length - 1, Math.max(0, Math.trunc(stepIndex)))
 }
 
-const atlasHistoryState = (diseaseId: string, stepIndex: number): Record<string, unknown> => ({
+const atlasHistoryState = (diseaseId: string, stepIndex: number, bodyPartId: string | null): Record<string, unknown> => ({
   ...(window.history.state && typeof window.history.state === 'object' ? window.history.state : {}),
-  [ATLAS_HISTORY_KEY]: { diseaseId, stepIndex: boundedStep(diseaseId, stepIndex) },
+  [ATLAS_HISTORY_KEY]: { diseaseId, stepIndex: boundedStep(diseaseId, stepIndex), bodyPartId },
 })
 
-const updateAtlasHistory = (mode: 'push' | 'replace', diseaseId: string, stepIndex: number): void => {
+const updateAtlasHistory = (mode: 'push' | 'replace', diseaseId: string, stepIndex: number, bodyPartId: string | null = null): void => {
   if (typeof window === 'undefined') return
-  const nextState = atlasHistoryState(diseaseId, stepIndex)
+  const nextState = atlasHistoryState(diseaseId, stepIndex, bodyPartId)
   if (mode === 'push') window.history.pushState(nextState, '', window.location.href)
   else window.history.replaceState(nextState, '', window.location.href)
+}
+
+const boundedBodyPart = (diseaseId: string, stepIndex: number, bodyPartId: string | null): BodyPartId | null => {
+  if (!bodyPartId) return null
+  const disease = diseaseById(diseaseId)
+  return disease.steps[boundedStep(disease.id, stepIndex)].bodyParts.includes(bodyPartId as BodyPartId)
+    ? bodyPartId as BodyPartId
+    : null
 }
 
 export const useAtlas = create<AtlasState>()((set, get) => ({
@@ -86,6 +98,13 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
     updateAtlasHistory('replace', selectedDiseaseId, 0)
     set({ selectedDiseaseId, stepIndex: 0, selectedBodyPart: null })
   },
+  setTarget: (requestedDiseaseId, requestedStepIndex, requestedBodyPartId = null) => {
+    const selectedDiseaseId = diseaseById(requestedDiseaseId).id
+    const stepIndex = boundedStep(selectedDiseaseId, requestedStepIndex)
+    const selectedBodyPart = boundedBodyPart(selectedDiseaseId, stepIndex, requestedBodyPartId)
+    updateAtlasHistory('replace', selectedDiseaseId, stepIndex, selectedBodyPart)
+    set({ selectedDiseaseId, stepIndex, selectedBodyPart })
+  },
   setStep: (stepIndex) => {
     const selectedDiseaseId = get().selectedDiseaseId
     const nextStep = boundedStep(selectedDiseaseId, stepIndex)
@@ -102,7 +121,12 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
   toggleExploded: () => set((state) => ({ exploded: !state.exploded })),
   toggleRotation: () => set((state) => ({ rotationPaused: !state.rotationPaused })),
   setGuideOpen: (guideOpen) => set({ guideOpen }),
-  setSelectedBodyPart: (selectedBodyPart) => set({ selectedBodyPart }),
+  setSelectedBodyPart: (requestedBodyPart) => {
+    const current = get()
+    const selectedBodyPart = boundedBodyPart(current.selectedDiseaseId, current.stepIndex, requestedBodyPart)
+    updateAtlasHistory('replace', current.selectedDiseaseId, current.stepIndex, selectedBodyPart)
+    set({ selectedBodyPart })
+  },
 }))
 
 export const syncAtlasFromHistory = (value: unknown): void => {
@@ -112,11 +136,12 @@ export const syncAtlasFromHistory = (value: unknown): void => {
     return
   }
   const disease = diseaseById(snapshot.diseaseId)
+  const stepIndex = boundedStep(disease.id, snapshot.stepIndex)
   useAtlas.setState({
     open: true,
     selectedDiseaseId: disease.id,
-    stepIndex: boundedStep(disease.id, snapshot.stepIndex),
+    stepIndex,
     guideOpen: false,
-    selectedBodyPart: null,
+    selectedBodyPart: boundedBodyPart(disease.id, stepIndex, snapshot.bodyPartId),
   })
 }

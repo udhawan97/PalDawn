@@ -1411,6 +1411,7 @@ export function FlightDeck({
         openWorkspace(true)
         return
       }
+      if (atlasOpen && !isTextEntry && event.code === 'Slash' && !event.shiftKey) return
       if (!isTextEntry && event.code === 'Slash' && !event.shiftKey) {
         event.preventDefault()
         setOpenPanel('transcript')
@@ -1456,7 +1457,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [openWorkspace, reducedMotion, setOpenPanel, toggleStageBookmark])
+  }, [atlasOpen, openWorkspace, reducedMotion, setOpenPanel, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
