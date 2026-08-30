@@ -73,6 +73,64 @@ test('Atlas Wayfinder focus survives browser history restoration', async ({ page
   await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
 })
 
+test('Research Lens maps bundled sources to authored steps and returns to the mechanism', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  const trigger = page.getByRole('button', { name: 'Research lens' })
+  await trigger.click()
+
+  const lens = page.getByRole('dialog', { name: 'Evidence map' })
+  await expect(lens).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Close Research lens' })).toBeFocused()
+  await expect(lens.getByRole('note')).toContainText('Named qualified review pending')
+  await expect(lens.locator('.atlas-evidence-metrics')).toHaveAttribute('data-source-count', '8')
+  await expect(lens.locator('.atlas-evidence-metrics')).toHaveAttribute('data-step-coverage', '11/11')
+  await expect(lens.getByText('Index context').first()).toBeVisible()
+
+  const diabetesSource = lens.locator('.atlas-evidence-source').filter({ hasText: 'What is diabetes?' })
+  await expect(diabetesSource.getByRole('link')).toHaveAttribute('href', /niddk\.nih\.gov/)
+  await diabetesSource.getByRole('button', { name: 'Go to step 3: The pancreas releases insulin' }).click()
+
+  await expect(lens).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'The pancreas releases insulin' })).toBeVisible()
+  await expect(trigger).toBeFocused()
+})
+
+test('mobile Research Lens stays bounded and restores focus after Escape', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  const trigger = page.getByRole('button', { name: 'Research lens' })
+  await trigger.click()
+
+  const lens = page.getByRole('dialog', { name: 'Evidence map' })
+  await expect(lens).toBeVisible()
+  const geometry = await page.evaluate(() => {
+    const dialog = document.querySelector('.atlas-research-lens').getBoundingClientRect()
+    const stepButton = document.querySelector('.atlas-evidence-coverage button').getBoundingClientRect()
+    return {
+      bodyOverflow: document.body.scrollWidth - document.body.clientWidth,
+      dialogLeft: dialog.left,
+      dialogRight: dialog.right,
+      dialogTop: dialog.top,
+      dialogBottom: dialog.bottom,
+      stepWidth: stepButton.width,
+      stepHeight: stepButton.height,
+    }
+  })
+  expect(geometry.bodyOverflow).toBeLessThanOrEqual(1)
+  expect(geometry.dialogLeft).toBeGreaterThanOrEqual(-1)
+  expect(geometry.dialogRight).toBeLessThanOrEqual(391)
+  expect(geometry.dialogTop).toBeGreaterThanOrEqual(0)
+  expect(geometry.dialogBottom).toBeLessThanOrEqual(845)
+  expect(geometry.stepWidth).toBeGreaterThanOrEqual(44)
+  expect(geometry.stepHeight).toBeGreaterThanOrEqual(44)
+
+  await page.keyboard.press('Escape')
+  await expect(lens).toHaveCount(0)
+  await expect(trigger).toBeFocused()
+})
+
 test('mobile Atlas Wayfinder keeps its result rail bounded and touchable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')

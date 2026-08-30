@@ -212,6 +212,16 @@ index adds no inferred medical associations, content, source, asset,
 dependency, analytics, persistence, or review claim. See
 `docs/ATLAS-WAYFINDING.md` for the feature and verification contract.
 
+### Atlas Research Lens slice
+
+The next code-owned evidence-navigation slice maps each condition's existing
+source records to the exact authored steps that reference them. It separates
+condition-index context from step evidence, keeps the pending qualified-review
+boundary visible, and lets learners return from a source record to a covered
+mechanism step. The local ledger adds no source, claim, inference, asset,
+dependency, analytics, persistence, or review assertion. See
+`docs/ATLAS-RESEARCH-LENS.md` for the feature and verification contract.
+
 ---
 
 ## 9. Medical guardrails
