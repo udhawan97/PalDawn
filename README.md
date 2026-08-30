@@ -13,7 +13,9 @@ through the body. The live app on `main` pairs ten WHO-ranked starting journeys
 with a project-authored conceptual systems map, organ-level close focus, and
 phase signals that make each authored mechanism step visible. A local Atlas
 Wayfinder searches the existing conditions, phases, and structures, then opens
-the exact preview route without sending or storing the query. Its new
+the exact preview route without sending or storing the query. A Research Lens
+maps the bundled source records to the authored steps they support while
+keeping index context and pending qualified review visibly separate. Its new
 living-instrument design carries the animated PalDawn mark through the intro,
 controls, scene materials, installed icon, and link preview without presenting
 the procedural model as reviewed anatomy.
@@ -61,6 +63,9 @@ and the original First Light systems release remains available at `v0.1.0`.
 - **Find an existing route.** Search the Atlas for a condition, mechanism
   phase, or highlighted structure, then arrive at the matching preview step and
   close-focus target. Search stays local and only indexes bundled content.
+- **Trace the authored evidence map.** Open Research Lens to distinguish index
+  context from step-linked WHO and NIH/NIDDK records, then return directly to a
+  covered mechanism phase. The map describes linkage, not evidentiary strength.
 - **Explore ten disease pathways.** Start from the WHO 2021 top ten global
   causes of death and follow a compact, source-linked mechanism through the
   body. The ranking describes global mortality, not personal risk.
@@ -136,6 +141,7 @@ npm run dev
 Open the URL printed by Vite. `npm test` type-checks, builds, validates the
 five-stage journey and synthetic-only boundary, checks the offline/local-data
 and Atlas-wayfinding contracts, and enforces the 500 KB gzip JavaScript budget.
+The same gate also validates the local Research Lens source-to-step map.
 
 Run the independent provenance gate from the repository root:
 
@@ -159,11 +165,13 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `app/src/data/p0-journey.json` | Bounded five-stage journey data |
 | `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
 | `app/src/data/atlasSearch.ts` | Bounded local index over existing Atlas routes and structures |
+| `app/src/data/atlasEvidence.ts` | Fail-closed source-to-step coverage map for the Research Lens |
 | `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
 | `app/src/scene/SceneCanvas.tsx` | Lazy-loaded WebGL scene boundary kept available through the offline asset manifest |
 | `docs/BRAND-SYSTEM.md` | Living mark, palette, typography, motion, generated assets, and authority boundary |
 | `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
 | `docs/ATLAS-WAYFINDING.md` | P2 route-search behavior, privacy boundary, and verification contract |
+| `docs/ATLAS-RESEARCH-LENS.md` | Evidence-navigation behavior, review boundary, and verification contract |
 | `docs/VISION.md` | Mission, body/disease/drug simulation north star, quality bar, and current limits |
 | `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |

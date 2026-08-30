@@ -21,9 +21,12 @@ diagnostic tool, or treatment guide.
    and not to anatomical scale.
 5. Switch between **Plain English** and **Clinical terms**. Both tracks use the
    same underlying step and source links; neither is professional training.
-6. Open **Evidence for this step** to inspect the supporting WHO or NIH/NIDDK
-   page. Choose **How to use** inside the explorer for the same controls and
-   keyboard guide.
+6. Open **Evidence for this step** to inspect a supporting WHO or NIH/NIDDK
+   page. Choose **Research lens** to see how every bundled source maps to the
+   authored route and return to a covered step. The map shows linkage, not
+   proof that a source validates every word or visual detail.
+7. Choose **How to use** inside the explorer for the same controls and keyboard
+   guide.
 
 Keyboard controls in the explorer:
 

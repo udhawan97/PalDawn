@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1788062260.8484004,
-    "ast_hash": "4f6fa92607cad768bbcdb56ad66c625e",
+    "mtime": 1788067128.8526418,
+    "ast_hash": "60fa7b5c06a2a7d4d8be009403d6d8e3",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788062822.8787084,
+    "mtime": 1788067297.3527448,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788062301.4892187,
-    "ast_hash": "f6c0117db7dc79146eee21c39a819043",
+    "mtime": 1788067238.6680062,
+    "ast_hash": "f944a431a9d786b6b117792f71da6663",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1788062301.4884324,
-    "ast_hash": "eecc97171f15f1ac087149aed7878852",
+    "mtime": 1788067238.6666899,
+    "ast_hash": "effd388980f880db4b7dd777ab3be6c8",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -420,7 +420,7 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788062639.2235785,
+    "mtime": 1788064196.0054142,
     "ast_hash": "d630f77480fcb3a812af3c242cd7c708",
     "semantic_hash": ""
   },
@@ -640,23 +640,23 @@
     "semantic_hash": ""
   },
   "app/src/state/atlas.ts": {
-    "mtime": 1788062067.1626947,
+    "mtime": 1788064196.0042903,
     "ast_hash": "4d72f3788fdf52cf341274e9e501ff61",
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1788062267.426982,
-    "ast_hash": "467a028fa29269dd80f6c841c8ce0e33",
+    "mtime": 1788067238.6575785,
+    "ast_hash": "4af7a010246c7b2b7b74c7a7f7d6c9b8",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1788064138.1913505,
-    "ast_hash": "b463a73933479dfa7695820a0bfac32c",
+    "mtime": 1788067389.132364,
+    "ast_hash": "bc672282d5f99e235a838a8866c5b51f",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-4.md": {
-    "mtime": 1788062301.4867013,
-    "ast_hash": "842dcf5c6302ef8df1a1b9846b738c56",
+    "mtime": 1788067238.667307,
+    "ast_hash": "4db1d2e642af6f1325738a3b3f1978a9",
     "semantic_hash": ""
   },
   "docs/releases/v0.2.0.md": {
@@ -700,17 +700,17 @@
     "semantic_hash": ""
   },
   "app/scripts/test-atlas-wayfinding.mjs": {
-    "mtime": 1788062260.8470812,
+    "mtime": 1788064196.0037515,
     "ast_hash": "ffdd9e9ae1f7deae86b34ef20a42cb9d",
     "semantic_hash": ""
   },
   "app/src/data/atlasSearch.ts": {
-    "mtime": 1788062039.28765,
+    "mtime": 1788064196.0039806,
     "ast_hash": "d5929680982d32fb61044220051d1c2c",
     "semantic_hash": ""
   },
   "docs/ATLAS-WAYFINDING.md": {
-    "mtime": 1788062301.4859834,
+    "mtime": 1788064196.0059068,
     "ast_hash": "60e2a1cbc142204f15d43e620a42d387",
     "semantic_hash": ""
   },
@@ -732,6 +732,21 @@
   "graphify-out/memory/query_20260827_043952_what_is_the_documented_next_phase_after_deep_lens.md": {
     "mtime": 1787805592.4874034,
     "ast_hash": "ee667ab97c2d5bbf4a7862cbca775e73",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-atlas-research-lens.mjs": {
+    "mtime": 1788067264.8465831,
+    "ast_hash": "d4a72ab79db61255538430606af5828c",
+    "semantic_hash": ""
+  },
+  "app/src/data/atlasEvidence.ts": {
+    "mtime": 1788067128.8504086,
+    "ast_hash": "a0454ab03f4b8ba95e9b86401deb4e70",
+    "semantic_hash": ""
+  },
+  "docs/ATLAS-RESEARCH-LENS.md": {
+    "mtime": 1788067238.6658266,
+    "ast_hash": "f17a3ced5a9ae1d7c2e3850172ab701b",
     "semantic_hash": ""
   }
 }

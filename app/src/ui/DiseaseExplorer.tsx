@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
+import { ATLAS_EVIDENCE_STATUS, buildAtlasEvidenceLedger } from '../data/atlasEvidence'
 import { searchAtlas, type AtlasSearchResult } from '../data/atlasSearch'
-import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId } from '../data/diseases'
+import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId, type DiseaseDefinition } from '../data/diseases'
 import { useAtlas } from '../state/atlas'
 import { useExperience } from '../state/experience'
 
@@ -133,8 +134,108 @@ function SourceLinks({ sourceIds }: { sourceIds: string[] }) {
   )
 }
 
+function ResearchLens({
+  disease,
+  currentStepIndex,
+  returnFocusTo,
+  onClose,
+  onSelectStep,
+}: {
+  disease: DiseaseDefinition
+  currentStepIndex: number
+  returnFocusTo: RefObject<HTMLButtonElement | null>
+  onClose: () => void
+  onSelectStep: (stepIndex: number) => void
+}) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const ledger = buildAtlasEvidenceLedger(disease)
+
+  useEffect(() => {
+    closeButtonRef.current?.focus()
+    const returnTarget = returnFocusTo.current
+    return () => {
+      if (!returnTarget || !document.contains(returnTarget)) return
+      window.requestAnimationFrame(() => returnTarget.focus())
+    }
+  }, [returnFocusTo])
+
+  return (
+    <section className="atlas-research-lens" role="dialog" aria-modal="false" aria-labelledby="atlas-research-title">
+      <header className="atlas-research-heading">
+        <div>
+          <p className="eyebrow">Research lens · current preview</p>
+          <h2 id="atlas-research-title">Evidence map</h2>
+          <p>{disease.title}</p>
+        </div>
+        <button ref={closeButtonRef} type="button" aria-label="Close Research lens" onClick={onClose}>×</button>
+      </header>
+
+      <div className="atlas-research-scroll">
+        <dl
+          className="atlas-evidence-metrics"
+          aria-label="Evidence map summary"
+          data-source-count={ledger.sourceCoverage.length}
+          data-step-coverage={`${ledger.sourcedStepCount}/${ledger.totalStepCount}`}
+        >
+          <div><dt>Sources</dt><dd>{ledger.sourceCoverage.length}</dd></div>
+          <div><dt>Steps linked</dt><dd>{ledger.sourcedStepCount}/{ledger.totalStepCount}</dd></div>
+          <div><dt>Review</dt><dd>Pending</dd></div>
+        </dl>
+
+        <p className="atlas-evidence-boundary" role="note">
+          <strong>{ATLAS_EVIDENCE_STATUS.reviewLabel}</strong>
+          Sources checked {ATLAS_EVIDENCE_STATUS.sourcesCheckedLabel}. This map shows authored source links, not proof that a source validates every word or visual detail.
+        </p>
+
+        {ledger.danglingSourceIds.length > 0 ? (
+          <p className="atlas-evidence-integrity" role="alert">
+            Evidence map unavailable: one or more step references do not resolve to a bundled source.
+          </p>
+        ) : (
+          <ol className="atlas-evidence-ledger">
+            {ledger.sourceCoverage.map(({ source, stepIndexes }, sourceIndex) => {
+              const stepSet = new Set(stepIndexes)
+              return (
+                <li key={source.id} className="atlas-evidence-source">
+                  <div className="atlas-evidence-source-heading">
+                    <span>{String(sourceIndex + 1).padStart(2, '0')} · {stepIndexes.length > 0 ? 'Step evidence' : 'Index context'}</span>
+                    <a href={source.url} target="_blank" rel="noreferrer">
+                      <strong>{source.organization}</strong>
+                      {source.title} <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                  <p>{stepIndexes.length > 0
+                    ? `Linked to ${stepIndexes.length} of ${disease.steps.length} authored steps.`
+                    : 'Supports the condition index; no mechanism step links to this source.'}</p>
+                  <ol className="atlas-evidence-coverage" aria-label={`${source.title} step coverage`}>
+                    {disease.steps.map((step, stepIndex) => (
+                      <li key={step.id}>
+                        {stepSet.has(stepIndex) ? (
+                          <button
+                            type="button"
+                            data-current={stepIndex === currentStepIndex}
+                            aria-current={stepIndex === currentStepIndex ? 'step' : undefined}
+                            aria-label={`Go to step ${stepIndex + 1}: ${step.label}`}
+                            title={step.label}
+                            onClick={() => onSelectStep(stepIndex)}
+                          >{String(stepIndex + 1).padStart(2, '0')}</button>
+                        ) : <span aria-hidden="true">—</span>}
+                      </li>
+                    ))}
+                  </ol>
+                </li>
+              )
+            })}
+          </ol>
+        )}
+      </div>
+    </section>
+  )
+}
+
 export function DiseaseExplorer() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [researchOpen, setResearchOpen] = useState(false)
   const selectedDiseaseId = useAtlas((state) => state.selectedDiseaseId)
   const stepIndex = useAtlas((state) => state.stepIndex)
   const narration = useAtlas((state) => state.narration)
@@ -152,6 +253,7 @@ export function DiseaseExplorer() {
   const setGuideOpen = useAtlas((state) => state.setGuideOpen)
   const setSelectedBodyPart = useAtlas((state) => state.setSelectedBodyPart)
   const guideTriggerRef = useRef<HTMLButtonElement>(null)
+  const researchTriggerRef = useRef<HTMLButtonElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const disease = diseaseById(selectedDiseaseId)
   const step = disease.steps[stepIndex]
@@ -166,6 +268,10 @@ export function DiseaseExplorer() {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target
       if (target instanceof HTMLElement && ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return
+      if (researchOpen) {
+        if (event.key === 'Escape') setResearchOpen(false)
+        return
+      }
       if (event.key === '/') {
         event.preventDefault()
         searchInputRef.current?.focus()
@@ -182,7 +288,7 @@ export function DiseaseExplorer() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [researchOpen])
 
   return (
     <main className="atlas" aria-labelledby="atlas-title">
@@ -295,7 +401,10 @@ export function DiseaseExplorer() {
       <article className="atlas-detail">
         <div className="atlas-detail-topline">
           <span style={{ color: disease.accent }}>WHO #{disease.rank}</span>
-          <button type="button" onClick={close}>Back to overview <span aria-hidden="true">×</span></button>
+          <div className="atlas-detail-actions">
+            <button ref={researchTriggerRef} type="button" onClick={() => setResearchOpen(true)}>Research lens</button>
+            <button type="button" onClick={close}>Back to overview <span aria-hidden="true">×</span></button>
+          </div>
         </div>
         <p className="atlas-category">{disease.category} · source-backed preview</p>
         <h1 id="atlas-title">{disease.title}</h1>
@@ -353,7 +462,7 @@ export function DiseaseExplorer() {
         </div>
         <p className="atlas-review-boundary" role="note" aria-label="Medical review status">
           <strong>Medical review status</strong>
-          Sources checked 22 Aug 2026. This educational synthesis has not yet been reviewed by a named qualified clinician.
+          Sources checked {ATLAS_EVIDENCE_STATUS.sourcesCheckedLabel}. This educational synthesis has not yet been reviewed by a named qualified clinician.
         </p>
       </article>
 
@@ -380,6 +489,18 @@ export function DiseaseExplorer() {
         </ol>
       </nav>
       {guideOpen ? <ExplorerGuide returnFocusTo={guideTriggerRef} /> : null}
+      {researchOpen ? (
+        <ResearchLens
+          disease={disease}
+          currentStepIndex={stepIndex}
+          returnFocusTo={researchTriggerRef}
+          onClose={() => setResearchOpen(false)}
+          onSelectStep={(nextStepIndex) => {
+            setStep(nextStepIndex)
+            setResearchOpen(false)
+          }}
+        />
+      ) : null}
     </main>
   )
 }

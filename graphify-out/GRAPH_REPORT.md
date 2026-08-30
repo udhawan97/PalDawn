@@ -1,15 +1,15 @@
-# Graph Report - .  (2026-08-29)
+# Graph Report - .  (2026-08-30)
 
 ## Corpus Check
 - cluster-only mode — file stats not available
 
 ## Summary
-- 692 nodes · 1046 edges · 60 communities (57 shown, 3 thin omitted)
+- 705 nodes · 1065 edges · 62 communities (58 shown, 4 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 45 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `23649955`
+- Built from commit: `abfc0d9c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -64,6 +64,8 @@
 - Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.
 - Q: What is the documented next phase after Deep Lens, and can it merge?
 - test-atlas-wayfinding.mjs
+- Atlas Research Lens
+- test-atlas-research-lens.mjs
 
 ## God Nodes (most connected - your core abstractions)
 1. `useSettings` - 25 edges
@@ -97,22 +99,22 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (60 total, 3 thin omitted)
+## Communities (62 total, 4 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
 Nodes (20): Medical Accuracy Report, Journey Proposal, Quality and Reduced-Motion Settings, Canonical Coronary Route, Medical Content Source Boundary, Medical Guardrails, Minimal Linear Journey Schema, P0 Graphics Directives (+12 more)
 
 ### Community 1 - "FlightDeck.tsx"
-Cohesion: 0.07
-Nodes (53): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+45 more)
+Cohesion: 0.09
+Nodes (42): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, progressForStageId() (+34 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
 Nodes (21): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution, noEmit, noFallthroughCasesInSwitch (+13 more)
 
 ### Community 3 - "MemoryStorage"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (5): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules()
 
 ### Community 4 - "validate.mjs"
@@ -132,8 +134,8 @@ Cohesion: 0.14
 Nodes (13): compilerOptions, lib, module, moduleResolution, noEmit, skipLibCheck, strict, target (+5 more)
 
 ### Community 9 - "VoyageScene.tsx"
-Cohesion: 0.09
-Nodes (32): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, ROUTE_LOOKUP, RouteFrame, routeFrameAt(), RouteSlice (+24 more)
+Cohesion: 0.08
+Nodes (36): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, ROUTE_LOOKUP, RouteFrame, routeFrameAt(), RouteSlice (+28 more)
 
 ### Community 10 - "gen-npm-records.mjs"
 Cohesion: 0.22
@@ -153,7 +155,7 @@ Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML 
 
 ### Community 17 - "diseases.ts"
 Cohesion: 0.06
-Nodes (50): AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch(), searchAtlas(), BODY_PART_LABELS, BodyPartId, diseaseById() (+42 more)
+Nodes (51): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+43 more)
 
 ### Community 18 - "test-release.mjs"
 Cohesion: 0.17
@@ -256,8 +258,8 @@ Cohesion: 0.40
 Nodes (4): Evidence and safety boundary, PalDawn v0.3.0 — Mechanism Lens, Verification, What is included
 
 ### Community 50 - "localData.ts"
-Cohesion: 0.10
-Nodes (35): CAPTION_SCALES, emptyWorkspace(), exportLocalData(), failedStorageKeys, ImportedSettings, JourneySession, loadJourneySession(), loadLearnerWorkspace() (+27 more)
+Cohesion: 0.07
+Nodes (46): rootEl, CAPTION_SCALES, emptyWorkspace(), exportLocalData(), failedStorageKeys, ImportedSettings, JourneySession, loadJourneySession() (+38 more)
 
 ### Community 52 - "PalDawn mission and future vision"
 Cohesion: 0.29
@@ -287,25 +289,29 @@ Nodes (4): Answer, Outcome, Q: Verify the refreshed PalDawn brand icon, app plac
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: What is the documented next phase after Deep Lens, and can it merge?, Source Nodes
 
+### Community 60 - "Atlas Research Lens"
+Cohesion: 0.40
+Nodes (4): Atlas Research Lens, Boundary, Feature set, Verification contract
+
 ## Knowledge Gaps
-- **277 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+272 more)
+- **280 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+275 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `replaceLocalDataFromImport()` connect `localData.ts` to `FlightDeck.tsx`?**
+- **Why does `replaceLocalDataFromImport()` connect `localData.ts` to `FlightDeck.tsx`, `MemoryStorage`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Why does `MemoryStorage` connect `MemoryStorage` to `localData.ts`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `useSettings` connect `VoyageScene.tsx` to `diseases.ts`, `settings.ts`, `FlightDeck.tsx`?**
+- **Why does `useSettings` connect `VoyageScene.tsx` to `diseases.ts`, `localData.ts`, `settings.ts`, `FlightDeck.tsx`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _277 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _280 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `FlightDeck.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.0703962703962704 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08925979680696662 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.041666666666666664 - nodes in this community are weakly interconnected._
+- **Should `compilerOptions` be split into smaller, more focused modules?**
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
