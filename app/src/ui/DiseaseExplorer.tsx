@@ -1,34 +1,50 @@
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { ATLAS_EVIDENCE_STATUS, buildAtlasEvidenceLedger } from '../data/atlasEvidence'
 import { searchAtlas, type AtlasSearchResult } from '../data/atlasSearch'
 import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId, type DiseaseDefinition } from '../data/diseases'
 import { useAtlas } from '../state/atlas'
 import { useExperience } from '../state/experience'
+import { CurriculumCatalog } from './CurriculumCatalog'
 
 export function TopDiseasesRail() {
+  const [catalogOpen, setCatalogOpen] = useState(false)
+  const catalogButtonRef = useRef<HTMLButtonElement>(null)
   const openDisease = useAtlas((state) => state.openDisease)
 
   return (
-    <aside className="top-diseases" aria-labelledby="top-diseases-title">
-      <div className="top-diseases-heading">
-        <p className="eyebrow">WHO global rank · 2021</p>
-        <h2 id="top-diseases-title">Ten starting journeys</h2>
-      </div>
-      <ol>
-        {DISEASES.map((disease) => (
-          <li key={disease.id}>
-            <button type="button" onClick={() => openDisease(disease.id)}>
-              <span>{String(disease.rank).padStart(2, '0')}</span>
-              <strong>{disease.shortTitle}</strong>
-              <i aria-hidden="true" style={{ background: disease.accent }} />
-            </button>
-          </li>
-        ))}
-      </ol>
-      <p>
-        Ranked causes of death, not personal risk. Each route is an educational preview.
-      </p>
-    </aside>
+    <>
+      <aside className="top-diseases" aria-labelledby="top-diseases-title">
+        <div className="top-diseases-heading">
+          <div>
+            <p className="eyebrow">WHO global rank · 2021</p>
+            <h2 id="top-diseases-title">Ten starting journeys</h2>
+          </div>
+          <button
+            ref={catalogButtonRef}
+            type="button"
+            className="curriculum-launch"
+            aria-haspopup="dialog"
+            aria-expanded={catalogOpen}
+            onClick={() => setCatalogOpen(true)}
+          >View 50</button>
+        </div>
+        <ol>
+          {DISEASES.map((disease) => (
+            <li key={disease.id}>
+              <button type="button" onClick={() => openDisease(disease.id)}>
+                <span>{String(disease.rank).padStart(2, '0')}</span>
+                <strong>{disease.shortTitle}</strong>
+                <i aria-hidden="true" style={{ background: disease.accent }} />
+              </button>
+            </li>
+          ))}
+        </ol>
+        <p>
+          Ranked causes of death, not personal risk. Each route is an educational preview.
+        </p>
+      </aside>
+      {catalogOpen ? <CurriculumCatalog onClose={() => setCatalogOpen(false)} returnFocusTo={catalogButtonRef} /> : null}
+    </>
   )
 }
 
@@ -36,10 +52,11 @@ function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonE
   const setGuideOpen = useAtlas((state) => state.setGuideOpen)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    closeButtonRef.current?.focus()
+  useLayoutEffect(() => {
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }))
     const returnTarget = returnFocusTo.current
     return () => {
+      window.cancelAnimationFrame(focusFrame)
       if (!returnTarget || !document.contains(returnTarget)) return
       window.requestAnimationFrame(() => returnTarget.focus())
     }
@@ -52,7 +69,7 @@ function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonE
           <p className="eyebrow">Seven controls · one learning loop</p>
           <h2 id="atlas-guide-title">How to use the systems map</h2>
         </div>
-        <button ref={closeButtonRef} type="button" aria-label="Close how-to guide" onClick={() => setGuideOpen(false)}>×</button>
+        <button ref={closeButtonRef} type="button" autoFocus aria-label="Close how-to guide" onClick={() => setGuideOpen(false)}>×</button>
       </div>
       <ol>
         <li><b>Search the map.</b><span>Find an existing condition, phase, or highlighted structure. Results only route through this preview’s current content.</span></li>
@@ -150,10 +167,11 @@ function ResearchLens({
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const ledger = buildAtlasEvidenceLedger(disease)
 
-  useEffect(() => {
-    closeButtonRef.current?.focus()
+  useLayoutEffect(() => {
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }))
     const returnTarget = returnFocusTo.current
     return () => {
+      window.cancelAnimationFrame(focusFrame)
       if (!returnTarget || !document.contains(returnTarget)) return
       window.requestAnimationFrame(() => returnTarget.focus())
     }
@@ -167,7 +185,7 @@ function ResearchLens({
           <h2 id="atlas-research-title">Evidence map</h2>
           <p>{disease.title}</p>
         </div>
-        <button ref={closeButtonRef} type="button" aria-label="Close Research lens" onClick={onClose}>×</button>
+        <button ref={closeButtonRef} type="button" autoFocus aria-label="Close Research lens" onClick={onClose}>×</button>
       </header>
 
       <div className="atlas-research-scroll">

@@ -4,7 +4,7 @@
   "description": "PalDawn Mechanism Lens — high-detail phase views across source-linked disease journeys",
   "main": "index.js",
   "scripts": {
-    "test": "npm run typecheck && npm run build && node scripts/test-release.mjs && node scripts/test-foundation-plus.mjs && node scripts/test-foundation-plus-2.mjs && node scripts/test-foundation-plus-3.mjs && node scripts/test-mechanism-lens.mjs && node scripts/test-atlas-wayfinding.mjs && node scripts/test-atlas-research-lens.mjs && node scripts/test-foundation-runtime.mjs",
+    "test": "npm run typecheck && npm run build && node scripts/test-release.mjs && node scripts/test-foundation-plus.mjs && node scripts/test-foundation-plus-2.mjs && node scripts/test-foundation-plus-3.mjs && node scripts/test-mechanism-lens.mjs && node scripts/test-atlas-wayfinding.mjs && node scripts/test-atlas-research-lens.mjs && node scripts/test-curriculum-catalog.mjs && node scripts/test-foundation-runtime.mjs",
     "test:browser": "playwright test",
     "dev": "vite",
     "build": "vite build",

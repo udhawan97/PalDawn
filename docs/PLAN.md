@@ -222,6 +222,18 @@ mechanism step. The local ledger adds no source, claim, inference, asset,
 dependency, analytics, persistence, or review assertion. See
 `docs/ATLAS-RESEARCH-LENS.md` for the feature and verification contract.
 
+### Curriculum 50 discovery slice
+
+The next planning slice defines a 50-condition global-burden curriculum across
+twelve system families while preserving the exact ten current WHO-ranked
+previews. The catalog explicitly is not a worldwide rank: forty entries remain
+non-explorable planning records until each gains a source dossier, reviewed
+mechanism, approved assets, and named qualified-human review. The landing
+surface can search and filter the full curriculum, but only existing journeys
+open. See `docs/CURRICULUM-50.md` for the curriculum method, multiscale
+scene-pack architecture, free/open-source pipeline, engine decision, adaptive
+learning boundary, and publication gates.
+
 ---
 
 ## 9. Medical guardrails

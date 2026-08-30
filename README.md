@@ -15,7 +15,10 @@ phase signals that make each authored mechanism step visible. A local Atlas
 Wayfinder searches the existing conditions, phases, and structures, then opens
 the exact preview route without sending or storing the query. A Research Lens
 maps the bundled source records to the authored steps they support while
-keeping index context and pending qualified review visibly separate. Its new
+keeping index context and pending qualified review visibly separate. A new
+Curriculum 50 planning catalog makes the intended breadth searchable across
+twelve system families while only the ten existing previews can open; the
+other forty remain visibly gated on sources and qualified review. Its
 living-instrument design carries the animated PalDawn mark through the intro,
 controls, scene materials, installed icon, and link preview without presenting
 the procedural model as reviewed anatomy.
@@ -69,6 +72,10 @@ and the original First Light systems release remains available at `v0.1.0`.
 - **Explore ten disease pathways.** Start from the WHO 2021 top ten global
   causes of death and follow a compact, source-linked mechanism through the
   body. The ranking describes global mortality, not personal risk.
+- **Inspect the 50-condition plan.** Search or filter the wider global-burden
+  curriculum by system. It is a coverage plan rather than a universal rank;
+  forty entries are deliberately non-explorable until their source, asset, and
+  qualified-review gates pass.
 - **See each phase change.** Follow a data-driven signal route across only the
   structures named by the current step, then select a highlighted structure to
   enter close focus with layered geometry and a visible phase lens.
@@ -164,6 +171,7 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `app/` | Vite, React, TypeScript, Three.js, React Three Fiber, PWA shell, and browser tests |
 | `app/src/data/p0-journey.json` | Bounded five-stage journey data |
 | `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
+| `app/src/data/diseaseCatalog.ts` | Fifty-condition curriculum registry with explorable/planned gates |
 | `app/src/data/atlasSearch.ts` | Bounded local index over existing Atlas routes and structures |
 | `app/src/data/atlasEvidence.ts` | Fail-closed source-to-step coverage map for the Research Lens |
 | `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
@@ -172,6 +180,7 @@ VITE_BASE_PATH=/PalDawn/ npm test
 | `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
 | `docs/ATLAS-WAYFINDING.md` | P2 route-search behavior, privacy boundary, and verification contract |
 | `docs/ATLAS-RESEARCH-LENS.md` | Evidence-navigation behavior, review boundary, and verification contract |
+| `docs/CURRICULUM-50.md` | Global-burden curriculum method, multiscale engine plan, and content gates |
 | `docs/VISION.md` | Mission, body/disease/drug simulation north star, quality bar, and current limits |
 | `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
 | `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |

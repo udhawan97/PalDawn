@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1788067128.8526418,
-    "ast_hash": "60fa7b5c06a2a7d4d8be009403d6d8e3",
+    "mtime": 1788078379.1442358,
+    "ast_hash": "9692d89102ef6642668efe7420274b1c",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788067297.3527448,
+    "mtime": 1788080528.704458,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788067238.6680062,
-    "ast_hash": "f944a431a9d786b6b117792f71da6663",
+    "mtime": 1788078628.1905372,
+    "ast_hash": "9d68b13d9a217f3b0a788c5b39fcdf90",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1788067238.6666899,
-    "ast_hash": "effd388980f880db4b7dd777ab3be6c8",
+    "mtime": 1788078603.4585729,
+    "ast_hash": "1e37b76bd42d19a70a8cf5b57567541d",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -645,17 +645,17 @@
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1788067238.6575785,
-    "ast_hash": "4af7a010246c7b2b7b74c7a7f7d6c9b8",
+    "mtime": 1788079753.104421,
+    "ast_hash": "145ce3731cf27d26ca99af056d316b6b",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1788067389.132364,
-    "ast_hash": "bc672282d5f99e235a838a8866c5b51f",
+    "mtime": 1788078379.144455,
+    "ast_hash": "4874ad7a62719474e14dbb2ee10955d3",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-4.md": {
-    "mtime": 1788067238.667307,
+    "mtime": 1788069472.483442,
     "ast_hash": "4db1d2e642af6f1325738a3b3f1978a9",
     "semantic_hash": ""
   },
@@ -690,8 +690,8 @@
     "semantic_hash": ""
   },
   "docs/VISION.md": {
-    "mtime": 1787740048.413864,
-    "ast_hash": "da17486c064fb8e7ab4e703bb27369f1",
+    "mtime": 1788078603.4620967,
+    "ast_hash": "31e6cb0242dbac7c6a1fc84a04167d7d",
     "semantic_hash": ""
   },
   "app/public/icon-app.svg": {
@@ -735,18 +735,43 @@
     "semantic_hash": ""
   },
   "app/scripts/test-atlas-research-lens.mjs": {
-    "mtime": 1788067264.8465831,
+    "mtime": 1788069472.452875,
     "ast_hash": "d4a72ab79db61255538430606af5828c",
     "semantic_hash": ""
   },
   "app/src/data/atlasEvidence.ts": {
-    "mtime": 1788067128.8504086,
+    "mtime": 1788069472.4651306,
     "ast_hash": "a0454ab03f4b8ba95e9b86401deb4e70",
     "semantic_hash": ""
   },
   "docs/ATLAS-RESEARCH-LENS.md": {
-    "mtime": 1788067238.6658266,
+    "mtime": 1788069472.4823837,
     "ast_hash": "f17a3ced5a9ae1d7c2e3850172ab701b",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-curriculum-catalog.mjs": {
+    "mtime": 1788078379.1440437,
+    "ast_hash": "98586828e0928c4e8879907bce55350c",
+    "semantic_hash": ""
+  },
+  "app/src/data/diseaseCatalog.ts": {
+    "mtime": 1788078077.039844,
+    "ast_hash": "87a7a7df30dfb9b423bf589f8668068b",
+    "semantic_hash": ""
+  },
+  "app/src/ui/CurriculumCatalog.tsx": {
+    "mtime": 1788078744.0331888,
+    "ast_hash": "031155fa8350f0847803756d53881fb3",
+    "semantic_hash": ""
+  },
+  "app/tests/curriculum-catalog.spec.mjs": {
+    "mtime": 1788078379.1446137,
+    "ast_hash": "fa38ff8c4deff06192457727f0e34be3",
+    "semantic_hash": ""
+  },
+  "docs/CURRICULUM-50.md": {
+    "mtime": 1788078575.3199296,
+    "ast_hash": "de2529f6304732b43f43e874877c064e",
     "semantic_hash": ""
   }
 }

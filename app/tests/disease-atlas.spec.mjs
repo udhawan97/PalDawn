@@ -6,7 +6,7 @@ test('landing offers ten English-only disease journeys and opens diabetes', asyn
   await page.goto('./')
 
   const startingJourneys = page.getByRole('complementary', { name: 'Ten starting journeys' })
-  await expect(startingJourneys.getByRole('button')).toHaveCount(10)
+  await expect(startingJourneys.locator('ol').getByRole('button')).toHaveCount(10)
   await expect(startingJourneys.getByRole('button', { name: '08 Diabetes' })).toBeVisible()
   expect(await page.locator('body').innerText()).not.toMatch(/[\u0900-\u097f]/)
 
@@ -187,7 +187,7 @@ test('mobile atlas and its how-to guide remain bounded and usable', async ({ pag
 
   const startingJourneys = page.getByRole('complementary', { name: 'Ten starting journeys' })
   await expect(startingJourneys).toBeVisible()
-  await expect(startingJourneys.getByRole('button')).toHaveCount(10)
+  await expect(startingJourneys.locator('ol').getByRole('button')).toHaveCount(10)
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
 
   const geometry = await page.evaluate(() => {

@@ -37,6 +37,14 @@ The long-range experience includes:
 6. **Research mode.** Expose source metadata, model assumptions, versioned
    evidence, confidence, and reviewer status so professionals can inspect the
    basis of a visualization rather than accepting it as a black box.
+7. **Adaptive study.** Use explicit retrieval answers, confidence, and
+   learner-controlled review state to build a local spaced-review queue. Never
+   infer clinical competence from clicks or collect patient information.
+
+The breadth target is a 50-condition global-burden curriculum, not a universal
+rank. The first ten retain WHO's 2021 global mortality ordering; the wider
+queue balances death, disability, prevalence, organ-system coverage, and
+mechanism diversity. See [`CURRICULUM-50.md`](CURRICULUM-50.md).
 
 ## What “simulation” must mean
 
