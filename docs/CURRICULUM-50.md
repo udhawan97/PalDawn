@@ -171,6 +171,13 @@ wall, pressure, heart, brain, kidney, and long-duration change. First deliver
 the schema, source ledger, claim inventory, normal-versus-condition storyboard,
 and review packet. Do not publish the journey before named qualified review.
 
+Candidate implementation: the runtime now validates a fail-closed proposal
+schema, and Curriculum 50 can inspect the hypertension source/readiness dossier
+without creating a journey. The six-scale storyboard, three official sources,
+five draft claims, and eight publication gates are recorded in code. Assets,
+content digest, reviewer identities, and publication eligibility remain empty
+or blocked. See [`research/hypertension-pack-dossier.md`](research/hypertension-pack-dossier.md).
+
 ### C50.2 — Shared cardiovascular scene family
 
 Build reusable, provenance-approved heart, artery, arteriole, capillary, and

@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1788078379.1442358,
-    "ast_hash": "9692d89102ef6642668efe7420274b1c",
+    "mtime": 1788202359.0467193,
+    "ast_hash": "0c8d346571e0876bde6239ba3ea4c192",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788080528.704458,
+    "mtime": 1788204424.786022,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,7 +235,7 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788078628.1905372,
+    "mtime": 1788080764.301305,
     "ast_hash": "9d68b13d9a217f3b0a788c5b39fcdf90",
     "semantic_hash": ""
   },
@@ -260,7 +260,7 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1788078603.4585729,
+    "mtime": 1788080764.3027308,
     "ast_hash": "1e37b76bd42d19a70a8cf5b57567541d",
     "semantic_hash": ""
   },
@@ -645,12 +645,12 @@
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1788079753.104421,
+    "mtime": 1788080764.30219,
     "ast_hash": "145ce3731cf27d26ca99af056d316b6b",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1788078379.144455,
+    "mtime": 1788080764.3024588,
     "ast_hash": "4874ad7a62719474e14dbb2ee10955d3",
     "semantic_hash": ""
   },
@@ -690,7 +690,7 @@
     "semantic_hash": ""
   },
   "docs/VISION.md": {
-    "mtime": 1788078603.4620967,
+    "mtime": 1788080764.302895,
     "ast_hash": "31e6cb0242dbac7c6a1fc84a04167d7d",
     "semantic_hash": ""
   },
@@ -750,28 +750,63 @@
     "semantic_hash": ""
   },
   "app/scripts/test-curriculum-catalog.mjs": {
-    "mtime": 1788078379.1440437,
+    "mtime": 1788080764.3015482,
     "ast_hash": "98586828e0928c4e8879907bce55350c",
     "semantic_hash": ""
   },
   "app/src/data/diseaseCatalog.ts": {
-    "mtime": 1788078077.039844,
+    "mtime": 1788080764.3016734,
     "ast_hash": "87a7a7df30dfb9b423bf589f8668068b",
     "semantic_hash": ""
   },
   "app/src/ui/CurriculumCatalog.tsx": {
-    "mtime": 1788078744.0331888,
-    "ast_hash": "031155fa8350f0847803756d53881fb3",
+    "mtime": 1788202483.3299959,
+    "ast_hash": "8238acdad730bfefc1a8d27e9a708780",
     "semantic_hash": ""
   },
   "app/tests/curriculum-catalog.spec.mjs": {
-    "mtime": 1788078379.1446137,
-    "ast_hash": "fa38ff8c4deff06192457727f0e34be3",
+    "mtime": 1788202940.5474467,
+    "ast_hash": "6b29e62d590658ccb8c8ce5567e27ad8",
     "semantic_hash": ""
   },
   "docs/CURRICULUM-50.md": {
-    "mtime": 1788078575.3199296,
-    "ast_hash": "de2529f6304732b43f43e874877c064e",
+    "mtime": 1788202359.0478241,
+    "ast_hash": "02be6566efbf6dd6bb48f7d691fb2477",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-disease-pack.mjs": {
+    "mtime": 1788202359.0457883,
+    "ast_hash": "a4bed3ede50e84ddfcecebbf73976cd4",
+    "semantic_hash": ""
+  },
+  "app/src/data/diseasePack.ts": {
+    "mtime": 1788201393.8795283,
+    "ast_hash": "e7098f13dfcca118085ab0158dfc58fe",
+    "semantic_hash": ""
+  },
+  "app/src/data/diseasePackRegistry.ts": {
+    "mtime": 1788201393.8801603,
+    "ast_hash": "c9116f65cf3edb282b704fe30176b72e",
+    "semantic_hash": ""
+  },
+  "app/src/data/hypertensionPack.ts": {
+    "mtime": 1788201393.8798807,
+    "ast_hash": "c225a3497bfb66273a11fc82ec631e77",
+    "semantic_hash": ""
+  },
+  "app/src/ui/DiseasePackInspector.tsx": {
+    "mtime": 1788202483.3302531,
+    "ast_hash": "6608f88c2d79e804873ec13708610d0f",
+    "semantic_hash": ""
+  },
+  "app/tests/hypertension-pack.spec.mjs": {
+    "mtime": 1788202940.5478907,
+    "ast_hash": "f649ec2cd992193ba0e74e077a2fff23",
+    "semantic_hash": ""
+  },
+  "docs/research/hypertension-pack-dossier.md": {
+    "mtime": 1788202359.047124,
+    "ast_hash": "def2290d6282528a26cce6ee58fb23cc",
     "semantic_hash": ""
   }
 }

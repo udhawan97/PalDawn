@@ -9,7 +9,9 @@ import {
   type CurriculumStatus,
   type CurriculumSystemId,
 } from '../data/diseaseCatalog'
+import { diseasePackProposalByConditionId } from '../data/diseasePackRegistry'
 import { useAtlas } from '../state/atlas'
+import { DiseasePackInspector } from './DiseasePackInspector'
 
 type CatalogStatusFilter = CurriculumStatus | 'all'
 type CatalogSystemFilter = CurriculumSystemId | 'all'
@@ -33,9 +35,14 @@ export function CurriculumCatalog({
   const [query, setQuery] = useState('')
   const [systemFilter, setSystemFilter] = useState<CatalogSystemFilter>('all')
   const [statusFilter, setStatusFilter] = useState<CatalogStatusFilter>('all')
+  const [selectedProposalId, setSelectedProposalId] = useState<string | null>(null)
   const dialogRef = useRef<HTMLElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
+  const proposalTriggerRef = useRef<HTMLButtonElement>(null)
   const openDisease = useAtlas((state) => state.openDisease)
+  const narration = useAtlas((state) => state.narration)
+  const setNarration = useAtlas((state) => state.setNarration)
+  const selectedProposal = selectedProposalId ? diseasePackProposalByConditionId(selectedProposalId) : null
 
   const results = useMemo(
     () => filterDiseaseCurriculum(query, systemFilter, statusFilter),
@@ -95,10 +102,11 @@ export function CurriculumCatalog({
       <section
         ref={dialogRef}
         className="curriculum-catalog"
+        data-inspector-open={selectedProposal ? 'true' : undefined}
         role="dialog"
         aria-modal="true"
         aria-labelledby="curriculum-title"
-        aria-describedby="curriculum-boundary"
+        aria-describedby={selectedProposal ? 'pack-inspector-boundary' : 'curriculum-boundary'}
       >
         <header className="curriculum-header">
           <div>
@@ -108,6 +116,16 @@ export function CurriculumCatalog({
           <button type="button" className="curriculum-close" aria-label="Close condition curriculum" onClick={onClose}>×</button>
         </header>
 
+        {selectedProposal ? (
+          <DiseasePackInspector
+            proposal={selectedProposal}
+            narration={narration}
+            onNarrationChange={setNarration}
+            onBack={() => setSelectedProposalId(null)}
+            returnFocusTo={proposalTriggerRef}
+          />
+        ) : (
+        <>
         <div className="curriculum-brief">
           <div className="curriculum-count" aria-label={`${DISEASE_CURRICULUM.length} conditions in the curriculum`}>
             <strong>{DISEASE_CURRICULUM.length}</strong>
@@ -194,13 +212,18 @@ export function CurriculumCatalog({
           <ol className="curriculum-grid">
             {results.map((entry) => {
               const system = curriculumSystemById(entry.systemId)
+              const proposal = diseasePackProposalByConditionId(entry.id)
               const content = (
                 <>
                   <span className="curriculum-code" style={{ color: system.accent }}>{entry.code}</span>
                   <strong>{entry.title}</strong>
                   <small>{system.label}</small>
                   <span className="curriculum-entry-status">
-                    {entry.status === 'explorable' ? 'Open source-linked preview' : 'Sources + review required'}
+                    {entry.status === 'explorable'
+                      ? 'Open source-linked preview'
+                      : proposal
+                        ? 'Dossier draft · inspect build plan'
+                        : 'Sources + review required'}
                   </span>
                 </>
               )
@@ -208,6 +231,13 @@ export function CurriculumCatalog({
                 <li key={entry.id} data-status={entry.status} style={{ '--system-accent': system.accent } as CSSProperties}>
                   {entry.journeyId ? (
                     <button type="button" onClick={() => chooseJourney(entry.journeyId!)}>{content}</button>
+                  ) : proposal ? (
+                    <button
+                      ref={proposalTriggerRef}
+                      type="button"
+                      aria-label={`Inspect ${entry.title} build plan`}
+                      onClick={() => setSelectedProposalId(entry.id)}
+                    >{content}</button>
                   ) : (
                     <article aria-label={`${entry.title}. Planned; sources and qualified review required.`}>{content}</article>
                   )}
@@ -227,6 +257,8 @@ export function CurriculumCatalog({
           <strong>Education plan · not diagnosis or clinical training.</strong>
           <span>Only ten source-linked previews open today. All remain pending qualified medical review; the other forty are planning records, not health guidance.</span>
         </footer>
+        </>
+        )}
       </section>
     </div>,
     document.body,

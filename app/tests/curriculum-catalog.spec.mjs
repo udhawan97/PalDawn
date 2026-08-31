@@ -19,7 +19,7 @@ test('the 50-condition curriculum separates explorable previews from the build q
   await search.fill('hypertension')
   await expect(catalog.locator('.curriculum-grid > li')).toHaveCount(1)
   await expect(catalog.getByText('Hypertension')).toBeVisible()
-  await expect(catalog.getByText('Sources + review required')).toBeVisible()
+  await expect(catalog.getByText('Dossier draft · inspect build plan')).toBeVisible()
 
   await search.fill('')
   await catalog.getByRole('button', { name: 'Explore now' }).click()
