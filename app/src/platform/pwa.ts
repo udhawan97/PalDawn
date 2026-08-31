@@ -1,7 +1,10 @@
 let registration: ServiceWorkerRegistration | null = null
 let refreshing = false
-let updateActivationRequested = false
 let installPrompt: BeforeInstallPromptEvent | null = null
+
+const UPDATE_REQUEST_MESSAGE = 'PALDAWN_REQUEST_UPDATE'
+const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
+const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -9,6 +12,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export type PwaInstallState = 'available' | 'installed' | 'instructions'
+export type PwaUpdateCheckResult = 'checked' | 'unavailable' | 'failed'
 
 const isStandalone = (): boolean =>
   window.matchMedia?.('(display-mode: standalone)').matches === true ||
@@ -16,6 +20,26 @@ const isStandalone = (): boolean =>
 
 const dispatch = (name: 'update-ready' | 'offline-ready'): void => {
   window.dispatchEvent(new CustomEvent(`paldawn:${name}`))
+}
+
+const updateRequestId = (): string => {
+  try {
+    return crypto.randomUUID()
+  } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+  }
+}
+
+const consumeUpdateReload = (requestId: string): boolean => {
+  if (refreshing) return false
+  try {
+    if (window.sessionStorage.getItem(UPDATE_RELOAD_SESSION_KEY) === requestId) return false
+    window.sessionStorage.setItem(UPDATE_RELOAD_SESSION_KEY, requestId)
+  } catch {
+    // The activation broadcast is one-shot; in-memory protection still prevents duplicates.
+  }
+  refreshing = true
+  return true
 }
 
 export function registerPwa(): void {
@@ -30,6 +54,14 @@ export function registerPwa(): void {
   })
 
   if (!('serviceWorker' in navigator) || !import.meta.env.PROD) return
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data?.type !== UPDATE_ACTIVATED_MESSAGE) return
+    const requestId = event.data.requestId
+    if (typeof requestId !== 'string' || requestId.length === 0 || requestId.length > 128) return
+    if (!consumeUpdateReload(requestId)) return
+    window.location.reload()
+  })
 
   window.addEventListener('load', () => {
     void navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {
@@ -50,12 +82,6 @@ export function registerPwa(): void {
       // The network remains the fallback; installation must never block the voyage.
     })
   }, { once: true })
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!updateActivationRequested || refreshing) return
-    refreshing = true
-    window.location.reload()
-  })
 }
 
 export function getPwaInstallState(): PwaInstallState {
@@ -82,10 +108,21 @@ export async function requestPwaInstall(): Promise<'accepted' | 'dismissed' | 'i
 export function activatePwaUpdate(): void {
   const waiting = registration?.waiting
   if (!waiting) return
-  updateActivationRequested = true
-  waiting.postMessage({ type: 'SKIP_WAITING' })
+  waiting.postMessage({ type: UPDATE_REQUEST_MESSAGE, requestId: updateRequestId() })
 }
 
-export function checkForPwaUpdate(): Promise<void> {
-  return registration?.update().then(() => undefined) ?? Promise.resolve()
+export async function checkForPwaUpdate(): Promise<PwaUpdateCheckResult> {
+  if (!('serviceWorker' in navigator) || !import.meta.env.PROD) return 'unavailable'
+
+  try {
+    const currentRegistration = registration ?? await navigator.serviceWorker.getRegistration(
+      new URL(import.meta.env.BASE_URL, window.location.href).href,
+    )
+    if (!currentRegistration) return 'unavailable'
+    registration = currentRegistration
+    await currentRegistration.update()
+    return 'checked'
+  } catch {
+    return 'failed'
+  }
 }

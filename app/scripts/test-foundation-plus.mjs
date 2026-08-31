@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
+import { runPwaLifecycleTests } from './test-pwa-lifecycle.mjs'
 
 const ROOT = new URL('..', import.meta.url)
 const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
@@ -20,6 +21,7 @@ const staticIcon = read('public/icon-static.svg')
 const indexHtml = read('index.html')
 const viteConfig = read('vite.config.ts')
 const archivedBrandPage = read('../paldawn-brand-and-site.html')
+const deployWorkflow = read('../.github/workflows/deploy.yml')
 
 assert.match(settings, /persist<SettingsState/)
 assert.match(settings, /partialize:/)
@@ -38,7 +40,9 @@ assert.match(deck, /Download text/)
 assert.match(deck, /window\.print\(\)/)
 assert.match(pwa, /serviceWorker\.register/)
 assert.match(pwa, /update-ready/)
-assert.match(pwa, /updateActivationRequested/)
+assert.match(pwa, /PwaUpdateCheckResult = 'checked' \| 'unavailable' \| 'failed'/)
+assert.match(pwa, /PALDAWN_UPDATE_ACTIVATED/)
+assert.match(pwa, /sessionStorage\.setItem\(UPDATE_RELOAD_SESSION_KEY, requestId\)/)
 assert.equal(manifest.display, 'standalone')
 assert.equal(manifest.name, 'PalDawn — Mechanism Lens')
 assert.ok(manifest.icons.some(({ src, sizes, purpose }) => src === 'icon-512.png' && sizes === '512x512' && purpose === 'any'))
@@ -75,11 +79,31 @@ assert.doesNotMatch(serviceWorker, /https?:\/\//i, 'offline shell must not fetch
 assert.match(serviceWorker, /request\.mode === 'navigate'/)
 assert.match(serviceWorker, /asset-manifest\.json/)
 assert.ok(builtAssetManifest.files.some((path) => /SceneCanvas-.*\.js$/.test(path)), 'offline shell must include the lazy 3D scene chunk')
-assert.match(serviceWorker, /SKIP_WAITING/)
+assert.match(serviceWorker, /PALDAWN_REQUEST_UPDATE/)
+assert.match(serviceWorker, /self\.skipWaiting\(\)/)
 assert.match(serviceWorker, /name\.startsWith\(CACHE_PREFIX\)/, 'cache cleanup must remain PalDawn-scoped')
 assert.match(serviceWorker, /__PALDAWN_BUILD_ID__/)
 assert.doesNotMatch(builtServiceWorker, /__PALDAWN_BUILD_ID__/, 'built worker must be fingerprinted')
 assert.match(builtServiceWorker, /const BUILD_ID = '[a-f0-9]{12}'/)
+
+await runPwaLifecycleTests()
+
+const buildJob = deployWorkflow.match(/\n  build:\n([\s\S]*?)\n  deploy:/)?.[1] ?? ''
+const deployJob = deployWorkflow.match(/\n  deploy:\n([\s\S]*)/)?.[1] ?? ''
+assert.match(deployWorkflow, /^permissions:\n  contents: read$/m, 'workflow defaults must remain read-only')
+assert.match(buildJob, /permissions:\n      contents: read/)
+assert.match(buildJob, /actions\/upload-pages-artifact@[a-f0-9]{40}/)
+assert.match(buildJob, /name: github-pages\n          path: app\/dist/)
+assert.doesNotMatch(buildJob, /pages: write|id-token: write|actions\/deploy-pages/)
+assert.match(deployJob, /needs: build/)
+assert.match(deployJob, /permissions:\n      pages: write\n      id-token: write/)
+assert.match(deployJob, /environment:\n      name: github-pages/)
+assert.match(deployJob, /actions\/deploy-pages@[a-f0-9]{40}/)
+assert.match(deployJob, /artifact_name: github-pages/)
+assert.doesNotMatch(deployJob, /actions\/checkout|actions\/setup-node|\n      - run:|actions\/upload-pages-artifact/)
+for (const reference of deployWorkflow.matchAll(/uses: [^@\s]+@([^\s]+)/g)) {
+  assert.match(reference[1], /^[a-f0-9]{40}$/, `workflow action must be pinned: ${reference[0]}`)
+}
 
 const shellBlock = serviceWorker.match(/const SHELL = \[([\s\S]*?)\]/)?.[1] ?? ''
 const fingerprintBlock = viteConfig.match(/const buildInputs = \[([\s\S]*?)\]\s*\.map/)?.[1] ?? ''
