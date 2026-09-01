@@ -284,6 +284,28 @@ test('atlas history keeps Back inside PalDawn and restores the current mechanism
   await expect(page.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
 })
 
+test('rapid repeated Atlas close requests traverse history only once', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+
+  const backCalls = await page.evaluate(() => {
+    const originalBack = window.history.back.bind(window.history)
+    let calls = 0
+    window.history.back = () => {
+      calls += 1
+      originalBack()
+    }
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    return calls
+  })
+
+  expect(backCalls).toBe(1)
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await page.goForward()
+  await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
+})
+
 test('Escape closes only the topmost Atlas surface and restart returns to the intro', async ({ page }) => {
   test.setTimeout(120_000)
   await page.goto('./')

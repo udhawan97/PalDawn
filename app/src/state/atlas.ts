@@ -45,6 +45,7 @@ interface AtlasHistorySnapshot {
 }
 
 const ATLAS_HISTORY_KEY = 'paldawnAtlas'
+let atlasHistoryClosePending = false
 
 const historySnapshot = (value: unknown): AtlasHistorySnapshot | null => {
   if (!value || typeof value !== 'object') return null
@@ -135,6 +136,8 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
     const current = get()
     const ownsHistoryEntry = typeof window !== 'undefined' && historySnapshot(window.history.state) !== null
     if (options.navigateHistory !== false && ownsHistoryEntry) {
+      if (atlasHistoryClosePending) return
+      atlasHistoryClosePending = true
       window.history.back()
       return
     }
@@ -179,6 +182,7 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
 }))
 
 export const syncAtlasFromHistory = (value: unknown): void => {
+  atlasHistoryClosePending = false
   const snapshot = historySnapshot(value)
   if (!snapshot) {
     if (useAtlas.getState().open) useAtlas.getState().close({ navigateHistory: false })
