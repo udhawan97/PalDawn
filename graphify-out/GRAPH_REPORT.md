@@ -1,16 +1,16 @@
 # Graph Report - integration  (2026-08-31)
 
 ## Corpus Check
-- 144 files · ~148,157 words
+- 144 files · ~148,621 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 792 nodes · 1210 edges · 69 communities (61 shown, 8 thin omitted)
+- 794 nodes · 1212 edges · 70 communities (62 shown, 8 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 47 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `77231471`
+- Built from commit: `d9973a73`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,7 +61,7 @@
 - test-pwa-browser-lifecycle.mjs
 - Atlas Wayfinding
 - useSettings
-- HumanSystemsScene.tsx
+- MemoryStorage
 - route.ts
 - FlowField.tsx
 - test-atlas-wayfinding.mjs
@@ -69,7 +69,7 @@
 - test-atlas-research-lens.mjs
 - CurriculumCatalog.tsx
 - settings.ts
-- VoyageScene
+- SceneBoundary
 - test-curriculum-catalog.mjs
 - test-disease-pack.mjs
 
@@ -105,7 +105,7 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (69 total, 8 thin omitted)
+## Communities (70 total, 8 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
@@ -116,8 +116,8 @@ Cohesion: 0.09
 Nodes (21): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution, noEmit, noFallthroughCasesInSwitch (+13 more)
 
 ### Community 3 - "localData.ts"
-Cohesion: 0.07
-Nodes (38): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules(), CAPTION_SCALES, emptyWorkspace(), failedStorageKeys (+30 more)
+Cohesion: 0.10
+Nodes (34): CAPTION_SCALES, emptyWorkspace(), failedStorageKeys, ImportedSettings, JourneySession, loadJourneySession(), loadLearnerWorkspace(), loadStageBookmarks() (+26 more)
 
 ### Community 4 - "validate.mjs"
 Cohesion: 0.16
@@ -136,8 +136,8 @@ Cohesion: 0.14
 Nodes (13): compilerOptions, lib, module, moduleResolution, noEmit, skipLibCheck, strict, target (+5 more)
 
 ### Community 9 - "VoyageScene.tsx"
-Cohesion: 0.15
-Nodes (11): routeFrameAt(), RouteSlice, ArrivalBeacon(), CameraDirector(), CORRIDOR_INK, CorridorRings(), DEEP_INK, RuntimeProbe() (+3 more)
+Cohesion: 0.17
+Nodes (7): HumanSystemsScene(), SceneCanvasProps, CORRIDOR_INK, DEEP_INK, RuntimeProbe(), SyntheticCore(), useTelemetry
 
 ### Community 10 - "gen-npm-records.mjs"
 Cohesion: 0.22
@@ -156,7 +156,7 @@ Cohesion: 0.19
 Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Direct Dependency License Bundle (+5 more)
 
 ### Community 17 - "diseases.ts"
-Cohesion: 0.06
+Cohesion: 0.05
 Nodes (52): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+44 more)
 
 ### Community 18 - "test-release.mjs"
@@ -277,19 +277,19 @@ Nodes (4): Atlas Wayfinding, Boundary, Feature set, Verification contract
 
 ### Community 55 - "useSettings"
 Cohesion: 0.21
-Nodes (7): App(), JourneyPlaybackDriver(), SceneBoundary, SceneBoundaryState, SceneCanvas, useSettings, webgl2Available()
+Nodes (13): App(), JourneyPlaybackDriver(), SceneBoundaryState, SceneCanvas, Organ(), PhaseSignal(), PortalGate(), VoyageScene() (+5 more)
 
-### Community 56 - "HumanSystemsScene.tsx"
-Cohesion: 0.20
-Nodes (4): BODY_DETAIL_POINTS, Organ(), PhaseSignal(), resolveTier()
+### Community 56 - "MemoryStorage"
+Cohesion: 0.18
+Nodes (5): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules()
 
 ### Community 57 - "route.ts"
-Cohesion: 0.22
-Nodes (6): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, RouteFrame, voyageRoute
+Cohesion: 0.15
+Nodes (10): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, RouteFrame, routeFrameAt(), RouteSlice, voyageRoute (+2 more)
 
 ### Community 58 - "FlowField.tsx"
 Cohesion: 0.31
-Nodes (8): ROUTE_LOOKUP, smoothRange(), FlowField(), INSTANCE_COUNTS, seededRandom(), DawnRoute(), FogDirector(), PortalGate()
+Nodes (8): ROUTE_LOOKUP, smoothRange(), FlowField(), INSTANCE_COUNTS, seededRandom(), CameraDirector(), DawnRoute(), FogDirector()
 
 ### Community 60 - "Atlas Research Lens"
 Cohesion: 0.40
@@ -300,8 +300,8 @@ Cohesion: 0.08
 Nodes (37): CURRICULUM_SYSTEMS, CurriculumCondition, CurriculumReviewStatus, CurriculumStatus, CurriculumSystem, curriculumSystemById(), CurriculumSystemId, DISEASE_CURRICULUM (+29 more)
 
 ### Community 63 - "settings.ts"
-Cohesion: 0.16
-Nodes (14): DiagnosticInput, CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier, qualityTiers (+6 more)
+Cohesion: 0.17
+Nodes (13): DiagnosticInput, CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier, qualityTiers (+5 more)
 
 ## Knowledge Gaps
 - **319 isolated node(s):** `name`, `version`, `description`, `main`, `test` (+314 more)
@@ -311,7 +311,9 @@ Nodes (14): DiagnosticInput, CaptionScale, captionScales, PersistedSettings, Pla
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useAtlas` connect `diseases.ts` to `VoyageScene`, `VoyageScene.tsx`, `FlightDeck.tsx`, `HumanSystemsScene.tsx`, `CurriculumCatalog.tsx`?**
+- **Why does `MemoryStorage` connect `MemoryStorage` to `localData.ts`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `useAtlas` connect `diseases.ts` to `VoyageScene.tsx`, `FlightDeck.tsx`, `CurriculumCatalog.tsx`, `useSettings`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Why does `resetLocalData()` connect `localData.ts` to `FlightDeck.tsx`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
@@ -320,8 +322,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `localData.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06972789115646258 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10099573257467995 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.041666666666666664 - nodes in this community are weakly interconnected._
-- **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

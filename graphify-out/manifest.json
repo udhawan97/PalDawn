@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788222522.043832,
+    "mtime": 1788223505.4834564,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788222265.0745142,
-    "ast_hash": "dfd388c0b74cd87e8e57dbb874dc999f",
+    "mtime": 1788226518.8194606,
+    "ast_hash": "9c17b7bea47c954991bfc59ff50bbe84",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788222265.0808644,
-    "ast_hash": "247fbb816e77d3ab45de20b0db20d376",
+    "mtime": 1788226557.4684289,
+    "ast_hash": "3efe14828bee0a105897fd30fef297a0",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {

@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 const JOURNEY_KEY = 'paldawn:journey:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const RESET_KEY = 'paldawn:reset:v1'
+const RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
 
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
@@ -122,6 +123,88 @@ test('reset marker failure stays on the page and reports retained data truthfull
   await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible()
   const retained = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), JOURNEY_KEY)
   expect(retained.progress).toBe(0.42)
+})
+
+test('late reset deletion failure does not publish reset intent to another tab', async ({ page }) => {
+  const otherPage = await page.context().newPage()
+  await page.addInitScript(({ bookmarksKey, journeyKey, resetKey, settingsKey, workspaceKey }) => {
+    const resetToken = 'reset-before-test'
+    localStorage.setItem(resetKey, resetToken)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'low' }, version: 1 }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.42, narrationMode: 'guide', resetToken }))
+    localStorage.setItem(bookmarksKey, JSON.stringify({ stageIds: ['portal'], resetToken }))
+    localStorage.setItem(workspaceKey, JSON.stringify({ notes: { portal: 'Retain me' }, checkpoints: [], resetToken }))
+    const original = Storage.prototype.removeItem
+    let delayed = false
+    Storage.prototype.removeItem = function removeItem(key) {
+      if (key === bookmarksKey) throw new DOMException('Injected late deletion failure', 'QuotaExceededError')
+      const result = original.call(this, key)
+      if (key === settingsKey && !delayed) {
+        delayed = true
+        const deadline = performance.now() + 750
+        while (performance.now() < deadline) { /* Let the peer renderer observe the pending fence. */ }
+      }
+      return result
+    }
+    sessionStorage.setItem('paldawn:test:reset-loads', String(Number(sessionStorage.getItem('paldawn:test:reset-loads') ?? '0') + 1))
+  }, {
+    bookmarksKey: 'paldawn:bookmarks:v1',
+    journeyKey: JOURNEY_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: 'paldawn:workspace:v1',
+  })
+  await otherPage.addInitScript(({ pendingKey, resetKey, settingsKey }) => {
+    sessionStorage.setItem('paldawn:test:reset-loads', String(Number(sessionStorage.getItem('paldawn:test:reset-loads') ?? '0') + 1))
+    window.addEventListener('storage', (event) => {
+      if (event.key !== pendingKey || event.newValue === null) return
+      const before = localStorage.getItem(settingsKey)
+      const select = document.querySelector('#quality-tier')
+      if (!(select instanceof HTMLSelectElement)) return
+      select.value = 'high'
+      select.dispatchEvent(new Event('change', { bubbles: true }))
+      sessionStorage.setItem('paldawn:test:pending-write-attempt', JSON.stringify({
+        blocked: localStorage.getItem(settingsKey) === before,
+        committedAtAttempt: localStorage.getItem(resetKey),
+      }))
+    })
+  }, { pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY, settingsKey: SETTINGS_KEY })
+  await page.goto('./')
+  await otherPage.goto('./')
+  await otherPage.getByRole('button', { name: 'Settings' }).click()
+  await expect(otherPage.getByLabel('Quality tier')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByRole('button', { name: 'Reset local data' }).click()
+  const peerReloaded = otherPage.waitForEvent('load', { timeout: 1_500 }).then(() => true, () => false)
+  await page.getByRole('button', { name: 'Confirm reset' }).click()
+
+  await expect(page.getByText(/could not verify that every local record was cleared/)).toBeVisible()
+  expect(await peerReloaded).toBe(false)
+  expect(await otherPage.evaluate(() => Number(sessionStorage.getItem('paldawn:test:reset-loads')))).toBe(1)
+  expect(await otherPage.evaluate(() => JSON.parse(sessionStorage.getItem('paldawn:test:pending-write-attempt')))).toEqual({
+    blocked: true,
+    committedAtAttempt: 'reset-before-test',
+  })
+  const retained = await page.evaluate(({ bookmarksKey, journeyKey, resetKey, settingsKey, workspaceKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
+    journey: localStorage.getItem(journeyKey),
+    reset: localStorage.getItem(resetKey),
+    settings: localStorage.getItem(settingsKey),
+    workspace: localStorage.getItem(workspaceKey),
+  }), {
+    bookmarksKey: 'paldawn:bookmarks:v1',
+    journeyKey: JOURNEY_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: 'paldawn:workspace:v1',
+  })
+  expect(retained.settings).not.toBeNull()
+  expect(retained.journey).not.toBeNull()
+  expect(retained.bookmarks).not.toBeNull()
+  expect(retained.workspace).not.toBeNull()
+  expect(retained.reset).toBe('reset-before-test')
+  await otherPage.close()
 })
 
 test('a rejected scene chunk offers a reload that makes a fresh request', async ({ page }) => {

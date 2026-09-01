@@ -5,6 +5,7 @@ export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
 export const PALDAWN_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 export const PALDAWN_WORKSPACE_KEY = 'paldawn:workspace:v1'
 export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
+export const PALDAWN_RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
 export const PALDAWN_STORAGE_FAILURE_EVENT = 'paldawn:storage-failure'
 export const PALDAWN_STORAGE_SUCCESS_EVENT = 'paldawn:storage-success'
 export const MAX_STAGE_NOTE_LENGTH = 1200
@@ -76,6 +77,12 @@ export type ResetLocalDataResult =
 
 let resetInProgress = false
 let resetTokenAtLoad: string | null = null
+const LOCAL_DATA_KEYS = new Set([
+  PALDAWN_SETTINGS_KEY,
+  PALDAWN_JOURNEY_KEY,
+  PALDAWN_BOOKMARKS_KEY,
+  PALDAWN_WORKSPACE_KEY,
+])
 const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
 const QUALITY_TIERS = new Set(['auto', 'high', 'balanced', 'low'])
 const CAPTION_SCALES = new Set(['standard', 'large', 'largest'])
@@ -130,6 +137,13 @@ export function writeLocalStorageValue(key: string, value: string): boolean {
     return false
   }
   try {
+    if (LOCAL_DATA_KEYS.has(key)) {
+      const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
+      const pendingReset = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
+      if (resetInProgress || committedReset !== resetTokenAtLoad || (pendingReset !== null && pendingReset !== committedReset)) {
+        return false
+      }
+    }
     localStorage.setItem(key, value)
     const saved = localStorage.getItem(key) === value
     if (saved) reportStorageSuccess(key)
@@ -392,23 +406,35 @@ export function resetLocalData(): ResetLocalDataResult {
     return { ok: false, error: 'storage-unavailable' }
   }
 
-  const keys = [
+  const dataKeys = [
     PALDAWN_SETTINGS_KEY,
     PALDAWN_JOURNEY_KEY,
     PALDAWN_BOOKMARKS_KEY,
     PALDAWN_WORKSPACE_KEY,
-    PALDAWN_RESET_KEY,
   ]
+  const keys = [...dataKeys, PALDAWN_RESET_KEY, PALDAWN_RESET_PENDING_KEY]
   const previous = new Map<string, string | null>()
   try {
     for (const key of keys) previous.set(key, localStorage.getItem(key))
+    const previousResetToken = previous.get(PALDAWN_RESET_KEY) ?? null
+    const previousPendingToken = previous.get(PALDAWN_RESET_PENDING_KEY) ?? null
+    if (previousPendingToken !== null && previousPendingToken !== previousResetToken) {
+      throw new Error('another reset transaction is still pending')
+    }
     const resetToken = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
+    localStorage.setItem(PALDAWN_RESET_PENDING_KEY, resetToken)
+    if (localStorage.getItem(PALDAWN_RESET_PENDING_KEY) !== resetToken) throw new Error('reset fence was not durable')
+    for (const key of dataKeys) {
+      localStorage.removeItem(key)
+      if (localStorage.getItem(key) !== null) throw new Error(`reset did not remove ${key}`)
+    }
     localStorage.setItem(PALDAWN_RESET_KEY, resetToken)
     if (localStorage.getItem(PALDAWN_RESET_KEY) !== resetToken) throw new Error('reset marker was not durable')
     resetTokenAtLoad = resetToken
-    for (const key of keys.slice(0, -1)) {
-      localStorage.removeItem(key)
-      if (localStorage.getItem(key) !== null) throw new Error(`reset did not remove ${key}`)
+    try {
+      localStorage.removeItem(PALDAWN_RESET_PENDING_KEY)
+    } catch {
+      // A fence equal to the committed token is inert and can be replaced by the next reset.
     }
     reportStorageSuccess(PALDAWN_RESET_KEY)
     return { ok: true, resetToken }
