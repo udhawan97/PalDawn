@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1788234609.6127622,
-    "ast_hash": "7b75c796031598ba1c42d2ca9de4f720",
+    "mtime": 1788237454.6637185,
+    "ast_hash": "d80bd4dffdf86c02f91627fe5fcfde9b",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1788236296.016423,
-    "ast_hash": "8ee8bd22e7a10ce7fc8dc8d6ae35f7f3",
+    "mtime": 1788237454.6613321,
+    "ast_hash": "5adf74c56ebc87515b28976dc763e748",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
@@ -795,8 +795,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788236548.3840477,
-    "ast_hash": "2f9f163f15943068ca55739cfff64cab",
+    "mtime": 1788237454.662058,
+    "ast_hash": "bda62f736bd0d4df18c7139b6eede67d",
     "semantic_hash": ""
   }
 }
