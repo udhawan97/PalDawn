@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788226867.7767584,
+    "mtime": 1788231167.4212728,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788218811.4577804,
-    "ast_hash": "9d68b13d9a217f3b0a788c5b39fcdf90",
+    "mtime": 1788232090.2618039,
+    "ast_hash": "ab7da50ee79d5678396a55aab7cd8eea",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788230619.8226154,
-    "ast_hash": "552d577120fad0cc45869b6211f9c23d",
+    "mtime": 1788232526.5637212,
+    "ast_hash": "653ea8d29ca095d0bba8733cc8a65d3c",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788230945.4250484,
-    "ast_hash": "c8c904a6dabd25997294d78952eceacf",
+    "mtime": 1788232526.5634,
+    "ast_hash": "f1e6929d14b8a263fc074ac2884a6272",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788230794.4593074,
-    "ast_hash": "07524352800e0758c2fc6b8ca01461f9",
+    "mtime": 1788232526.564115,
+    "ast_hash": "a7ea904a3e05ad04317523c0d3c6d2c5",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-QA.md": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788230500.449018,
-    "ast_hash": "41673367cf0b8922c3f887601f517da9",
+    "mtime": 1788232449.2262287,
+    "ast_hash": "a96a6fcdcf8b4a1acc8ada4e5dfe6f31",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {
