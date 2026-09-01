@@ -25,7 +25,7 @@ class FailingStorage extends MemoryStorage {
   setItem() { throw new Error('storage blocked') }
 }
 
-const installBrowserStubs = (localStorage) => {
+const installBrowserStubs = (localStorage, dispatchedEvents) => {
   Object.defineProperty(globalThis, 'CustomEvent', {
     configurable: true,
     value: class CustomEvent {
@@ -45,14 +45,18 @@ const installBrowserStubs = (localStorage) => {
     value: {
       devicePixelRatio: 2,
       localStorage,
-      dispatchEvent: () => true,
+      dispatchEvent: (event) => {
+        dispatchedEvents.push(event)
+        return true
+      },
       matchMedia: () => ({ matches: false }),
     },
   })
 }
 
 const withModules = async (localStorage, run) => {
-  installBrowserStubs(localStorage)
+  const dispatchedEvents = []
+  installBrowserStubs(localStorage, dispatchedEvents)
   const server = await createServer({
     root: APP_ROOT,
     server: { middlewareMode: true },
@@ -60,7 +64,7 @@ const withModules = async (localStorage, run) => {
     logLevel: 'silent',
   })
   try {
-    await run((path) => server.ssrLoadModule(path))
+    await run((path) => server.ssrLoadModule(path), dispatchedEvents)
   } finally {
     await server.close()
   }
@@ -98,6 +102,93 @@ await withModules(new MemoryStorage(), async (load) => {
   localStorage.setItem(JOURNEY_KEY, JSON.stringify({ progress: 0.75, narrationMode: 'guide', resetToken: null }))
   assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
   assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'stale-generation records must be removed on load')
+})
+
+await withModules(new MemoryStorage(), async (load, dispatchedEvents) => {
+  const originalToken = 'generation-before-corrupt-fence'
+  const originalJourney = JSON.stringify({ progress: 0.42, narrationMode: 'engineering', resetToken: originalToken })
+  localStorage.setItem(RESET_KEY, originalToken)
+  localStorage.setItem(JOURNEY_KEY, originalJourney)
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify({ stageIds: ['portal'], resetToken: originalToken }))
+  localStorage.setItem(WORKSPACE_KEY, JSON.stringify({ notes: { portal: 'Keep me' }, checkpoints: [], resetToken: originalToken }))
+  localStorage.setItem(RESET_PENDING_KEY, '{"schemaVersion":')
+
+  const localData = await load('/src/platform/localData.ts?corrupt-fence-reset')
+  assert.equal(localStorage.getItem(JOURNEY_KEY), originalJourney, 'startup must not erase records behind a corrupt fence')
+  assert.ok(
+    dispatchedEvents.some(({ type, detail }) => type === 'paldawn:storage-failure' && detail?.key === RESET_KEY),
+    'corrupt startup recovery must report that the reset fence needs attention',
+  )
+  assert.deepEqual(localData.loadJourneySession(), { progress: 0, narrationMode: 'guide' })
+  assert.equal(localStorage.getItem(JOURNEY_KEY), originalJourney, 'a fail-closed read must preserve the fenced record')
+  assert.equal(localData.saveJourneySession({ progress: 0.64, narrationMode: 'guide' }), false)
+  assert.ok(
+    dispatchedEvents.some(({ type, detail }) => type === 'paldawn:storage-failure' && detail?.key === JOURNEY_KEY),
+    'rejected reads and writes must report their affected key',
+  )
+
+  const resetResult = localData.resetLocalData()
+  assert.equal(resetResult.ok, true, 'an explicit reset may replace a corrupt fence')
+  assert.equal(localStorage.getItem(JOURNEY_KEY), null)
+  assert.equal(localStorage.getItem(BOOKMARKS_KEY), null)
+  assert.equal(localStorage.getItem(WORKSPACE_KEY), null)
+  assert.equal(JSON.parse(localStorage.getItem(RESET_PENDING_KEY)).token, resetResult.resetToken)
+  await new Promise((resolve) => setTimeout(resolve, 300))
+  assert.equal(
+    localData.saveJourneySession({ progress: 0.64, narrationMode: 'guide' }),
+    true,
+    'a successful reset must release its in-page write guard even if the caller does not reload',
+  )
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).resetToken, resetResult.resetToken)
+})
+
+await withModules(new MemoryStorage(), async (load) => {
+  localStorage.setItem(RESET_KEY, 'generation-before-corrupt-import')
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify({
+    progress: 0.21,
+    narrationMode: 'guide',
+    resetToken: 'generation-before-corrupt-import',
+  }))
+  localStorage.setItem(RESET_PENDING_KEY, '{corrupt-json')
+  const localData = await load('/src/platform/localData.ts?corrupt-fence-import')
+  const parsed = localData.parseLocalDataImport(JSON.stringify({
+    schema_version: 2,
+    local_only: true,
+    journey: { progress: 0.73, narrationMode: 'engineering' },
+  }))
+  assert.equal(parsed.ok, true)
+  assert.equal(localData.replaceLocalDataFromImport(parsed.data), true, 'an explicit import may replace a corrupt fence')
+  const committedToken = localStorage.getItem(RESET_KEY)
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.73)
+  assert.deepEqual(
+    (({ token, kind }) => ({ token, kind }))(JSON.parse(localStorage.getItem(RESET_PENDING_KEY))),
+    { token: committedToken, kind: 'import' },
+  )
+  await new Promise((resolve) => setTimeout(resolve, 300))
+  assert.equal(
+    localData.saveJourneySession({ progress: 0.81, narrationMode: 'engineering' }),
+    true,
+    'a successful import must also release its in-page write guard',
+  )
+  assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).resetToken, committedToken)
+})
+
+await withModules(new MemoryStorage(), async (load) => {
+  const legacyToken = '123e4567-e89b-42d3-a456-426614174000'
+  localStorage.setItem(RESET_KEY, 'generation-before-legacy-recovery')
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify({
+    progress: 0.5,
+    narrationMode: 'guide',
+    resetToken: 'generation-before-legacy-recovery',
+  }))
+  localStorage.setItem(RESET_PENDING_KEY, legacyToken)
+  await load('/src/platform/localData.ts?legacy-fence-recovery')
+  assert.equal(localStorage.getItem(JOURNEY_KEY), null, 'the valid legacy token fence must still finish its reset')
+  assert.equal(localStorage.getItem(RESET_KEY), legacyToken)
+  assert.deepEqual(
+    (({ token, kind }) => ({ token, kind }))(JSON.parse(localStorage.getItem(RESET_PENDING_KEY))),
+    { token: legacyToken, kind: 'reset' },
+  )
 })
 
 await withModules(new MemoryStorage(), async (load) => {

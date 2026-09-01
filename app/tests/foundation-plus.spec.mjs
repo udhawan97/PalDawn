@@ -383,6 +383,77 @@ test('an unverified rollback leaves a durable fence that reload completes', asyn
   expect(savedSettings.resetToken).toBe(recovered.reset)
 })
 
+test('a corrupt transaction fence preserves records until explicit recovery', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.addInitScript(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+    if (sessionStorage.getItem('paldawn:test:corrupt-fence-seeded')) return
+    sessionStorage.setItem('paldawn:test:corrupt-fence-seeded', 'true')
+    const token = 'generation-before-corrupt-fence'
+    localStorage.setItem(resetKey, token)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'high' }, version: 1, resetToken: token }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.42, narrationMode: 'guide', resetToken: token }))
+    localStorage.setItem(bookmarksKey, JSON.stringify({ stageIds: ['portal'], resetToken: token }))
+    localStorage.setItem(workspaceKey, JSON.stringify({ notes: { portal: 'Preserve me' }, checkpoints: [], resetToken: token }))
+    localStorage.setItem(pendingKey, '{"schemaVersion":')
+  }, {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  await page.goto('./')
+  const before = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, settingsKey, workspaceKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
+    journey: localStorage.getItem(journeyKey),
+    pending: localStorage.getItem(pendingKey),
+    settings: localStorage.getItem(settingsKey),
+    workspace: localStorage.getItem(workspaceKey),
+  }), {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(before.pending).toBe('{"schemaVersion":')
+  expect(before.settings).not.toBeNull()
+  expect(before.journey).not.toBeNull()
+  expect(before.bookmarks).not.toBeNull()
+  expect(before.workspace).not.toBeNull()
+
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByLabel('Quality tier').selectOption('low')
+  await expect(page.getByText(/preference changed for this tab, but browser storage is unavailable/)).toBeVisible()
+  expect(await page.evaluate((key) => localStorage.getItem(key), SETTINGS_KEY)).toBe(before.settings)
+
+  await page.getByRole('button', { name: 'Reset local data' }).click()
+  const reloaded = page.waitForEvent('load')
+  await page.getByRole('button', { name: 'Confirm reset' }).click()
+  await reloaded
+  const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
+    journey: localStorage.getItem(journeyKey),
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+    settings: localStorage.getItem(settingsKey),
+    workspace: localStorage.getItem(workspaceKey),
+  }), {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(recovered.settings).toBeNull()
+  expect(recovered.journey).toBeNull()
+  expect(recovered.bookmarks).toBeNull()
+  expect(recovered.workspace).toBeNull()
+  expect(recovered.pending).toMatchObject({ token: recovered.reset, kind: 'reset' })
+})
+
 test('two-tab import publishes only its fully verified committed generation', async ({ page }) => {
   test.setTimeout(120_000)
   const otherPage = await page.context().newPage()

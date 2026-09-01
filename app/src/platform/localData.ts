@@ -152,6 +152,14 @@ const readString = (key: string): string | null => {
 const newResetToken = (): string =>
   globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
 
+const releaseTransactionGuard = (token: string): void => {
+  // FlightDeck reloads synchronously after commit. Keep stale state from flushing
+  // while WebKit schedules that navigation, but recover writes if reload is blocked.
+  globalThis.setTimeout(() => {
+    if (resetTokenAtLoad === token) resetInProgress = false
+  }, 250)
+}
+
 const resetDesiredValues = (): LocalDataValues => ({
   [PALDAWN_SETTINGS_KEY]: null,
   [PALDAWN_JOURNEY_KEY]: null,
@@ -161,6 +169,8 @@ const resetDesiredValues = (): LocalDataValues => ({
 
 const serializePendingTransaction = (transaction: PendingLocalDataTransaction): string =>
   JSON.stringify(transaction)
+
+const LEGACY_RESET_TOKEN_PATTERN = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|[0-9]{10,}-(?:0(?:\.\d+)?|[0-9]+(?:\.\d+)?e-\d+))$/i
 
 const parsePendingTransaction = (raw: string | null): PendingLocalDataTransaction | null => {
   if (!raw) return null
@@ -174,7 +184,7 @@ const parsePendingTransaction = (raw: string | null): PendingLocalDataTransactio
     return { schemaVersion: 1, token: value.token, kind: value.kind as 'reset' | 'import', desired }
   } catch {
     // The previous fence format stored only the reset token. Recover it as a reset.
-    if (raw.length > 256 || raw.trimStart().startsWith('{')) return null
+    if (!LEGACY_RESET_TOKEN_PATTERN.test(raw)) return null
     return { schemaVersion: 1, token: raw, kind: 'reset', desired: resetDesiredValues() }
   }
 }
@@ -230,13 +240,19 @@ const pendingFenceIsActive = (
 
 export function readLocalStorageValue(key: string): string | null {
   const localStorage = storage()
-  if (!localStorage) return null
+  if (!localStorage) {
+    reportStorageFailure(key)
+    return null
+  }
   try {
     const value = localStorage.getItem(key)
     if (!LOCAL_DATA_KEYS.has(key)) return value
     const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
     const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
-    if (pendingFenceIsActive(rawPending, committedReset)) return null
+    if (pendingFenceIsActive(rawPending, committedReset)) {
+      reportStorageFailure(key)
+      return null
+    }
     if (!value) return value
     if (committedReset === null || valueGeneration(value) === committedReset) return value
     if (key === PALDAWN_SETTINGS_KEY && valueGeneration(value) === undefined &&
@@ -247,7 +263,9 @@ export function readLocalStorageValue(key: string): string | null {
       if (localStorage.getItem(key) !== migrated) throw new Error('legacy settings generation could not be verified')
       return migrated
     }
-    return restoreTransactionDesiredValue(localStorage, key as LocalDataKey)
+    const restored = restoreTransactionDesiredValue(localStorage, key as LocalDataKey)
+    reportStorageFailure(key)
+    return restored
   } catch {
     reportStorageFailure(key)
     return null
@@ -270,7 +288,10 @@ export function writeLocalStorageValue(key: string, value: string): boolean {
     if (localDataKey) {
       const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
       const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
-      if (resetInProgress || committedReset !== resetTokenAtLoad || pendingFenceIsActive(rawPending, committedReset)) return false
+      if (resetInProgress || committedReset !== resetTokenAtLoad || pendingFenceIsActive(rawPending, committedReset)) {
+        reportStorageFailure(key)
+        return false
+      }
     }
 
     localStorage.setItem(key, savedValue)
@@ -280,6 +301,7 @@ export function writeLocalStorageValue(key: string, value: string): boolean {
       const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
       if (committedReset !== resetTokenAtLoad || pendingFenceIsActive(rawPending, committedReset)) {
         restoreTransactionDesiredValue(localStorage, localDataKey)
+        reportStorageFailure(key)
         return false
       }
     }
@@ -307,13 +329,12 @@ const recoverInterruptedLocalDataTransaction = (): void => {
   }
   if (rawPending === null) return
   const parsed = parsePendingTransaction(rawPending)
-  if (parsed?.token === committedReset) return
-  const transaction = parsed ?? {
-    schemaVersion: 1 as const,
-    token: newResetToken(),
-    kind: 'reset' as const,
-    desired: resetDesiredValues(),
+  if (!parsed) {
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return
   }
+  if (parsed.token === committedReset) return
+  const transaction = parsed
   resetInProgress = true
   try {
     const serialized = serializePendingTransaction(transaction)
@@ -364,7 +385,6 @@ export function loadJourneySession(): JourneySession {
 }
 
 export function saveJourneySession(session: JourneySession): boolean {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
   return writeLocalStorageValue(PALDAWN_JOURNEY_KEY, JSON.stringify({
     progress: Number(Math.min(1, Math.max(0, session.progress)).toFixed(4)),
     narrationMode: session.narrationMode,
@@ -393,7 +413,6 @@ export function loadStageBookmarks(): string[] {
 }
 
 export function saveStageBookmarks(stageIds: string[]): boolean {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
   return writeLocalStorageValue(PALDAWN_BOOKMARKS_KEY, JSON.stringify({
     stageIds: [...new Set(stageIds.filter((id) => STAGE_IDS.has(id)))],
     resetToken: resetTokenAtLoad,
@@ -417,7 +436,6 @@ export function loadLearnerWorkspace(): LearnerWorkspace {
 }
 
 export function saveLearnerWorkspace(workspace: LearnerWorkspace): boolean {
-  if (resetInProgress || readString(PALDAWN_RESET_KEY) !== resetTokenAtLoad) return false
   const normalized = normalizeWorkspace(workspace)
   return writeLocalStorageValue(PALDAWN_WORKSPACE_KEY, JSON.stringify({
     ...normalized,
@@ -524,7 +542,10 @@ const executeLocalDataTransaction = (
     for (const key of snapshotKeys) previous.set(key, localStorage.getItem(key))
     const committedReset = previous.get(PALDAWN_RESET_KEY) ?? null
     const rawPending = previous.get(PALDAWN_RESET_PENDING_KEY) ?? null
-    if (pendingFenceIsActive(rawPending, committedReset)) throw new Error('another local-data transaction is pending')
+    const parsedPending = parsePendingTransaction(rawPending)
+    if (rawPending !== null && parsedPending !== null && parsedPending.token !== committedReset) {
+      throw new Error('another local-data transaction is pending')
+    }
 
     const token = newResetToken()
     transaction = { schemaVersion: 1, token, kind, desired: desiredForToken(token) }
@@ -535,6 +556,7 @@ const executeLocalDataTransaction = (
     localStorage.setItem(PALDAWN_RESET_KEY, token)
     if (localStorage.getItem(PALDAWN_RESET_KEY) !== token) throw new Error('transaction commit was not durable')
     resetTokenAtLoad = token
+    releaseTransactionGuard(token)
     reportStorageSuccess(PALDAWN_RESET_KEY)
     return token
   } catch {
