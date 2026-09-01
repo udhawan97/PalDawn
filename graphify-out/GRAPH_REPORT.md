@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `934140d2`
+- Built from commit: `514aece0`
 - Compare this value with the latest commit that changes source, tests, or documentation; a following graph-artifact-only commit is expected.
 - Run `graphify update .` after code changes (no API cost).
 
