@@ -1,15 +1,20 @@
 import { Component, lazy, Suspense, useEffect, useState, type ErrorInfo, type ReactNode } from 'react'
 import { FlightDeck } from './ui/FlightDeck'
+import { useExperience } from './state/experience'
 import { resolveTier, TIER_DPR, useSettings } from './state/settings'
 import { webgl2Available } from './webgl'
 
-const SceneCanvas = lazy(() => import('./scene/SceneCanvas'))
+const sceneRecoveryRequested = typeof window !== 'undefined' &&
+  new URL(window.location.href).searchParams.has('scene-retry')
+const SceneCanvas = lazy(() => sceneRecoveryRequested
+  ? import('./scene/SceneCanvas?scene-recovery')
+  : import('./scene/SceneCanvas'))
 
 interface SceneBoundaryState {
   failed: boolean
 }
 
-class SceneBoundary extends Component<{ children: ReactNode; onFailure: (reason: string) => void }, SceneBoundaryState> {
+class SceneBoundary extends Component<{ children: ReactNode; onFailure: () => void }, SceneBoundaryState> {
   state: SceneBoundaryState = { failed: false }
 
   static getDerivedStateFromError(): SceneBoundaryState {
@@ -18,7 +23,7 @@ class SceneBoundary extends Component<{ children: ReactNode; onFailure: (reason:
 
   componentDidCatch(_error: Error, _info: ErrorInfo) {
     // The user-facing recovery path is rendered below. No telemetry leaves the device.
-    this.props.onFailure('The 3D scene stopped unexpectedly.')
+    this.props.onFailure()
   }
 
   render() {
@@ -29,14 +34,47 @@ class SceneBoundary extends Component<{ children: ReactNode; onFailure: (reason:
   }
 }
 
+function JourneyPlaybackDriver() {
+  const playing = useExperience((state) => state.playing)
+  const playbackRate = useSettings((state) => state.playbackRate)
+  const reducedMotion = useSettings((state) => state.reducedMotion)
+
+  useEffect(() => {
+    if (!playing || reducedMotion) return
+
+    let frame = 0
+    let previous = performance.now()
+    const resetClock = () => { previous = performance.now() }
+    const advance = (now: number) => {
+      const deltaSeconds = Math.min(0.1, Math.max(0, (now - previous) / 1000))
+      previous = now
+      if (!document.hidden) useExperience.getState().advance(deltaSeconds, playbackRate)
+      frame = window.requestAnimationFrame(advance)
+    }
+
+    document.addEventListener('visibilitychange', resetClock)
+    frame = window.requestAnimationFrame(advance)
+    return () => {
+      document.removeEventListener('visibilitychange', resetClock)
+      window.cancelAnimationFrame(frame)
+    }
+  }, [playbackRate, playing, reducedMotion])
+
+  return null
+}
+
 function RenderFallback({
   reason,
   reducedMotion,
+  reloadRequired,
+  freshRequestAvailable,
   onRetry,
   onTextVoyage,
 }: {
   reason: string
   reducedMotion: boolean
+  reloadRequired: boolean
+  freshRequestAvailable: boolean
   onRetry: () => void
   onTextVoyage: () => void
 }) {
@@ -53,7 +91,7 @@ function RenderFallback({
       <p>{reason} The disease guides and First Light text voyage remain available, and your saved position and settings stay on this device.</p>
       <div className="fallback-actions">
         <button className="primary-action" type="button" onClick={onRetry}>
-          Retry the scene <span aria-hidden="true">↻</span>
+          {reloadRequired ? freshRequestAvailable ? 'Reload the scene' : 'Reload the app' : 'Retry the scene'} <span aria-hidden="true">↻</span>
         </button>
         <button className="secondary-action" type="button" onClick={onTextVoyage}>
           Continue without 3D
@@ -68,6 +106,7 @@ export default function App() {
   // Probe once at mount; locked decision: P0 requires WebGL2.
   const [webgl2, setWebgl2] = useState(webgl2Available)
   const [sceneIssue, setSceneIssue] = useState<string | null>(null)
+  const [sceneReloadRequired, setSceneReloadRequired] = useState(false)
   const [sceneAttempt, setSceneAttempt] = useState(0)
   const [recoveryTextVoyage, setRecoveryTextVoyage] = useState(false)
   const qualityTier = useSettings((s) => s.qualityTier)
@@ -84,15 +123,31 @@ export default function App() {
     }
   }, [reducedMotion])
 
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    if (!url.searchParams.has('scene-retry')) return
+    url.searchParams.delete('scene-retry')
+    window.history.replaceState(window.history.state, '', url)
+  }, [])
+
   const retryScene = () => {
     const available = webgl2Available()
     setWebgl2(available)
     setSceneIssue(available ? null : 'This browser or device still does not provide the WebGL2 context required by this release.')
+    setSceneReloadRequired(false)
     if (available) {
       setRecoveryTextVoyage(false)
       setSceneAttempt((attempt) => attempt + 1)
     }
   }
+
+  const reloadScene = () => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('scene-retry', Date.now().toString(36))
+    window.location.replace(url)
+  }
+
+  const reloadApp = () => window.location.reload()
 
   const changeTextVoyagePreference = (enabled: boolean) => {
     setTextVoyagePreferred(enabled)
@@ -102,6 +157,7 @@ export default function App() {
   if (textVoyage) {
     return (
       <div className="app-root app-root--text">
+        <JourneyPlaybackDriver />
         <div className="text-voyage-backdrop" aria-hidden="true" />
         <FlightDeck textVoyage onTextVoyageChange={changeTextVoyagePreference} />
       </div>
@@ -113,7 +169,9 @@ export default function App() {
       <RenderFallback
         reason={sceneIssue ?? 'This browser or device did not provide the WebGL2 context required by this release.'}
         reducedMotion={reducedMotion}
-        onRetry={retryScene}
+        reloadRequired={sceneReloadRequired}
+        freshRequestAvailable={!sceneRecoveryRequested}
+        onRetry={sceneReloadRequired ? sceneRecoveryRequested ? reloadApp : reloadScene : retryScene}
         onTextVoyage={() => setRecoveryTextVoyage(true)}
       />
     )
@@ -121,13 +179,22 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <SceneBoundary key={sceneAttempt} onFailure={setSceneIssue}>
+      <JourneyPlaybackDriver />
+      <SceneBoundary key={sceneAttempt} onFailure={() => {
+        setSceneReloadRequired(true)
+        setSceneIssue(sceneRecoveryRequested
+          ? 'The 3D scene did not load after a fresh request.'
+          : 'The 3D scene stopped unexpectedly. Reloading will make a fresh scene request while keeping saved local data.')
+      }}>
         <Suspense fallback={<div className="scene-loading" aria-hidden="true" />}>
           <SceneCanvas
             dpr={TIER_DPR[tier]}
             reducedMotion={reducedMotion}
             antialias={tier !== 'low'}
-            onContextLost={() => setSceneIssue('The device reported a lost WebGL context.')}
+            onContextLost={() => {
+              setSceneReloadRequired(false)
+              setSceneIssue('The device reported a lost WebGL context.')
+            }}
           />
         </Suspense>
       </SceneBoundary>

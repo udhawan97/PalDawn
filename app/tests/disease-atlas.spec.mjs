@@ -279,8 +279,30 @@ test('atlas history keeps Back inside PalDawn and restores the current mechanism
 
   await page.getByRole('button', { name: 'Back to overview' }).click()
   await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Explore diabetes' })).toBeFocused()
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
   await expect(page.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
+})
+
+test('Escape closes only the topmost Atlas surface and restart returns to the intro', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('heading', { name: 'Settings' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Explore diabetes' })).toBeFocused()
+
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByRole('button', { name: 'Restart voyage' }).click()
+  await page.getByRole('button', { name: 'Confirm restart voyage' }).click()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await expect(page.locator('#intro-title')).toBeFocused()
+  await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toHaveCount(0)
 })
 
 test('the final mechanism step closes with a clear next decision', async ({ page }) => {

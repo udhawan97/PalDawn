@@ -70,6 +70,10 @@ export type LocalDataImportResult =
   | { ok: true; data: LocalDataImport; preview: LocalDataImportPreview }
   | { ok: false; error: string }
 
+export type ResetLocalDataResult =
+  | { ok: true; resetToken: string }
+  | { ok: false; error: 'storage-unavailable' | 'reset-not-verified' }
+
 let resetInProgress = false
 let resetTokenAtLoad: string | null = null
 const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
@@ -379,18 +383,47 @@ export function exportLocalData(): string {
   }, null, 2)
 }
 
-export function resetLocalData(): void {
+export function resetLocalData(): ResetLocalDataResult {
   resetInProgress = true
+  const localStorage = storage()
+  if (!localStorage) {
+    resetInProgress = false
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return { ok: false, error: 'storage-unavailable' }
+  }
+
+  const keys = [
+    PALDAWN_SETTINGS_KEY,
+    PALDAWN_JOURNEY_KEY,
+    PALDAWN_BOOKMARKS_KEY,
+    PALDAWN_WORKSPACE_KEY,
+    PALDAWN_RESET_KEY,
+  ]
+  const previous = new Map<string, string | null>()
   try {
-    const localStorage = storage()
+    for (const key of keys) previous.set(key, localStorage.getItem(key))
     const resetToken = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
-    localStorage?.setItem(PALDAWN_RESET_KEY, resetToken)
+    localStorage.setItem(PALDAWN_RESET_KEY, resetToken)
+    if (localStorage.getItem(PALDAWN_RESET_KEY) !== resetToken) throw new Error('reset marker was not durable')
     resetTokenAtLoad = resetToken
-    localStorage?.removeItem(PALDAWN_SETTINGS_KEY)
-    localStorage?.removeItem(PALDAWN_JOURNEY_KEY)
-    localStorage?.removeItem(PALDAWN_BOOKMARKS_KEY)
-    localStorage?.removeItem(PALDAWN_WORKSPACE_KEY)
+    for (const key of keys.slice(0, -1)) {
+      localStorage.removeItem(key)
+      if (localStorage.getItem(key) !== null) throw new Error(`reset did not remove ${key}`)
+    }
+    reportStorageSuccess(PALDAWN_RESET_KEY)
+    return { ok: true, resetToken }
   } catch {
-    // A blocked storage API already behaves like a reset state.
+    try {
+      for (const [key, value] of previous) {
+        if (value === null) localStorage.removeItem(key)
+        else localStorage.setItem(key, value)
+      }
+    } catch {
+      // The caller remains on the page because reset completeness is unknown.
+    }
+    resetTokenAtLoad = readString(PALDAWN_RESET_KEY)
+    resetInProgress = false
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return { ok: false, error: 'reset-not-verified' }
   }
 }

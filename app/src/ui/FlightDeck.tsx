@@ -155,7 +155,12 @@ function Intro() {
         step by step. The 3D body is a conceptual learning map, not reviewed anatomy.
       </p>
       <div className="intro-actions" data-resume-available={resumeAvailable}>
-        <button className="primary-action" type="button" onClick={() => openDisease('diabetes')}>
+        <button
+          className="primary-action"
+          type="button"
+          data-atlas-opener="intro-diabetes"
+          onClick={() => openDisease('diabetes', '[data-atlas-opener="intro-diabetes"]')}
+        >
           Explore diabetes
           <span aria-hidden="true">↗</span>
         </button>
@@ -787,7 +792,11 @@ function SettingsPanel({
           {fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
         </button>
         <button type="button" onClick={() => {
-          void checkForPwaUpdate().then(() => reportStatus('Update check complete.'))
+          void checkForPwaUpdate().then((outcome) => {
+            if (outcome === 'checked') reportStatus('PalDawn checked for an app update.')
+            else if (outcome === 'unavailable') reportStatus('App update checks are unavailable in this browser context.')
+            else reportStatus('PalDawn could not check for an app update. Try again when the connection is available.')
+          })
         }}>Check for app update</button>
         <button
           type="button"
@@ -828,7 +837,12 @@ function SettingsPanel({
           }}>Download local data</button>
           {confirmReset ? (
             <button className="danger-action" type="button" onClick={() => {
-              resetLocalData()
+              const outcome = resetLocalData()
+              if (!outcome.ok) {
+                setConfirmReset(false)
+                setStatus('PalDawn could not verify that every local record was cleared. This page was kept open; retry or download a backup before leaving.')
+                return
+              }
               const resetUrl = new URL(window.location.href)
               resetUrl.hash = ''
               window.history.replaceState(null, '', resetUrl)
@@ -903,8 +917,11 @@ function SettingsPanel({
               const restartUrl = new URL(window.location.href)
               restartUrl.hash = ''
               window.history.replaceState(null, '', restartUrl)
+              useAtlas.getState().close({ navigateHistory: false, restoreFocus: false })
               restart()
-              window.requestAnimationFrame(() => document.getElementById('intro-title')?.focus())
+              window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+                document.getElementById('intro-title')?.focus({ preventScroll: true })
+              }))
             }}>Confirm restart voyage</button>
           ) : (
             <button type="button" onClick={() => setConfirmRestart(true)}>Restart voyage</button>
@@ -1162,9 +1179,15 @@ export function FlightDeck({
   const entered = useExperience((state) => state.entered)
   const progress = useExperience((state) => state.progress)
   const playing = useExperience((state) => state.playing)
+  const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const atlasOpen = useAtlas((state) => state.open)
   const openDisease = useAtlas((state) => state.openDisease)
+  const closeAtlas = useAtlas((state) => state.close)
+  const guideOpen = useAtlas((state) => state.guideOpen)
+  const researchOpen = useAtlas((state) => state.researchOpen)
+  const setGuideOpen = useAtlas((state) => state.setGuideOpen)
+  const setResearchOpen = useAtlas((state) => state.setResearchOpen)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const comfortVignette = useSettings((state) => state.comfortVignette)
   const highContrast = useSettings((state) => state.highContrast)
@@ -1391,8 +1414,11 @@ export function FlightDeck({
   useLayoutEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setSystemNoticesOpen(false)
-        setOpenPanel(null, { resumePlayback: !reducedMotion })
+        if (openPanel) setOpenPanel(null, { resumePlayback: !reducedMotion })
+        else if (researchOpen) setResearchOpen(false)
+        else if (guideOpen) setGuideOpen(false)
+        else if (atlasOpen) closeAtlas()
+        else setSystemNoticesOpen(false)
         return
       }
       const isTextEntry = event.target instanceof HTMLElement &&
@@ -1457,7 +1483,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [atlasOpen, openWorkspace, reducedMotion, setOpenPanel, toggleStageBookmark])
+  }, [atlasOpen, closeAtlas, guideOpen, openPanel, openWorkspace, reducedMotion, researchOpen, setGuideOpen, setOpenPanel, setResearchOpen, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
@@ -1504,9 +1530,9 @@ export function FlightDeck({
         </a>
         <p className="build-mark">PAL · DAWN / MECHANISM LENS</p>
         <nav className="utility-nav" aria-label="Release information">
-          <button className="text-button" type="button" aria-expanded={atlasOpen} onClick={() => {
+          <button className="text-button" type="button" data-atlas-opener="utility-atlas" aria-expanded={atlasOpen} onClick={() => {
             setOpenPanel(null, { resumePlayback: false })
-            openDisease('diabetes')
+            openDisease('diabetes', '[data-atlas-opener="utility-atlas"]')
           }}>Atlas</button>
           <PanelButton panel="transcript">Transcript</PanelButton>
           <PanelButton panel="workspace">Study</PanelButton>

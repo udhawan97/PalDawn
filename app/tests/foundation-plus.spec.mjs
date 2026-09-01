@@ -103,3 +103,65 @@ test('reset in one tab cannot be undone by another open tab', async ({ page }) =
     await expect(candidate.getByRole('button', { name: 'Resume at' })).toHaveCount(0)
   }
 })
+
+test('reset marker failure stays on the page and reports retained data truthfully', async ({ page }) => {
+  await page.addInitScript(({ journeyKey, resetKey }) => {
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.42, narrationMode: 'guide' }))
+    const original = Storage.prototype.setItem
+    Storage.prototype.setItem = function setItem(key, value) {
+      if (key === resetKey) throw new DOMException('Injected reset failure', 'QuotaExceededError')
+      return original.call(this, key, value)
+    }
+  }, { journeyKey: JOURNEY_KEY, resetKey: RESET_KEY })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByRole('button', { name: 'Reset local data' }).click()
+  await page.getByRole('button', { name: 'Confirm reset' }).click()
+
+  await expect(page.getByText(/could not verify that every local record was cleared/)).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible()
+  const retained = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), JOURNEY_KEY)
+  expect(retained.progress).toBe(0.42)
+})
+
+test('a rejected scene chunk offers a reload that makes a fresh request', async ({ page }) => {
+  await page.addInitScript(({ journeyKey, seedKey }) => {
+    if (sessionStorage.getItem(seedKey)) return
+    sessionStorage.setItem(seedKey, 'true')
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.37, narrationMode: 'guide' }))
+  }, { journeyKey: JOURNEY_KEY, seedKey: 'paldawn:test:scene-retry-seeded' })
+  let allowSceneChunk = false
+  let sceneChunkRequests = 0
+  await page.route(/SceneCanvas-[^/]+\.js(?:\?|$)/, async (route) => {
+    sceneChunkRequests += 1
+    if (!allowSceneChunk) await route.abort('failed')
+    else await route.continue()
+  })
+  await page.goto('./')
+  const reload = page.getByRole('button', { name: 'Reload the scene' })
+  await expect(reload).toBeVisible()
+  const beforeReload = sceneChunkRequests
+  allowSceneChunk = true
+  await Promise.all([page.waitForNavigation(), reload.click()])
+  await expect(page.locator('canvas')).toHaveCount(1)
+  expect(sceneChunkRequests).toBeGreaterThan(beforeReload)
+  const restored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), JOURNEY_KEY)
+  expect(restored.narrationMode).toBe('guide')
+  expect(restored.progress).toBeGreaterThanOrEqual(0.37)
+  expect(restored.progress).toBeLessThan(0.6)
+  await expect(page).not.toHaveURL(/scene-retry=/)
+})
+
+test('a failed recovery stays honest and keeps the text voyage available', async ({ page }) => {
+  await page.route(/SceneCanvas-[^/]+\.js(?:\?|$)/, (route) => route.abort('failed'))
+  await page.goto('./')
+  const reloadScene = page.getByRole('button', { name: 'Reload the scene' })
+  await expect(reloadScene).toBeVisible()
+  await Promise.all([page.waitForNavigation(), reloadScene.click()])
+
+  await expect(page.getByText(/did not load after a fresh request/)).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Reload the app' })).toBeVisible()
+  await page.getByRole('button', { name: 'Continue without 3D' }).click()
+  await expect(page.locator('.app-root--text')).toBeVisible()
+  await expect(page.locator('canvas')).toHaveCount(0)
+})

@@ -34,12 +34,6 @@ import { HumanSystemsScene } from './HumanSystemsScene'
 const DEEP_INK = new Color('#050412')
 const CORRIDOR_INK = new Color('#180722')
 
-function JourneyClock() {
-  const playbackRate = useSettings((state) => state.playbackRate)
-  useFrame((_, delta) => useExperience.getState().advance(delta, playbackRate))
-  return null
-}
-
 function CameraDirector() {
   const lookAt = useRef(new Vector3())
   const reducedMotion = useSettings((state) => state.reducedMotion)
@@ -397,7 +391,6 @@ export function VoyageScene() {
       <directionalLight position={[5, 8, 7]} intensity={2.7} color="#f3d98a" />
       <directionalLight position={[-5, -2, 2]} intensity={1.1} color="#45e6cf" />
       <pointLight position={[-0.4, 0, 0.2]} intensity={18} distance={8} color="#e0b653" />
-      <JourneyClock />
       <CameraDirector />
       <FogDirector />
       <RuntimeProbe />

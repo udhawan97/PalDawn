@@ -31,7 +31,11 @@ export function TopDiseasesRail() {
         <ol>
           {DISEASES.map((disease) => (
             <li key={disease.id}>
-              <button type="button" onClick={() => openDisease(disease.id)}>
+              <button
+                type="button"
+                data-atlas-opener={`rank-${disease.id}`}
+                onClick={() => openDisease(disease.id, `[data-atlas-opener="rank-${disease.id}"]`)}
+              >
                 <span>{String(disease.rank).padStart(2, '0')}</span>
                 <strong>{disease.shortTitle}</strong>
                 <i aria-hidden="true" style={{ background: disease.accent }} />
@@ -253,13 +257,13 @@ function ResearchLens({
 
 export function DiseaseExplorer() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [researchOpen, setResearchOpen] = useState(false)
   const selectedDiseaseId = useAtlas((state) => state.selectedDiseaseId)
   const stepIndex = useAtlas((state) => state.stepIndex)
   const narration = useAtlas((state) => state.narration)
   const exploded = useAtlas((state) => state.exploded)
   const rotationPaused = useAtlas((state) => state.rotationPaused)
   const guideOpen = useAtlas((state) => state.guideOpen)
+  const researchOpen = useAtlas((state) => state.researchOpen)
   const selectedBodyPart = useAtlas((state) => state.selectedBodyPart)
   const close = useAtlas((state) => state.close)
   const setDisease = useAtlas((state) => state.setDisease)
@@ -269,6 +273,7 @@ export function DiseaseExplorer() {
   const toggleExploded = useAtlas((state) => state.toggleExploded)
   const toggleRotation = useAtlas((state) => state.toggleRotation)
   const setGuideOpen = useAtlas((state) => state.setGuideOpen)
+  const setResearchOpen = useAtlas((state) => state.setResearchOpen)
   const setSelectedBodyPart = useAtlas((state) => state.setSelectedBodyPart)
   const guideTriggerRef = useRef<HTMLButtonElement>(null)
   const researchTriggerRef = useRef<HTMLButtonElement>(null)
@@ -286,16 +291,9 @@ export function DiseaseExplorer() {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target
       if (target instanceof HTMLElement && ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return
-      if (researchOpen) {
-        if (event.key === 'Escape') setResearchOpen(false)
-        return
-      }
       if (event.key === '/') {
         event.preventDefault()
         searchInputRef.current?.focus()
-      } else if (event.key === 'Escape') {
-        if (useAtlas.getState().guideOpen) useAtlas.getState().setGuideOpen(false)
-        else useAtlas.getState().close()
       } else if (event.key === 'ArrowRight') {
         event.preventDefault()
         useAtlas.getState().moveStep(1)
@@ -306,7 +304,7 @@ export function DiseaseExplorer() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [researchOpen])
+  }, [])
 
   return (
     <main className="atlas" aria-labelledby="atlas-title">
@@ -421,7 +419,7 @@ export function DiseaseExplorer() {
           <span style={{ color: disease.accent }}>WHO #{disease.rank}</span>
           <div className="atlas-detail-actions">
             <button ref={researchTriggerRef} type="button" onClick={() => setResearchOpen(true)}>Research lens</button>
-            <button type="button" onClick={close}>Back to overview <span aria-hidden="true">×</span></button>
+            <button type="button" onClick={() => close()}>Back to overview <span aria-hidden="true">×</span></button>
           </div>
         </div>
         <p className="atlas-category">{disease.category} · source-backed preview</p>
@@ -473,7 +471,7 @@ export function DiseaseExplorer() {
         <div className="atlas-step-actions" data-complete={finalStep}>
           <button type="button" disabled={stepIndex === 0} onClick={() => moveStep(-1)}>← Previous</button>
           {finalStep ? (
-            <button type="button" onClick={close}>Choose another condition →</button>
+            <button type="button" onClick={() => close()}>Choose another condition →</button>
           ) : (
             <button type="button" onClick={() => moveStep(1)}>Next step →</button>
           )}

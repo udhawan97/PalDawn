@@ -3,6 +3,16 @@ import { diseaseById, type BodyPartId } from '../data/diseases'
 
 export type AtlasNarration = 'plain' | 'clinical'
 
+interface AtlasFocusReturn {
+  element: HTMLElement | null
+  selector: string | null
+}
+
+interface AtlasCloseOptions {
+  navigateHistory?: boolean
+  restoreFocus?: boolean
+}
+
 interface AtlasState {
   open: boolean
   selectedDiseaseId: string
@@ -11,9 +21,11 @@ interface AtlasState {
   exploded: boolean
   rotationPaused: boolean
   guideOpen: boolean
+  researchOpen: boolean
   selectedBodyPart: string | null
-  openDisease: (id?: string) => void
-  close: () => void
+  focusReturn: AtlasFocusReturn | null
+  openDisease: (id?: string, focusSelector?: string) => void
+  close: (options?: AtlasCloseOptions) => void
   setDisease: (id: string) => void
   setTarget: (diseaseId: string, stepIndex: number, bodyPartId?: BodyPartId | null) => void
   setStep: (index: number) => void
@@ -22,6 +34,7 @@ interface AtlasState {
   toggleExploded: () => void
   toggleRotation: () => void
   setGuideOpen: (open: boolean) => void
+  setResearchOpen: (open: boolean) => void
   setSelectedBodyPart: (id: string | null) => void
 }
 
@@ -62,6 +75,26 @@ const updateAtlasHistory = (mode: 'push' | 'replace', diseaseId: string, stepInd
   else window.history.replaceState(nextState, '', window.location.href)
 }
 
+const captureFocusReturn = (selector?: string): AtlasFocusReturn | null => {
+  if (typeof document === 'undefined') return null
+  const element = document.activeElement instanceof HTMLElement && document.activeElement !== document.body
+    ? document.activeElement
+    : null
+  const fallbackSelector = selector ?? (element?.closest('.curriculum-catalog') ? '.curriculum-launch' : null)
+  return element || fallbackSelector ? { element, selector: fallbackSelector } : null
+}
+
+const restoreFocus = (target: AtlasFocusReturn | null): void => {
+  if (!target || typeof window === 'undefined') return
+  window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+    const connectedElement = target.element?.isConnected && target.element.getClientRects().length
+      ? target.element
+      : null
+    const element = connectedElement ?? (target.selector ? document.querySelector<HTMLElement>(target.selector) : null)
+    if (element?.getClientRects().length) element.focus({ preventScroll: true })
+  }))
+}
+
 const boundedBodyPart = (diseaseId: string, stepIndex: number, bodyPartId: string | null): BodyPartId | null => {
   if (!bodyPartId) return null
   const disease = diseaseById(diseaseId)
@@ -78,20 +111,35 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
   exploded: false,
   rotationPaused: false,
   guideOpen: false,
+  researchOpen: false,
   selectedBodyPart: null,
-  openDisease: (requestedDiseaseId = 'diabetes') => {
+  focusReturn: null,
+  openDisease: (requestedDiseaseId = 'diabetes', focusSelector) => {
     const current = get()
     const selectedDiseaseId = diseaseById(requestedDiseaseId).id
     const stepIndex = current.selectedDiseaseId === selectedDiseaseId
       ? boundedStep(selectedDiseaseId, current.stepIndex)
       : 0
     updateAtlasHistory(current.open ? 'replace' : 'push', selectedDiseaseId, stepIndex)
-    set({ open: true, selectedDiseaseId, stepIndex, guideOpen: false, selectedBodyPart: null })
+    set({
+      open: true,
+      selectedDiseaseId,
+      stepIndex,
+      guideOpen: false,
+      researchOpen: false,
+      selectedBodyPart: null,
+      focusReturn: current.open ? current.focusReturn : captureFocusReturn(focusSelector),
+    })
   },
-  close: () => {
+  close: (options = {}) => {
+    const current = get()
     const ownsHistoryEntry = typeof window !== 'undefined' && historySnapshot(window.history.state) !== null
-    set({ open: false, guideOpen: false, selectedBodyPart: null })
-    if (ownsHistoryEntry) window.history.back()
+    if (options.navigateHistory !== false && ownsHistoryEntry) {
+      window.history.back()
+      return
+    }
+    set({ open: false, guideOpen: false, researchOpen: false, selectedBodyPart: null })
+    if (current.open && options.restoreFocus !== false) restoreFocus(current.focusReturn)
   },
   setDisease: (requestedDiseaseId) => {
     const selectedDiseaseId = diseaseById(requestedDiseaseId).id
@@ -121,6 +169,7 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
   toggleExploded: () => set((state) => ({ exploded: !state.exploded })),
   toggleRotation: () => set((state) => ({ rotationPaused: !state.rotationPaused })),
   setGuideOpen: (guideOpen) => set({ guideOpen }),
+  setResearchOpen: (researchOpen) => set({ researchOpen }),
   setSelectedBodyPart: (requestedBodyPart) => {
     const current = get()
     const selectedBodyPart = boundedBodyPart(current.selectedDiseaseId, current.stepIndex, requestedBodyPart)
@@ -132,7 +181,8 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
 export const syncAtlasFromHistory = (value: unknown): void => {
   const snapshot = historySnapshot(value)
   if (!snapshot) {
-    useAtlas.setState({ open: false, guideOpen: false, selectedBodyPart: null })
+    if (useAtlas.getState().open) useAtlas.getState().close({ navigateHistory: false })
+    else useAtlas.setState({ guideOpen: false, researchOpen: false, selectedBodyPart: null })
     return
   }
   const disease = diseaseById(snapshot.diseaseId)
@@ -142,6 +192,7 @@ export const syncAtlasFromHistory = (value: unknown): void => {
     selectedDiseaseId: disease.id,
     stepIndex,
     guideOpen: false,
+    researchOpen: false,
     selectedBodyPart: boundedBodyPart(disease.id, stepIndex, snapshot.bodyPartId),
   })
 }

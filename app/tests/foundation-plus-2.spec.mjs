@@ -22,6 +22,33 @@ test('playback speed persists and stays visible in the flight controls', async (
   await expect(page.locator('.shortcut-hint output')).toHaveText('1.5×')
 })
 
+test('scene-free playback advances and pauses on the renderer-neutral clock', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByRole('button', { name: 'Use text voyage' }).click()
+  await page.getByRole('button', { name: 'Close panel' }).click()
+  await page.getByRole('button', { name: 'Begin the voyage' }).click()
+
+  const slider = page.getByRole('slider', { name: 'Journey position' })
+  const before = Number(await slider.inputValue())
+  await expect.poll(async () => Number(await slider.inputValue())).toBeGreaterThan(before)
+  await page.getByRole('button', { name: 'Pause' }).click()
+  const paused = Number(await slider.inputValue())
+  await page.waitForTimeout(500)
+  expect(Number(await slider.inputValue())).toBe(paused)
+})
+
+test('3D playback advances on the same single clock', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  const slider = page.getByRole('slider', { name: 'Journey position' })
+  const before = Number(await slider.inputValue())
+  await page.waitForTimeout(1250)
+  const delta = Number(await slider.inputValue()) - before
+  expect(delta).toBeGreaterThan(15)
+  expect(delta).toBeLessThan(50)
+})
+
 test('slash focuses transcript search and a result jumps to its stage', async ({ page }) => {
   await page.goto('./')
   await page.keyboard.press('/')
