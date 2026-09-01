@@ -189,7 +189,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
     await summary.click()
     await expect(offline).toBeVisible()
     await expect(update).toBeVisible()
-    const updateTarget = await update.getByRole('button', { name: 'Update now' }).boundingBox()
+    const updateTarget = await update.getByRole('button', { name: 'Update and reload open tabs' }).boundingBox()
     expect(updateTarget.height, `${viewport.width}x${viewport.height} update target height`).toBeGreaterThanOrEqual(44)
     await summary.click()
     await expect(offline).toBeHidden()
@@ -218,6 +218,8 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   await expect(atlasUpdate).toBeHidden()
   await expect(atlasSummary).toHaveAttribute('aria-expanded', 'false')
   await expect(atlasSummary).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
 
   await page.setViewportSize({ width: 320, height: 568 })
   await page.goto('./')

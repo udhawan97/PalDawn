@@ -1635,8 +1635,8 @@ export function FlightDeck({
         if (openPanel) setOpenPanel(null, { resumePlayback: !reducedMotion })
         else if (researchOpen) setResearchOpen(false)
         else if (guideOpen) setGuideOpen(false)
+        else if (systemNoticesOpen) setSystemNoticesOpen(false)
         else if (atlasOpen) closeAtlas()
-        else setSystemNoticesOpen(false)
         return
       }
       const isTextEntry = event.target instanceof HTMLElement &&
@@ -1701,7 +1701,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [atlasOpen, closeAtlas, guideOpen, openPanel, openWorkspace, reducedMotion, researchOpen, setGuideOpen, setOpenPanel, setResearchOpen, toggleStageBookmark])
+  }, [atlasOpen, closeAtlas, guideOpen, openPanel, openWorkspace, reducedMotion, researchOpen, setGuideOpen, setOpenPanel, setResearchOpen, systemNoticesOpen, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
