@@ -2,8 +2,31 @@ import { expect, test } from '@playwright/test'
 
 const JOURNEY_KEY = 'paldawn:journey:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
+const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
+const WORKSPACE_KEY = 'paldawn:workspace:v1'
 const RESET_KEY = 'paldawn:reset:v1'
 const RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
+
+const importedBackup = () => JSON.stringify({
+  schema_version: 2,
+  local_only: true,
+  settings: {
+    version: 1,
+    state: {
+      qualityTier: 'low',
+      reducedMotion: false,
+      comfortVignette: true,
+      highContrast: true,
+      showTelemetry: false,
+      captionScale: 'large',
+      playbackRate: 1.5,
+      textVoyagePreferred: false,
+    },
+  },
+  journey: { progress: 0.61, narrationMode: 'engineering' },
+  bookmarks: { stageIds: ['portal'] },
+  workspace: { notes: { portal: 'Imported private note' }, checkpoints: ['arrival'] },
+})
 
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
@@ -204,6 +227,276 @@ test('late reset deletion failure does not publish reset intent to another tab',
   expect(retained.bookmarks).not.toBeNull()
   expect(retained.workspace).not.toBeNull()
   expect(retained.reset).toBe('reset-before-test')
+  await otherPage.close()
+})
+
+test('a peer write paused after its old-generation check cannot survive reset commit', async ({ page }) => {
+  test.setTimeout(120_000)
+  const otherPage = await page.context().newPage()
+  await page.addInitScript(({ bookmarksKey, journeyKey, resetKey, settingsKey, workspaceKey }) => {
+    if (sessionStorage.getItem('paldawn:test:stale-write-seeded')) return
+    sessionStorage.setItem('paldawn:test:stale-write-seeded', 'true')
+    const token = 'generation-before-reset'
+    localStorage.setItem(resetKey, token)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'low' }, version: 1, resetToken: token }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.42, narrationMode: 'guide', resetToken: token }))
+    localStorage.setItem(bookmarksKey, JSON.stringify({ stageIds: ['portal'], resetToken: token }))
+    localStorage.setItem(workspaceKey, JSON.stringify({ notes: { portal: 'Remove me' }, checkpoints: [], resetToken: token }))
+  }, { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, resetKey: RESET_KEY, settingsKey: SETTINGS_KEY, workspaceKey: WORKSPACE_KEY })
+  await otherPage.addInitScript(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+    const originalSetItem = Storage.prototype.setItem
+    const originalRemoveItem = Storage.prototype.removeItem
+    Storage.prototype.setItem = function setItem(key, value) {
+      if (key !== settingsKey || sessionStorage.getItem('paldawn:test:arm-post-check') !== 'true') {
+        return originalSetItem.call(this, key, value)
+      }
+      sessionStorage.removeItem('paldawn:test:arm-post-check')
+      const token = 'generation-after-reset'
+      const desired = {
+        [settingsKey]: null,
+        [journeyKey]: null,
+        [bookmarksKey]: null,
+        [workspaceKey]: null,
+      }
+      originalSetItem.call(this, pendingKey, JSON.stringify({ schemaVersion: 1, token, kind: 'reset', desired }))
+      for (const dataKey of [settingsKey, journeyKey, bookmarksKey, workspaceKey]) {
+        originalRemoveItem.call(this, dataKey)
+      }
+      originalSetItem.call(this, resetKey, token)
+      originalSetItem.call(this, key, value)
+      sessionStorage.setItem('paldawn:test:post-check-interleaved', 'true')
+    }
+  }, {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  await Promise.all([page.goto('./'), otherPage.goto('./')])
+  await otherPage.getByRole('button', { name: 'Settings' }).click()
+  await otherPage.evaluate(() => sessionStorage.setItem('paldawn:test:arm-post-check', 'true'))
+  const pageReloaded = page.waitForEvent('load')
+  await otherPage.getByLabel('Quality tier').selectOption('high')
+  await pageReloaded
+
+  expect(await otherPage.evaluate(() => sessionStorage.getItem('paldawn:test:post-check-interleaved'))).toBe('true')
+  const stored = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
+    journey: localStorage.getItem(journeyKey),
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+    settings: localStorage.getItem(settingsKey),
+    workspace: localStorage.getItem(workspaceKey),
+  }), {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(stored.settings).toBeNull()
+  expect(stored.journey).toBeNull()
+  expect(stored.bookmarks).toBeNull()
+  expect(stored.workspace).toBeNull()
+  expect(stored.reset).toBe('generation-after-reset')
+  expect(stored.pending).toMatchObject({ token: stored.reset, kind: 'reset' })
+  await otherPage.reload()
+  await expect(otherPage.getByRole('button', { name: 'Begin the voyage' })).toBeVisible()
+  await otherPage.close()
+})
+
+test('an unverified rollback leaves a durable fence that reload completes', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.addInitScript(({ bookmarksKey, journeyKey, resetKey, settingsKey, workspaceKey }) => {
+    if (sessionStorage.getItem('paldawn:test:rollback-failure-injected')) return
+    sessionStorage.setItem('paldawn:test:rollback-failure-injected', 'true')
+    const token = 'generation-before-interruption'
+    localStorage.setItem(resetKey, token)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'high' }, version: 1, resetToken: token }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.42, narrationMode: 'guide', resetToken: token }))
+    localStorage.setItem(bookmarksKey, JSON.stringify({ stageIds: ['portal'], resetToken: token }))
+    localStorage.setItem(workspaceKey, JSON.stringify({ notes: { portal: 'Recover me' }, checkpoints: [], resetToken: token }))
+
+    const originalRemoveItem = Storage.prototype.removeItem
+    const originalSetItem = Storage.prototype.setItem
+    let deletionFailed = false
+    let rollbackWriteMustFail = false
+    Storage.prototype.removeItem = function removeItem(key) {
+      if (key === bookmarksKey && !deletionFailed) {
+        deletionFailed = true
+        rollbackWriteMustFail = true
+        throw new DOMException('Injected deletion failure', 'QuotaExceededError')
+      }
+      return originalRemoveItem.call(this, key)
+    }
+    Storage.prototype.setItem = function setItem(key, value) {
+      if (key === settingsKey && rollbackWriteMustFail) {
+        rollbackWriteMustFail = false
+        throw new DOMException('Injected rollback failure', 'QuotaExceededError')
+      }
+      return originalSetItem.call(this, key, value)
+    }
+  }, { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, resetKey: RESET_KEY, settingsKey: SETTINGS_KEY, workspaceKey: WORKSPACE_KEY })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByRole('button', { name: 'Reset local data' }).click()
+  await page.getByRole('button', { name: 'Confirm reset' }).click()
+
+  await expect(page.getByText(/could not verify that every local record was cleared/)).toBeVisible()
+  const interrupted = await page.evaluate(({ pendingKey, resetKey }) => ({
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+  }), { pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY })
+  expect(interrupted.pending).toMatchObject({ kind: 'reset' })
+  expect(interrupted.pending.token).not.toBe(interrupted.reset)
+
+  await page.reload()
+  const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
+    journey: localStorage.getItem(journeyKey),
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+    settings: localStorage.getItem(settingsKey),
+    workspace: localStorage.getItem(workspaceKey),
+  }), {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(recovered.settings).toBeNull()
+  expect(recovered.journey).toBeNull()
+  expect(recovered.bookmarks).toBeNull()
+  expect(recovered.workspace).toBeNull()
+  expect(recovered.pending).toMatchObject({ token: recovered.reset, kind: 'reset' })
+  await expect(page.getByRole('button', { name: 'Begin the voyage' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.getByLabel('Quality tier').selectOption('low')
+  const savedSettings = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), SETTINGS_KEY)
+  expect(savedSettings.state.qualityTier).toBe('low')
+  expect(savedSettings.resetToken).toBe(recovered.reset)
+})
+
+test('two-tab import publishes only its fully verified committed generation', async ({ page }) => {
+  test.setTimeout(120_000)
+  const otherPage = await page.context().newPage()
+  await page.addInitScript(() => {
+    sessionStorage.setItem('paldawn:test:import-loads', String(Number(sessionStorage.getItem('paldawn:test:import-loads') ?? '0') + 1))
+  })
+  await otherPage.addInitScript(() => {
+    sessionStorage.setItem('paldawn:test:import-loads', String(Number(sessionStorage.getItem('paldawn:test:import-loads') ?? '0') + 1))
+  })
+  await Promise.all([page.goto('./'), otherPage.goto('./')])
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.locator('#local-data-import').setInputFiles({
+    name: 'paldawn-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(importedBackup()),
+  })
+  await expect(page.getByRole('heading', { name: 'Replacement preview' })).toBeVisible()
+  const pageReloaded = page.waitForEvent('load')
+  const otherPageReloaded = otherPage.waitForEvent('load')
+  await page.getByRole('button', { name: 'Confirm replace local data' }).click()
+  await Promise.all([pageReloaded, otherPageReloaded])
+
+  for (const candidate of [page, otherPage]) {
+    const committed = await candidate.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+      const values = {
+        [settingsKey]: localStorage.getItem(settingsKey),
+        [journeyKey]: localStorage.getItem(journeyKey),
+        [bookmarksKey]: localStorage.getItem(bookmarksKey),
+        [workspaceKey]: localStorage.getItem(workspaceKey),
+      }
+      return {
+        loads: Number(sessionStorage.getItem('paldawn:test:import-loads')),
+        pending: JSON.parse(localStorage.getItem(pendingKey)),
+        reset: localStorage.getItem(resetKey),
+        values,
+      }
+    }, {
+      bookmarksKey: BOOKMARKS_KEY,
+      journeyKey: JOURNEY_KEY,
+      pendingKey: RESET_PENDING_KEY,
+      resetKey: RESET_KEY,
+      settingsKey: SETTINGS_KEY,
+      workspaceKey: WORKSPACE_KEY,
+    })
+    expect(committed.loads).toBe(2)
+    expect(committed.pending).toMatchObject({ token: committed.reset, kind: 'import', desired: committed.values })
+    for (const value of Object.values(committed.values)) {
+      expect(JSON.parse(value).resetToken).toBe(committed.reset)
+    }
+    expect(JSON.parse(committed.values[SETTINGS_KEY]).state.qualityTier).toBe('low')
+    expect(JSON.parse(committed.values[JOURNEY_KEY]).progress).toBe(0.61)
+  }
+  await otherPage.close()
+})
+
+test('failed two-tab import rolls back without publishing a peer reload', async ({ page }) => {
+  test.setTimeout(120_000)
+  const otherPage = await page.context().newPage()
+  await page.addInitScript(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+    const token = 'generation-before-import'
+    const oldValues = {
+      [settingsKey]: JSON.stringify({ state: { qualityTier: 'high' }, version: 1, resetToken: token }),
+      [journeyKey]: JSON.stringify({ progress: 0.23, narrationMode: 'guide', resetToken: token }),
+      [bookmarksKey]: JSON.stringify({ stageIds: ['approach'], resetToken: token }),
+      [workspaceKey]: JSON.stringify({ notes: { approach: 'Original note' }, checkpoints: [], resetToken: token }),
+    }
+    localStorage.setItem(resetKey, token)
+    for (const [key, value] of Object.entries(oldValues)) localStorage.setItem(key, value)
+    sessionStorage.setItem('paldawn:test:original-import-values', JSON.stringify(oldValues))
+    const originalSetItem = Storage.prototype.setItem
+    let failed = false
+    Storage.prototype.setItem = function setItem(key, value) {
+      const pending = localStorage.getItem(pendingKey)
+      if (key === workspaceKey && !failed && pending?.includes('"kind":"import"')) {
+        failed = true
+        throw new DOMException('Injected import failure', 'QuotaExceededError')
+      }
+      return originalSetItem.call(this, key, value)
+    }
+  }, {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  await otherPage.addInitScript(() => {
+    sessionStorage.setItem('paldawn:test:import-failure-loads', String(Number(sessionStorage.getItem('paldawn:test:import-failure-loads') ?? '0') + 1))
+  })
+  await Promise.all([page.goto('./'), otherPage.goto('./')])
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.locator('#local-data-import').setInputFiles({
+    name: 'paldawn-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(importedBackup()),
+  })
+  await expect(page.getByRole('heading', { name: 'Replacement preview' })).toBeVisible()
+  const peerReloaded = otherPage.waitForEvent('load', { timeout: 1_500 }).then(() => true, () => false)
+  await page.getByRole('button', { name: 'Confirm replace local data' }).click()
+
+  await expect(page.getByText('Local data could not be replaced in this browser context.')).toBeVisible()
+  expect(await peerReloaded).toBe(false)
+  expect(await otherPage.evaluate(() => Number(sessionStorage.getItem('paldawn:test:import-failure-loads')))).toBe(1)
+  const rolledBack = await page.evaluate(({ pendingKey, resetKey }) => ({
+    original: JSON.parse(sessionStorage.getItem('paldawn:test:original-import-values')),
+    pending: localStorage.getItem(pendingKey),
+    reset: localStorage.getItem(resetKey),
+    values: Object.fromEntries(Object.keys(JSON.parse(sessionStorage.getItem('paldawn:test:original-import-values')))
+      .map((key) => [key, localStorage.getItem(key)])),
+  }), { pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY })
+  expect(rolledBack.reset).toBe('generation-before-import')
+  expect(rolledBack.pending).toBeNull()
+  expect(rolledBack.values).toEqual(rolledBack.original)
   await otherPage.close()
 })
 

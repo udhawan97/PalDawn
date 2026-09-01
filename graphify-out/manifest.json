@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "app/src/state/settings.ts": {
-    "mtime": 1788218811.4801679,
-    "ast_hash": "98e4ac31e396a46c78845cd1ac4af06f",
+    "mtime": 1788229969.2720668,
+    "ast_hash": "75e8823959932b0f1837e7f44725fd96",
     "semantic_hash": ""
   },
   "app/src/vite-env.d.ts": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1788222969.9608986,
-    "ast_hash": "9aba2101e23235806477ff1780f02335",
+    "mtime": 1788229969.2776575,
+    "ast_hash": "f17cb2c8671f1f2a8d898a0195b6e272",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788226518.8194606,
-    "ast_hash": "9c17b7bea47c954991bfc59ff50bbe84",
+    "mtime": 1788229969.2698038,
+    "ast_hash": "028b8b0d1712c1f801ba45044ad18731",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788218811.4717133,
-    "ast_hash": "c40b37db4f370e3c0e65c49b62b882ec",
+    "mtime": 1788229969.275901,
+    "ast_hash": "2c55c0569d90a85cad6290fc41bae1d1",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-QA.md": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788226557.4684289,
-    "ast_hash": "3efe14828bee0a105897fd30fef297a0",
+    "mtime": 1788229969.2741,
+    "ast_hash": "daf2ef7cce1680285815a67b050fb735",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {

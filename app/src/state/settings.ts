@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware'
-import { PALDAWN_SETTINGS_KEY, writeLocalStorageValue } from '../platform/localData'
+import { PALDAWN_SETTINGS_KEY, readLocalStorageValue, writeLocalStorageValue } from '../platform/localData'
 
 export type QualityTier = 'auto' | 'high' | 'balanced' | 'low'
 export type ResolvedTier = Exclude<QualityTier, 'auto'>
@@ -95,7 +95,7 @@ const mergePersistedSettings = (persisted: unknown, current: SettingsState): Set
 
 const safeStorage: StateStorage = {
   getItem: (name) => {
-    try { return localStorage.getItem(name) } catch { return null }
+    return readLocalStorageValue(name)
   },
   setItem: (name, value) => {
     writeLocalStorageValue(name, value)

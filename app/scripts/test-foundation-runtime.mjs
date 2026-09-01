@@ -8,6 +8,7 @@ const JOURNEY_KEY = 'paldawn:journey:v1'
 const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
 const RESET_KEY = 'paldawn:reset:v1'
+const RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
 
 class MemoryStorage {
   #values = new Map()
@@ -25,6 +26,15 @@ class FailingStorage extends MemoryStorage {
 }
 
 const installBrowserStubs = (localStorage) => {
+  Object.defineProperty(globalThis, 'CustomEvent', {
+    configurable: true,
+    value: class CustomEvent {
+      constructor(type, init = {}) {
+        this.type = type
+        this.detail = init.detail
+      }
+    },
+  })
   Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: localStorage })
   Object.defineProperty(globalThis, 'navigator', {
     configurable: true,
@@ -35,6 +45,7 @@ const installBrowserStubs = (localStorage) => {
     value: {
       devicePixelRatio: 2,
       localStorage,
+      dispatchEvent: () => true,
       matchMedia: () => ({ matches: false }),
     },
   })
@@ -114,6 +125,11 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(localData.replaceLocalDataFromImport(parsed.data), true)
   const resetToken = localStorage.getItem(RESET_KEY)
   assert.ok(resetToken)
+  assert.deepEqual(
+    (({ token, kind }) => ({ token, kind }))(JSON.parse(localStorage.getItem(RESET_PENDING_KEY))),
+    { token: resetToken, kind: 'import' },
+  )
+  assert.equal(JSON.parse(localStorage.getItem(SETTINGS_KEY)).resetToken, resetToken)
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).resetToken, resetToken)
   assert.equal(JSON.parse(localStorage.getItem(WORKSPACE_KEY)).resetToken, resetToken)
   assert.equal(JSON.parse(localStorage.getItem(SETTINGS_KEY)).state.qualityTier, 'low')
