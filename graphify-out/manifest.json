@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788232722.9662764,
+    "mtime": 1788235160.232109,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788232090.2618039,
-    "ast_hash": "ab7da50ee79d5678396a55aab7cd8eea",
+    "mtime": 1788236596.5608542,
+    "ast_hash": "2edd08fd729d6ef86483b2223df9b308",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788234883.8333116,
-    "ast_hash": "0e19f2683f787954b59b21c3a323e80c",
+    "mtime": 1788236322.482673,
+    "ast_hash": "52144e3eb39281c72dafba00599b8e21",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "app/public/sw.js": {
-    "mtime": 1788234758.955589,
-    "ast_hash": "d01eb65974b052c89f2185c3e1ad6f10",
+    "mtime": 1788236308.4284034,
+    "ast_hash": "f7191c528e13c3651765043df462ba37",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1788234632.9766872,
-    "ast_hash": "131cfd6e3930b68d0885c9992f583a4d",
+    "mtime": 1788236296.016423,
+    "ast_hash": "8ee8bd22e7a10ce7fc8dc8d6ae35f7f3",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
@@ -515,8 +515,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus-2.mjs": {
-    "mtime": 1788235091.824876,
-    "ast_hash": "84716174523d3ce202b41df15b23174a",
+    "mtime": 1788236347.4057522,
+    "ast_hash": "01c35a7616e3d3a48f901133d3703745",
     "semantic_hash": ""
   },
   "app/src/platform/share.ts": {
@@ -790,13 +790,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-lifecycle.mjs": {
-    "mtime": 1788234547.6553009,
-    "ast_hash": "0c204d5e750447df034aa087dc5eb8fd",
+    "mtime": 1788236354.9425101,
+    "ast_hash": "8a5e7caaaabc3bed326a40e0beafa969",
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788234497.6615891,
-    "ast_hash": "d4d6a5f367b34aa1b7d3595f44153ffa",
+    "mtime": 1788236548.3840477,
+    "ast_hash": "2f9f163f15943068ca55739cfff64cab",
     "semantic_hash": ""
   }
 }
