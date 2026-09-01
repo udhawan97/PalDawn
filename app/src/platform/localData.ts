@@ -73,7 +73,16 @@ export type LocalDataImportResult =
 
 export type ResetLocalDataResult =
   | { ok: true; resetToken: string }
-  | { ok: false; error: 'storage-unavailable' | 'reset-not-verified' }
+  | { ok: false; error: 'storage-unavailable' | 'reset-not-verified'; recoveryPending: PendingLocalDataRecovery | null }
+
+export type ReplaceLocalDataResult =
+  | { ok: true; resetToken: string }
+  | { ok: false; error: 'storage-unavailable' | 'replace-not-verified'; recoveryPending: PendingLocalDataRecovery | null }
+
+export type PendingLocalDataRecovery = {
+  kind: 'reset' | 'import'
+  token: string
+}
 
 const LOCAL_DATA_KEY_LIST = [
   PALDAWN_SETTINGS_KEY,
@@ -237,6 +246,20 @@ const pendingFenceIsActive = (
   rawPending: string | null,
   committedReset: string | null,
 ): boolean => rawPending !== null && parsePendingTransaction(rawPending)?.token !== committedReset
+
+export function getPendingLocalDataRecovery(): PendingLocalDataRecovery | null {
+  const localStorage = storage()
+  if (!localStorage) return null
+  try {
+    const pending = parsePendingTransaction(localStorage.getItem(PALDAWN_RESET_PENDING_KEY))
+    const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
+    return pending && pending.token !== committedReset
+      ? { kind: pending.kind, token: pending.token }
+      : null
+  } catch {
+    return null
+  }
+}
 
 export function readLocalStorageValue(key: string): string | null {
   const localStorage = storage()
@@ -527,11 +550,11 @@ const restoreStoredValue = (localStorage: Storage, key: string, value: string | 
 const executeLocalDataTransaction = (
   kind: PendingLocalDataTransaction['kind'],
   desiredForToken: (token: string) => LocalDataValues,
-): string | null => {
+): { resetToken: string | null; recoveryPending: PendingLocalDataRecovery | null } => {
   const localStorage = storage()
   if (!localStorage) {
     reportStorageFailure(PALDAWN_RESET_KEY)
-    return null
+    return { resetToken: null, recoveryPending: null }
   }
 
   resetInProgress = true
@@ -558,7 +581,7 @@ const executeLocalDataTransaction = (
     resetTokenAtLoad = token
     releaseTransactionGuard(token)
     reportStorageSuccess(PALDAWN_RESET_KEY)
-    return token
+    return { resetToken: token, recoveryPending: null }
   } catch {
     let rollbackVerified = false
     try {
@@ -590,12 +613,22 @@ const executeLocalDataTransaction = (
     resetTokenAtLoad = readString(PALDAWN_RESET_KEY)
     resetInProgress = false
     reportStorageFailure(PALDAWN_RESET_KEY)
-    return null
+    let recoveryPending: PendingLocalDataRecovery | null = null
+    try {
+      recoveryPending = getPendingLocalDataRecovery()
+    } catch {
+      // Without a readable durable receipt the UI must not promise reload recovery.
+    }
+    return { resetToken: null, recoveryPending }
   }
 }
 
-export function replaceLocalDataFromImport(data: LocalDataImport): boolean {
-  const token = executeLocalDataTransaction('import', (resetToken) => ({
+export function replaceLocalDataFromImport(data: LocalDataImport): ReplaceLocalDataResult {
+  if (!storage()) {
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return { ok: false, error: 'storage-unavailable', recoveryPending: null }
+  }
+  const outcome = executeLocalDataTransaction('import', (resetToken) => ({
     [PALDAWN_SETTINGS_KEY]: data.settings
       ? JSON.stringify({ state: data.settings, version: 1, resetToken })
       : null,
@@ -605,7 +638,9 @@ export function replaceLocalDataFromImport(data: LocalDataImport): boolean {
     [PALDAWN_BOOKMARKS_KEY]: JSON.stringify({ stageIds: data.bookmarks, resetToken }),
     [PALDAWN_WORKSPACE_KEY]: JSON.stringify({ ...normalizeWorkspace(data.workspace), resetToken }),
   }))
-  return token !== null
+  return outcome.resetToken
+    ? { ok: true, resetToken: outcome.resetToken }
+    : { ok: false, error: 'replace-not-verified', recoveryPending: outcome.recoveryPending }
 }
 
 export function exportLocalData(): string {
@@ -622,10 +657,10 @@ export function exportLocalData(): string {
 export function resetLocalData(): ResetLocalDataResult {
   if (!storage()) {
     reportStorageFailure(PALDAWN_RESET_KEY)
-    return { ok: false, error: 'storage-unavailable' }
+    return { ok: false, error: 'storage-unavailable', recoveryPending: null }
   }
-  const resetToken = executeLocalDataTransaction('reset', () => resetDesiredValues())
-  return resetToken
-    ? { ok: true, resetToken }
-    : { ok: false, error: 'reset-not-verified' }
+  const outcome = executeLocalDataTransaction('reset', () => resetDesiredValues())
+  return outcome.resetToken
+    ? { ok: true, resetToken: outcome.resetToken }
+    : { ok: false, error: 'reset-not-verified', recoveryPending: outcome.recoveryPending }
 }

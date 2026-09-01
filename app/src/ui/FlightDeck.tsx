@@ -32,6 +32,7 @@ import {
   PALDAWN_WORKSPACE_KEY,
   MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
+  getPendingLocalDataRecovery,
   loadLearnerWorkspace,
   loadStageBookmarks,
   parseLocalDataImport,
@@ -705,14 +706,24 @@ function SettingsPanel({
   const [confirmReset, setConfirmReset] = useState(false)
   const [confirmRestart, setConfirmRestart] = useState(false)
   const [pendingImport, setPendingImport] = useState<Extract<LocalDataImportResult, { ok: true }> | null>(null)
+  const [pendingLocalDataRecovery, setPendingLocalDataRecovery] = useState<'reset' | 'import' | null>(
+    () => getPendingLocalDataRecovery()?.kind ?? null,
+  )
   const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
   const mounted = useRef(true)
+  const recoveryActionRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     mounted.current = true
     return () => { mounted.current = false }
   }, [])
+
+  useLayoutEffect(() => {
+    if (!pendingLocalDataRecovery) return
+    const focusFrame = window.requestAnimationFrame(() => recoveryActionRef.current?.focus({ preventScroll: false }))
+    return () => window.cancelAnimationFrame(focusFrame)
+  }, [pendingLocalDataRecovery])
 
   const reportStatus = (status: string) => {
     if (mounted.current) setStatus(status)
@@ -747,8 +758,29 @@ function SettingsPanel({
     telemetry: useTelemetry.getState(),
   })
 
+  const finishLocalDataRecovery = () => {
+    const recoveryUrl = new URL(window.location.href)
+    recoveryUrl.hash = ''
+    window.history.replaceState(null, '', recoveryUrl)
+    window.location.reload()
+  }
+
   return (
     <>
+      {pendingLocalDataRecovery ? (
+        <aside className="persistence-warning local-data-recovery" role="alert" aria-labelledby="local-data-recovery-title">
+          <strong id="local-data-recovery-title">Reload required to finish local-data recovery.</strong>
+          <p>
+            {pendingLocalDataRecovery === 'reset'
+              ? 'PalDawn saved and verified a recovery plan that will finish clearing the local records selected by reset.'
+              : 'PalDawn saved and verified a recovery plan that will finish replacing local records with the validated backup preview.'}{' '}
+            Settings and local-data actions are disabled until recovery finishes. Reload this tab now; if it closes first, recovery resumes the next time PalDawn opens.
+          </p>
+          <button ref={recoveryActionRef} type="button" onClick={finishLocalDataRecovery}>Reload to finish recovery</button>
+        </aside>
+      ) : null}
+      <fieldset className="settings-recovery-lock" disabled={pendingLocalDataRecovery !== null}>
+        <legend className="sr-only">Settings and local-data actions</legend>
       <p className="panel-kicker">Display and comfort</p>
       <h2 id="panel-title">Flight settings</h2>
       <label className="quality-setting" htmlFor="quality-tier">
@@ -842,8 +874,13 @@ function SettingsPanel({
             <button className="danger-action" type="button" onClick={() => {
               const outcome = resetLocalData()
               if (!outcome.ok) {
+                if (outcome.recoveryPending) {
+                  setPendingLocalDataRecovery(outcome.recoveryPending.kind)
+                  setStatus('')
+                  return
+                }
                 setConfirmReset(false)
-                setStatus('PalDawn could not verify that every local record was cleared. This page was kept open; retry or download a backup before leaving.')
+                setStatus('PalDawn could not verify that every local record was cleared. This page was kept open; restore browser storage, then retry or use Study to copy memory-only notes.')
                 return
               }
               const resetUrl = new URL(window.location.href)
@@ -893,8 +930,14 @@ function SettingsPanel({
               </p>
               <div className="panel-actions">
                 <button className="danger-action" type="button" onClick={() => {
-                  if (!replaceLocalDataFromImport(pendingImport.data)) {
-                    reportStatus('Local data could not be replaced in this browser context.')
+                  const outcome = replaceLocalDataFromImport(pendingImport.data)
+                  if (!outcome.ok) {
+                    if (outcome.recoveryPending) {
+                      setPendingLocalDataRecovery(outcome.recoveryPending.kind)
+                      reportStatus('')
+                      return
+                    }
+                    reportStatus('PalDawn could not verify the local-data replacement. This page was kept open; restore browser storage before retrying.')
                     return
                   }
                   const importUrl = new URL(window.location.href)
@@ -932,6 +975,7 @@ function SettingsPanel({
           {confirmRestart ? <button type="button" onClick={() => setConfirmRestart(false)}>Cancel restart</button> : null}
         </div>
       </section>
+      </fieldset>
     </>
   )
 }

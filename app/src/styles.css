@@ -2198,6 +2198,13 @@ kbd {
   border-color: transparent;
 }
 
+.settings-recovery-lock {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 .settings-subsection {
   padding: 20px 0;
   border-top: 1px solid var(--line);

@@ -157,7 +157,7 @@ await withModules(new MemoryStorage(), async (load) => {
     journey: { progress: 0.73, narrationMode: 'engineering' },
   }))
   assert.equal(parsed.ok, true)
-  assert.equal(localData.replaceLocalDataFromImport(parsed.data), true, 'an explicit import may replace a corrupt fence')
+  assert.equal(localData.replaceLocalDataFromImport(parsed.data).ok, true, 'an explicit import may replace a corrupt fence')
   const committedToken = localStorage.getItem(RESET_KEY)
   assert.equal(JSON.parse(localStorage.getItem(JOURNEY_KEY)).progress, 0.73)
   assert.deepEqual(
@@ -213,7 +213,7 @@ await withModules(new MemoryStorage(), async (load) => {
   assert.equal(parsed.preview.progressPercent, 100)
   assert.deepEqual(parsed.data.bookmarks, ['portal'])
   assert.deepEqual(parsed.data.workspace, { notes: { portal: 'Imported note' }, checkpoints: ['arrival'] })
-  assert.equal(localData.replaceLocalDataFromImport(parsed.data), true)
+  assert.equal(localData.replaceLocalDataFromImport(parsed.data).ok, true)
   const resetToken = localStorage.getItem(RESET_KEY)
   assert.ok(resetToken)
   assert.deepEqual(
@@ -234,7 +234,9 @@ await withModules(new FailingStorage(), async (load) => {
     workspace: { notes: { approach: 'Bounded' }, checkpoints: [] },
   }))
   assert.equal(parsed.ok, true)
-  assert.equal(localData.replaceLocalDataFromImport(parsed.data), false, 'blocked storage must fail without reloading')
+  const outcome = localData.replaceLocalDataFromImport(parsed.data)
+  assert.equal(outcome.ok, false, 'blocked storage must fail without reloading')
+  assert.equal(outcome.recoveryPending, null, 'unreadable storage cannot promise a durable recovery plan')
 })
 
 await withModules(new MemoryStorage(), async (load) => {

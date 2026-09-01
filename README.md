@@ -128,7 +128,7 @@ anatomical reconstruction.*
 | AI | No runtime AI provider, model call, or API key is used. SPD is authored interface guidance, not a diagnostic agent. |
 | Medical content | Mechanism Lens contains source-linked, unreviewed educational synthesis and project-authored illustrative geometry. Both are visibly bounded and never presented as diagnosis, treatment selection, reviewed anatomy, or professional clinical training. |
 | Provenance | Candidate assets and content fail closed until license, lineage, source, and—where medical—named qualified-human review requirements pass. |
-| Updates | PalDawn shows an update banner when a new build is waiting; choose **Update now** to activate it immediately. The browser may also activate it after all PalDawn tabs close. |
+| Updates | Modern clients offer **Update and reload open tabs** and activate only after every open PalDawn tab verifies its local work is saved; a failed save pauses the update without reloading. An older client’s legacy **Update now** request is intentionally vetoed because it cannot verify memory-only work: keep that tab open to copy or save its work, then close and reopen PalDawn before retrying. The browser may also activate a waiting build after all PalDawn tabs close. |
 
 The audited Z-Anatomy heart and coronary candidates remain
 planned/pending/blocked with null adoption output. See the

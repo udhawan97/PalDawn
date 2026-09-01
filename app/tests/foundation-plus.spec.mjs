@@ -345,7 +345,18 @@ test('an unverified rollback leaves a durable fence that reload completes', asyn
   await page.getByRole('button', { name: 'Reset local data' }).click()
   await page.getByRole('button', { name: 'Confirm reset' }).click()
 
-  await expect(page.getByText(/could not verify that every local record was cleared/)).toBeVisible()
+  await expect(page.locator('.settings-status')).toHaveText('')
+  const recoveryAlert = page.getByRole('alert').filter({ hasText: 'Reload required to finish local-data recovery.' })
+  const recoveryAction = recoveryAlert.getByRole('button', { name: 'Reload to finish recovery' })
+  await expect(recoveryAlert).toContainText('saved and verified a recovery plan that will finish clearing')
+  await expect(recoveryAction).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Download local data' })).toBeDisabled()
+  await expect(page.locator('#local-data-import')).toBeDisabled()
+  await expect(page.getByLabel('Quality tier')).toBeDisabled()
+  await expect(page.locator('.settings-status')).not.toContainText(/retry|download a backup/i)
+  await page.getByRole('button', { name: 'Close panel' }).click()
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await expect(recoveryAction).toBeFocused()
   const interrupted = await page.evaluate(({ pendingKey, resetKey }) => ({
     pending: JSON.parse(localStorage.getItem(pendingKey)),
     reset: localStorage.getItem(resetKey),
@@ -353,7 +364,9 @@ test('an unverified rollback leaves a durable fence that reload completes', asyn
   expect(interrupted.pending).toMatchObject({ kind: 'reset' })
   expect(interrupted.pending.token).not.toBe(interrupted.reset)
 
-  await page.reload()
+  const recoveryReload = page.waitForEvent('load')
+  await recoveryAction.click()
+  await recoveryReload
   const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
     bookmarks: localStorage.getItem(bookmarksKey),
     journey: localStorage.getItem(journeyKey),
@@ -381,6 +394,93 @@ test('an unverified rollback leaves a durable fence that reload completes', asyn
   const savedSettings = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), SETTINGS_KEY)
   expect(savedSettings.state.qualityTier).toBe('low')
   expect(savedSettings.resetToken).toBe(recovered.reset)
+})
+
+test('an unverified import rollback exposes one focused recovery action and reload finishes the validated replacement', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.addInitScript(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+    if (sessionStorage.getItem('paldawn:test:import-recovery-injected')) return
+    sessionStorage.setItem('paldawn:test:import-recovery-injected', 'true')
+    const token = 'generation-before-import-interruption'
+    localStorage.setItem(resetKey, token)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'high' }, version: 1, resetToken: token }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.18, narrationMode: 'guide', resetToken: token }))
+    localStorage.setItem(bookmarksKey, JSON.stringify({ stageIds: ['approach'], resetToken: token }))
+    localStorage.setItem(workspaceKey, JSON.stringify({ notes: { approach: 'Original note' }, checkpoints: [], resetToken: token }))
+
+    const originalSetItem = Storage.prototype.setItem
+    let transactionFailed = false
+    let rollbackWriteMustFail = false
+    Storage.prototype.setItem = function setItem(key, value) {
+      const pending = localStorage.getItem(pendingKey)
+      if (key === workspaceKey && !transactionFailed && pending?.includes('"kind":"import"')) {
+        transactionFailed = true
+        rollbackWriteMustFail = true
+        throw new DOMException('Injected import transaction failure', 'QuotaExceededError')
+      }
+      if (key === settingsKey && rollbackWriteMustFail) {
+        rollbackWriteMustFail = false
+        throw new DOMException('Injected import rollback failure', 'QuotaExceededError')
+      }
+      return originalSetItem.call(this, key, value)
+    }
+  }, { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY, settingsKey: SETTINGS_KEY, workspaceKey: WORKSPACE_KEY })
+
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await page.locator('#local-data-import').setInputFiles({
+    name: 'paldawn-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(importedBackup()),
+  })
+  await page.getByRole('button', { name: 'Confirm replace local data' }).click()
+
+  const recoveryAlert = page.getByRole('alert').filter({ hasText: 'Reload required to finish local-data recovery.' })
+  const recoveryAction = recoveryAlert.getByRole('button', { name: 'Reload to finish recovery' })
+  await expect(recoveryAlert).toContainText('saved and verified a recovery plan that will finish replacing')
+  await expect(recoveryAction).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Download local data' })).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Confirm replace local data' })).toBeDisabled()
+  await expect(page.locator('#local-data-import')).toBeDisabled()
+  await expect(page.locator('.settings-status')).toHaveText('')
+
+  const interrupted = await page.evaluate(({ pendingKey, resetKey }) => ({
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+  }), { pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY })
+  expect(interrupted.pending).toMatchObject({ kind: 'import' })
+  expect(interrupted.pending.token).not.toBe(interrupted.reset)
+
+  const recoveryReload = page.waitForEvent('load')
+  await recoveryAction.click()
+  await recoveryReload
+  const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => {
+    const values = {
+      [settingsKey]: localStorage.getItem(settingsKey),
+      [journeyKey]: localStorage.getItem(journeyKey),
+      [bookmarksKey]: localStorage.getItem(bookmarksKey),
+      [workspaceKey]: localStorage.getItem(workspaceKey),
+    }
+    return {
+      pending: JSON.parse(localStorage.getItem(pendingKey)),
+      reset: localStorage.getItem(resetKey),
+      values,
+    }
+  }, {
+    bookmarksKey: BOOKMARKS_KEY,
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(recovered.pending).toMatchObject({ token: recovered.reset, kind: 'import', desired: recovered.values })
+  expect(JSON.parse(recovered.values[SETTINGS_KEY]).state.qualityTier).toBe('low')
+  expect(JSON.parse(recovered.values[JOURNEY_KEY]).progress).toBe(0.61)
+  expect(JSON.parse(recovered.values[WORKSPACE_KEY]).notes.portal).toBe('Imported private note')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  await expect(page.getByLabel('Quality tier')).toHaveValue('low')
+  await expect(page.getByLabel('Quality tier')).toBeEnabled()
 })
 
 test('a corrupt transaction fence preserves records until explicit recovery', async ({ page }) => {
@@ -555,7 +655,7 @@ test('failed two-tab import rolls back without publishing a peer reload', async 
   const peerReloaded = otherPage.waitForEvent('load', { timeout: 1_500 }).then(() => true, () => false)
   await page.getByRole('button', { name: 'Confirm replace local data' }).click()
 
-  await expect(page.getByText('Local data could not be replaced in this browser context.')).toBeVisible()
+  await expect(page.getByText(/could not verify the local-data replacement/)).toBeVisible()
   expect(await peerReloaded).toBe(false)
   expect(await otherPage.evaluate(() => Number(sessionStorage.getItem('paldawn:test:import-failure-loads')))).toBe(1)
   const rolledBack = await page.evaluate(({ pendingKey, resetKey }) => ({
