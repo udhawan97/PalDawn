@@ -64,3 +64,47 @@ test('the curriculum remains bounded on a narrow phone and can launch an existin
   await expect(catalog).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
 })
+
+test('the six-scale legend becomes a keyboard-scrollable local region only when it overflows', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('paldawn:settings:v1', JSON.stringify({
+      state: { highContrast: true, reducedMotion: true },
+      version: 1,
+    }))
+  })
+
+  for (const width of [320, 375, 414]) {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto('./')
+    await page.getByRole('button', { name: 'View 50' }).click()
+    const legend = page.getByRole('list', { name: 'Planned semantic scale coverage' })
+    await expect(legend).toHaveAttribute('data-scrollable', 'true')
+    await expect(legend).toHaveAttribute('tabindex', '0')
+
+    const geometry = await legend.evaluate((element) => ({
+      bodyOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+      itemWidths: [...element.children].map((item) => item.getBoundingClientRect().width),
+      labels: [...element.querySelectorAll('strong')].map((label) => label.textContent),
+    }))
+    expect(geometry.bodyOverflow).toBeLessThanOrEqual(1)
+    expect(geometry.scrollWidth).toBeGreaterThan(geometry.clientWidth + 1)
+    expect(Math.min(...geometry.itemWidths)).toBeGreaterThanOrEqual(111)
+    expect(geometry.labels).toEqual(['Body', 'System', 'Organ', 'Structure', 'Tissue', 'Cellular'])
+
+    await legend.focus()
+    await expect(legend).toBeFocused()
+    await page.keyboard.press('ArrowRight')
+    await expect.poll(() => legend.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0)
+  }
+
+  await page.setViewportSize({ width: 1024, height: 844 })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'View 50' }).click()
+  const desktopLegend = page.getByRole('list', { name: 'Planned semantic scale coverage' })
+  await expect(desktopLegend).not.toHaveAttribute('data-scrollable', 'true')
+  await expect(desktopLegend).not.toHaveAttribute('tabindex', '0')
+  const desktopWidths = await desktopLegend.locator('li').evaluateAll((items) => items.map((item) => item.getBoundingClientRect().width))
+  expect(Math.max(...desktopWidths) - Math.min(...desktopWidths)).toBeLessThanOrEqual(1)
+})

@@ -39,6 +39,8 @@ export function CurriculumCatalog({
   const dialogRef = useRef<HTMLElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   const proposalTriggerRef = useRef<HTMLButtonElement>(null)
+  const scaleRef = useRef<HTMLOListElement>(null)
+  const [scaleScrollable, setScaleScrollable] = useState(false)
   const openDisease = useAtlas((state) => state.openDisease)
   const narration = useAtlas((state) => state.narration)
   const setNarration = useAtlas((state) => state.setNarration)
@@ -52,6 +54,20 @@ export function CurriculumCatalog({
   useLayoutEffect(() => {
     const focusFrame = window.requestAnimationFrame(() => searchRef.current?.focus({ preventScroll: true }))
     return () => window.cancelAnimationFrame(focusFrame)
+  }, [])
+
+  useLayoutEffect(() => {
+    const scale = scaleRef.current
+    if (!scale) return
+    const updateScrollable = () => setScaleScrollable(scale.scrollWidth > scale.clientWidth + 1)
+    updateScrollable()
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(updateScrollable)
+    observer?.observe(scale)
+    window.addEventListener('resize', updateScrollable)
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', updateScrollable)
+    }
   }, [])
 
   useEffect(() => {
@@ -143,7 +159,13 @@ export function CurriculumCatalog({
           </dl>
         </div>
 
-        <ol className="curriculum-scale" aria-label="Planned semantic scale coverage">
+        <ol
+          ref={scaleRef}
+          className="curriculum-scale"
+          aria-label="Planned semantic scale coverage"
+          data-scrollable={scaleScrollable ? 'true' : undefined}
+          tabIndex={scaleScrollable ? 0 : undefined}
+        >
           {SCALE_STAGES.map(([level, label]) => (
             <li key={level}>
               <span>{level}</span>

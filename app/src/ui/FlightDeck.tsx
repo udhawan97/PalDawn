@@ -1582,7 +1582,7 @@ export function FlightDeck({
         <span>{textVoyage ? 'TEXT VOYAGE' : atlasOpen || !entered ? '3D SYSTEMS MAP' : 'SYNTHETIC MODEL'}</span>
         <span>{textVoyage ? 'SCENE-FREE ROUTE' : atlasOpen || !entered ? 'CONCEPTUAL / NOT TO SCALE' : 'NO ANATOMICAL SCALE'}</span>
       </div>
-      {atlasOpen ? <DiseaseExplorer /> : null}
+      {atlasOpen ? <DiseaseExplorer rendererAvailable={!textVoyage} /> : null}
       {!atlasOpen && !entered ? <><Intro /><TopDiseasesRail /></> : null}
       {!atlasOpen && completed ? (
         <CompletionSummary />

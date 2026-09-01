@@ -11347,7 +11347,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/CurriculumCatalog.tsx",
-      "source_location": "L209",
+      "source_location": "L231",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_curriculumcatalog_curriculumcatalog",
@@ -11371,7 +11371,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/CurriculumCatalog.tsx",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_curriculumcatalog_curriculumcatalog",
@@ -11809,7 +11809,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/CurriculumCatalog.tsx",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_curriculumcatalog_curriculumcatalog",
@@ -16731,7 +16731,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/CurriculumCatalog.tsx",
-      "source_location": "L42",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_curriculumcatalog_curriculumcatalog",
@@ -22251,5 +22251,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "fad580aa72fd3e34c5c2358712aa6f9b674886a5"
+  "built_at_commit": "3fda6f55141cb3ab39758cbd8d03474f473ae1a7"
 }

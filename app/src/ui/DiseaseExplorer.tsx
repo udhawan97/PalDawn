@@ -255,7 +255,7 @@ function ResearchLens({
   )
 }
 
-export function DiseaseExplorer() {
+export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: boolean }) {
   const [searchQuery, setSearchQuery] = useState('')
   const selectedDiseaseId = useAtlas((state) => state.selectedDiseaseId)
   const stepIndex = useAtlas((state) => state.stepIndex)
@@ -281,7 +281,7 @@ export function DiseaseExplorer() {
   const disease = diseaseById(selectedDiseaseId)
   const step = disease.steps[stepIndex]
   const finalStep = stepIndex === disease.steps.length - 1
-  const focusPart = (selectedBodyPart ?? step.bodyParts[0]) as BodyPartId
+  const focusPart = (rendererAvailable ? selectedBodyPart ?? step.bodyParts[0] : step.bodyParts[0]) as BodyPartId
   const focusLabel = BODY_PART_LABELS[focusPart]
   const searching = searchQuery.trim().length > 0
   const searchResults = searching ? searchAtlas(searchQuery) : []
@@ -305,6 +305,10 @@ export function DiseaseExplorer() {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
+
+  useEffect(() => {
+    if (!rendererAvailable) useAtlas.getState().setGuideOpen(false)
+  }, [rendererAvailable])
 
   return (
     <main className="atlas" aria-labelledby="atlas-title">
@@ -371,16 +375,19 @@ export function DiseaseExplorer() {
 
       <section
         className="atlas-stage"
-        aria-label="Interactive 3D systems map"
+        aria-label={rendererAvailable ? 'Interactive 3D systems map' : 'Scene-free mechanism guide'}
+        data-renderer={rendererAvailable ? 'available' : 'unavailable'}
         data-phase-detail={step.id}
-        data-focus-part={selectedBodyPart ?? 'whole-body'}
+        data-focus-part={rendererAvailable ? selectedBodyPart ?? 'whole-body' : undefined}
       >
         <div className="atlas-stage-heading">
           <div>
-            <p className="eyebrow">3D systems map · visibly synthetic</p>
+            <p className="eyebrow">
+              {rendererAvailable ? '3D systems map · visibly synthetic' : 'Scene-free mechanism guide'}
+            </p>
             <p>{disease.pathwayLabel}</p>
           </div>
-          <div className="atlas-view-actions" role="group" aria-label="3D view controls">
+          {rendererAvailable ? <div className="atlas-view-actions" role="group" aria-label="3D view controls">
             <button type="button" aria-pressed={exploded} onClick={toggleExploded}>
               {exploded ? 'Assemble body' : 'Explode systems'}
             </button>
@@ -391,9 +398,9 @@ export function DiseaseExplorer() {
               <button type="button" onClick={() => setSelectedBodyPart(null)}>Whole body</button>
             ) : null}
             <button ref={guideTriggerRef} type="button" onClick={() => setGuideOpen(true)}>How to use</button>
-          </div>
+          </div> : null}
         </div>
-        <div className="atlas-active-parts">
+        {rendererAvailable ? <><div className="atlas-active-parts">
           <span>Phase detail</span>
           {step.bodyParts.map((part) => (
             <button
@@ -411,7 +418,12 @@ export function DiseaseExplorer() {
           {selectedBodyPart
             ? `${focusLabel} in close focus. Layered geometry and phase signals are conceptual, not anatomical scale.`
             : `${focusLabel} anchors this phase. Select any highlighted structure for close detail.`}
-        </p>
+        </p></> : (
+          <p className="atlas-scene-free-note" role="note">
+            <strong>Scene-free route</strong>
+            <span>3D body controls are unavailable. Continue through the mechanism steps, Research Lens, and source links.</span>
+          </p>
+        )}
       </section>
 
       <article className="atlas-detail">
@@ -442,19 +454,23 @@ export function DiseaseExplorer() {
           </div>
           <p>{step.phase}</p>
           <h2 id="atlas-step-title" aria-live="polite">{step.label}</h2>
-          <aside className="atlas-mechanism-lens" aria-label="Mechanism lens" aria-live="polite">
+          <aside className="atlas-mechanism-lens" aria-label={rendererAvailable ? 'Mechanism lens' : 'Mechanism context'} aria-live="polite">
             <div>
-              <span>Mechanism lens</span>
-              <strong>{focusLabel} · {selectedBodyPart ? 'close focus' : 'phase anchor'}</strong>
+              <span>{rendererAvailable ? 'Mechanism lens' : 'Mechanism context'}</span>
+              <strong>{rendererAvailable
+                ? `${focusLabel} · ${selectedBodyPart ? 'close focus' : 'phase anchor'}`
+                : `${step.bodyParts.length} structure${step.bodyParts.length === 1 ? '' : 's'} named`}</strong>
             </div>
             <p>
-              {selectedBodyPart
-                ? 'The 3D view is holding this structure close while the current phase route remains visible.'
-                : 'Select a highlighted structure in the 3D view to reveal its layered detail.'}
+              {rendererAvailable
+                ? selectedBodyPart
+                  ? 'The 3D view is holding this structure close while the current phase route remains visible.'
+                  : 'Select a highlighted structure in the 3D view to reveal its layered detail.'
+                : 'These conceptual structures are named by the current authored step; no body view or visual highlight is active.'}
             </p>
-            <ul aria-label="Structures shown in this phase">
+            <ul aria-label={rendererAvailable ? 'Structures shown in this phase' : 'Structures named in this phase'}>
               {step.bodyParts.map((part) => (
-                <li key={part} data-primary={part === focusPart}>{BODY_PART_LABELS[part]}</li>
+                <li key={part} data-primary={rendererAvailable && part === focusPart ? 'true' : undefined}>{BODY_PART_LABELS[part]}</li>
               ))}
             </ul>
           </aside>
@@ -504,7 +520,7 @@ export function DiseaseExplorer() {
           ))}
         </ol>
       </nav>
-      {guideOpen ? <ExplorerGuide returnFocusTo={guideTriggerRef} /> : null}
+      {rendererAvailable && guideOpen ? <ExplorerGuide returnFocusTo={guideTriggerRef} /> : null}
       {researchOpen ? (
         <ResearchLens
           disease={disease}

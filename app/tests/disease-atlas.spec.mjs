@@ -30,6 +30,57 @@ test('diabetes controls connect the explanation depth, mechanism, and 3D state',
   await expect(page.getByRole('button', { name: 'Assemble body' })).toHaveAttribute('aria-pressed', 'true')
 })
 
+test('Atlas exposes renderer controls only when a renderer is present', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Explore diabetes' }).click()
+
+  const renderedStage = page.getByRole('region', { name: 'Interactive 3D systems map' })
+  await expect(renderedStage).toHaveAttribute('data-renderer', 'available')
+  await expect(page.getByRole('group', { name: '3D view controls' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'How to use' })).toBeVisible()
+  await expect(page.getByRole('complementary', { name: 'Mechanism lens' })).toContainText('3D view')
+
+  const textPage = await page.context().newPage()
+  await textPage.addInitScript(() => {
+    localStorage.setItem('paldawn:settings:v1', JSON.stringify({
+      state: { textVoyagePreferred: true },
+      version: 1,
+    }))
+  })
+  await textPage.goto('./')
+  await textPage.getByRole('button', { name: 'Explore diabetes' }).click()
+
+  const sceneFreeStage = textPage.getByRole('region', { name: 'Scene-free mechanism guide' })
+  await expect(sceneFreeStage).toHaveAttribute('data-renderer', 'unavailable')
+  await expect(sceneFreeStage).not.toHaveAttribute('data-focus-part', /.+/)
+  await expect(textPage.getByRole('group', { name: '3D view controls' })).toHaveCount(0)
+  await expect(textPage.getByRole('button', { name: /Explode systems|Pause drift|Resume drift|How to use|Whole body/ })).toHaveCount(0)
+  await expect(sceneFreeStage.locator('.atlas-active-parts')).toHaveCount(0)
+  await expect(sceneFreeStage.locator('.atlas-structure-status')).toHaveCount(0)
+  await expect(sceneFreeStage.getByRole('note')).toContainText('3D body controls are unavailable')
+
+  const mechanismContext = textPage.getByRole('complementary', { name: 'Mechanism context' })
+  await expect(mechanismContext).toContainText('no body view or visual highlight is active')
+  await expect(mechanismContext).not.toContainText(/close focus|phase anchor|highlighted structure in the 3D view/i)
+  const search = textPage.getByRole('searchbox', { name: 'Find a route' })
+  await search.fill('pancreas')
+  await textPage.getByRole('region', { name: 'Atlas search results' }).locator('button[data-kind="pathway"]').first().click()
+  await expect(textPage.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
+  await textPage.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' }).click()
+  await expect(textPage.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
+  await expect(textPage.getByRole('button', { name: 'Next step' })).toBeVisible()
+
+  await textPage.goBack()
+  await expect(textPage.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await textPage.goForward()
+  await expect(textPage.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' })).toHaveAttribute('aria-current', 'step')
+  await textPage.getByRole('button', { name: 'Research lens' }).click()
+  const evidenceMap = textPage.getByRole('dialog', { name: 'Evidence map' })
+  await expect(evidenceMap).toBeVisible()
+  await expect(evidenceMap.getByRole('link', { name: /What is diabetes/ })).toHaveAttribute('href', /niddk\.nih\.gov/)
+  await textPage.close()
+})
+
 test('Atlas Wayfinder searches existing routes and arrives at the matched structure', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
