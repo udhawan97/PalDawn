@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788231167.4212728,
+    "mtime": 1788232722.9662764,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788232526.5637212,
-    "ast_hash": "653ea8d29ca095d0bba8733cc8a65d3c",
+    "mtime": 1788234883.8333116,
+    "ast_hash": "0e19f2683f787954b59b21c3a323e80c",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "app/public/sw.js": {
-    "mtime": 1788230977.4507077,
-    "ast_hash": "e0c4f705c988c3d4197db4fa88796c73",
+    "mtime": 1788234758.955589,
+    "ast_hash": "d01eb65974b052c89f2185c3e1ad6f10",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1788230982.2447824,
-    "ast_hash": "7226edd2c053477ced4ede9ed95786a9",
+    "mtime": 1788234609.6127622,
+    "ast_hash": "7b75c796031598ba1c42d2ca9de4f720",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -475,13 +475,13 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788232526.5634,
-    "ast_hash": "f1e6929d14b8a263fc074ac2884a6272",
+    "mtime": 1788234248.4730663,
+    "ast_hash": "e26ab1b4af1350f24940ab63a8b5b743",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1788230962.1569247,
-    "ast_hash": "d09f78cfe70f37593ac780ff92990ab2",
+    "mtime": 1788234632.9766872,
+    "ast_hash": "131cfd6e3930b68d0885c9992f583a4d",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788232526.564115,
-    "ast_hash": "a7ea904a3e05ad04317523c0d3c6d2c5",
+    "mtime": 1788234194.761858,
+    "ast_hash": "e6003d8817c62a86138a7ba2a2b6f5cc",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-QA.md": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788232449.2262287,
-    "ast_hash": "a96a6fcdcf8b4a1acc8ada4e5dfe6f31",
+    "mtime": 1788234883.8354583,
+    "ast_hash": "37d831fa52302cd41eaa349863555612",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {
@@ -790,13 +790,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-lifecycle.mjs": {
-    "mtime": 1788230800.5577948,
-    "ast_hash": "c5308717190bb6fbd6f74ab37b86f175",
+    "mtime": 1788234547.6553009,
+    "ast_hash": "0c204d5e750447df034aa087dc5eb8fd",
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788230761.4599512,
-    "ast_hash": "c6b49ad528b1fd62841fac9e0131cb7d",
+    "mtime": 1788234497.6615891,
+    "ast_hash": "d4d6a5f367b34aa1b7d3595f44153ffa",
     "semantic_hash": ""
   }
 }
