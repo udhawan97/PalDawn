@@ -126,6 +126,26 @@ await withModules(new MemoryStorage(), async (load, dispatchedEvents) => {
     dispatchedEvents.some(({ type, detail }) => type === 'paldawn:storage-failure' && detail?.key === JOURNEY_KEY),
     'rejected reads and writes must report their affected key',
   )
+  assert.deepEqual(localData.getLocalDataRecoveryState(), {
+    status: 'blocked',
+    reason: 'corrupt-receipt',
+  })
+  const normalExport = localData.exportLocalData()
+  assert.equal(normalExport.ok, false, 'a corrupt receipt must not produce a successful empty normal backup')
+  assert.equal(normalExport.error, 'recovery-required')
+  assert.deepEqual(normalExport.recovery, {
+    status: 'blocked',
+    reason: 'corrupt-receipt',
+  })
+  const rawExport = localData.exportRawLocalDataRecoveryBackup()
+  assert.equal(rawExport.ok, true)
+  const rawBackup = JSON.parse(rawExport.text)
+  assert.equal(rawBackup.importable, false)
+  assert.equal(rawBackup.records[JOURNEY_KEY], originalJourney)
+  assert.equal(rawBackup.records[BOOKMARKS_KEY], localStorage.getItem(BOOKMARKS_KEY))
+  assert.equal(rawBackup.records[WORKSPACE_KEY], localStorage.getItem(WORKSPACE_KEY))
+  assert.equal(rawBackup.metadata[RESET_KEY], originalToken)
+  assert.equal(rawBackup.metadata[RESET_PENDING_KEY], '{"schemaVersion":')
 
   const resetResult = localData.resetLocalData()
   assert.equal(resetResult.ok, true, 'an explicit reset may replace a corrupt fence')
@@ -193,7 +213,9 @@ await withModules(new MemoryStorage(), async (load) => {
 
 await withModules(new MemoryStorage(), async (load) => {
   const localData = await load('/src/platform/localData.ts?import')
-  assert.equal(JSON.parse(localData.exportLocalData()).schema_version, 2)
+  const exported = localData.exportLocalData()
+  assert.equal(exported.ok, true)
+  assert.equal(JSON.parse(exported.text).schema_version, 2)
   assert.equal(localData.parseLocalDataImport('{broken').ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 99, local_only: true })).ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 2, local_only: true })).ok, false)

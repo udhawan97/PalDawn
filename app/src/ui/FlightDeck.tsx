@@ -32,7 +32,8 @@ import {
   PALDAWN_WORKSPACE_KEY,
   MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
-  getPendingLocalDataRecovery,
+  exportRawLocalDataRecoveryBackup,
+  getLocalDataRecoveryState,
   loadLearnerWorkspace,
   loadStageBookmarks,
   parseLocalDataImport,
@@ -43,6 +44,7 @@ import {
   saveStageBookmarks,
   writeLocalStorageValue,
   type LearnerWorkspace,
+  type LocalDataRecoveryState,
   type LocalDataImportResult,
   type StorageFailureDetail,
 } from '../platform/localData'
@@ -704,11 +706,11 @@ function SettingsPanel({
   const restart = useExperience((state) => state.restart)
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
   const [confirmReset, setConfirmReset] = useState(false)
+  const [confirmBlockedReset, setConfirmBlockedReset] = useState(false)
   const [confirmRestart, setConfirmRestart] = useState(false)
   const [pendingImport, setPendingImport] = useState<Extract<LocalDataImportResult, { ok: true }> | null>(null)
-  const [pendingLocalDataRecovery, setPendingLocalDataRecovery] = useState<'reset' | 'import' | null>(
-    () => getPendingLocalDataRecovery()?.kind ?? null,
-  )
+  const [blockedRecoveryImport, setBlockedRecoveryImport] = useState<Extract<LocalDataImportResult, { ok: true }> | null>(null)
+  const [localDataRecovery, setLocalDataRecovery] = useState<LocalDataRecoveryState | null>(getLocalDataRecoveryState)
   const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
   const mounted = useRef(true)
@@ -720,10 +722,10 @@ function SettingsPanel({
   }, [])
 
   useLayoutEffect(() => {
-    if (!pendingLocalDataRecovery) return
+    if (!localDataRecovery) return
     const focusFrame = window.requestAnimationFrame(() => recoveryActionRef.current?.focus({ preventScroll: false }))
     return () => window.cancelAnimationFrame(focusFrame)
-  }, [pendingLocalDataRecovery])
+  }, [localDataRecovery])
 
   const reportStatus = (status: string) => {
     if (mounted.current) setStatus(status)
@@ -765,21 +767,124 @@ function SettingsPanel({
     window.location.reload()
   }
 
+  const inspectBackup = (
+    file: File,
+    setResult: (result: Extract<LocalDataImportResult, { ok: true }> | null) => void,
+    readyMessage: string,
+  ) => {
+    void file.text().then((text) => {
+      const result = parseLocalDataImport(text)
+      if (!result.ok) {
+        setResult(null)
+        reportStatus(result.error)
+        return
+      }
+      setResult(result)
+      reportStatus(readyMessage)
+    }).catch(() => {
+      setResult(null)
+      reportStatus('That backup could not be read.')
+    })
+  }
+
+  const handleRecoveryFailure = (recovery: LocalDataRecoveryState | null, message: string) => {
+    if (recovery?.status === 'pending') {
+      setLocalDataRecovery(recovery)
+      reportStatus('')
+      return
+    }
+    setLocalDataRecovery(getLocalDataRecoveryState())
+    reportStatus(message)
+  }
+
   return (
     <>
-      {pendingLocalDataRecovery ? (
+      {localDataRecovery?.status === 'pending' ? (
         <aside className="persistence-warning local-data-recovery" role="alert" aria-labelledby="local-data-recovery-title">
           <strong id="local-data-recovery-title">Reload required to finish local-data recovery.</strong>
           <p>
-            {pendingLocalDataRecovery === 'reset'
+            {localDataRecovery.kind === 'reset'
               ? 'PalDawn saved and verified a recovery plan that will finish clearing the local records selected by reset.'
               : 'PalDawn saved and verified a recovery plan that will finish replacing local records with the validated backup preview.'}{' '}
             Settings and local-data actions are disabled until recovery finishes. Reload this tab now; if it closes first, recovery resumes the next time PalDawn opens.
           </p>
           <button ref={recoveryActionRef} type="button" onClick={finishLocalDataRecovery}>Reload to finish recovery</button>
         </aside>
+      ) : localDataRecovery?.status === 'blocked' ? (
+        <aside className="persistence-warning local-data-recovery" role="alert" aria-labelledby="local-data-recovery-title">
+          <strong id="local-data-recovery-title">Local data recovery is blocked.</strong>
+          <p>
+            PalDawn found a damaged recovery receipt. The opaque local records are preserved unchanged, but PalDawn cannot safely read them as learner data. Normal settings, export, import, and reset actions are locked so those records are not reported as empty or overwritten by accident.
+          </p>
+          <div className="panel-actions">
+            <button ref={recoveryActionRef} type="button" onClick={() => {
+              const outcome = exportRawLocalDataRecoveryBackup()
+              if (!outcome.ok) {
+                reportStatus('PalDawn could not read a stable raw recovery snapshot. Keep this page open and restore browser storage before retrying.')
+                return
+              }
+              downloadText('paldawn-raw-recovery-backup.json', outcome.text, 'application/json')
+              reportStatus('Raw recovery backup downloaded. It preserves opaque stored values and is not a normal PalDawn import.')
+            }}>Download raw recovery backup</button>
+            {confirmBlockedReset ? (
+              <button className="danger-action" type="button" onClick={() => {
+                const outcome = resetLocalData()
+                if (!outcome.ok) {
+                  handleRecoveryFailure(outcome.recoveryPending, 'PalDawn could not verify the deliberate clear. Preserved raw records remain protected; restore browser storage before retrying.')
+                  return
+                }
+                finishLocalDataRecovery()
+              }}>Confirm permanent clear</button>
+            ) : (
+              <button className="danger-action" type="button" onClick={() => setConfirmBlockedReset(true)}>Clear preserved local data</button>
+            )}
+            {confirmBlockedReset ? <button type="button" onClick={() => setConfirmBlockedReset(false)}>Cancel clear</button> : null}
+          </div>
+          {confirmBlockedReset ? (
+            <p><strong>Permanent action.</strong> Confirm only if you intend to permanently clear the preserved opaque records and start with empty local data.</p>
+          ) : null}
+          <div className="local-import">
+            <label className="file-action" htmlFor="local-data-recovery-import">
+              Choose a backup for deliberate replacement
+              <input
+                id="local-data-recovery-import"
+                type="file"
+                accept="application/json,.json"
+                onChange={(event) => {
+                  const file = event.target.files?.[0]
+                  event.target.value = ''
+                  if (file) inspectBackup(file, setBlockedRecoveryImport, 'Backup validated for deliberate recovery. Review the destructive replacement preview.')
+                }}
+              />
+            </label>
+            {blockedRecoveryImport ? (
+              <section className="import-preview" aria-labelledby="destructive-import-preview-title">
+                <h4 id="destructive-import-preview-title">Destructive replacement preview</h4>
+                <p>
+                  {blockedRecoveryImport.preview.progressPercent}% route progress · {blockedRecoveryImport.preview.bookmarkCount} saved stages ·{' '}
+                  {blockedRecoveryImport.preview.noteCount} private notes · {blockedRecoveryImport.preview.checkpointCount} personal checkpoints ·{' '}
+                  {blockedRecoveryImport.preview.hasSettings ? 'preferences included' : 'no preferences'}. Confirming will replace every preserved opaque record with this validated backup.
+                </p>
+                <div className="panel-actions">
+                  <button className="danger-action" type="button" onClick={() => {
+                    const outcome = replaceLocalDataFromImport(blockedRecoveryImport.data)
+                    if (!outcome.ok) {
+                      handleRecoveryFailure(outcome.recoveryPending, 'PalDawn could not verify the deliberate replacement. Preserved raw records remain protected; restore browser storage before retrying.')
+                      return
+                    }
+                    finishLocalDataRecovery()
+                  }}>Confirm replace preserved local data</button>
+                  <button type="button" onClick={() => {
+                    setBlockedRecoveryImport(null)
+                    reportStatus('Destructive replacement cancelled. Preserved raw records remain unchanged.')
+                  }}>Cancel replacement</button>
+                </div>
+              </section>
+            ) : null}
+          </div>
+        </aside>
       ) : null}
-      <fieldset className="settings-recovery-lock" disabled={pendingLocalDataRecovery !== null}>
+      <fieldset className="settings-recovery-lock" disabled={localDataRecovery !== null}>
         <legend className="sr-only">Settings and local-data actions</legend>
       <p className="panel-kicker">Display and comfort</p>
       <h2 id="panel-title">Flight settings</h2>
@@ -867,7 +972,13 @@ function SettingsPanel({
         <p>Only display preferences, one First Light resume position, saved stage IDs, private notes, and personal checkpoints are stored.</p>
         <div className="panel-actions">
           <button type="button" onClick={() => {
-            downloadText('paldawn-local-data.json', exportLocalData(), 'application/json')
+            const outcome = exportLocalData()
+            if (!outcome.ok) {
+              if (outcome.recovery) setLocalDataRecovery(outcome.recovery)
+              reportStatus('PalDawn could not verify a normal local-data backup. No empty or partial backup was downloaded.')
+              return
+            }
+            downloadText('paldawn-local-data.json', outcome.text, 'application/json')
             reportStatus('Local data downloaded.')
           }}>Download local data</button>
           {confirmReset ? (
@@ -875,7 +986,7 @@ function SettingsPanel({
               const outcome = resetLocalData()
               if (!outcome.ok) {
                 if (outcome.recoveryPending) {
-                  setPendingLocalDataRecovery(outcome.recoveryPending.kind)
+                  setLocalDataRecovery(outcome.recoveryPending)
                   setStatus('')
                   return
                 }
@@ -904,19 +1015,7 @@ function SettingsPanel({
                 const file = event.target.files?.[0]
                 event.target.value = ''
                 if (!file) return
-                void file.text().then((text) => {
-                  const result = parseLocalDataImport(text)
-                  if (!result.ok) {
-                    setPendingImport(null)
-                    reportStatus(result.error)
-                    return
-                  }
-                  setPendingImport(result)
-                  reportStatus('Backup validated. Review the preview before replacing local data.')
-                }).catch(() => {
-                  setPendingImport(null)
-                  reportStatus('That backup could not be read.')
-                })
+                inspectBackup(file, setPendingImport, 'Backup validated. Review the preview before replacing local data.')
               }}
             />
           </label>
@@ -933,7 +1032,7 @@ function SettingsPanel({
                   const outcome = replaceLocalDataFromImport(pendingImport.data)
                   if (!outcome.ok) {
                     if (outcome.recoveryPending) {
-                      setPendingLocalDataRecovery(outcome.recoveryPending.kind)
+                      setLocalDataRecovery(outcome.recoveryPending)
                       reportStatus('')
                       return
                     }

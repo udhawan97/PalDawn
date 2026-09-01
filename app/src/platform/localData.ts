@@ -80,9 +80,27 @@ export type ReplaceLocalDataResult =
   | { ok: false; error: 'storage-unavailable' | 'replace-not-verified'; recoveryPending: PendingLocalDataRecovery | null }
 
 export type PendingLocalDataRecovery = {
+  status: 'pending'
   kind: 'reset' | 'import'
   token: string
 }
+
+export type LocalDataRecoveryState = PendingLocalDataRecovery | {
+  status: 'blocked'
+  reason: 'corrupt-receipt'
+}
+
+export type LocalDataExportResult =
+  | { ok: true; text: string }
+  | {
+    ok: false
+    error: 'data-not-readable' | 'recovery-required' | 'storage-unavailable'
+    recovery: LocalDataRecoveryState | null
+  }
+
+export type RawLocalDataRecoveryExportResult =
+  | { ok: true; text: string }
+  | { ok: false; error: 'recovery-not-blocked' | 'storage-unavailable' }
 
 const LOCAL_DATA_KEY_LIST = [
   PALDAWN_SETTINGS_KEY,
@@ -247,15 +265,25 @@ const pendingFenceIsActive = (
   committedReset: string | null,
 ): boolean => rawPending !== null && parsePendingTransaction(rawPending)?.token !== committedReset
 
-export function getPendingLocalDataRecovery(): PendingLocalDataRecovery | null {
+const localDataRecoveryState = (
+  rawPending: string | null,
+  committedReset: string | null,
+): LocalDataRecoveryState | null => {
+  if (rawPending === null) return null
+  const pending = parsePendingTransaction(rawPending)
+  if (!pending) return { status: 'blocked', reason: 'corrupt-receipt' }
+  return pending.token !== committedReset
+    ? { status: 'pending', kind: pending.kind, token: pending.token }
+    : null
+}
+
+export function getLocalDataRecoveryState(): LocalDataRecoveryState | null {
   const localStorage = storage()
   if (!localStorage) return null
   try {
-    const pending = parsePendingTransaction(localStorage.getItem(PALDAWN_RESET_PENDING_KEY))
+    const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
     const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
-    return pending && pending.token !== committedReset
-      ? { kind: pending.kind, token: pending.token }
-      : null
+    return localDataRecoveryState(rawPending, committedReset)
   } catch {
     return null
   }
@@ -615,7 +643,8 @@ const executeLocalDataTransaction = (
     reportStorageFailure(PALDAWN_RESET_KEY)
     let recoveryPending: PendingLocalDataRecovery | null = null
     try {
-      recoveryPending = getPendingLocalDataRecovery()
+      const recovery = getLocalDataRecoveryState()
+      recoveryPending = recovery?.status === 'pending' ? recovery : null
     } catch {
       // Without a readable durable receipt the UI must not promise reload recovery.
     }
@@ -643,15 +672,95 @@ export function replaceLocalDataFromImport(data: LocalDataImport): ReplaceLocalD
     : { ok: false, error: 'replace-not-verified', recoveryPending: outcome.recoveryPending }
 }
 
-export function exportLocalData(): string {
-  return JSON.stringify({
-    schema_version: 2,
-    local_only: true,
-    settings: readJson(PALDAWN_SETTINGS_KEY),
-    journey: readJson(PALDAWN_JOURNEY_KEY),
-    bookmarks: readJson(PALDAWN_BOOKMARKS_KEY),
-    workspace: readJson(PALDAWN_WORKSPACE_KEY),
-  }, null, 2)
+export function exportLocalData(): LocalDataExportResult {
+  const localStorage = storage()
+  if (!localStorage) {
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return { ok: false, error: 'storage-unavailable', recovery: null }
+  }
+  try {
+    const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
+    const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
+    const recovery = localDataRecoveryState(rawPending, committedReset)
+    if (recovery) {
+      reportStorageFailure(PALDAWN_RESET_KEY)
+      return { ok: false, error: 'recovery-required', recovery }
+    }
+
+    const parsed = {} as Record<LocalDataKey, unknown>
+    for (const key of LOCAL_DATA_KEY_LIST) {
+      const raw = localStorage.getItem(key)
+      if (raw === null) {
+        parsed[key] = null
+        continue
+      }
+      if (committedReset !== null && valueGeneration(raw) !== committedReset) {
+        reportStorageFailure(key)
+        return { ok: false, error: 'data-not-readable', recovery: null }
+      }
+      try {
+        parsed[key] = JSON.parse(raw)
+      } catch {
+        reportStorageFailure(key)
+        return { ok: false, error: 'data-not-readable', recovery: null }
+      }
+    }
+
+    if (localStorage.getItem(PALDAWN_RESET_KEY) !== committedReset ||
+      localStorage.getItem(PALDAWN_RESET_PENDING_KEY) !== rawPending) {
+      reportStorageFailure(PALDAWN_RESET_KEY)
+      return { ok: false, error: 'data-not-readable', recovery: getLocalDataRecoveryState() }
+    }
+
+    return {
+      ok: true,
+      text: JSON.stringify({
+        schema_version: 2,
+        local_only: true,
+        settings: parsed[PALDAWN_SETTINGS_KEY],
+        journey: parsed[PALDAWN_JOURNEY_KEY],
+        bookmarks: parsed[PALDAWN_BOOKMARKS_KEY],
+        workspace: parsed[PALDAWN_WORKSPACE_KEY],
+      }, null, 2),
+    }
+  } catch {
+    reportStorageFailure(PALDAWN_RESET_KEY)
+    return { ok: false, error: 'storage-unavailable', recovery: null }
+  }
+}
+
+export function exportRawLocalDataRecoveryBackup(): RawLocalDataRecoveryExportResult {
+  const localStorage = storage()
+  if (!localStorage) return { ok: false, error: 'storage-unavailable' }
+  try {
+    const committedReset = localStorage.getItem(PALDAWN_RESET_KEY)
+    const rawPending = localStorage.getItem(PALDAWN_RESET_PENDING_KEY)
+    if (localDataRecoveryState(rawPending, committedReset)?.status !== 'blocked') {
+      return { ok: false, error: 'recovery-not-blocked' }
+    }
+    const records = Object.fromEntries(LOCAL_DATA_KEY_LIST.map((key) => [key, localStorage.getItem(key)]))
+    if (localStorage.getItem(PALDAWN_RESET_KEY) !== committedReset ||
+      localStorage.getItem(PALDAWN_RESET_PENDING_KEY) !== rawPending) {
+      return { ok: false, error: 'storage-unavailable' }
+    }
+    return {
+      ok: true,
+      text: JSON.stringify({
+        artifact_type: 'paldawn-opaque-local-data-recovery',
+        schema_version: 1,
+        local_only: true,
+        importable: false,
+        warning: 'Opaque recovery artifact. Stored values are unparsed and unverified. This is not a normal PalDawn local-data backup and cannot be imported directly.',
+        records,
+        metadata: {
+          [PALDAWN_RESET_KEY]: committedReset,
+          [PALDAWN_RESET_PENDING_KEY]: rawPending,
+        },
+      }, null, 2),
+    }
+  } catch {
+    return { ok: false, error: 'storage-unavailable' }
+  }
 }
 
 export function resetLocalData(): ResetLocalDataResult {

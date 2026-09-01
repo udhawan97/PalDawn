@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
 const JOURNEY_KEY = 'paldawn:journey:v1'
@@ -524,13 +525,51 @@ test('a corrupt transaction fence preserves records until explicit recovery', as
   expect(before.workspace).not.toBeNull()
 
   await page.getByRole('button', { name: 'Settings' }).click()
-  await page.getByLabel('Quality tier').selectOption('low')
-  await expect(page.getByText(/preference changed for this tab, but browser storage is unavailable/)).toBeVisible()
-  expect(await page.evaluate((key) => localStorage.getItem(key), SETTINGS_KEY)).toBe(before.settings)
+  const blockedAlert = page.getByRole('alert').filter({ hasText: 'Local data recovery is blocked.' })
+  await expect(blockedAlert).toContainText('damaged recovery receipt')
+  await expect(page.getByRole('button', { name: 'Download local data' })).toBeDisabled()
+  await expect(page.locator('#local-data-import')).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Reset local data' })).toBeDisabled()
+  await expect(page.getByLabel('Quality tier')).toBeDisabled()
 
-  await page.getByRole('button', { name: 'Reset local data' }).click()
+  const rawDownloadEvent = page.waitForEvent('download')
+  await blockedAlert.getByRole('button', { name: 'Download raw recovery backup' }).click()
+  const rawDownload = await rawDownloadEvent
+  expect(rawDownload.suggestedFilename()).toBe('paldawn-raw-recovery-backup.json')
+  const rawBackup = JSON.parse(await readFile(await rawDownload.path(), 'utf8'))
+  expect(rawBackup).toMatchObject({
+    artifact_type: 'paldawn-opaque-local-data-recovery',
+    schema_version: 1,
+    local_only: true,
+    importable: false,
+  })
+  expect(rawBackup.records).toEqual({
+    [SETTINGS_KEY]: before.settings,
+    [JOURNEY_KEY]: before.journey,
+    [BOOKMARKS_KEY]: before.bookmarks,
+    [WORKSPACE_KEY]: before.workspace,
+  })
+  expect(rawBackup.metadata).toEqual({
+    [RESET_KEY]: 'generation-before-corrupt-fence',
+    [RESET_PENDING_KEY]: '{"schemaVersion":',
+  })
+  expect(rawBackup).not.toHaveProperty('settings')
+  await expect(page.getByText(/Raw recovery backup downloaded.*not a normal PalDawn import/i)).toBeVisible()
+
+  expect(await page.evaluate(({ journeyKey, pendingKey, settingsKey }) => ({
+    journey: localStorage.getItem(journeyKey),
+    pending: localStorage.getItem(pendingKey),
+    settings: localStorage.getItem(settingsKey),
+  }), { journeyKey: JOURNEY_KEY, pendingKey: RESET_PENDING_KEY, settingsKey: SETTINGS_KEY })).toEqual({
+    journey: before.journey,
+    pending: '{"schemaVersion":',
+    settings: before.settings,
+  })
+
+  await blockedAlert.getByRole('button', { name: 'Clear preserved local data' }).click()
+  await expect(blockedAlert).toContainText('permanently clear the preserved opaque records')
   const reloaded = page.waitForEvent('load')
-  await page.getByRole('button', { name: 'Confirm reset' }).click()
+  await blockedAlert.getByRole('button', { name: 'Confirm permanent clear' }).click()
   await reloaded
   const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
     bookmarks: localStorage.getItem(bookmarksKey),
@@ -552,6 +591,53 @@ test('a corrupt transaction fence preserves records until explicit recovery', as
   expect(recovered.bookmarks).toBeNull()
   expect(recovered.workspace).toBeNull()
   expect(recovered.pending).toMatchObject({ token: recovered.reset, kind: 'reset' })
+})
+
+test('a corrupt transaction fence can be deliberately replaced by a validated backup', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.addInitScript(({ journeyKey, pendingKey, resetKey, settingsKey }) => {
+    if (sessionStorage.getItem('paldawn:test:corrupt-import-fence-seeded')) return
+    sessionStorage.setItem('paldawn:test:corrupt-import-fence-seeded', 'true')
+    const token = 'generation-before-corrupt-import-recovery'
+    localStorage.setItem(resetKey, token)
+    localStorage.setItem(settingsKey, JSON.stringify({ state: { qualityTier: 'high' }, version: 1, resetToken: token }))
+    localStorage.setItem(journeyKey, JSON.stringify({ progress: 0.19, narrationMode: 'guide', resetToken: token }))
+    localStorage.setItem(pendingKey, '{"schemaVersion":')
+  }, { journeyKey: JOURNEY_KEY, pendingKey: RESET_PENDING_KEY, resetKey: RESET_KEY, settingsKey: SETTINGS_KEY })
+
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  const blockedAlert = page.getByRole('alert').filter({ hasText: 'Local data recovery is blocked.' })
+  await blockedAlert.locator('#local-data-recovery-import').setInputFiles({
+    name: 'paldawn-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(importedBackup()),
+  })
+  await expect(blockedAlert.getByRole('heading', { name: 'Destructive replacement preview' })).toBeVisible()
+  await expect(blockedAlert).toContainText('61% route progress')
+  await expect(blockedAlert).toContainText('will replace every preserved opaque record')
+
+  const reloaded = page.waitForEvent('load')
+  await blockedAlert.getByRole('button', { name: 'Confirm replace preserved local data' }).click()
+  await reloaded
+
+  const recovered = await page.evaluate(({ journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
+    journey: JSON.parse(localStorage.getItem(journeyKey)),
+    pending: JSON.parse(localStorage.getItem(pendingKey)),
+    reset: localStorage.getItem(resetKey),
+    settings: JSON.parse(localStorage.getItem(settingsKey)),
+    workspace: JSON.parse(localStorage.getItem(workspaceKey)),
+  }), {
+    journeyKey: JOURNEY_KEY,
+    pendingKey: RESET_PENDING_KEY,
+    resetKey: RESET_KEY,
+    settingsKey: SETTINGS_KEY,
+    workspaceKey: WORKSPACE_KEY,
+  })
+  expect(recovered.pending).toMatchObject({ token: recovered.reset, kind: 'import' })
+  expect(recovered.journey).toMatchObject({ progress: 0.61, narrationMode: 'engineering', resetToken: recovered.reset })
+  expect(recovered.settings).toMatchObject({ state: { qualityTier: 'low' }, resetToken: recovered.reset })
+  expect(recovered.workspace).toMatchObject({ notes: { portal: 'Imported private note' }, resetToken: recovered.reset })
 })
 
 test('two-tab import publishes only its fully verified committed generation', async ({ page }) => {
