@@ -6,12 +6,15 @@ const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
 const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
 const UPDATE_CANCEL_MESSAGE = 'PALDAWN_CANCEL_UPDATE'
 const UPDATE_RELOAD_MESSAGE = 'PALDAWN_REQUEST_RELOAD'
+const UPDATE_COMMITTED_MESSAGE = 'PALDAWN_UPDATE_COMMITTED'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
 const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const LEGACY_UPDATE_MESSAGE = 'SKIP_WAITING'
 const UPDATE_REQUEST_URL = new URL('./.paldawn-update-request', self.registration.scope).href
 const PREPARE_TIMEOUT_MS = 4_000
 let pendingPreparation = null
+let activeUpdateAttemptId = null
+let committedRequestId = null
 const cancelledRequests = new Set()
 const SHELL = [
   './',
@@ -45,30 +48,50 @@ self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME)
     const updateRequestResponse = await cache.match(UPDATE_REQUEST_URL)
-    let requestId = null
+    let updateRequest = null
     if (updateRequestResponse) {
       try {
-        const updateRequest = await updateRequestResponse.json()
-        if (typeof updateRequest.requestId === 'string' && updateRequest.requestId.length > 0 && updateRequest.requestId.length <= 128) {
-          requestId = updateRequest.requestId
-        }
+        const candidate = await updateRequestResponse.json()
+        if (validRequestId(candidate.requestId) && validClientIds(candidate.clientIds)) updateRequest = candidate
       } catch {
         // An invalid marker must not turn a first install into a reload loop.
       }
     }
 
-    const names = await caches.keys()
-    const stalePalDawnCaches = names.filter((name) =>
-      name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
-    await Promise.all(stalePalDawnCaches.map((name) => caches.delete(name)))
-    await self.clients.claim()
-
-    if (requestId) {
-      const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true })
-      for (const client of windows) {
-        client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId })
+    if (updateRequest) {
+      committedRequestId = updateRequest.requestId
+      const beforeClaim = await scopedWindows()
+      notifyCommitted(updateRequest.requestId, beforeClaim)
+      if (!sameClientIds(beforeClaim, updateRequest.clientIds)) {
+        await self.clients.claim()
+        await notifyBlocked(updateRequest.requestId, 'changed', beforeClaim)
+        committedRequestId = null
+        await cache.delete(UPDATE_REQUEST_URL)
+        return
       }
+
+      await self.clients.claim()
+      const beforeCleanup = await scopedWindows()
+      if (!sameClientIds(beforeCleanup, updateRequest.clientIds)) {
+        await notifyBlocked(updateRequest.requestId, 'changed', mergeClients(beforeClaim, beforeCleanup))
+        committedRequestId = null
+        await cache.delete(UPDATE_REQUEST_URL)
+        return
+      }
+
+      notifyCommitted(updateRequest.requestId, beforeCleanup)
+      // PALDAWN_ACTIVATION_CACHE_COMMIT: browser acceptance delays this boundary.
+      await deleteStalePalDawnCaches()
+      for (const client of beforeCleanup) {
+        client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId: updateRequest.requestId })
+      }
+      committedRequestId = null
+      await cache.delete(UPDATE_REQUEST_URL)
+      return
     }
+
+    await deleteStalePalDawnCaches()
+    await self.clients.claim()
     if (updateRequestResponse) {
       await cache.delete(UPDATE_REQUEST_URL)
     }
@@ -77,6 +100,11 @@ self.addEventListener('activate', (event) => {
 
 const validRequestId = (value) =>
   typeof value === 'string' && value.length > 0 && value.length <= 128
+
+const validClientIds = (value) =>
+  Array.isArray(value) && value.length > 0 && value.length <= 64 &&
+  value.every((id) => typeof id === 'string' && id.length > 0 && id.length <= 256) &&
+  new Set(value).size === value.length
 
 const updateRequestId = () => {
   try {
@@ -113,6 +141,19 @@ const mergeClients = (...groups) => {
     for (const client of group) clients.set(client.id, client)
   }
   return [...clients.values()]
+}
+
+const deleteStalePalDawnCaches = async () => {
+  const names = await caches.keys()
+  const stalePalDawnCaches = names.filter((name) =>
+    name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
+  await Promise.all(stalePalDawnCaches.map((name) => caches.delete(name)))
+}
+
+const notifyCommitted = (requestId, clients) => {
+  for (const client of clients) {
+    client.postMessage({ type: UPDATE_COMMITTED_MESSAGE, requestId })
+  }
 }
 
 const notifyBlocked = async (requestId, reason, clients = null) => {
@@ -171,9 +212,28 @@ const handleLegacyRequest = async (event) => {
   await notifyBlocked(requestId, 'legacy', [event.source])
 }
 
-const handleCancelRequest = (event) => {
+const handleCancelRequest = async (event) => {
   const requestId = event.data?.requestId
   if (!validRequestId(requestId) || !scopedClient(event.source)) return
+
+  if (committedRequestId === requestId) {
+    notifyCommitted(requestId, [event.source])
+    return
+  }
+  if (activeUpdateAttemptId !== requestId) {
+    try {
+      const cache = await caches.open(CACHE_NAME)
+      const markerResponse = await cache.match(UPDATE_REQUEST_URL)
+      const marker = markerResponse ? await markerResponse.json() : null
+      if (marker && marker.requestId === requestId && validClientIds(marker.clientIds)) {
+        committedRequestId = requestId
+        notifyCommitted(requestId, [event.source])
+        return
+      }
+    } catch {
+      // A corrupt or unavailable marker is not evidence that activation committed.
+    }
+  }
   cancelledRequests.add(requestId)
   if (cancelledRequests.size > 16) cancelledRequests.delete(cancelledRequests.values().next().value)
   if (pendingPreparation?.requestId === requestId) {
@@ -191,15 +251,26 @@ const handleUpdateRequest = async (event) => {
   const requestId = event.data?.requestId
   if (!validRequestId(requestId) || !scopedClient(event.source)) return
 
-  const prepared = await prepareClients(requestId)
-  if (!prepared.ready) {
-    cancelledRequests.delete(requestId)
-    await notifyBlocked(requestId, prepared.reason, prepared.windows)
+  if (committedRequestId) {
+    notifyCommitted(committedRequestId, [event.source])
     return
   }
+  if (activeUpdateAttemptId && activeUpdateAttemptId !== requestId) {
+    await notifyBlocked(requestId, 'busy', [event.source])
+    return
+  }
+  activeUpdateAttemptId = requestId
 
+  let prepared = null
   let cache = null
   try {
+    prepared = await prepareClients(requestId)
+    if (!prepared.ready) {
+      cancelledRequests.delete(requestId)
+      await notifyBlocked(requestId, prepared.reason, prepared.windows)
+      return
+    }
+
     cache = await caches.open(CACHE_NAME)
     const beforeMarker = await scopedWindows()
     const markerFailure = preparedClientFailure(requestId, prepared, beforeMarker)
@@ -208,7 +279,10 @@ const handleUpdateRequest = async (event) => {
       return
     }
 
-    await cache.put(UPDATE_REQUEST_URL, new Response(JSON.stringify({ requestId }), {
+    await cache.put(UPDATE_REQUEST_URL, new Response(JSON.stringify({
+      requestId,
+      clientIds: prepared.clientIds,
+    }), {
       headers: { 'content-type': 'application/json' },
     }))
 
@@ -219,11 +293,16 @@ const handleUpdateRequest = async (event) => {
       await notifyBlocked(requestId, activationFailure, mergeClients(prepared.windows, beforeActivation))
       return
     }
-    await self.skipWaiting()
+    committedRequestId = requestId
+    const activation = self.skipWaiting()
+    notifyCommitted(requestId, beforeActivation)
+    await activation
   } catch {
+    committedRequestId = null
     if (cache) await cache.delete(UPDATE_REQUEST_URL)
-    await notifyBlocked(requestId, 'failed', prepared.windows)
+    await notifyBlocked(requestId, 'failed', prepared?.windows ?? [event.source])
   } finally {
+    activeUpdateAttemptId = null
     cancelledRequests.delete(requestId)
   }
 }
@@ -246,10 +325,17 @@ const handleReloadRequest = async (event) => {
       await notifyBlocked(requestId, reloadFailure, mergeClients(prepared.windows, beforeReload))
       return
     }
+    committedRequestId = requestId
+    notifyCommitted(requestId, beforeReload)
     for (const client of beforeReload) {
       client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId })
     }
+    committedRequestId = null
+    const cache = await caches.open(CACHE_NAME)
+    await cache.delete(UPDATE_REQUEST_URL)
+    await deleteStalePalDawnCaches()
   } catch {
+    committedRequestId = null
     await notifyBlocked(requestId, 'failed', prepared.windows)
   } finally {
     cancelledRequests.delete(requestId)
@@ -266,7 +352,7 @@ self.addEventListener('message', (event) => {
     return
   }
   if (event.data?.type === UPDATE_CANCEL_MESSAGE) {
-    handleCancelRequest(event)
+    event.waitUntil(handleCancelRequest(event))
     return
   }
   if (event.data?.type === UPDATE_REQUEST_MESSAGE) {

@@ -7,6 +7,7 @@ const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
 const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
 const UPDATE_CANCEL_MESSAGE = 'PALDAWN_CANCEL_UPDATE'
 const UPDATE_RELOAD_MESSAGE = 'PALDAWN_REQUEST_RELOAD'
+const UPDATE_COMMITTED_MESSAGE = 'PALDAWN_UPDATE_COMMITTED'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
 const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
@@ -15,6 +16,7 @@ const ACTIVATION_WATCHDOG_MS = 6_000
 const updatePreparations = new Set<() => boolean | Promise<boolean>>()
 const abandonedUpdateRequests = new Set<string>()
 let activeUpdateRequestId: string | null = null
+let committedUpdateRequestId: string | null = null
 let activationWatchdog: number | null = null
 
 interface BeforeInstallPromptEvent extends Event {
@@ -67,6 +69,7 @@ const clearActivationWatchdog = (): void => {
 const dispatchUpdateBlocked = (requestId: string, reason: PwaUpdateBlockReason): void => {
   clearActivationWatchdog()
   activeUpdateRequestId = null
+  committedUpdateRequestId = null
   setUpdateHandoff(false)
   window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
     detail: { requestId, reason },
@@ -83,6 +86,7 @@ const watchForActivation = (worker: ServiceWorker, requestId: string): void => {
   clearActivationWatchdog()
   activationWatchdog = window.setTimeout(() => {
     if (activeUpdateRequestId !== requestId) return
+    if (committedUpdateRequestId === requestId) return
     abandonedUpdateRequests.add(requestId)
     if (abandonedUpdateRequests.size > 8) {
       abandonedUpdateRequests.delete(abandonedUpdateRequests.values().next().value as string)
@@ -156,6 +160,14 @@ export function registerPwa(): void {
 
     if (data.type === UPDATE_PREPARE_MESSAGE) {
       if (abandonedUpdateRequests.has(requestId)) return
+      if (committedUpdateRequestId) {
+        event.source.postMessage({
+          type: UPDATE_PREPARED_MESSAGE,
+          requestId,
+          ready: committedUpdateRequestId === requestId,
+        })
+        return
+      }
       if (activeUpdateRequestId && activeUpdateRequestId !== requestId) {
         event.source.postMessage({ type: UPDATE_PREPARED_MESSAGE, requestId, ready: false })
         return
@@ -163,20 +175,42 @@ export function registerPwa(): void {
       void prepareUpdate(event.source, requestId)
       return
     }
+    if (data.type === UPDATE_COMMITTED_MESSAGE) {
+      abandonedUpdateRequests.delete(requestId)
+      clearActivationWatchdog()
+      committedUpdateRequestId = requestId
+      activeUpdateRequestId = requestId
+      setUpdateHandoff(true)
+      window.dispatchEvent(new CustomEvent('paldawn:update-preparing', { detail: { requestId } }))
+      return
+    }
     if (data.type === UPDATE_BLOCKED_MESSAGE) {
       const reason = data.reason
       if (!['activation-timeout', 'busy', 'changed', 'failed', 'late', 'legacy', 'timeout', 'unsaved'].includes(reason)) return
-      if (activeUpdateRequestId !== requestId) return
+      if (committedUpdateRequestId === requestId) {
+        window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
+          detail: { requestId, reason },
+        }))
+        return
+      }
+      if (activeUpdateRequestId && activeUpdateRequestId !== requestId) return
+      if (activeUpdateRequestId !== requestId && !abandonedUpdateRequests.has(requestId)) return
+      abandonedUpdateRequests.delete(requestId)
       dispatchUpdateBlocked(requestId, reason)
       return
     }
     if (data.type === UPDATE_ACTIVATED_MESSAGE) {
-      if (abandonedUpdateRequests.has(requestId)) {
-        abandonedUpdateRequests.delete(requestId)
-        return
-      }
-      if (activeUpdateRequestId !== requestId) return
+      if (event.source !== navigator.serviceWorker.controller) return
+      if (
+        committedUpdateRequestId !== requestId &&
+        activeUpdateRequestId !== requestId &&
+        !abandonedUpdateRequests.has(requestId)
+      ) return
+      abandonedUpdateRequests.delete(requestId)
       clearActivationWatchdog()
+      committedUpdateRequestId = requestId
+      activeUpdateRequestId = requestId
+      setUpdateHandoff(true)
       if (!consumeUpdateReload(requestId)) return
       window.location.reload()
     }

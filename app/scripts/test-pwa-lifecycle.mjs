@@ -15,6 +15,7 @@ export async function runPwaLifecycleTests() {
   let claimCount = 0
   let skipWaitingCount = 0
   let afterCachePut = null
+  let onSkipWaiting = null
 
   const scheduleTimeout = (callback) => {
     const id = nextTimerId++
@@ -69,7 +70,10 @@ export async function runPwaLifecycleTests() {
     },
     location: { origin: 'https://example.test' },
     registration: { scope: 'https://example.test/PalDawn/' },
-    skipWaiting: async () => { skipWaitingCount += 1 },
+    skipWaiting: async () => {
+      skipWaitingCount += 1
+      await onSkipWaiting?.()
+    },
   }
 
   vm.runInNewContext(serviceWorkerSource, {
@@ -263,6 +267,43 @@ export async function runPwaLifecycleTests() {
   ], 'a watchdog cancellation must restore every prepared client with an actionable result')
 
   clientMessages.forEach((messages) => messages.splice(0))
+  const activationChangedRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-activation-changed' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  for (const client of clients) {
+    await dispatch('message', {
+      data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-activation-changed', ready: true },
+      source: client,
+    })
+  }
+  await activationChangedRequest
+  assert.equal(skipWaitingCount, 1, 'a fully prepared request may enter the committed phase')
+
+  await openCache('paldawn-foundation-preserved-on-mismatch')
+  currentClients = [...clients, changedClient]
+  await dispatch('activate')
+  assert.equal(claimCount, 2, 'a newly active worker must claim clients before reporting an activation fence mismatch')
+  assert.equal(cacheBuckets.has('paldawn-foundation-preserved-on-mismatch'), true, 'an activation client-set mismatch must preserve the previous cache')
+  assert.deepEqual([
+    ...clientMessages.map((messages) => messages.at(-1)),
+    changedClientMessages.at(-1),
+  ], [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-activation-changed', reason: 'changed' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-activation-changed', reason: 'changed' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-activation-changed', reason: 'changed' },
+  ], 'activation must fail closed when the persisted prepared client set changes')
+
+  currentClients = clients
+  clientMessages.forEach((messages) => messages.splice(0))
+  changedClientMessages.splice(0)
+  onSkipWaiting = async () => {
+    await dispatch('message', {
+      data: { type: 'PALDAWN_CANCEL_UPDATE', requestId: 'request-3' },
+      source: clients[0],
+    })
+  }
   const acceptedRequest = dispatch('message', {
     data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-3' },
     source: clients[0],
@@ -275,23 +316,30 @@ export async function runPwaLifecycleTests() {
     })
   }
   await acceptedRequest
-  assert.equal(skipWaitingCount, 1, 'activation requires an affirmative response from every client')
+  onSkipWaiting = null
+  assert.equal(skipWaitingCount, 2, 'activation requires an affirmative response from every client')
+  assert.equal(clientMessages.some((messages) => messages.some((message) =>
+    message.type === 'PALDAWN_UPDATE_BLOCKED' && message.requestId === 'request-3')), false, 'a cancellation racing after commit must not roll activation back')
+  assert.ok(clientMessages.every((messages) => messages.some((message) =>
+    message.type === 'PALDAWN_UPDATE_COMMITTED' && message.requestId === 'request-3')), 'every prepared client must be told when activation becomes irreversible')
 
   const currentCache = cacheBuckets.get('paldawn-foundation-__PALDAWN_BUILD_ID__')
-  assert.ok([...currentCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), 'activation request must survive in the new worker cache')
+  const markerKey = [...currentCache.keys()].find((key) => key.endsWith('/.paldawn-update-request'))
+  assert.ok(markerKey, 'activation request must survive in the new worker cache')
+  assert.deepEqual(await currentCache.get(markerKey).clone().json(), {
+    requestId: 'request-3',
+    clientIds: ['client-1', 'client-2'],
+  }, 'the durable marker must bind activation to the exact prepared client IDs')
 
   await dispatch('activate')
-  assert.equal(claimCount, 2)
-  assert.deepEqual(clientMessages, [
-    [
-      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-3' },
-      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
-    ],
-    [
-      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-3' },
-      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
-    ],
+  assert.equal(claimCount, 3)
+  assert.ok(clientMessages.every((messages) => messages.some((message) =>
+    message.type === 'PALDAWN_UPDATE_COMMITTED' && message.requestId === 'request-3')), 'the active worker must renew the commit before asynchronous cache cleanup')
+  assert.deepEqual(clientMessages.map((messages) => messages.at(-1)), [
+    { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
+    { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
   ], 'every in-scope window must receive the same activation request')
+  assert.equal(cacheBuckets.has('paldawn-foundation-preserved-on-mismatch'), false, 'successful exact-set activation must remove the stale PalDawn cache')
   assert.equal([...currentCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), false, 'activation marker must be consumed once')
 
   clientMessages.forEach((messages) => messages.splice(0))
@@ -310,14 +358,16 @@ export async function runPwaLifecycleTests() {
     })
   }
   await reloadRequest
-  assert.equal(skipWaitingCount, 1, 'an already-active worker retry must not invoke skipWaiting again')
+  assert.equal(skipWaitingCount, 2, 'an already-active worker retry must not invoke skipWaiting again')
   assert.deepEqual(clientMessages, [
     [
       { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-reload' },
+      { type: 'PALDAWN_UPDATE_COMMITTED', requestId: 'request-reload' },
       { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-reload' },
     ],
     [
       { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-reload' },
+      { type: 'PALDAWN_UPDATE_COMMITTED', requestId: 'request-reload' },
       { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-reload' },
     ],
   ], 'a safe retry after late activation must coordinate the active worker across the same client set')

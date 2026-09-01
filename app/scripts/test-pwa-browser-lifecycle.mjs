@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { cp, mkdir, mkdtemp, readFile, rm, stat, symlink } from 'node:fs/promises'
+import { cp, mkdir, mkdtemp, readFile, rm, stat, symlink, writeFile } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import { tmpdir } from 'node:os'
 import { extname, join, resolve, sep } from 'node:path'
@@ -16,6 +16,7 @@ const COMMAND_TIMEOUT_MS = 30_000
 const PAGE_TIMEOUT_MS = 15_000
 const LOAD_COUNT_KEY = 'paldawn:test:pwa-document-loads'
 const CAPTURED_REQUEST_KEY = 'paldawn:test:pwa-request-id'
+const COMMITTED_REQUEST_KEY = 'paldawn:test:pwa-committed-request-id'
 const LEGACY_BLOCKED_KEY = 'paldawn:test:pwa-legacy-blocked'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
 const JOURNEY_KEY = 'paldawn:journey:v1'
@@ -151,6 +152,17 @@ const buildInto = async (sourceApp, target, salt) => {
   return buildId
 }
 
+const delayActivationCacheCleanup = async (root, delayMs) => {
+  const workerPath = join(root, 'sw.js')
+  const worker = await readFile(workerPath, 'utf8')
+  const boundary = '// PALDAWN_ACTIVATION_CACHE_COMMIT: browser acceptance delays this boundary.'
+  assert.equal(worker.split(boundary).length, 2, 'built worker must expose one committed activation boundary')
+  await writeFile(workerPath, worker.replace(
+    boundary,
+    `${boundary}\n      await new Promise((resolveDelay) => setTimeout(resolveDelay, ${delayMs}))`,
+  ))
+}
+
 const createStaticServer = (initialRoot) => {
   let activeRoot = initialRoot
   const server = createServer(async (request, response) => {
@@ -249,12 +261,14 @@ const waitForController = async (page) => {
   })
 }
 
-const tabState = (page) => page.evaluate(({ capturedKey, loadKey, markerKey }) => ({
+const tabState = (page) => page.evaluate(({ capturedKey, committedKey, loadKey, markerKey }) => ({
   capturedRequestId: sessionStorage.getItem(capturedKey),
+  committedRequestId: sessionStorage.getItem(committedKey),
   loadCount: Number(sessionStorage.getItem(loadKey) ?? '0'),
   updateMarker: sessionStorage.getItem(markerKey),
 }), {
   capturedKey: CAPTURED_REQUEST_KEY,
+  committedKey: COMMITTED_REQUEST_KEY,
   loadKey: LOAD_COUNT_KEY,
   markerKey: UPDATE_RELOAD_SESSION_KEY,
 })
@@ -286,6 +300,7 @@ const runAcceptance = async () => {
   const candidateBuildId = await buildInto(candidateApp, candidateRoot, 'pwa-browser-lifecycle-candidate')
   const nextCandidateBuildId = await buildInto(candidateApp, nextCandidateRoot, 'pwa-browser-lifecycle-next')
   assert.equal(new Set([baseBuildId, candidateBuildId, nextCandidateBuildId]).size, 3, 'builds must have distinct service workers')
+  await delayActivationCacheCleanup(nextCandidateRoot, 8_000)
 
   const staticServer = createStaticServer(baseRoot)
   resources.server = staticServer.server
@@ -321,7 +336,7 @@ const runAcceptance = async () => {
     externalRequests.push(url.href)
     await route.abort('blockedbyclient')
   })
-  await context.addInitScript(({ blockedKey, capturedKey, loadKey, markerType, origin: expectedOrigin, settingsKey }) => {
+  await context.addInitScript(({ blockedKey, capturedKey, committedKey, loadKey, markerType, origin: expectedOrigin, settingsKey }) => {
     if (location.origin !== expectedOrigin) return
     if (!localStorage.getItem(settingsKey)) {
       localStorage.setItem(settingsKey, JSON.stringify({
@@ -335,6 +350,9 @@ const runAcceptance = async () => {
       if (event.data?.type === markerType && typeof event.data.requestId === 'string') {
         sessionStorage.setItem(capturedKey, event.data.requestId)
       }
+      if (event.data?.type === 'PALDAWN_UPDATE_COMMITTED' && typeof event.data.requestId === 'string') {
+        sessionStorage.setItem(committedKey, event.data.requestId)
+      }
       if (event.data?.type === 'PALDAWN_UPDATE_BLOCKED' && event.data.reason === 'legacy') {
         sessionStorage.setItem(blockedKey, event.data.requestId)
       }
@@ -342,6 +360,7 @@ const runAcceptance = async () => {
   }, {
     blockedKey: LEGACY_BLOCKED_KEY,
     capturedKey: CAPTURED_REQUEST_KEY,
+    committedKey: COMMITTED_REQUEST_KEY,
     loadKey: LOAD_COUNT_KEY,
     markerType: 'PALDAWN_UPDATE_ACTIVATED',
     origin,
@@ -533,9 +552,35 @@ const runAcceptance = async () => {
   await firstCandidateTab.bringToFront()
   const retryAction = firstCandidateTab.getByRole('button', { name: 'Retry update and reload' })
   await retryAction.waitFor({ state: 'visible' })
+  await firstCandidateTab.evaluate(async () => {
+    const waiting = (await navigator.serviceWorker.getRegistration())?.waiting
+    if (!waiting) throw new Error('delayed activation test requires a waiting worker')
+    window.__paldawnDelayedActivationWorker = waiting
+  })
   const firstRetryReload = firstCandidateTab.waitForEvent('load')
   const secondRetryReload = secondCandidateTab.waitForEvent('load')
   await retryAction.click()
+  await Promise.all([firstCandidateTab, secondCandidateTab].map((page) => page.waitForFunction(
+    ({ committedKey, previousRequestId }) => {
+      const requestId = sessionStorage.getItem(committedKey)
+      return Boolean(requestId && requestId !== previousRequestId)
+    },
+    { committedKey: COMMITTED_REQUEST_KEY, previousRequestId: markerBeforeVeto },
+  )))
+  const committedRequestIds = await Promise.all([firstCandidateTab, secondCandidateTab].map((page) =>
+    page.evaluate((key) => sessionStorage.getItem(key), COMMITTED_REQUEST_KEY)))
+  assert.ok(committedRequestIds[0], 'the requesting tab must observe the irreversible commit')
+  assert.equal(committedRequestIds[0], committedRequestIds[1], 'every prepared tab must observe the same commit')
+  await firstCandidateTab.evaluate(({ requestId }) => {
+    window.__paldawnDelayedActivationWorker.postMessage({
+      type: 'PALDAWN_CANCEL_UPDATE',
+      requestId,
+    })
+  }, { requestId: committedRequestIds[0] })
+  await firstCandidateTab.waitForTimeout(6_500)
+  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), true, 'a committed requesting tab must remain inert beyond the pre-commit watchdog')
+  assert.equal(await secondCandidateTab.evaluate(() => document.body.inert), true, 'a committed sibling tab must remain inert beyond the pre-commit watchdog')
+  assert.deepEqual((await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])).map(({ loadCount }) => loadCount), [2, 2], 'a post-commit cancellation must not unlock or reload before scoped cache cleanup completes')
   await Promise.all([firstRetryReload, secondRetryReload])
   await Promise.all([waitForController(firstCandidateTab), waitForController(secondCandidateTab)])
 
@@ -557,7 +602,7 @@ const runAcceptance = async () => {
   console.log(`legacy: 2 base tabs vetoed/preserved -> 2 manually reopened candidate tabs reloaded once · request ${firstState.updateMarker}`)
   console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage preserved`)
   console.log(`watchdog: missing and late activation outcomes restored the client without reload`)
-  console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then activated after the sibling saved · note/checkpoint restored`)
+  console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then stayed inert through delayed committed cleanup and activated after the sibling saved · note/checkpoint restored`)
 }
 
 let timeout
