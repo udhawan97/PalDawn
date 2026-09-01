@@ -11,6 +11,7 @@ const UPDATE_COMMITTED_MESSAGE = 'PALDAWN_UPDATE_COMMITTED'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
 const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
+const COMMITTED_RECOVERY_NOTICE_ID = 'pwa-committed-recovery'
 const ACTIVATION_WATCHDOG_MS = 6_000
 
 const updatePreparations = new Set<() => boolean | Promise<boolean>>()
@@ -26,7 +27,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export type PwaInstallState = 'available' | 'installed' | 'instructions'
 export type PwaUpdateCheckResult = 'checked' | 'unavailable' | 'failed'
-export type PwaUpdateBlockReason = 'activation-timeout' | 'busy' | 'changed' | 'failed' | 'late' | 'legacy' | 'timeout' | 'unsaved'
+export type PwaUpdateBlockReason = 'activation-timeout' | 'busy' | 'changed' | 'committed-changed' | 'failed' | 'late' | 'legacy' | 'timeout' | 'unsaved'
 
 export interface PwaUpdateBlockedDetail {
   requestId: string
@@ -56,9 +57,42 @@ const isScopedServiceWorker = (source: MessageEventSource | null): source is Ser
 }
 
 const setUpdateHandoff = (active: boolean): void => {
-  document.body.inert = active
+  const appRoot = document.getElementById('root')
+  if (appRoot instanceof HTMLElement) appRoot.inert = active
+  else document.body.inert = active
   if (active) document.documentElement.dataset.pwaUpdateHandoff = 'true'
   else delete document.documentElement.dataset.pwaUpdateHandoff
+}
+
+const showCommittedUpdateRecovery = (requestId: string): void => {
+  clearActivationWatchdog()
+  activeUpdateRequestId = requestId
+  committedUpdateRequestId = requestId
+  document.body.inert = false
+  setUpdateHandoff(true)
+
+  let notice = document.getElementById(COMMITTED_RECOVERY_NOTICE_ID)
+  if (!(notice instanceof HTMLElement)) {
+    notice = document.createElement('section')
+    notice.id = COMMITTED_RECOVERY_NOTICE_ID
+    notice.className = 'pwa-committed-recovery'
+    notice.tabIndex = -1
+    notice.setAttribute('role', 'alertdialog')
+    notice.setAttribute('aria-modal', 'true')
+    notice.setAttribute('aria-labelledby', `${COMMITTED_RECOVERY_NOTICE_ID}-title`)
+
+    const title = document.createElement('h2')
+    title.id = `${COMMITTED_RECOVERY_NOTICE_ID}-title`
+    title.textContent = 'Close and reopen PalDawn to finish the update'
+    const explanation = document.createElement('p')
+    explanation.textContent = 'The open PalDawn tabs changed after the update committed. This page is frozen to protect local work. Close every PalDawn tab, then reopen PalDawn so all tabs use one version.'
+    notice.append(title, explanation)
+    document.body.append(notice)
+  }
+  window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
+    detail: { requestId, reason: 'committed-changed' },
+  }))
+  window.setTimeout(() => notice?.focus(), 0)
 }
 
 const clearActivationWatchdog = (): void => {
@@ -188,9 +222,7 @@ export function registerPwa(): void {
       const reason = data.reason
       if (!['activation-timeout', 'busy', 'changed', 'failed', 'late', 'legacy', 'timeout', 'unsaved'].includes(reason)) return
       if (committedUpdateRequestId === requestId) {
-        window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
-          detail: { requestId, reason },
-        }))
+        showCommittedUpdateRecovery(requestId)
         return
       }
       if (activeUpdateRequestId && activeUpdateRequestId !== requestId) return

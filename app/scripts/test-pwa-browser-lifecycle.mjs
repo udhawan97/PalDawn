@@ -296,11 +296,14 @@ const runAcceptance = async () => {
   const baseRoot = join(resources.tempRoot, 'base-build')
   const candidateRoot = join(resources.tempRoot, 'candidate-build')
   const nextCandidateRoot = join(resources.tempRoot, 'next-candidate-build')
+  const terminalCandidateRoot = join(resources.tempRoot, 'terminal-candidate-build')
   const baseBuildId = await buildInto(baseApp, baseRoot, 'pwa-browser-lifecycle-base')
   const candidateBuildId = await buildInto(candidateApp, candidateRoot, 'pwa-browser-lifecycle-candidate')
   const nextCandidateBuildId = await buildInto(candidateApp, nextCandidateRoot, 'pwa-browser-lifecycle-next')
-  assert.equal(new Set([baseBuildId, candidateBuildId, nextCandidateBuildId]).size, 3, 'builds must have distinct service workers')
+  const terminalCandidateBuildId = await buildInto(candidateApp, terminalCandidateRoot, 'pwa-browser-lifecycle-terminal')
+  assert.equal(new Set([baseBuildId, candidateBuildId, nextCandidateBuildId, terminalCandidateBuildId]).size, 4, 'builds must have distinct service workers')
   await delayActivationCacheCleanup(nextCandidateRoot, 8_000)
+  await delayActivationCacheCleanup(terminalCandidateRoot, 8_000)
 
   const staticServer = createStaticServer(baseRoot)
   resources.server = staticServer.server
@@ -486,9 +489,9 @@ const runAcceptance = async () => {
       source: waiting,
     }))
   }, watchdogRequestId)
-  await firstCandidateTab.waitForFunction(() => document.body.inert === true)
+  await firstCandidateTab.waitForFunction(() => document.getElementById('root')?.inert === true)
   await firstCandidateTab.getByText(/Update did not finish, so PalDawn did not reload this tab/).waitFor({ state: 'visible', timeout: 10_000 })
-  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'the activation watchdog must restore a client when no outcome arrives')
+  assert.equal(await firstCandidateTab.locator('#root').evaluate((element) => element.inert), false, 'the activation watchdog must restore a client when no outcome arrives')
   assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update and reload' }).evaluate((button) => document.activeElement === button), true, 'an activation timeout must focus its retry action')
   const afterWatchdog = await tabState(firstCandidateTab)
   assert.equal(afterWatchdog.loadCount, 2, 'an activation timeout must not reload the prepared client')
@@ -503,7 +506,7 @@ const runAcceptance = async () => {
   }, watchdogRequestId)
   await firstCandidateTab.waitForTimeout(250)
   assert.equal((await tabState(firstCandidateTab)).loadCount, 2, 'a late outcome for an abandoned request must not reload the client')
-  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'a late abandoned outcome must not re-enter handoff mode')
+  assert.equal(await firstCandidateTab.locator('#root').evaluate((element) => element.inert), false, 'a late abandoned outcome must not re-enter handoff mode')
 
   await secondCandidateTab.bringToFront()
   await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
@@ -529,8 +532,8 @@ const runAcceptance = async () => {
   await vetoAction.click()
   await firstCandidateTab.getByText(/Update paused because an open PalDawn tab could not verify/).waitFor({ state: 'visible' })
   await firstCandidateTab.waitForTimeout(500)
-  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the requesting tab')
-  assert.equal(await secondCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the sibling tab')
+  assert.equal(await firstCandidateTab.locator('#root').evaluate((element) => element.inert), false, 'a blocked handoff must restore the requesting tab')
+  assert.equal(await secondCandidateTab.locator('#root').evaluate((element) => element.inert), false, 'a blocked handoff must restore the sibling tab')
   assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update and reload' }).evaluate((button) => document.activeElement === button), true, 'a blocked handoff must focus its retry action')
 
   const [firstAfterVeto, secondAfterVeto] = await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])
@@ -578,8 +581,8 @@ const runAcceptance = async () => {
     })
   }, { requestId: committedRequestIds[0] })
   await firstCandidateTab.waitForTimeout(6_500)
-  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), true, 'a committed requesting tab must remain inert beyond the pre-commit watchdog')
-  assert.equal(await secondCandidateTab.evaluate(() => document.body.inert), true, 'a committed sibling tab must remain inert beyond the pre-commit watchdog')
+  assert.equal(await firstCandidateTab.locator('#root').evaluate((element) => element.inert), true, 'a committed requesting tab must remain inert beyond the pre-commit watchdog')
+  assert.equal(await secondCandidateTab.locator('#root').evaluate((element) => element.inert), true, 'a committed sibling tab must remain inert beyond the pre-commit watchdog')
   assert.deepEqual((await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])).map(({ loadCount }) => loadCount), [2, 2], 'a post-commit cancellation must not unlock or reload before scoped cache cleanup completes')
   await Promise.all([firstRetryReload, secondRetryReload])
   await Promise.all([waitForController(firstCandidateTab), waitForController(secondCandidateTab)])
@@ -594,6 +597,48 @@ const runAcceptance = async () => {
   assert.equal(await secondCandidateTab.getByRole('button', { name: 'Personal checkpoint complete' }).getAttribute('aria-pressed'), 'true')
   const recoveredCacheNames = await firstCandidateTab.evaluate(() => caches.keys())
   assert.deepEqual(recoveredCacheNames, [`paldawn-foundation-${nextCandidateBuildId}`], 'successful retry must leave only the current PalDawn cache')
+
+  staticServer.useRoot(terminalCandidateRoot)
+  const terminalAction = await revealUpdateAction(firstCandidateTab)
+  const previousCommittedRequestId = firstRecovered.committedRequestId
+  await terminalAction.click()
+  await Promise.all([firstCandidateTab, secondCandidateTab].map((page) => page.waitForFunction(
+    ({ committedKey, previousRequestId }) => {
+      const requestId = sessionStorage.getItem(committedKey)
+      return Boolean(requestId && requestId !== previousRequestId)
+    },
+    { committedKey: COMMITTED_REQUEST_KEY, previousRequestId: previousCommittedRequestId },
+  )))
+
+  await secondCandidateTab.close()
+  const terminalPages = [firstCandidateTab]
+  for (const [index, page] of terminalPages.entries()) {
+    try {
+      await page.getByRole('alertdialog', { name: 'Close and reopen PalDawn to finish the update' }).waitFor({ state: 'visible', timeout: 15_000 })
+    } catch (error) {
+      const state = await page.evaluate(() => ({
+        bodyInert: document.body.inert,
+        notice: document.getElementById('pwa-committed-recovery')?.textContent ?? null,
+        rootInert: document.getElementById('root')?.inert ?? null,
+        updateText: document.querySelector('.system-banner-update-ready')?.textContent ?? null,
+      }))
+      throw new Error(`terminal page ${index + 1} did not expose recovery: ${JSON.stringify(state)}`, { cause: error })
+    }
+  }
+  for (const page of terminalPages) {
+    assert.equal(await page.locator('#root').evaluate((element) => element.inert), true, 'a post-commit mismatch must keep the application frozen')
+    assert.equal(await page.evaluate(() => document.body.inert), false, 'the terminal recovery instruction must stay outside the inert application root')
+    assert.equal(await page.getByRole('alertdialog').evaluate((element) => document.activeElement === element), true, 'the terminal recovery instruction must receive focus')
+    await page.getByText(/Close every PalDawn tab, then reopen PalDawn/).waitFor({ state: 'visible' })
+    assert.equal(await page.locator('#pwa-update-action').count(), 0, 'post-commit containment must not offer an unusable retry action')
+  }
+  const terminalLoadCounts = (await Promise.all(terminalPages.map(tabState))).map(({ loadCount }) => loadCount)
+  assert.deepEqual(terminalLoadCounts, [3], 'post-commit containment must not reload the remaining tab')
+  const terminalCacheNames = (await firstCandidateTab.evaluate(() => caches.keys())).sort()
+  assert.deepEqual(terminalCacheNames, [
+    `paldawn-foundation-${nextCandidateBuildId}`,
+    `paldawn-foundation-${terminalCandidateBuildId}`,
+  ].sort(), 'post-commit containment must preserve the previous cache beside the installed candidate')
   assert.deepEqual(externalRequests, [], 'browser acceptance must not request external origins')
   assert.deepEqual(pageErrors, [], 'browser acceptance must not produce page errors')
 
@@ -603,6 +648,7 @@ const runAcceptance = async () => {
   console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage preserved`)
   console.log(`watchdog: missing and late activation outcomes restored the client without reload`)
   console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then stayed inert through delayed committed cleanup and activated after the sibling saved · note/checkpoint restored`)
+  console.log(`post-commit tab close: ${terminalCandidateBuildId} preserved both caches and focused a manual close/reopen instruction in the remaining frozen tab`)
 }
 
 let timeout

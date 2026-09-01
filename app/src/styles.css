@@ -1635,6 +1635,37 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
+.pwa-committed-recovery {
+  position: fixed;
+  z-index: 200;
+  top: max(18px, env(safe-area-inset-top));
+  left: 50%;
+  width: min(620px, calc(100vw - 32px));
+  padding: 18px 20px;
+  border: 1px solid var(--signal);
+  color: var(--bone);
+  background: rgba(10, 8, 32, 0.98);
+  box-shadow: 0 24px 80px rgba(2, 1, 12, 0.72);
+  transform: translateX(-50%);
+}
+
+.pwa-committed-recovery:focus-visible {
+  outline: 3px solid var(--dawn-bright);
+  outline-offset: 3px;
+}
+
+.pwa-committed-recovery h2 {
+  margin: 0 0 8px;
+  color: var(--dawn-bright);
+  font-size: 1rem;
+}
+
+.pwa-committed-recovery p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .text-button:hover,
 .text-button[aria-expanded='true'] {
   border-bottom-color: var(--dawn);

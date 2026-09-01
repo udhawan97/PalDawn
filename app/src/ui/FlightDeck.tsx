@@ -1597,11 +1597,14 @@ export function FlightDeck({
       setUpdatePreparing(true)
     }
     const onUpdateBlocked = (event: Event) => {
+      const detail = (event as CustomEvent<PwaUpdateBlockedDetail>).detail
       setUpdateReady(true)
-      setUpdateBlocked((event as CustomEvent<PwaUpdateBlockedDetail>).detail)
+      setUpdateBlocked(detail)
       setUpdatePreparing(false)
       setSystemNoticesOpen(true)
-      window.setTimeout(() => document.getElementById('pwa-update-action')?.focus(), 0)
+      window.setTimeout(() => document.getElementById(
+        detail.reason === 'committed-changed' ? 'pwa-committed-recovery' : 'pwa-update-action',
+      )?.focus(), 0)
     }
     const onOfflineReady = () => setOfflineReady(true)
     const onOnline = () => setOnline(true)
@@ -1784,13 +1787,17 @@ export function FlightDeck({
               {updatePreparing
                 ? 'Saving local changes in every open PalDawn tab before updating…'
                 : updateBlocked
-                ? updateBlocked.reason === 'activation-timeout'
+                ? updateBlocked.reason === 'committed-changed'
+                  ? 'The update committed, but the open PalDawn tabs changed before it could finish. This page is frozen; close every PalDawn tab, then reopen PalDawn.'
+                  : updateBlocked.reason === 'activation-timeout'
                   ? 'Update did not finish, so PalDawn did not reload this tab. Your local work remains open; retry when every PalDawn tab is ready.'
                   : updateBlocked.reason === 'changed'
                     ? 'Update paused because the set of open PalDawn tabs changed while saving. Keep the tabs you need open, then retry.'
                     : 'Update paused because an open PalDawn tab could not verify that its local work was saved. Keep that tab open, restore browser storage or copy its private work, close older tabs, then retry.'
                 : 'A new local build is ready.'}
-              <button id="pwa-update-action" type="button" disabled={updatePreparing} onClick={activatePwaUpdate}>{updateBlocked ? 'Retry update and reload' : 'Update and reload open tabs'}</button>
+              {updateBlocked?.reason === 'committed-changed' ? null : (
+                <button id="pwa-update-action" type="button" disabled={updatePreparing} onClick={activatePwaUpdate}>{updateBlocked ? 'Retry update and reload' : 'Update and reload open tabs'}</button>
+              )}
             </p>
           ) : null}
           {visibilityPaused ? (

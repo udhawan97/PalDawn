@@ -64,6 +64,7 @@ self.addEventListener('activate', (event) => {
       notifyCommitted(updateRequest.requestId, beforeClaim)
       if (!sameClientIds(beforeClaim, updateRequest.clientIds)) {
         await self.clients.claim()
+        notifyCommitted(updateRequest.requestId, beforeClaim)
         await notifyBlocked(updateRequest.requestId, 'changed', beforeClaim)
         committedRequestId = null
         await cache.delete(UPDATE_REQUEST_URL)
@@ -73,7 +74,9 @@ self.addEventListener('activate', (event) => {
       await self.clients.claim()
       const beforeCleanup = await scopedWindows()
       if (!sameClientIds(beforeCleanup, updateRequest.clientIds)) {
-        await notifyBlocked(updateRequest.requestId, 'changed', mergeClients(beforeClaim, beforeCleanup))
+        const blockedClients = mergeClients(beforeClaim, beforeCleanup)
+        notifyCommitted(updateRequest.requestId, blockedClients)
+        await notifyBlocked(updateRequest.requestId, 'changed', blockedClients)
         committedRequestId = null
         await cache.delete(UPDATE_REQUEST_URL)
         return
@@ -81,8 +84,18 @@ self.addEventListener('activate', (event) => {
 
       notifyCommitted(updateRequest.requestId, beforeCleanup)
       // PALDAWN_ACTIVATION_CACHE_COMMIT: browser acceptance delays this boundary.
+      const beforeCacheCleanup = await scopedWindows()
+      if (!sameClientIds(beforeCacheCleanup, updateRequest.clientIds)) {
+        const blockedClients = mergeClients(beforeClaim, beforeCleanup, beforeCacheCleanup)
+        notifyCommitted(updateRequest.requestId, blockedClients)
+        await notifyBlocked(updateRequest.requestId, 'changed', blockedClients)
+        committedRequestId = null
+        await cache.delete(UPDATE_REQUEST_URL)
+        return
+      }
+      notifyCommitted(updateRequest.requestId, beforeCacheCleanup)
       await deleteStalePalDawnCaches()
-      for (const client of beforeCleanup) {
+      for (const client of beforeCacheCleanup) {
         client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId: updateRequest.requestId })
       }
       committedRequestId = null

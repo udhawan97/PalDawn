@@ -294,6 +294,9 @@ export async function runPwaLifecycleTests() {
     { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-activation-changed', reason: 'changed' },
     { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-activation-changed', reason: 'changed' },
   ], 'activation must fail closed when the persisted prepared client set changes')
+  assert.ok([...clientMessages, changedClientMessages].every((messages) => messages.some((message) =>
+    message.type === 'PALDAWN_UPDATE_COMMITTED' && message.requestId === 'request-activation-changed')),
+  'every client in a post-commit mismatch must learn that retry is no longer safe before it is blocked')
 
   currentClients = clients
   clientMessages.forEach((messages) => messages.splice(0))
