@@ -1371,6 +1371,7 @@ export function FlightDeck({
   const [bookmarkStatus, setBookmarkStatus] = useState('')
   const flightUiRef = useRef<HTMLDivElement>(null)
   const safetyLineRef = useRef<HTMLParagraphElement>(null)
+  const systemNoticeSummaryRef = useRef<HTMLButtonElement>(null)
   const bookmarksRef = useRef(bookmarks)
   const workspaceRef = useRef(workspace)
   const pausedForVisibility = useRef(false)
@@ -1635,7 +1636,10 @@ export function FlightDeck({
         if (openPanel) setOpenPanel(null, { resumePlayback: !reducedMotion })
         else if (researchOpen) setResearchOpen(false)
         else if (guideOpen) setGuideOpen(false)
-        else if (systemNoticesOpen) setSystemNoticesOpen(false)
+        else if (systemNoticesOpen) {
+          setSystemNoticesOpen(false)
+          window.requestAnimationFrame(() => systemNoticeSummaryRef.current?.focus({ preventScroll: true }))
+        }
         else if (atlasOpen) closeAtlas()
         return
       }
@@ -1761,6 +1765,7 @@ export function FlightDeck({
       <div className="system-banners" data-expanded={systemNoticesOpen} aria-live="polite">
         {systemNoticeCount > 0 ? (
           <button
+            ref={systemNoticeSummaryRef}
             className="system-notice-summary"
             type="button"
             aria-controls="system-notice-list"

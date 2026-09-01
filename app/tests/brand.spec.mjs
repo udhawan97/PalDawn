@@ -214,6 +214,7 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   await page.keyboard.press('Enter')
   await expect(atlasUpdate).toBeVisible()
   await expect(atlasSummary).toBeFocused()
+  await atlasUpdate.getByRole('button', { name: 'Update and reload open tabs' }).focus()
   await page.keyboard.press('Escape')
   await expect(atlasUpdate).toBeHidden()
   await expect(atlasSummary).toHaveAttribute('aria-expanded', 'false')
