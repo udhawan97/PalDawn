@@ -631,6 +631,20 @@ const runAcceptance = async () => {
     assert.equal(await page.getByRole('alertdialog').evaluate((element) => document.activeElement === element), true, 'the terminal recovery instruction must receive focus')
     await page.getByText(/Close every PalDawn tab, then reopen PalDawn/).waitFor({ state: 'visible' })
     assert.equal(await page.locator('#pwa-update-action').count(), 0, 'post-commit containment must not offer an unusable retry action')
+
+    const beforeShortcuts = await page.evaluate(() => ({
+      hash: window.location.hash,
+      localStorage: Object.fromEntries(Object.entries(localStorage)),
+      position: document.querySelector('[aria-label="Journey position"]')?.value ?? null,
+    }))
+    for (const key of ['Space', 'ArrowRight', 'ArrowLeft', 'b', 'Home', 'End']) await page.keyboard.press(key)
+    await page.waitForTimeout(250)
+    const afterShortcuts = await page.evaluate(() => ({
+      hash: window.location.hash,
+      localStorage: Object.fromEntries(Object.entries(localStorage)),
+      position: document.querySelector('[aria-label="Journey position"]')?.value ?? null,
+    }))
+    assert.deepEqual(afterShortcuts, beforeShortcuts, 'post-commit containment must block global shortcuts from mutating route, journey, or durable local state')
   }
   const terminalLoadCounts = (await Promise.all(terminalPages.map(tabState))).map(({ loadCount }) => loadCount)
   assert.deepEqual(terminalLoadCounts, [3], 'post-commit containment must not reload the remaining tab')

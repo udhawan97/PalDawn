@@ -64,6 +64,12 @@ const setUpdateHandoff = (active: boolean): void => {
   else delete document.documentElement.dataset.pwaUpdateHandoff
 }
 
+const blockUpdateHandoffKeyboardInput = (event: KeyboardEvent): void => {
+  if (document.documentElement.dataset.pwaUpdateHandoff !== 'true') return
+  event.stopImmediatePropagation()
+  if (!event.metaKey && !event.ctrlKey && !event.altKey) event.preventDefault()
+}
+
 const showCommittedUpdateRecovery = (requestId: string): void => {
   clearActivationWatchdog()
   activeUpdateRequestId = requestId
@@ -173,6 +179,7 @@ const consumeUpdateReload = (requestId: string): boolean => {
 }
 
 export function registerPwa(): void {
+  window.addEventListener('keydown', blockUpdateHandoffKeyboardInput, { capture: true })
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault()
     installPrompt = event as BeforeInstallPromptEvent
