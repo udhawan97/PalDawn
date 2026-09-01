@@ -4,12 +4,15 @@ const CACHE_NAME = `${CACHE_PREFIX}${BUILD_ID}`
 const UPDATE_REQUEST_MESSAGE = 'PALDAWN_REQUEST_UPDATE'
 const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
 const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
+const UPDATE_CANCEL_MESSAGE = 'PALDAWN_CANCEL_UPDATE'
+const UPDATE_RELOAD_MESSAGE = 'PALDAWN_REQUEST_RELOAD'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
 const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const LEGACY_UPDATE_MESSAGE = 'SKIP_WAITING'
 const UPDATE_REQUEST_URL = new URL('./.paldawn-update-request', self.registration.scope).href
 const PREPARE_TIMEOUT_MS = 4_000
 let pendingPreparation = null
+const cancelledRequests = new Set()
 const SHELL = [
   './',
   './asset-manifest.json',
@@ -98,6 +101,20 @@ const scopedWindows = async () => {
   return windows.filter(scopedClient)
 }
 
+const sameClientIds = (windows, expectedIds) => {
+  if (windows.length !== expectedIds.length) return false
+  const currentIds = new Set(windows.map((client) => client.id))
+  return expectedIds.every((id) => currentIds.has(id))
+}
+
+const mergeClients = (...groups) => {
+  const clients = new Map()
+  for (const group of groups) {
+    for (const client of group) clients.set(client.id, client)
+  }
+  return [...clients.values()]
+}
+
 const notifyBlocked = async (requestId, reason, clients = null) => {
   const windows = clients ?? await scopedWindows()
   for (const client of windows) {
@@ -107,19 +124,20 @@ const notifyBlocked = async (requestId, reason, clients = null) => {
 
 const prepareClients = async (requestId) => {
   const windows = await scopedWindows()
-  if (windows.length === 0) return { ready: false, reason: 'failed', windows }
-  if (pendingPreparation) return { ready: false, reason: 'busy', windows }
+  const clientIds = windows.map((client) => client.id)
+  if (windows.length === 0) return { ready: false, reason: 'failed', windows, clientIds }
+  if (pendingPreparation) return { ready: false, reason: 'busy', windows, clientIds }
 
   const expected = new Set(windows.map((client) => client.id))
   let settle
   const result = new Promise((resolve) => { settle = resolve })
-  const timer = setTimeout(() => settle({ ready: false, reason: 'timeout', windows }), PREPARE_TIMEOUT_MS)
+  const timer = setTimeout(() => settle({ ready: false, reason: 'timeout', windows, clientIds }), PREPARE_TIMEOUT_MS)
   pendingPreparation = {
     expected,
     requestId,
     settle: (outcome) => {
       clearTimeout(timer)
-      settle({ ...outcome, windows })
+      settle({ ...outcome, windows, clientIds })
     },
   }
 
@@ -153,12 +171,29 @@ const handleLegacyRequest = async (event) => {
   await notifyBlocked(requestId, 'legacy', [event.source])
 }
 
+const handleCancelRequest = (event) => {
+  const requestId = event.data?.requestId
+  if (!validRequestId(requestId) || !scopedClient(event.source)) return
+  cancelledRequests.add(requestId)
+  if (cancelledRequests.size > 16) cancelledRequests.delete(cancelledRequests.values().next().value)
+  if (pendingPreparation?.requestId === requestId) {
+    pendingPreparation.settle({ ready: false, reason: 'activation-timeout' })
+  }
+}
+
+const preparedClientFailure = (requestId, prepared, currentWindows) => {
+  if (cancelledRequests.delete(requestId)) return 'activation-timeout'
+  if (!sameClientIds(currentWindows, prepared.clientIds)) return 'changed'
+  return null
+}
+
 const handleUpdateRequest = async (event) => {
   const requestId = event.data?.requestId
   if (!validRequestId(requestId) || !scopedClient(event.source)) return
 
   const prepared = await prepareClients(requestId)
   if (!prepared.ready) {
+    cancelledRequests.delete(requestId)
     await notifyBlocked(requestId, prepared.reason, prepared.windows)
     return
   }
@@ -166,13 +201,58 @@ const handleUpdateRequest = async (event) => {
   let cache = null
   try {
     cache = await caches.open(CACHE_NAME)
+    const beforeMarker = await scopedWindows()
+    const markerFailure = preparedClientFailure(requestId, prepared, beforeMarker)
+    if (markerFailure) {
+      await notifyBlocked(requestId, markerFailure, mergeClients(prepared.windows, beforeMarker))
+      return
+    }
+
     await cache.put(UPDATE_REQUEST_URL, new Response(JSON.stringify({ requestId }), {
       headers: { 'content-type': 'application/json' },
     }))
+
+    const beforeActivation = await scopedWindows()
+    const activationFailure = preparedClientFailure(requestId, prepared, beforeActivation)
+    if (activationFailure) {
+      await cache.delete(UPDATE_REQUEST_URL)
+      await notifyBlocked(requestId, activationFailure, mergeClients(prepared.windows, beforeActivation))
+      return
+    }
     await self.skipWaiting()
   } catch {
     if (cache) await cache.delete(UPDATE_REQUEST_URL)
     await notifyBlocked(requestId, 'failed', prepared.windows)
+  } finally {
+    cancelledRequests.delete(requestId)
+  }
+}
+
+const handleReloadRequest = async (event) => {
+  const requestId = event.data?.requestId
+  if (!validRequestId(requestId) || !scopedClient(event.source)) return
+
+  const prepared = await prepareClients(requestId)
+  if (!prepared.ready) {
+    cancelledRequests.delete(requestId)
+    await notifyBlocked(requestId, prepared.reason, prepared.windows)
+    return
+  }
+
+  try {
+    const beforeReload = await scopedWindows()
+    const reloadFailure = preparedClientFailure(requestId, prepared, beforeReload)
+    if (reloadFailure) {
+      await notifyBlocked(requestId, reloadFailure, mergeClients(prepared.windows, beforeReload))
+      return
+    }
+    for (const client of beforeReload) {
+      client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId })
+    }
+  } catch {
+    await notifyBlocked(requestId, 'failed', prepared.windows)
+  } finally {
+    cancelledRequests.delete(requestId)
   }
 }
 
@@ -185,8 +265,16 @@ self.addEventListener('message', (event) => {
     event.waitUntil(handleLegacyRequest(event))
     return
   }
+  if (event.data?.type === UPDATE_CANCEL_MESSAGE) {
+    handleCancelRequest(event)
+    return
+  }
   if (event.data?.type === UPDATE_REQUEST_MESSAGE) {
     event.waitUntil(handleUpdateRequest(event))
+    return
+  }
+  if (event.data?.type === UPDATE_RELOAD_MESSAGE) {
+    event.waitUntil(handleReloadRequest(event))
   }
 })
 

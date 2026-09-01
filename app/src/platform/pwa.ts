@@ -5,12 +5,17 @@ let installPrompt: BeforeInstallPromptEvent | null = null
 const UPDATE_REQUEST_MESSAGE = 'PALDAWN_REQUEST_UPDATE'
 const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
 const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
+const UPDATE_CANCEL_MESSAGE = 'PALDAWN_CANCEL_UPDATE'
+const UPDATE_RELOAD_MESSAGE = 'PALDAWN_REQUEST_RELOAD'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
 const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
+const ACTIVATION_WATCHDOG_MS = 6_000
 
 const updatePreparations = new Set<() => boolean | Promise<boolean>>()
+const abandonedUpdateRequests = new Set<string>()
 let activeUpdateRequestId: string | null = null
+let activationWatchdog: number | null = null
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -19,7 +24,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export type PwaInstallState = 'available' | 'installed' | 'instructions'
 export type PwaUpdateCheckResult = 'checked' | 'unavailable' | 'failed'
-export type PwaUpdateBlockReason = 'busy' | 'failed' | 'legacy' | 'timeout' | 'unsaved'
+export type PwaUpdateBlockReason = 'activation-timeout' | 'busy' | 'changed' | 'failed' | 'late' | 'legacy' | 'timeout' | 'unsaved'
 
 export interface PwaUpdateBlockedDetail {
   requestId: string
@@ -54,7 +59,13 @@ const setUpdateHandoff = (active: boolean): void => {
   else delete document.documentElement.dataset.pwaUpdateHandoff
 }
 
+const clearActivationWatchdog = (): void => {
+  if (activationWatchdog !== null) window.clearTimeout(activationWatchdog)
+  activationWatchdog = null
+}
+
 const dispatchUpdateBlocked = (requestId: string, reason: PwaUpdateBlockReason): void => {
+  clearActivationWatchdog()
   activeUpdateRequestId = null
   setUpdateHandoff(false)
   window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
@@ -63,8 +74,26 @@ const dispatchUpdateBlocked = (requestId: string, reason: PwaUpdateBlockReason):
 }
 
 const beginUpdateHandoff = (requestId: string): void => {
+  clearActivationWatchdog()
   activeUpdateRequestId = requestId
   setUpdateHandoff(true)
+}
+
+const watchForActivation = (worker: ServiceWorker, requestId: string): void => {
+  clearActivationWatchdog()
+  activationWatchdog = window.setTimeout(() => {
+    if (activeUpdateRequestId !== requestId) return
+    abandonedUpdateRequests.add(requestId)
+    if (abandonedUpdateRequests.size > 8) {
+      abandonedUpdateRequests.delete(abandonedUpdateRequests.values().next().value as string)
+    }
+    try {
+      worker.postMessage({ type: UPDATE_CANCEL_MESSAGE, requestId })
+    } catch {
+      // The local watchdog still restores the page when the worker is no longer reachable.
+    }
+    dispatchUpdateBlocked(requestId, 'activation-timeout')
+  }, ACTIVATION_WATCHDOG_MS)
 }
 
 const prepareUpdate = async (worker: ServiceWorker, requestId: string): Promise<void> => {
@@ -79,6 +108,7 @@ const prepareUpdate = async (worker: ServiceWorker, requestId: string): Promise<
   }
   try {
     worker.postMessage({ type: UPDATE_PREPARED_MESSAGE, requestId, ready })
+    if (activeUpdateRequestId === requestId) watchForActivation(worker, requestId)
   } catch {
     if (activeUpdateRequestId === requestId) dispatchUpdateBlocked(requestId, 'failed')
   }
@@ -122,20 +152,31 @@ export function registerPwa(): void {
     if (!data || typeof data !== 'object') return
     const requestId = data.requestId
     if (!validRequestId(requestId)) return
+    if (!isScopedServiceWorker(event.source)) return
 
     if (data.type === UPDATE_PREPARE_MESSAGE) {
-      if (!isScopedServiceWorker(event.source)) return
+      if (abandonedUpdateRequests.has(requestId)) return
+      if (activeUpdateRequestId && activeUpdateRequestId !== requestId) {
+        event.source.postMessage({ type: UPDATE_PREPARED_MESSAGE, requestId, ready: false })
+        return
+      }
       void prepareUpdate(event.source, requestId)
       return
     }
     if (data.type === UPDATE_BLOCKED_MESSAGE) {
       const reason = data.reason
-      if (!['busy', 'failed', 'legacy', 'timeout', 'unsaved'].includes(reason)) return
+      if (!['activation-timeout', 'busy', 'changed', 'failed', 'late', 'legacy', 'timeout', 'unsaved'].includes(reason)) return
       if (activeUpdateRequestId !== requestId) return
       dispatchUpdateBlocked(requestId, reason)
       return
     }
     if (data.type === UPDATE_ACTIVATED_MESSAGE) {
+      if (abandonedUpdateRequests.has(requestId)) {
+        abandonedUpdateRequests.delete(requestId)
+        return
+      }
+      if (activeUpdateRequestId !== requestId) return
+      clearActivationWatchdog()
       if (!consumeUpdateReload(requestId)) return
       window.location.reload()
     }
@@ -186,14 +227,18 @@ export async function requestPwaInstall(): Promise<'accepted' | 'dismissed' | 'i
 export function activatePwaUpdate(): void {
   const waiting = registration?.waiting
   const requestId = updateRequestId()
-  if (!waiting) {
+  const worker = waiting ?? navigator.serviceWorker.controller
+  if (!worker) {
     dispatchUpdateBlocked(requestId, 'failed')
     return
   }
   activeUpdateRequestId = requestId
   window.dispatchEvent(new CustomEvent('paldawn:update-preparing', { detail: { requestId } }))
   try {
-    waiting.postMessage({ type: UPDATE_REQUEST_MESSAGE, requestId })
+    worker.postMessage({
+      type: waiting ? UPDATE_REQUEST_MESSAGE : UPDATE_RELOAD_MESSAGE,
+      requestId,
+    })
   } catch {
     dispatchUpdateBlocked(requestId, 'failed')
   }

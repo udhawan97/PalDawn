@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788229823.50225,
-    "ast_hash": "4e05a3b93c4b54cfb768efad8e28e359",
+    "mtime": 1788230619.8226154,
+    "ast_hash": "552d577120fad0cc45869b6211f9c23d",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "app/public/sw.js": {
-    "mtime": 1788230181.9637883,
-    "ast_hash": "934b7e0c1c7ca23dd9da7ef024a72c94",
+    "mtime": 1788230977.4507077,
+    "ast_hash": "e0c4f705c988c3d4197db4fa88796c73",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1788230067.7016013,
-    "ast_hash": "4e77ec20e60aba1fccf69fbfb7a66cc5",
+    "mtime": 1788230982.2447824,
+    "ast_hash": "7226edd2c053477ced4ede9ed95786a9",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -475,13 +475,13 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788229780.6207638,
-    "ast_hash": "028b8b0d1712c1f801ba45044ad18731",
+    "mtime": 1788230945.4250484,
+    "ast_hash": "c8c904a6dabd25997294d78952eceacf",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1788229855.1297073,
-    "ast_hash": "34085f3b65547a4d6b8afd2d67076bf1",
+    "mtime": 1788230962.1569247,
+    "ast_hash": "d09f78cfe70f37593ac780ff92990ab2",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788229468.7913573,
-    "ast_hash": "2c55c0569d90a85cad6290fc41bae1d1",
+    "mtime": 1788230794.4593074,
+    "ast_hash": "07524352800e0758c2fc6b8ca01461f9",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-QA.md": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788229446.4918258,
-    "ast_hash": "daf2ef7cce1680285815a67b050fb735",
+    "mtime": 1788230500.449018,
+    "ast_hash": "41673367cf0b8922c3f887601f517da9",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {
@@ -790,13 +790,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-lifecycle.mjs": {
-    "mtime": 1788229629.060873,
-    "ast_hash": "1a7a0320534e7e898eeff4f7ec4773f8",
+    "mtime": 1788230800.5577948,
+    "ast_hash": "c5308717190bb6fbd6f74ab37b86f175",
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788230141.3426158,
-    "ast_hash": "1456dd6b8f3ce8c36ec0f7e86c277310",
+    "mtime": 1788230761.4599512,
+    "ast_hash": "c6b49ad528b1fd62841fac9e0131cb7d",
     "semantic_hash": ""
   }
 }

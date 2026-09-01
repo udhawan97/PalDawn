@@ -268,7 +268,9 @@ const revealUpdateAction = async (page) => {
   const noticeSummary = page.locator('.system-notice-summary')
   await noticeSummary.waitFor({ state: 'visible' })
   if (await noticeSummary.getAttribute('aria-expanded') !== 'true') await noticeSummary.click()
-  const updateAction = page.getByRole('button', { name: 'Update now' })
+  const updateAction = page.getByRole('button', { name: 'Update and reload open tabs' })
+    .or(page.getByRole('button', { name: 'Retry update and reload' }))
+    .or(page.getByRole('button', { name: 'Update now' }))
     .or(page.getByRole('button', { name: 'Retry update' }))
   await updateAction.waitFor({ state: 'visible' })
   return updateAction
@@ -455,6 +457,35 @@ const runAcceptance = async () => {
   assert.deepEqual(cacheNames, [`paldawn-foundation-${candidateBuildId}`], 'only the safely activated candidate cache may remain')
 
   staticServer.useRoot(nextCandidateRoot)
+  await revealUpdateAction(firstCandidateTab)
+  const watchdogRequestId = 'browser-watchdog-no-broadcast'
+  await firstCandidateTab.evaluate(async (requestId) => {
+    const waiting = (await navigator.serviceWorker.getRegistration())?.waiting
+    if (!waiting) throw new Error('watchdog test requires an installed waiting worker')
+    navigator.serviceWorker.dispatchEvent(new MessageEvent('message', {
+      data: { type: 'PALDAWN_PREPARE_UPDATE', requestId },
+      source: waiting,
+    }))
+  }, watchdogRequestId)
+  await firstCandidateTab.waitForFunction(() => document.body.inert === true)
+  await firstCandidateTab.getByText(/Update did not finish, so PalDawn did not reload this tab/).waitFor({ state: 'visible', timeout: 10_000 })
+  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'the activation watchdog must restore a client when no outcome arrives')
+  assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update and reload' }).evaluate((button) => document.activeElement === button), true, 'an activation timeout must focus its retry action')
+  const afterWatchdog = await tabState(firstCandidateTab)
+  assert.equal(afterWatchdog.loadCount, 2, 'an activation timeout must not reload the prepared client')
+  assert.equal(afterWatchdog.updateMarker, firstState.updateMarker, 'an activation timeout must not consume a new request marker')
+  await firstCandidateTab.evaluate(async (requestId) => {
+    const waiting = (await navigator.serviceWorker.getRegistration())?.waiting
+    if (!waiting) throw new Error('late-message test requires the same waiting worker')
+    navigator.serviceWorker.dispatchEvent(new MessageEvent('message', {
+      data: { type: 'PALDAWN_UPDATE_ACTIVATED', requestId },
+      source: waiting,
+    }))
+  }, watchdogRequestId)
+  await firstCandidateTab.waitForTimeout(250)
+  assert.equal((await tabState(firstCandidateTab)).loadCount, 2, 'a late outcome for an abandoned request must not reload the client')
+  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'a late abandoned outcome must not re-enter handoff mode')
+
   await secondCandidateTab.bringToFront()
   await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
   const durableWorkspaceBefore = await secondCandidateTab.evaluate((workspaceKey) => {
@@ -481,7 +512,7 @@ const runAcceptance = async () => {
   await firstCandidateTab.waitForTimeout(500)
   assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the requesting tab')
   assert.equal(await secondCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the sibling tab')
-  assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update' }).evaluate((button) => document.activeElement === button), true, 'a blocked handoff must focus its retry action')
+  assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update and reload' }).evaluate((button) => document.activeElement === button), true, 'a blocked handoff must focus its retry action')
 
   const [firstAfterVeto, secondAfterVeto] = await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])
   assert.equal(firstAfterVeto.loadCount, 2, 'requesting candidate tab must not reload after a sibling veto')
@@ -500,7 +531,7 @@ const runAcceptance = async () => {
   await secondCandidateTab.getByRole('button', { name: 'Close panel' }).click()
 
   await firstCandidateTab.bringToFront()
-  const retryAction = firstCandidateTab.getByRole('button', { name: 'Retry update' })
+  const retryAction = firstCandidateTab.getByRole('button', { name: 'Retry update and reload' })
   await retryAction.waitFor({ state: 'visible' })
   const firstRetryReload = firstCandidateTab.waitForEvent('load')
   const secondRetryReload = secondCandidateTab.waitForEvent('load')
@@ -525,6 +556,7 @@ const runAcceptance = async () => {
   console.log(`builds: base ${BASE_REVISION.slice(0, 8)} / ${baseBuildId} -> candidate ${candidateBuildId}`)
   console.log(`legacy: 2 base tabs vetoed/preserved -> 2 manually reopened candidate tabs reloaded once · request ${firstState.updateMarker}`)
   console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage preserved`)
+  console.log(`watchdog: missing and late activation outcomes restored the client without reload`)
   console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then activated after the sibling saved · note/checkpoint restored`)
 }
 

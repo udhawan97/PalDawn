@@ -1622,9 +1622,13 @@ export function FlightDeck({
               {updatePreparing
                 ? 'Saving local changes in every open PalDawn tab before updating…'
                 : updateBlocked
-                ? 'Update paused because an open PalDawn tab could not verify that its local work was saved. Keep that tab open, restore browser storage or copy its private work, close older tabs, then retry.'
+                ? updateBlocked.reason === 'activation-timeout'
+                  ? 'Update did not finish, so PalDawn did not reload this tab. Your local work remains open; retry when every PalDawn tab is ready.'
+                  : updateBlocked.reason === 'changed'
+                    ? 'Update paused because the set of open PalDawn tabs changed while saving. Keep the tabs you need open, then retry.'
+                    : 'Update paused because an open PalDawn tab could not verify that its local work was saved. Keep that tab open, restore browser storage or copy its private work, close older tabs, then retry.'
                 : 'A new local build is ready.'}
-              <button id="pwa-update-action" type="button" disabled={updatePreparing} onClick={activatePwaUpdate}>{updateBlocked ? 'Retry update' : 'Update now'}</button>
+              <button id="pwa-update-action" type="button" disabled={updatePreparing} onClick={activatePwaUpdate}>{updateBlocked ? 'Retry update and reload' : 'Update and reload open tabs'}</button>
             </p>
           ) : null}
           {visibilityPaused ? (

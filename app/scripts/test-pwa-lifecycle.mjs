@@ -14,6 +14,7 @@ export async function runPwaLifecycleTests() {
   let nextTimerId = 1
   let claimCount = 0
   let skipWaitingCount = 0
+  let afterCachePut = null
 
   const scheduleTimeout = (callback) => {
     const id = nextTimerId++
@@ -39,6 +40,7 @@ export async function runPwaLifecycleTests() {
       match: async (request) => entries.get(cacheKey(request)),
       put: async (request, response) => {
         entries.set(cacheKey(request), response)
+        afterCachePut?.(request)
       },
     }
   }
@@ -48,6 +50,13 @@ export async function runPwaLifecycleTests() {
     url: `https://example.test/PalDawn/?tab=${index + 1}`,
     postMessage: (message) => messages.push(JSON.parse(JSON.stringify(message))),
   }))
+  const changedClientMessages = []
+  const changedClient = {
+    id: 'client-3',
+    url: 'https://example.test/PalDawn/?tab=3',
+    postMessage: (message) => changedClientMessages.push(JSON.parse(JSON.stringify(message))),
+  }
+  let currentClients = clients
 
   const worker = {
     addEventListener: (name, listener) => listeners.set(name, listener),
@@ -55,7 +64,7 @@ export async function runPwaLifecycleTests() {
       claim: async () => { claimCount += 1 },
       matchAll: async (options) => {
         assert.deepEqual(JSON.parse(JSON.stringify(options)), { type: 'window', includeUncontrolled: true })
-        return clients
+        return currentClients
       },
     },
     location: { origin: 'https://example.test' },
@@ -170,6 +179,90 @@ export async function runPwaLifecycleTests() {
   ], 'a missing acknowledgement must produce a truthful timeout result')
 
   clientMessages.forEach((messages) => messages.splice(0))
+  const changedRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-changed' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  await dispatch('message', {
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-changed', ready: true },
+    source: clients[0],
+  })
+  listeners.get('message')?.({
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-changed', ready: true },
+    source: clients[1],
+    waitUntil: () => {},
+  })
+  currentClients = [...clients, changedClient]
+  await changedRequest
+  assert.equal(skipWaitingCount, 0, 'a client opened after acknowledgements must block activation')
+  assert.deepEqual([
+    ...clientMessages.map((messages) => messages.at(-1)),
+    changedClientMessages.at(-1),
+  ], [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-changed', reason: 'changed' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-changed', reason: 'changed' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-changed', reason: 'changed' },
+  ], 'the prepared and newly opened clients must receive a truthful changed-set result')
+  const changedCache = cacheBuckets.get('paldawn-foundation-__PALDAWN_BUILD_ID__')
+  assert.equal([...changedCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), false, 'a changed client set must not leave an activation marker')
+
+  currentClients = clients
+  clientMessages.forEach((messages) => messages.splice(0))
+  changedClientMessages.splice(0)
+  afterCachePut = (request) => {
+    if (!cacheKey(request).endsWith('/.paldawn-update-request')) return
+    afterCachePut = null
+    currentClients = [clients[0]]
+  }
+  const closedAfterMarkerRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-closed-after-marker' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  for (const client of clients) {
+    await dispatch('message', {
+      data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-closed-after-marker', ready: true },
+      source: client,
+    })
+  }
+  await closedAfterMarkerRequest
+  assert.equal(skipWaitingCount, 0, 'a client closed after marker creation must block activation')
+  assert.deepEqual(clientMessages.map((messages) => messages.at(-1)), [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-closed-after-marker', reason: 'changed' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-closed-after-marker', reason: 'changed' },
+  ], 'a post-marker client-set change must notify every initially prepared client')
+  assert.equal([...changedCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), false, 'a post-marker client-set change must roll back the activation marker')
+
+  currentClients = clients
+  clientMessages.forEach((messages) => messages.splice(0))
+  const cancelledRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-cancelled' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  await dispatch('message', {
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-cancelled', ready: true },
+    source: clients[0],
+  })
+  listeners.get('message')?.({
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-cancelled', ready: true },
+    source: clients[1],
+    waitUntil: () => {},
+  })
+  listeners.get('message')?.({
+    data: { type: 'PALDAWN_CANCEL_UPDATE', requestId: 'request-cancelled' },
+    source: clients[0],
+    waitUntil: () => {},
+  })
+  await cancelledRequest
+  assert.equal(skipWaitingCount, 0, 'a client watchdog cancellation must prevent activation before skipWaiting')
+  assert.deepEqual(clientMessages.map((messages) => messages.at(-1)), [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-cancelled', reason: 'activation-timeout' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-cancelled', reason: 'activation-timeout' },
+  ], 'a watchdog cancellation must restore every prepared client with an actionable result')
+
+  clientMessages.forEach((messages) => messages.splice(0))
   const acceptedRequest = dispatch('message', {
     data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-3' },
     source: clients[0],
@@ -204,4 +297,28 @@ export async function runPwaLifecycleTests() {
   clientMessages.forEach((messages) => messages.splice(0))
   await dispatch('activate')
   assert.deepEqual(clientMessages, [[], []], 'a consumed request must not create a reload loop')
+
+  const reloadRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_RELOAD', requestId: 'request-reload' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  for (const client of clients) {
+    await dispatch('message', {
+      data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-reload', ready: true },
+      source: client,
+    })
+  }
+  await reloadRequest
+  assert.equal(skipWaitingCount, 1, 'an already-active worker retry must not invoke skipWaiting again')
+  assert.deepEqual(clientMessages, [
+    [
+      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-reload' },
+      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-reload' },
+    ],
+    [
+      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-reload' },
+      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-reload' },
+    ],
+  ], 'a safe retry after late activation must coordinate the active worker across the same client set')
 }
