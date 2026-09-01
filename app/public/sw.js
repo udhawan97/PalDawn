@@ -2,8 +2,14 @@ const CACHE_PREFIX = 'paldawn-foundation-'
 const BUILD_ID = '__PALDAWN_BUILD_ID__'
 const CACHE_NAME = `${CACHE_PREFIX}${BUILD_ID}`
 const UPDATE_REQUEST_MESSAGE = 'PALDAWN_REQUEST_UPDATE'
+const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
+const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
+const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
+const LEGACY_UPDATE_MESSAGE = 'SKIP_WAITING'
 const UPDATE_REQUEST_URL = new URL('./.paldawn-update-request', self.registration.scope).href
+const PREPARE_TIMEOUT_MS = 4_000
+let pendingPreparation = null
 const SHELL = [
   './',
   './asset-manifest.json',
@@ -66,26 +72,122 @@ self.addEventListener('activate', (event) => {
   })())
 })
 
-self.addEventListener('message', (event) => {
-  if (event.data?.type !== UPDATE_REQUEST_MESSAGE) return
-  const requestId = event.data.requestId
-  if (typeof requestId !== 'string' || requestId.length === 0 || requestId.length > 128) return
+const validRequestId = (value) =>
+  typeof value === 'string' && value.length > 0 && value.length <= 128
 
-  let sourceUrl = null
+const updateRequestId = () => {
   try {
-    sourceUrl = event.source?.url ? new URL(event.source.url) : null
+    return self.crypto.randomUUID()
   } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+  }
+}
+
+const scopedClient = (client) => {
+  if (!client?.url) return false
+  try {
+    const url = new URL(client.url)
+    return url.origin === self.location.origin && url.href.startsWith(self.registration.scope)
+  } catch {
+    return false
+  }
+}
+
+const scopedWindows = async () => {
+  const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+  return windows.filter(scopedClient)
+}
+
+const notifyBlocked = async (requestId, reason, clients = null) => {
+  const windows = clients ?? await scopedWindows()
+  for (const client of windows) {
+    client.postMessage({ type: UPDATE_BLOCKED_MESSAGE, requestId, reason })
+  }
+}
+
+const prepareClients = async (requestId) => {
+  const windows = await scopedWindows()
+  if (windows.length === 0) return { ready: false, reason: 'failed', windows }
+  if (pendingPreparation) return { ready: false, reason: 'busy', windows }
+
+  const expected = new Set(windows.map((client) => client.id))
+  let settle
+  const result = new Promise((resolve) => { settle = resolve })
+  const timer = setTimeout(() => settle({ ready: false, reason: 'timeout', windows }), PREPARE_TIMEOUT_MS)
+  pendingPreparation = {
+    expected,
+    requestId,
+    settle: (outcome) => {
+      clearTimeout(timer)
+      settle({ ...outcome, windows })
+    },
+  }
+
+  for (const client of windows) {
+    client.postMessage({ type: UPDATE_PREPARE_MESSAGE, requestId })
+  }
+
+  const outcome = await result
+  if (pendingPreparation?.requestId === requestId) pendingPreparation = null
+  return outcome
+}
+
+const handlePrepared = (event) => {
+  const requestId = event.data?.requestId
+  const pending = pendingPreparation
+  if (!pending || requestId !== pending.requestId || !scopedClient(event.source)) return
+  if (!pending.expected.has(event.source.id)) return
+  if (event.data.ready !== true) {
+    pending.settle({ ready: false, reason: 'unsaved' })
     return
   }
-  if (sourceUrl?.origin !== self.location.origin || !sourceUrl.href.startsWith(self.registration.scope)) return
+  pending.expected.delete(event.source.id)
+  if (pending.expected.size === 0) pending.settle({ ready: true })
+}
 
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME)
+const handleLegacyRequest = async (event) => {
+  if (!scopedClient(event.source)) return
+  const requestId = updateRequestId()
+  // The audited base client cannot flush or acknowledge current in-memory work.
+  // Recognize its request, but preserve every tab until a modern client can coordinate them.
+  await notifyBlocked(requestId, 'legacy', [event.source])
+}
+
+const handleUpdateRequest = async (event) => {
+  const requestId = event.data?.requestId
+  if (!validRequestId(requestId) || !scopedClient(event.source)) return
+
+  const prepared = await prepareClients(requestId)
+  if (!prepared.ready) {
+    await notifyBlocked(requestId, prepared.reason, prepared.windows)
+    return
+  }
+
+  let cache = null
+  try {
+    cache = await caches.open(CACHE_NAME)
     await cache.put(UPDATE_REQUEST_URL, new Response(JSON.stringify({ requestId }), {
       headers: { 'content-type': 'application/json' },
     }))
     await self.skipWaiting()
-  })())
+  } catch {
+    if (cache) await cache.delete(UPDATE_REQUEST_URL)
+    await notifyBlocked(requestId, 'failed', prepared.windows)
+  }
+}
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === UPDATE_PREPARED_MESSAGE) {
+    handlePrepared(event)
+    return
+  }
+  if (event.data?.type === LEGACY_UPDATE_MESSAGE) {
+    event.waitUntil(handleLegacyRequest(event))
+    return
+  }
+  if (event.data?.type === UPDATE_REQUEST_MESSAGE) {
+    event.waitUntil(handleUpdateRequest(event))
+  }
 })
 
 self.addEventListener('fetch', (event) => {

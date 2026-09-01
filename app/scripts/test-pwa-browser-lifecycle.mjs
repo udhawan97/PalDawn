@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { cp, mkdtemp, readFile, rm, stat } from 'node:fs/promises'
+import { cp, mkdir, mkdtemp, readFile, rm, stat, symlink } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import { tmpdir } from 'node:os'
 import { extname, join, resolve, sep } from 'node:path'
@@ -8,16 +8,20 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from '@playwright/test'
 
 const APP_ROOT = fileURLToPath(new URL('..', import.meta.url))
-const DIST_ROOT = join(APP_ROOT, 'dist')
+const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url))
+const BASE_REVISION = '38294634d9f35778b2519bc9a33f95e9bbcfbc20'
 const BASE_PATH = '/PalDawn/'
-const TEST_TIMEOUT_MS = 90_000
+const TEST_TIMEOUT_MS = 150_000
 const COMMAND_TIMEOUT_MS = 30_000
 const PAGE_TIMEOUT_MS = 15_000
 const LOAD_COUNT_KEY = 'paldawn:test:pwa-document-loads'
 const CAPTURED_REQUEST_KEY = 'paldawn:test:pwa-request-id'
+const LEGACY_BLOCKED_KEY = 'paldawn:test:pwa-legacy-blocked'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
 const JOURNEY_KEY = 'paldawn:journey:v1'
+const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
+const WORKSPACE_KEY = 'paldawn:workspace:v1'
 
 const contentTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -31,20 +35,9 @@ const contentTypes = new Map([
 
 const resources = {
   browser: null,
-  child: null,
+  children: new Set(),
   server: null,
   tempRoot: null,
-  distBackup: null,
-  hadDist: false,
-}
-
-const exists = async (path) => {
-  try {
-    await stat(path)
-    return true
-  } catch {
-    return false
-  }
 }
 
 const runCommand = (command, args, options) => new Promise((resolveCommand, rejectCommand) => {
@@ -52,7 +45,7 @@ const runCommand = (command, args, options) => new Promise((resolveCommand, reje
     ...options,
     stdio: ['ignore', 'pipe', 'pipe'],
   })
-  resources.child = child
+  resources.children.add(child)
   let output = ''
   let timedOut = false
   const append = (chunk) => {
@@ -66,12 +59,12 @@ const runCommand = (command, args, options) => new Promise((resolveCommand, reje
   }, COMMAND_TIMEOUT_MS)
   child.once('error', (error) => {
     clearTimeout(timer)
-    resources.child = null
+    resources.children.delete(child)
     rejectCommand(error)
   })
   child.once('exit', (code, signal) => {
     clearTimeout(timer)
-    resources.child = null
+    resources.children.delete(child)
     if (code === 0 && !timedOut) {
       resolveCommand(output)
       return
@@ -81,9 +74,62 @@ const runCommand = (command, args, options) => new Promise((resolveCommand, reje
   })
 })
 
-const buildInto = async (target, salt) => {
+const archiveRevision = (revision, target) => new Promise((resolveArchive, rejectArchive) => {
+  const archive = spawn('git', ['archive', '--format=tar', revision, 'app'], {
+    cwd: REPO_ROOT,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  })
+  const extract = spawn('tar', ['-x', '-C', target], {
+    stdio: ['pipe', 'ignore', 'pipe'],
+  })
+  resources.children.add(archive)
+  resources.children.add(extract)
+  archive.stdout.pipe(extract.stdin)
+  let errors = ''
+  archive.stderr.on('data', (chunk) => { errors = `${errors}${chunk}`.slice(-12_000) })
+  extract.stderr.on('data', (chunk) => { errors = `${errors}${chunk}`.slice(-12_000) })
+  let archiveCode = null
+  let extractCode = null
+  const timer = setTimeout(() => {
+    archive.kill('SIGKILL')
+    extract.kill('SIGKILL')
+  }, COMMAND_TIMEOUT_MS)
+  const finish = () => {
+    if (archiveCode === null || extractCode === null) return
+    clearTimeout(timer)
+    resources.children.delete(archive)
+    resources.children.delete(extract)
+    if (archiveCode === 0 && extractCode === 0) resolveArchive()
+    else rejectArchive(new Error(`git archive ${revision} failed (${archiveCode}/${extractCode})\n${errors}`))
+  }
+  archive.once('error', rejectArchive)
+  extract.once('error', rejectArchive)
+  archive.once('exit', (code) => { archiveCode = code; finish() })
+  extract.once('exit', (code) => { extractCode = code; finish() })
+})
+
+const prepareSourceTrees = async (tempRoot) => {
+  const baseSource = join(tempRoot, 'base-source')
+  const candidateSource = join(tempRoot, 'candidate-source')
+  await mkdir(baseSource, { recursive: true })
+  await mkdir(candidateSource, { recursive: true })
+  await archiveRevision(BASE_REVISION, baseSource)
+  await cp(APP_ROOT, join(candidateSource, 'app'), {
+    recursive: true,
+    filter: (source) => !['node_modules', 'dist', 'test-results'].includes(source.split(sep).at(-1)),
+  })
+  for (const source of [baseSource, candidateSource]) {
+    await symlink(join(APP_ROOT, 'node_modules'), join(source, 'app', 'node_modules'))
+  }
+  return {
+    baseApp: join(baseSource, 'app'),
+    candidateApp: join(candidateSource, 'app'),
+  }
+}
+
+const buildInto = async (sourceApp, target, salt) => {
   await runCommand('npm', ['run', 'build'], {
-    cwd: APP_ROOT,
+    cwd: sourceApp,
     env: {
       ...process.env,
       ALL_PROXY: 'http://127.0.0.1:9',
@@ -98,7 +144,7 @@ const buildInto = async (target, salt) => {
       npm_config_update_notifier: 'false',
     },
   })
-  await cp(DIST_ROOT, target, { recursive: true })
+  await cp(join(sourceApp, 'dist'), target, { recursive: true })
   const worker = await readFile(join(target, 'sw.js'), 'utf8')
   const buildId = worker.match(/const BUILD_ID = '([a-f0-9]{12})'/)?.[1]
   assert.ok(buildId, `service worker for ${salt} must contain a stamped build ID`)
@@ -175,17 +221,15 @@ const closeServer = async (server) => {
 }
 
 const cleanup = async () => {
-  if (resources.child && resources.child.exitCode === null) resources.child.kill('SIGKILL')
-  resources.child = null
+  for (const child of resources.children) {
+    if (child.exitCode === null) child.kill('SIGKILL')
+  }
+  resources.children.clear()
   if (resources.browser) await resources.browser.close().catch(() => {})
   resources.browser = null
   await closeServer(resources.server).catch(() => {})
   resources.server = null
   if (resources.tempRoot) {
-    await rm(DIST_ROOT, { force: true, recursive: true })
-    if (resources.hadDist && resources.distBackup && await exists(resources.distBackup)) {
-      await cp(resources.distBackup, DIST_ROOT, { recursive: true })
-    }
     await rm(resources.tempRoot, { force: true, recursive: true })
   }
   resources.tempRoot = null
@@ -215,21 +259,33 @@ const tabState = (page) => page.evaluate(({ capturedKey, loadKey, markerKey }) =
   markerKey: UPDATE_RELOAD_SESSION_KEY,
 })
 
+const revealUpdateAction = async (page) => {
+  await page.bringToFront()
+  await page.getByRole('button', { name: 'Settings', exact: true }).click()
+  await page.getByRole('button', { name: 'Check for app update' }).click()
+  await page.getByText(/^(?:Update check complete\.|PalDawn checked for an app update\.)$/).waitFor({ state: 'visible' })
+  await page.getByRole('button', { name: 'Close panel' }).click()
+  const noticeSummary = page.locator('.system-notice-summary')
+  await noticeSummary.waitFor({ state: 'visible' })
+  if (await noticeSummary.getAttribute('aria-expanded') !== 'true') await noticeSummary.click()
+  const updateAction = page.getByRole('button', { name: 'Update now' })
+    .or(page.getByRole('button', { name: 'Retry update' }))
+  await updateAction.waitFor({ state: 'visible' })
+  return updateAction
+}
+
 const runAcceptance = async () => {
   resources.tempRoot = await mkdtemp(join(tmpdir(), 'paldawn-pwa-browser-'))
-  resources.hadDist = await exists(DIST_ROOT)
-  if (resources.hadDist) {
-    resources.distBackup = join(resources.tempRoot, 'dist-backup')
-    await cp(DIST_ROOT, resources.distBackup, { recursive: true })
-  }
+  const { baseApp, candidateApp } = await prepareSourceTrees(resources.tempRoot)
+  const baseRoot = join(resources.tempRoot, 'base-build')
+  const candidateRoot = join(resources.tempRoot, 'candidate-build')
+  const nextCandidateRoot = join(resources.tempRoot, 'next-candidate-build')
+  const baseBuildId = await buildInto(baseApp, baseRoot, 'pwa-browser-lifecycle-base')
+  const candidateBuildId = await buildInto(candidateApp, candidateRoot, 'pwa-browser-lifecycle-candidate')
+  const nextCandidateBuildId = await buildInto(candidateApp, nextCandidateRoot, 'pwa-browser-lifecycle-next')
+  assert.equal(new Set([baseBuildId, candidateBuildId, nextCandidateBuildId]).size, 3, 'builds must have distinct service workers')
 
-  const v1Root = join(resources.tempRoot, 'v1')
-  const v2Root = join(resources.tempRoot, 'v2')
-  const v1BuildId = await buildInto(v1Root, 'pwa-browser-lifecycle-v1')
-  const v2BuildId = await buildInto(v2Root, 'pwa-browser-lifecycle-v2')
-  assert.notEqual(v1BuildId, v2BuildId, 'build salts must create distinct service workers')
-
-  const staticServer = createStaticServer(v1Root)
+  const staticServer = createStaticServer(baseRoot)
   resources.server = staticServer.server
   const port = await listen(resources.server)
   const origin = `http://127.0.0.1:${port}`
@@ -263,7 +319,7 @@ const runAcceptance = async () => {
     externalRequests.push(url.href)
     await route.abort('blockedbyclient')
   })
-  await context.addInitScript(({ capturedKey, loadKey, markerType, origin: expectedOrigin, settingsKey }) => {
+  await context.addInitScript(({ blockedKey, capturedKey, loadKey, markerType, origin: expectedOrigin, settingsKey }) => {
     if (location.origin !== expectedOrigin) return
     if (!localStorage.getItem(settingsKey)) {
       localStorage.setItem(settingsKey, JSON.stringify({
@@ -277,8 +333,12 @@ const runAcceptance = async () => {
       if (event.data?.type === markerType && typeof event.data.requestId === 'string') {
         sessionStorage.setItem(capturedKey, event.data.requestId)
       }
+      if (event.data?.type === 'PALDAWN_UPDATE_BLOCKED' && event.data.reason === 'legacy') {
+        sessionStorage.setItem(blockedKey, event.data.requestId)
+      }
     })
   }, {
+    blockedKey: LEGACY_BLOCKED_KEY,
     capturedKey: CAPTURED_REQUEST_KEY,
     loadKey: LOAD_COUNT_KEY,
     markerType: 'PALDAWN_UPDATE_ACTIVATED',
@@ -286,25 +346,26 @@ const runAcceptance = async () => {
     settingsKey: SETTINGS_KEY,
   })
 
-  const firstTab = await context.newPage()
-  const secondTab = await context.newPage()
-  for (const page of [firstTab, secondTab]) {
+  const firstBaseTab = await context.newPage()
+  const secondBaseTab = await context.newPage()
+  for (const page of [firstBaseTab, secondBaseTab]) {
     page.on('pageerror', (error) => pageErrors.push(error.message))
   }
-  await Promise.all([firstTab.goto(appUrl), secondTab.goto(appUrl)])
-  await Promise.all([waitForController(firstTab), waitForController(secondTab)])
-  await firstTab.waitForTimeout(750)
-  assert.deepEqual((await Promise.all([tabState(firstTab), tabState(secondTab)])).map(({ loadCount }) => loadCount), [1, 1], 'first install must not reload either tab')
+  await Promise.all([firstBaseTab.goto(appUrl), secondBaseTab.goto(appUrl)])
+  await Promise.all([waitForController(firstBaseTab), waitForController(secondBaseTab)])
+  await firstBaseTab.waitForTimeout(750)
+  assert.deepEqual((await Promise.all([tabState(firstBaseTab), tabState(secondBaseTab)])).map(({ loadCount }) => loadCount), [1, 1], 'first install must not reload either base tab')
 
-  await firstTab.bringToFront()
-  await firstTab.getByRole('button', { name: 'Settings', exact: true }).click()
-  await firstTab.getByLabel('Quality tier').selectOption('low')
-  await firstTab.getByRole('button', { name: 'Close panel' }).click()
-  await firstTab.getByRole('button', { name: /^(?:Begin the voyage|Enter step mode)$/ }).click()
-  const pauseAction = firstTab.getByRole('button', { name: 'Pause' })
+  await firstBaseTab.bringToFront()
+  await firstBaseTab.getByRole('button', { name: 'Settings', exact: true }).click()
+  await firstBaseTab.getByLabel('Quality tier').selectOption('low')
+  await firstBaseTab.getByRole('button', { name: 'Close panel' }).click()
+  await firstBaseTab.getByRole('button', { name: /^(?:Begin the voyage|Enter step mode)$/ }).click()
+  const pauseAction = firstBaseTab.getByRole('button', { name: 'Pause' })
   if (await pauseAction.isVisible()) await pauseAction.click()
-  await firstTab.getByLabel('Journey position').fill('250')
-  await firstTab.waitForFunction((key) => {
+  await firstBaseTab.getByLabel('Journey position').fill('250')
+  await firstBaseTab.getByRole('button', { name: 'Save stage', exact: true }).first().click()
+  await firstBaseTab.waitForFunction((key) => {
     const value = localStorage.getItem(key)
     if (!value) return false
     try {
@@ -313,32 +374,53 @@ const runAcceptance = async () => {
       return false
     }
   }, JOURNEY_KEY, { timeout: 5_000 })
-  const storedBefore = await firstTab.evaluate(({ journeyKey, settingsKey }) => ({
+  const storedBefore = await firstBaseTab.evaluate(({ bookmarksKey, journeyKey, settingsKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
     journey: localStorage.getItem(journeyKey),
     settings: localStorage.getItem(settingsKey),
-  }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  }), { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  assert.ok(storedBefore.bookmarks, 'saved-stage state must be durable before activation')
   assert.ok(storedBefore.journey, 'journey state must be durable before activation')
   assert.ok(storedBefore.settings, 'settings state must be durable before activation')
 
-  staticServer.useRoot(v2Root)
-  await firstTab.getByRole('button', { name: 'Settings', exact: true }).click()
-  await firstTab.getByRole('button', { name: 'Check for app update' }).click()
-  await firstTab.getByText(/^(?:Update check complete\.|PalDawn checked for an app update\.)$/).waitFor({ state: 'visible' })
-  await firstTab.getByRole('button', { name: 'Close panel' }).click()
-  const noticeSummary = firstTab.locator('.system-notice-summary')
-  await noticeSummary.waitFor({ state: 'visible' })
-  await noticeSummary.click()
-  const updateAction = firstTab.getByRole('button', { name: 'Update now' })
-  await updateAction.waitFor({ state: 'visible' })
+  staticServer.useRoot(candidateRoot)
+  const firstLegacyAction = await revealUpdateAction(firstBaseTab)
+  await firstLegacyAction.click()
+  await firstBaseTab.waitForFunction((key) => Boolean(sessionStorage.getItem(key)), LEGACY_BLOCKED_KEY)
 
-  const firstReload = firstTab.waitForEvent('load')
-  const secondReload = secondTab.waitForEvent('load')
+  const secondLegacyAction = await revealUpdateAction(secondBaseTab)
+  await secondLegacyAction.click()
+  await secondBaseTab.waitForFunction((key) => Boolean(sessionStorage.getItem(key)), LEGACY_BLOCKED_KEY)
+  assert.deepEqual((await Promise.all([tabState(firstBaseTab), tabState(secondBaseTab)])).map(({ loadCount }) => loadCount), [1, 1], 'legacy bridge must preserve both base tabs without reload')
+
+  const [firstLegacyRequestId, secondLegacyRequestId] = await Promise.all([
+    firstBaseTab.evaluate((key) => sessionStorage.getItem(key), LEGACY_BLOCKED_KEY),
+    secondBaseTab.evaluate((key) => sessionStorage.getItem(key), LEGACY_BLOCKED_KEY),
+  ])
+  assert.ok(firstLegacyRequestId && secondLegacyRequestId)
+  assert.notEqual(firstLegacyRequestId, secondLegacyRequestId, 'each legacy veto must retain a distinct request ID')
+
+  const firstCandidateTab = await context.newPage()
+  const secondCandidateTab = await context.newPage()
+  for (const page of [firstCandidateTab, secondCandidateTab]) {
+    page.on('pageerror', (error) => pageErrors.push(error.message))
+  }
+  await Promise.all([
+    firstCandidateTab.goto(`${appUrl}?paldawn-update-bridge=${encodeURIComponent(firstLegacyRequestId)}`),
+    secondCandidateTab.goto(`${appUrl}?paldawn-update-bridge=${encodeURIComponent(secondLegacyRequestId)}`),
+  ])
+
+  await Promise.all([firstBaseTab.close(), secondBaseTab.close()])
+  await firstCandidateTab.waitForTimeout(250)
+  const updateAction = await revealUpdateAction(firstCandidateTab)
+  const firstReload = firstCandidateTab.waitForEvent('load')
+  const secondReload = secondCandidateTab.waitForEvent('load')
   await updateAction.click()
   await Promise.all([firstReload, secondReload])
-  await Promise.all([waitForController(firstTab), waitForController(secondTab)])
-  await firstTab.waitForTimeout(1_250)
+  await Promise.all([waitForController(firstCandidateTab), waitForController(secondCandidateTab)])
+  await firstCandidateTab.waitForTimeout(1_250)
 
-  const [firstState, secondState] = await Promise.all([tabState(firstTab), tabState(secondTab)])
+  const [firstState, secondState] = await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])
   assert.equal(firstState.loadCount, 2, 'requesting tab must reload exactly once')
   assert.equal(secondState.loadCount, 2, 'sibling tab must reload exactly once')
   assert.ok(firstState.updateMarker, 'requesting tab must retain the consumed request marker')
@@ -346,25 +428,104 @@ const runAcceptance = async () => {
   assert.equal(firstState.capturedRequestId, firstState.updateMarker, 'requesting tab must reload for its captured activation')
   assert.equal(secondState.capturedRequestId, firstState.updateMarker, 'sibling tab must reload for the same captured activation')
 
-  const storedAfter = await firstTab.evaluate(({ journeyKey, settingsKey }) => ({
+  const storedAfter = await firstCandidateTab.evaluate(({ bookmarksKey, journeyKey, settingsKey }) => ({
+    bookmarks: localStorage.getItem(bookmarksKey),
     journey: localStorage.getItem(journeyKey),
     settings: localStorage.getItem(settingsKey),
-  }), { journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
-  assert.deepEqual(storedAfter, storedBefore, 'local journey and settings data must survive activation')
-  await firstTab.getByRole('button', { name: 'Settings', exact: true }).click()
-  assert.equal(await firstTab.getByLabel('Quality tier').inputValue(), 'low', 'persisted settings must restore in the updated UI')
-  await firstTab.getByRole('button', { name: 'Close panel' }).click()
-  await firstTab.getByRole('button', { name: /Resume at/ }).waitFor({ state: 'visible' })
+  }), { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  const beforeBookmarks = JSON.parse(storedBefore.bookmarks)
+  const afterBookmarks = JSON.parse(storedAfter.bookmarks)
+  const beforeJourney = JSON.parse(storedBefore.journey)
+  const afterJourney = JSON.parse(storedAfter.journey)
+  const beforeSettings = JSON.parse(storedBefore.settings)
+  const afterSettings = JSON.parse(storedAfter.settings)
+  assert.deepEqual(
+    { progress: afterJourney.progress, narrationMode: afterJourney.narrationMode },
+    { progress: beforeJourney.progress, narrationMode: beforeJourney.narrationMode },
+    'local journey state must survive activation',
+  )
+  assert.deepEqual(afterSettings.state, beforeSettings.state, 'local settings state must survive activation')
+  assert.deepEqual(afterBookmarks.stageIds, beforeBookmarks.stageIds, 'saved-stage state must survive activation')
+  await firstCandidateTab.getByRole('button', { name: 'Settings', exact: true }).click()
+  assert.equal(await firstCandidateTab.getByLabel('Quality tier').inputValue(), 'low', 'persisted settings must restore in the updated UI')
+  await firstCandidateTab.getByRole('button', { name: 'Close panel' }).click()
+  await firstCandidateTab.getByRole('button', { name: /Resume at/ }).waitFor({ state: 'visible' })
 
-  const cacheNames = await firstTab.evaluate(() => caches.keys())
-  assert.deepEqual(cacheNames, [`paldawn-foundation-${v2BuildId}`], 'only the new bounded PalDawn cache may remain')
+  const cacheNames = await firstCandidateTab.evaluate(() => caches.keys())
+  assert.deepEqual(cacheNames, [`paldawn-foundation-${candidateBuildId}`], 'only the safely activated candidate cache may remain')
+
+  staticServer.useRoot(nextCandidateRoot)
+  await secondCandidateTab.bringToFront()
+  await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
+  const durableWorkspaceBefore = await secondCandidateTab.evaluate((workspaceKey) => {
+    const originalSetItem = Storage.prototype.setItem
+    Object.defineProperty(window, '__paldawnRestoreStorage', {
+      configurable: true,
+      value: () => { Storage.prototype.setItem = originalSetItem },
+    })
+    Storage.prototype.setItem = function (key, value) {
+      if (key === workspaceKey) throw new DOMException('Injected workspace storage failure', 'QuotaExceededError')
+      return originalSetItem.call(this, key, value)
+    }
+    return localStorage.getItem(workspaceKey)
+  }, WORKSPACE_KEY)
+  const privateNote = 'Memory-only checkpoint must survive a blocked update.'
+  await secondCandidateTab.getByLabel(/^Private note for /).fill(privateNote)
+  await secondCandidateTab.getByRole('button', { name: 'Mark personal checkpoint' }).click()
+  await secondCandidateTab.getByText('Browser storage is unavailable.').waitFor({ state: 'visible' })
+
+  const markerBeforeVeto = (await tabState(firstCandidateTab)).updateMarker
+  const vetoAction = await revealUpdateAction(firstCandidateTab)
+  await vetoAction.click()
+  await firstCandidateTab.getByText(/Update paused because an open PalDawn tab could not verify/).waitFor({ state: 'visible' })
+  await firstCandidateTab.waitForTimeout(500)
+  assert.equal(await firstCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the requesting tab')
+  assert.equal(await secondCandidateTab.evaluate(() => document.body.inert), false, 'a blocked handoff must restore the sibling tab')
+  assert.equal(await firstCandidateTab.getByRole('button', { name: 'Retry update' }).evaluate((button) => document.activeElement === button), true, 'a blocked handoff must focus its retry action')
+
+  const [firstAfterVeto, secondAfterVeto] = await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])
+  assert.equal(firstAfterVeto.loadCount, 2, 'requesting candidate tab must not reload after a sibling veto')
+  assert.equal(secondAfterVeto.loadCount, 2, 'unpersistable sibling tab must remain open and unreloaded')
+  assert.equal(firstAfterVeto.updateMarker, markerBeforeVeto, 'a veto must not commit a new activation marker')
+  assert.equal(secondAfterVeto.updateMarker, markerBeforeVeto, 'a veto must not change the sibling activation marker')
+  assert.equal(await secondCandidateTab.getByLabel(/^Private note for /).inputValue(), privateNote, 'memory-only private note must remain intact')
+  assert.equal(await secondCandidateTab.getByRole('button', { name: 'Personal checkpoint complete' }).getAttribute('aria-pressed'), 'true')
+  assert.equal(await secondCandidateTab.evaluate((workspaceKey) => localStorage.getItem(workspaceKey), WORKSPACE_KEY), durableWorkspaceBefore, 'failed persistence must not be mistaken for a durable flush')
+  assert.equal(await firstCandidateTab.evaluate(async () => (await navigator.serviceWorker.getRegistration())?.waiting?.state), 'installed', 'vetoed worker must remain waiting')
+
+  await secondCandidateTab.bringToFront()
+  await secondCandidateTab.evaluate(() => window.__paldawnRestoreStorage())
+  await secondCandidateTab.getByRole('button', { name: 'Retry saving' }).click()
+  await secondCandidateTab.getByText('Private workspace saved in this browser.').waitFor({ state: 'visible' })
+  await secondCandidateTab.getByRole('button', { name: 'Close panel' }).click()
+
+  await firstCandidateTab.bringToFront()
+  const retryAction = firstCandidateTab.getByRole('button', { name: 'Retry update' })
+  await retryAction.waitFor({ state: 'visible' })
+  const firstRetryReload = firstCandidateTab.waitForEvent('load')
+  const secondRetryReload = secondCandidateTab.waitForEvent('load')
+  await retryAction.click()
+  await Promise.all([firstRetryReload, secondRetryReload])
+  await Promise.all([waitForController(firstCandidateTab), waitForController(secondCandidateTab)])
+
+  const [firstRecovered, secondRecovered] = await Promise.all([tabState(firstCandidateTab), tabState(secondCandidateTab)])
+  assert.equal(firstRecovered.loadCount, 3, 'requesting tab must reload once after storage recovery')
+  assert.equal(secondRecovered.loadCount, 3, 'recovered sibling must reload once after storage recovery')
+  assert.notEqual(firstRecovered.updateMarker, markerBeforeVeto, 'successful retry must use a fresh activation request')
+  assert.equal(firstRecovered.updateMarker, secondRecovered.updateMarker, 'successful retry must remain coherent across tabs')
+  await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
+  assert.equal(await secondCandidateTab.getByLabel(/^Private note for /).inputValue(), privateNote, 'recovered note must restore after activation')
+  assert.equal(await secondCandidateTab.getByRole('button', { name: 'Personal checkpoint complete' }).getAttribute('aria-pressed'), 'true')
+  const recoveredCacheNames = await firstCandidateTab.evaluate(() => caches.keys())
+  assert.deepEqual(recoveredCacheNames, [`paldawn-foundation-${nextCandidateBuildId}`], 'successful retry must leave only the current PalDawn cache')
   assert.deepEqual(externalRequests, [], 'browser acceptance must not request external origins')
   assert.deepEqual(pageErrors, [], 'browser acceptance must not produce page errors')
 
   console.log(`pwa browser lifecycle: PASS · Chromium ${browserVersion}`)
-  console.log(`builds: ${v1BuildId} -> ${v2BuildId}`)
-  console.log(`tabs: 1 -> ${firstState.loadCount} loads each · request ${firstState.updateMarker}`)
-  console.log(`cache: ${cacheNames.join(', ')} · local journey/settings preserved`)
+  console.log(`builds: base ${BASE_REVISION.slice(0, 8)} / ${baseBuildId} -> candidate ${candidateBuildId}`)
+  console.log(`legacy: 2 base tabs vetoed/preserved -> 2 manually reopened candidate tabs reloaded once · request ${firstState.updateMarker}`)
+  console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage preserved`)
+  console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then activated after the sibling saved · note/checkpoint restored`)
 }
 
 let timeout

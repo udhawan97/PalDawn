@@ -3,8 +3,14 @@ let refreshing = false
 let installPrompt: BeforeInstallPromptEvent | null = null
 
 const UPDATE_REQUEST_MESSAGE = 'PALDAWN_REQUEST_UPDATE'
+const UPDATE_PREPARE_MESSAGE = 'PALDAWN_PREPARE_UPDATE'
+const UPDATE_PREPARED_MESSAGE = 'PALDAWN_UPDATE_PREPARED'
 const UPDATE_ACTIVATED_MESSAGE = 'PALDAWN_UPDATE_ACTIVATED'
+const UPDATE_BLOCKED_MESSAGE = 'PALDAWN_UPDATE_BLOCKED'
 const UPDATE_RELOAD_SESSION_KEY = 'paldawn:pwa-update-reload:v1'
+
+const updatePreparations = new Set<() => boolean | Promise<boolean>>()
+let activeUpdateRequestId: string | null = null
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -13,6 +19,12 @@ interface BeforeInstallPromptEvent extends Event {
 
 export type PwaInstallState = 'available' | 'installed' | 'instructions'
 export type PwaUpdateCheckResult = 'checked' | 'unavailable' | 'failed'
+export type PwaUpdateBlockReason = 'busy' | 'failed' | 'legacy' | 'timeout' | 'unsaved'
+
+export interface PwaUpdateBlockedDetail {
+  requestId: string
+  reason: PwaUpdateBlockReason
+}
 
 const isStandalone = (): boolean =>
   window.matchMedia?.('(display-mode: standalone)').matches === true ||
@@ -20,6 +32,56 @@ const isStandalone = (): boolean =>
 
 const dispatch = (name: 'update-ready' | 'offline-ready'): void => {
   window.dispatchEvent(new CustomEvent(`paldawn:${name}`))
+}
+
+const validRequestId = (value: unknown): value is string =>
+  typeof value === 'string' && value.length > 0 && value.length <= 128
+
+const isScopedServiceWorker = (source: MessageEventSource | null): source is ServiceWorker => {
+  if (!(source instanceof ServiceWorker)) return false
+  try {
+    const scriptUrl = new URL(source.scriptURL)
+    const scopeUrl = new URL(import.meta.env.BASE_URL, window.location.href)
+    return scriptUrl.origin === window.location.origin && scriptUrl.href.startsWith(scopeUrl.href)
+  } catch {
+    return false
+  }
+}
+
+const setUpdateHandoff = (active: boolean): void => {
+  document.body.inert = active
+  if (active) document.documentElement.dataset.pwaUpdateHandoff = 'true'
+  else delete document.documentElement.dataset.pwaUpdateHandoff
+}
+
+const dispatchUpdateBlocked = (requestId: string, reason: PwaUpdateBlockReason): void => {
+  activeUpdateRequestId = null
+  setUpdateHandoff(false)
+  window.dispatchEvent(new CustomEvent<PwaUpdateBlockedDetail>('paldawn:update-blocked', {
+    detail: { requestId, reason },
+  }))
+}
+
+const beginUpdateHandoff = (requestId: string): void => {
+  activeUpdateRequestId = requestId
+  setUpdateHandoff(true)
+}
+
+const prepareUpdate = async (worker: ServiceWorker, requestId: string): Promise<void> => {
+  beginUpdateHandoff(requestId)
+  let ready = updatePreparations.size > 0
+  for (const preparation of updatePreparations) {
+    try {
+      if (!await preparation()) ready = false
+    } catch {
+      ready = false
+    }
+  }
+  try {
+    worker.postMessage({ type: UPDATE_PREPARED_MESSAGE, requestId, ready })
+  } catch {
+    if (activeUpdateRequestId === requestId) dispatchUpdateBlocked(requestId, 'failed')
+  }
 }
 
 const updateRequestId = (): string => {
@@ -56,11 +118,27 @@ export function registerPwa(): void {
   if (!('serviceWorker' in navigator) || !import.meta.env.PROD) return
 
   navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data?.type !== UPDATE_ACTIVATED_MESSAGE) return
-    const requestId = event.data.requestId
-    if (typeof requestId !== 'string' || requestId.length === 0 || requestId.length > 128) return
-    if (!consumeUpdateReload(requestId)) return
-    window.location.reload()
+    const data = event.data
+    if (!data || typeof data !== 'object') return
+    const requestId = data.requestId
+    if (!validRequestId(requestId)) return
+
+    if (data.type === UPDATE_PREPARE_MESSAGE) {
+      if (!isScopedServiceWorker(event.source)) return
+      void prepareUpdate(event.source, requestId)
+      return
+    }
+    if (data.type === UPDATE_BLOCKED_MESSAGE) {
+      const reason = data.reason
+      if (!['busy', 'failed', 'legacy', 'timeout', 'unsaved'].includes(reason)) return
+      if (activeUpdateRequestId !== requestId) return
+      dispatchUpdateBlocked(requestId, reason)
+      return
+    }
+    if (data.type === UPDATE_ACTIVATED_MESSAGE) {
+      if (!consumeUpdateReload(requestId)) return
+      window.location.reload()
+    }
   })
 
   window.addEventListener('load', () => {
@@ -107,8 +185,25 @@ export async function requestPwaInstall(): Promise<'accepted' | 'dismissed' | 'i
 
 export function activatePwaUpdate(): void {
   const waiting = registration?.waiting
-  if (!waiting) return
-  waiting.postMessage({ type: UPDATE_REQUEST_MESSAGE, requestId: updateRequestId() })
+  const requestId = updateRequestId()
+  if (!waiting) {
+    dispatchUpdateBlocked(requestId, 'failed')
+    return
+  }
+  activeUpdateRequestId = requestId
+  window.dispatchEvent(new CustomEvent('paldawn:update-preparing', { detail: { requestId } }))
+  try {
+    waiting.postMessage({ type: UPDATE_REQUEST_MESSAGE, requestId })
+  } catch {
+    dispatchUpdateBlocked(requestId, 'failed')
+  }
+}
+
+export function registerPwaUpdatePreparation(
+  preparation: () => boolean | Promise<boolean>,
+): () => void {
+  updatePreparations.add(preparation)
+  return () => updatePreparations.delete(preparation)
 }
 
 export async function checkForPwaUpdate(): Promise<PwaUpdateCheckResult> {

@@ -40,6 +40,7 @@ import {
   saveLearnerWorkspace,
   saveJourneySession,
   saveStageBookmarks,
+  writeLocalStorageValue,
   type LearnerWorkspace,
   type LocalDataImportResult,
   type StorageFailureDetail,
@@ -48,8 +49,10 @@ import {
   activatePwaUpdate,
   checkForPwaUpdate,
   getPwaInstallState,
+  registerPwaUpdatePreparation,
   requestPwaInstall,
   type PwaInstallState,
+  type PwaUpdateBlockedDetail,
 } from '../platform/pwa'
 import { shareOrCopy, type ShareOutcome } from '../platform/share'
 import { studyWorkspaceMarkdown } from '../platform/study'
@@ -1193,6 +1196,8 @@ export function FlightDeck({
   const highContrast = useSettings((state) => state.highContrast)
   const captionScale = useSettings((state) => state.captionScale)
   const [updateReady, setUpdateReady] = useState(false)
+  const [updateBlocked, setUpdateBlocked] = useState<PwaUpdateBlockedDetail | null>(null)
+  const [updatePreparing, setUpdatePreparing] = useState(false)
   const [offlineReady, setOfflineReady] = useState(false)
   const [online, setOnline] = useState(navigator.onLine)
   const [visibilityPaused, setVisibilityPaused] = useState(false)
@@ -1210,7 +1215,7 @@ export function FlightDeck({
   const systemNoticeLabels = [
     !online ? 'Offline mode' : null,
     offlineReady ? 'Offline ready' : null,
-    updateReady ? 'Update ready' : null,
+    updateBlocked ? 'Update paused' : updateReady ? 'Update ready' : null,
     visibilityPaused ? 'Voyage paused' : null,
     failedStorageKeys.length ? 'Local storage unavailable' : null,
   ].filter((label): label is string => label !== null)
@@ -1246,6 +1251,33 @@ export function FlightDeck({
     return persisted
   }, [])
 
+  const preparePwaUpdate = useCallback(() => {
+    const experience = useExperience.getState()
+    if (experience.playing) experience.pause()
+    const settings = useSettings.getState()
+    const journeySaved = !experience.entered || saveJourneySession({
+      progress: experience.progress,
+      narrationMode: experience.narrationMode,
+    })
+    const bookmarksSaved = saveStageBookmarks(bookmarksRef.current)
+    const workspaceSaved = saveLearnerWorkspace(workspaceRef.current)
+    const settingsSaved = writeLocalStorageValue(PALDAWN_SETTINGS_KEY, JSON.stringify({
+      state: {
+        qualityTier: settings.qualityTier,
+        reducedMotion: settings.reducedMotion,
+        comfortVignette: settings.comfortVignette,
+        highContrast: settings.highContrast,
+        showTelemetry: settings.showTelemetry,
+        captionScale: settings.captionScale,
+        playbackRate: settings.playbackRate,
+        textVoyagePreferred: settings.textVoyagePreferred,
+      },
+      version: 1,
+    }))
+    setWorkspacePersisted(workspaceSaved)
+    return journeySaved && bookmarksSaved && workspaceSaved && settingsSaved
+  }, [])
+
   const openWorkspace = useCallback((focusNote: boolean) => {
     setOpenPanel('workspace')
     if (focusNote) window.setTimeout(() => document.getElementById('workspace-note')?.focus(), 0)
@@ -1275,6 +1307,8 @@ export function FlightDeck({
       window.removeEventListener(PALDAWN_STORAGE_SUCCESS_EVENT, onStorageSuccess)
     }
   }, [])
+
+  useEffect(() => registerPwaUpdatePreparation(preparePwaUpdate), [preparePwaUpdate])
 
   useLayoutEffect(() => {
     const shell = flightUiRef.current
@@ -1391,16 +1425,35 @@ export function FlightDeck({
   }, [playing])
 
   useLayoutEffect(() => {
-    const onUpdate = () => setUpdateReady(true)
+    const onUpdate = () => {
+      setUpdateReady(true)
+      setUpdateBlocked(null)
+      setUpdatePreparing(false)
+    }
+    const onUpdatePreparing = () => {
+      setUpdateBlocked(null)
+      setUpdatePreparing(true)
+    }
+    const onUpdateBlocked = (event: Event) => {
+      setUpdateReady(true)
+      setUpdateBlocked((event as CustomEvent<PwaUpdateBlockedDetail>).detail)
+      setUpdatePreparing(false)
+      setSystemNoticesOpen(true)
+      window.setTimeout(() => document.getElementById('pwa-update-action')?.focus(), 0)
+    }
     const onOfflineReady = () => setOfflineReady(true)
     const onOnline = () => setOnline(true)
     const onOffline = () => setOnline(false)
     window.addEventListener('paldawn:update-ready', onUpdate)
+    window.addEventListener('paldawn:update-preparing', onUpdatePreparing)
+    window.addEventListener('paldawn:update-blocked', onUpdateBlocked)
     window.addEventListener('paldawn:offline-ready', onOfflineReady)
     window.addEventListener('online', onOnline)
     window.addEventListener('offline', onOffline)
     return () => {
       window.removeEventListener('paldawn:update-ready', onUpdate)
+      window.removeEventListener('paldawn:update-preparing', onUpdatePreparing)
+      window.removeEventListener('paldawn:update-blocked', onUpdateBlocked)
       window.removeEventListener('paldawn:offline-ready', onOfflineReady)
       window.removeEventListener('online', onOnline)
       window.removeEventListener('offline', onOffline)
@@ -1561,7 +1614,18 @@ export function FlightDeck({
             <p className="system-banner system-banner-offline-ready">Offline voyage ready.<button type="button" onClick={() => setOfflineReady(false)}>Dismiss</button></p>
           ) : null}
           {updateReady ? (
-            <p className="system-banner system-banner-update-ready">A new local build is ready.<button type="button" onClick={activatePwaUpdate}>Update now</button></p>
+            <p
+              className="system-banner system-banner-update-ready"
+              role={updateBlocked ? 'alert' : undefined}
+              aria-busy={updatePreparing}
+            >
+              {updatePreparing
+                ? 'Saving local changes in every open PalDawn tab before updating…'
+                : updateBlocked
+                ? 'Update paused because an open PalDawn tab could not verify that its local work was saved. Keep that tab open, restore browser storage or copy its private work, close older tabs, then retry.'
+                : 'A new local build is ready.'}
+              <button id="pwa-update-action" type="button" disabled={updatePreparing} onClick={activatePwaUpdate}>{updateBlocked ? 'Retry update' : 'Update now'}</button>
+            </p>
           ) : null}
           {visibilityPaused ? (
             <p className="system-banner">Voyage paused while this page was in the background.<button type="button" onClick={() => {

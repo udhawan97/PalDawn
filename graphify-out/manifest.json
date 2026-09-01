@@ -20,7 +20,7 @@
     "semantic_hash": ""
   },
   "app/src/state/settings.ts": {
-    "mtime": 1788229969.2720668,
+    "mtime": 1788229107.2186477,
     "ast_hash": "75e8823959932b0f1837e7f44725fd96",
     "semantic_hash": ""
   },
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788223505.4834564,
+    "mtime": 1788226867.7767584,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1788223456.7190309,
-    "ast_hash": "b4412b46f5ac0c2704ff29f456ae0ea1",
+    "mtime": 1788229823.50225,
+    "ast_hash": "4e05a3b93c4b54cfb768efad8e28e359",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "app/public/sw.js": {
-    "mtime": 1788219480.6211815,
-    "ast_hash": "772744b90a08dd8497892f7721011e2f",
+    "mtime": 1788230181.9637883,
+    "ast_hash": "934b7e0c1c7ca23dd9da7ef024a72c94",
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus.mjs": {
-    "mtime": 1788229969.2776575,
-    "ast_hash": "f17cb2c8671f1f2a8d898a0195b6e272",
+    "mtime": 1788230067.7016013,
+    "ast_hash": "4e77ec20e60aba1fccf69fbfb7a66cc5",
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
@@ -475,13 +475,13 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788229969.2698038,
+    "mtime": 1788229780.6207638,
     "ast_hash": "028b8b0d1712c1f801ba45044ad18731",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
-    "mtime": 1788219480.6247132,
-    "ast_hash": "e249df614088d9e57ea2c0635e5d274a",
+    "mtime": 1788229855.1297073,
+    "ast_hash": "34085f3b65547a4d6b8afd2d67076bf1",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS.md": {
@@ -490,7 +490,7 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788229969.275901,
+    "mtime": 1788229468.7913573,
     "ast_hash": "2c55c0569d90a85cad6290fc41bae1d1",
     "semantic_hash": ""
   },
@@ -505,7 +505,7 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788229969.2741,
+    "mtime": 1788229446.4918258,
     "ast_hash": "daf2ef7cce1680285815a67b050fb735",
     "semantic_hash": ""
   },
@@ -790,13 +790,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-lifecycle.mjs": {
-    "mtime": 1788219480.6238,
-    "ast_hash": "9acfcb92f1cf49e7697e8b79e265a7de",
+    "mtime": 1788229629.060873,
+    "ast_hash": "1a7a0320534e7e898eeff4f7ec4773f8",
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788222969.9610555,
-    "ast_hash": "973ecb7fd2f0a54e788720838540b6db",
+    "mtime": 1788230141.3426158,
+    "ast_hash": "1456dd6b8f3ce8c36ec0f7e86c277310",
     "semantic_hash": ""
   }
 }

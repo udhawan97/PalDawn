@@ -10,8 +10,22 @@ export async function runPwaLifecycleTests() {
   const listeners = new Map()
   const cacheBuckets = new Map()
   const clientMessages = [[], []]
+  const timers = new Map()
+  let nextTimerId = 1
   let claimCount = 0
   let skipWaitingCount = 0
+
+  const scheduleTimeout = (callback) => {
+    const id = nextTimerId++
+    timers.set(id, callback)
+    return id
+  }
+  const cancelTimeout = (id) => timers.delete(id)
+  const runTimers = () => {
+    const callbacks = [...timers.values()]
+    timers.clear()
+    callbacks.forEach((callback) => callback())
+  }
 
   const openCache = (name) => {
     let entries = cacheBuckets.get(name)
@@ -29,7 +43,9 @@ export async function runPwaLifecycleTests() {
     }
   }
 
-  const clients = clientMessages.map((messages) => ({
+  const clients = clientMessages.map((messages, index) => ({
+    id: `client-${index + 1}`,
+    url: `https://example.test/PalDawn/?tab=${index + 1}`,
     postMessage: (message) => messages.push(JSON.parse(JSON.stringify(message))),
   }))
 
@@ -51,6 +67,7 @@ export async function runPwaLifecycleTests() {
     URL,
     Request,
     Response,
+    clearTimeout: cancelTimeout,
     caches: {
       delete: async (name) => cacheBuckets.delete(name),
       keys: async () => [...cacheBuckets.keys()],
@@ -64,6 +81,7 @@ export async function runPwaLifecycleTests() {
       },
     },
     fetch: async () => { throw new Error('fetch is outside this lifecycle test') },
+    setTimeout: scheduleTimeout,
     self: worker,
   }, { filename: 'sw.js' })
 
@@ -97,10 +115,74 @@ export async function runPwaLifecycleTests() {
   assert.equal(skipWaitingCount, 0, 'same-origin clients outside the registration scope cannot request activation')
 
   await dispatch('message', {
-    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-1' },
-    source: { url: 'https://example.test/PalDawn/' },
+    data: { type: 'SKIP_WAITING' },
+    source: clients[0],
   })
-  assert.equal(skipWaitingCount, 1, 'a valid user request activates the waiting worker')
+  assert.equal(skipWaitingCount, 0, 'a legacy request must never bypass the preparation handshake')
+  assert.deepEqual(clientMessages[0], [{
+    type: 'PALDAWN_UPDATE_BLOCKED',
+    requestId: clientMessages[0][0].requestId,
+    reason: 'legacy',
+  }], 'a legacy request must receive a fail-closed response with a modern request ID')
+  assert.match(clientMessages[0][0].requestId, /\S+/)
+
+  clientMessages.forEach((messages) => messages.splice(0))
+  const vetoedRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-1' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  assert.deepEqual(clientMessages, [
+    [{ type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-1' }],
+    [{ type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-1' }],
+  ], 'every in-scope client must prepare before activation')
+  await dispatch('message', {
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-1', ready: true },
+    source: clients[0],
+  })
+  await dispatch('message', {
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-1', ready: false },
+    source: clients[1],
+  })
+  await vetoedRequest
+  assert.equal(skipWaitingCount, 0, 'one client veto must prevent activation')
+  assert.deepEqual(clientMessages.map((messages) => messages.at(-1)), [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-1', reason: 'unsaved' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-1', reason: 'unsaved' },
+  ], 'a veto must produce a truthful result in every modern client')
+
+  clientMessages.forEach((messages) => messages.splice(0))
+  const timedOutRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-2' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  await dispatch('message', {
+    data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-2', ready: true },
+    source: clients[0],
+  })
+  runTimers()
+  await timedOutRequest
+  assert.equal(skipWaitingCount, 0, 'a missing client acknowledgement must time out without activation')
+  assert.deepEqual(clientMessages.map((messages) => messages.at(-1)), [
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-2', reason: 'timeout' },
+    { type: 'PALDAWN_UPDATE_BLOCKED', requestId: 'request-2', reason: 'timeout' },
+  ], 'a missing acknowledgement must produce a truthful timeout result')
+
+  clientMessages.forEach((messages) => messages.splice(0))
+  const acceptedRequest = dispatch('message', {
+    data: { type: 'PALDAWN_REQUEST_UPDATE', requestId: 'request-3' },
+    source: clients[0],
+  })
+  await new Promise((resolve) => setImmediate(resolve))
+  for (const client of clients) {
+    await dispatch('message', {
+      data: { type: 'PALDAWN_UPDATE_PREPARED', requestId: 'request-3', ready: true },
+      source: client,
+    })
+  }
+  await acceptedRequest
+  assert.equal(skipWaitingCount, 1, 'activation requires an affirmative response from every client')
 
   const currentCache = cacheBuckets.get('paldawn-foundation-__PALDAWN_BUILD_ID__')
   assert.ok([...currentCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), 'activation request must survive in the new worker cache')
@@ -108,8 +190,14 @@ export async function runPwaLifecycleTests() {
   await dispatch('activate')
   assert.equal(claimCount, 2)
   assert.deepEqual(clientMessages, [
-    [{ type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-1' }],
-    [{ type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-1' }],
+    [
+      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-3' },
+      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
+    ],
+    [
+      { type: 'PALDAWN_PREPARE_UPDATE', requestId: 'request-3' },
+      { type: 'PALDAWN_UPDATE_ACTIVATED', requestId: 'request-3' },
+    ],
   ], 'every in-scope window must receive the same activation request')
   assert.equal([...currentCache.keys()].some((key) => key.endsWith('/.paldawn-update-request')), false, 'activation marker must be consumed once')
 
