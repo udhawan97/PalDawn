@@ -2512,7 +2512,7 @@ kbd {
 }
 
 .track-columns h4,
-.import-preview h4 {
+.import-preview h3 {
   margin: 0 0 8px;
   color: var(--dawn);
   font-family: 'SFMono-Regular', Menlo, monospace;

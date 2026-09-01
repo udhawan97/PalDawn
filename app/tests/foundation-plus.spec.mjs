@@ -527,6 +527,9 @@ test('a corrupt transaction fence preserves records until explicit recovery', as
   await page.getByRole('button', { name: 'Settings' }).click()
   const blockedAlert = page.getByRole('alert').filter({ hasText: 'Local data recovery is blocked.' })
   await expect(blockedAlert).toContainText('damaged recovery receipt')
+  await expect(blockedAlert).toContainText('may contain private notes and preferences')
+  await expect(blockedAlert).toContainText('forensic copy and cannot be imported into PalDawn')
+  await expect(blockedAlert.getByRole('button', { name: 'Download raw recovery backup' })).toBeFocused()
   await expect(page.getByRole('button', { name: 'Download local data' })).toBeDisabled()
   await expect(page.locator('#local-data-import')).toBeDisabled()
   await expect(page.getByRole('button', { name: 'Reset local data' })).toBeDisabled()
@@ -568,8 +571,17 @@ test('a corrupt transaction fence preserves records until explicit recovery', as
 
   await blockedAlert.getByRole('button', { name: 'Clear preserved local data' }).click()
   await expect(blockedAlert).toContainText('permanently clear the preserved opaque records')
+  const permanentClear = blockedAlert.getByRole('button', { name: 'Confirm permanent clear of preserved local data' })
+  await expect(permanentClear).toBeFocused()
+  await expect(permanentClear).toHaveAttribute('aria-describedby', 'blocked-reset-warning')
+  await expect(blockedAlert.locator('#blocked-reset-warning')).toContainText('Permanent action')
+  await blockedAlert.getByRole('button', { name: 'Cancel clear' }).click()
+  await expect(blockedAlert.getByRole('button', { name: 'Clear preserved local data' })).toBeFocused()
+
+  await blockedAlert.getByRole('button', { name: 'Clear preserved local data' }).click()
+  await expect(permanentClear).toBeFocused()
   const reloaded = page.waitForEvent('load')
-  await blockedAlert.getByRole('button', { name: 'Confirm permanent clear' }).click()
+  await permanentClear.click()
   await reloaded
   const recovered = await page.evaluate(({ bookmarksKey, journeyKey, pendingKey, resetKey, settingsKey, workspaceKey }) => ({
     bookmarks: localStorage.getItem(bookmarksKey),
@@ -608,7 +620,10 @@ test('a corrupt transaction fence can be deliberately replaced by a validated ba
   await page.goto('./')
   await page.getByRole('button', { name: 'Settings' }).click()
   const blockedAlert = page.getByRole('alert').filter({ hasText: 'Local data recovery is blocked.' })
-  await blockedAlert.locator('#local-data-recovery-import').setInputFiles({
+  const recoveryImport = blockedAlert.getByLabel('Choose a normal PalDawn backup for deliberate replacement')
+  await expect(blockedAlert).toContainText('Raw recovery backups cannot be imported here.')
+  await expect(recoveryImport).toHaveAttribute('aria-describedby', 'local-data-recovery-import-help')
+  await recoveryImport.setInputFiles({
     name: 'paldawn-import.json',
     mimeType: 'application/json',
     buffer: Buffer.from(importedBackup()),
@@ -616,6 +631,16 @@ test('a corrupt transaction fence can be deliberately replaced by a validated ba
   await expect(blockedAlert.getByRole('heading', { name: 'Destructive replacement preview' })).toBeVisible()
   await expect(blockedAlert).toContainText('61% route progress')
   await expect(blockedAlert).toContainText('will replace every preserved opaque record')
+
+  await blockedAlert.getByRole('button', { name: 'Cancel replacement' }).click()
+  await expect(recoveryImport).toBeFocused()
+  await expect(blockedAlert.getByRole('heading', { name: 'Destructive replacement preview' })).toHaveCount(0)
+  await recoveryImport.setInputFiles({
+    name: 'paldawn-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(importedBackup()),
+  })
+  await expect(blockedAlert.getByRole('heading', { name: 'Destructive replacement preview' })).toBeVisible()
 
   const reloaded = page.waitForEvent('load')
   await blockedAlert.getByRole('button', { name: 'Confirm replace preserved local data' }).click()

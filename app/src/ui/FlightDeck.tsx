@@ -715,6 +715,9 @@ function SettingsPanel({
   const fullscreenAvailable = document.fullscreenEnabled
   const mounted = useRef(true)
   const recoveryActionRef = useRef<HTMLButtonElement>(null)
+  const blockedResetTriggerRef = useRef<HTMLButtonElement>(null)
+  const blockedResetConfirmRef = useRef<HTMLButtonElement>(null)
+  const blockedRecoveryImportRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     mounted.current = true
@@ -726,6 +729,12 @@ function SettingsPanel({
     const focusFrame = window.requestAnimationFrame(() => recoveryActionRef.current?.focus({ preventScroll: false }))
     return () => window.cancelAnimationFrame(focusFrame)
   }, [localDataRecovery])
+
+  useLayoutEffect(() => {
+    if (!confirmBlockedReset) return
+    const focusFrame = window.requestAnimationFrame(() => blockedResetConfirmRef.current?.focus({ preventScroll: false }))
+    return () => window.cancelAnimationFrame(focusFrame)
+  }, [confirmBlockedReset])
 
   const reportStatus = (status: string) => {
     if (mounted.current) setStatus(status)
@@ -816,6 +825,12 @@ function SettingsPanel({
           <p>
             PalDawn found a damaged recovery receipt. The opaque local records are preserved unchanged, but PalDawn cannot safely read them as learner data. Normal settings, export, import, and reset actions are locked so those records are not reported as empty or overwritten by accident.
           </p>
+          <p>
+            A raw recovery backup may contain private notes and preferences. Store it privately. It is a forensic copy and cannot be imported into PalDawn.
+          </p>
+          {confirmBlockedReset ? (
+            <p id="blocked-reset-warning"><strong>Permanent action.</strong> Confirm only if you intend to permanently clear the preserved opaque records and start with empty local data.</p>
+          ) : null}
           <div className="panel-actions">
             <button ref={recoveryActionRef} type="button" onClick={() => {
               const outcome = exportRawLocalDataRecoveryBackup()
@@ -827,29 +842,31 @@ function SettingsPanel({
               reportStatus('Raw recovery backup downloaded. It preserves opaque stored values and is not a normal PalDawn import.')
             }}>Download raw recovery backup</button>
             {confirmBlockedReset ? (
-              <button className="danger-action" type="button" onClick={() => {
+              <button ref={blockedResetConfirmRef} className="danger-action" type="button" aria-describedby="blocked-reset-warning" onClick={() => {
                 const outcome = resetLocalData()
                 if (!outcome.ok) {
                   handleRecoveryFailure(outcome.recoveryPending, 'PalDawn could not verify the deliberate clear. Preserved raw records remain protected; restore browser storage before retrying.')
                   return
                 }
                 finishLocalDataRecovery()
-              }}>Confirm permanent clear</button>
+              }}>Confirm permanent clear of preserved local data</button>
             ) : (
-              <button className="danger-action" type="button" onClick={() => setConfirmBlockedReset(true)}>Clear preserved local data</button>
+              <button ref={blockedResetTriggerRef} className="danger-action" type="button" onClick={() => setConfirmBlockedReset(true)}>Clear preserved local data</button>
             )}
-            {confirmBlockedReset ? <button type="button" onClick={() => setConfirmBlockedReset(false)}>Cancel clear</button> : null}
+            {confirmBlockedReset ? <button type="button" onClick={() => {
+              setConfirmBlockedReset(false)
+              window.requestAnimationFrame(() => blockedResetTriggerRef.current?.focus({ preventScroll: false }))
+            }}>Cancel clear</button> : null}
           </div>
-          {confirmBlockedReset ? (
-            <p><strong>Permanent action.</strong> Confirm only if you intend to permanently clear the preserved opaque records and start with empty local data.</p>
-          ) : null}
           <div className="local-import">
             <label className="file-action" htmlFor="local-data-recovery-import">
-              Choose a backup for deliberate replacement
+              Choose a normal PalDawn backup for deliberate replacement
               <input
+                ref={blockedRecoveryImportRef}
                 id="local-data-recovery-import"
                 type="file"
                 accept="application/json,.json"
+                aria-describedby="local-data-recovery-import-help"
                 onChange={(event) => {
                   const file = event.target.files?.[0]
                   event.target.value = ''
@@ -857,9 +874,10 @@ function SettingsPanel({
                 }}
               />
             </label>
+            <p id="local-data-recovery-import-help" className="panel-note">Raw recovery backups cannot be imported here.</p>
             {blockedRecoveryImport ? (
               <section className="import-preview" aria-labelledby="destructive-import-preview-title">
-                <h4 id="destructive-import-preview-title">Destructive replacement preview</h4>
+                <h3 id="destructive-import-preview-title">Destructive replacement preview</h3>
                 <p>
                   {blockedRecoveryImport.preview.progressPercent}% route progress · {blockedRecoveryImport.preview.bookmarkCount} saved stages ·{' '}
                   {blockedRecoveryImport.preview.noteCount} private notes · {blockedRecoveryImport.preview.checkpointCount} personal checkpoints ·{' '}
@@ -877,6 +895,7 @@ function SettingsPanel({
                   <button type="button" onClick={() => {
                     setBlockedRecoveryImport(null)
                     reportStatus('Destructive replacement cancelled. Preserved raw records remain unchanged.')
+                    window.requestAnimationFrame(() => blockedRecoveryImportRef.current?.focus({ preventScroll: false }))
                   }}>Cancel replacement</button>
                 </div>
               </section>
