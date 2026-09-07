@@ -109,6 +109,15 @@ and the original First Light systems release remains available at `v0.1.0`.
 deliberately project-authored, conceptual, and visibly synthetic; it is not an
 anatomical reconstruction.*
 
+## Graphics development
+
+A separate [heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) starts the
+[graphics rebuild](docs/GRAPHICS-REBUILD.md) with original editable exterior
+geometry, surface vessels, clay/tissue inspection, and responsive camera fitting.
+It is unreviewed artwork, excluded from the public app build; the live app has
+not adopted this model. Run `npm run graphics:dev` from `app/` to inspect it
+locally. Blood flow, interiors, and the cinematic sequence remain planned.
+
 ## How the voyage works
 
 1. **Approach** — establish the synthetic route and its limits.
