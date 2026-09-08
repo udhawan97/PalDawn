@@ -1,6 +1,6 @@
 {
   "app/package.json": {
-    "mtime": 1788847486.3726208,
+    "mtime": 1788848608.3023896,
     "ast_hash": "2e1869b70e3373813e91b7e519768c30",
     "semantic_hash": ""
   },
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788847243.8849258,
+    "mtime": 1788853822.162881,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -50,7 +50,7 @@
     "semantic_hash": "cebcd0aef9a53b9c724ac53266f03437"
   },
   "app/tsconfig.node.json": {
-    "mtime": 1788767971.2222707,
+    "mtime": 1788848608.303742,
     "ast_hash": "69c99ad3e4e089c944b18f59dbc75839",
     "semantic_hash": ""
   },
@@ -210,7 +210,7 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1788767410.3471622,
+    "mtime": 1788848608.2969637,
     "ast_hash": "4bd74d9934083473a15a96c6ae16ca19",
     "semantic_hash": ""
   },
@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "CREDITS.md": {
-    "mtime": 1788767410.4227283,
+    "mtime": 1788848608.2980754,
     "ast_hash": "3e55485958e7867e4e177c74ff042de2",
     "semantic_hash": ""
   },
   "NOTICE.md": {
-    "mtime": 1788767410.346298,
+    "mtime": 1788848608.2982821,
     "ast_hash": "61dc30b0942687362fad70b51f309cdf",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788847420.6457784,
-    "ast_hash": "ae7e7a1f2d73eaf9276f4dfcb6e2d0b0",
+    "mtime": 1788853821.8505988,
+    "ast_hash": "ba7e08b7303fa4d9e203ec0eccea819d",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -260,7 +260,7 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1788766099.339106,
+    "mtime": 1788848608.3335056,
     "ast_hash": "4bc8c8611ab13a773569c923315c7868",
     "semantic_hash": ""
   },
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788847401.7796245,
-    "ast_hash": "8e7de0aea1edf0758a01f882bbdb3f66",
+    "mtime": 1788853821.8509192,
+    "ast_hash": "4791675a6434f593461fa3501fda0e28",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -800,82 +800,82 @@
     "semantic_hash": ""
   },
   "app/graphics/HeartWorkbench.tsx": {
-    "mtime": 1788847097.926135,
+    "mtime": 1788848608.2992835,
     "ast_hash": "85546e7a645a2dd896745e4c5926caf8",
     "semantic_hash": ""
   },
   "app/graphics/build-heart.mjs": {
-    "mtime": 1788766681.2892678,
+    "mtime": 1788848608.2996926,
     "ast_hash": "221f52fe5fc46401b043b77241af447b",
     "semantic_hash": ""
   },
   "app/graphics/cameraFit.ts": {
-    "mtime": 1788847630.4490905,
+    "mtime": 1788848608.299843,
     "ast_hash": "336ac7b822eaa2cd1cd97cee7c7c4673",
     "semantic_hash": ""
   },
   "app/graphics/main.tsx": {
-    "mtime": 1788766728.0038335,
+    "mtime": 1788848608.3003926,
     "ast_hash": "de14ec156980cfe59a2b3270f91fb84a",
     "semantic_hash": ""
   },
   "app/graphics/mesh-builder.mjs": {
-    "mtime": 1788767737.9450004,
+    "mtime": 1788848608.3005972,
     "ast_hash": "8e19c9002f20024a9a2bd4195defbdc6",
     "semantic_hash": ""
   },
   "app/graphics/tests/workbench.spec.mjs": {
-    "mtime": 1788767656.9240568,
+    "mtime": 1788848608.3017302,
     "ast_hash": "ae1a1ace844513a43e5d4795064e6d2a",
     "semantic_hash": ""
   },
   "app/graphics/verify-heart.mjs": {
-    "mtime": 1788847097.9303823,
+    "mtime": 1788848608.3020797,
     "ast_hash": "5d30db86d4313fc40e45ee9a37587d57",
     "semantic_hash": ""
   },
   "app/playwright.graphics.config.mjs": {
-    "mtime": 1788767253.5363276,
+    "mtime": 1788848608.3025932,
     "ast_hash": "3c085fb4210ae4d71a84666fa9d64745",
     "semantic_hash": ""
   },
   "app/tsconfig.graphics.json": {
-    "mtime": 1788766728.003587,
+    "mtime": 1788848608.3034673,
     "ast_hash": "ffe6e0058ae6d9b0526f789f7c6cf042",
     "semantic_hash": ""
   },
   "app/vite.graphics.config.ts": {
-    "mtime": 1788847097.9293537,
+    "mtime": 1788848608.3038635,
     "ast_hash": "b743a29e606761129eac5b950da23214",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/manifest.json": {
-    "mtime": 1788767738.215239,
+    "mtime": 1788848608.3208394,
     "ast_hash": "1e5067a0060ded81d6646f82c32061ca",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/source.json": {
-    "mtime": 1788767737.9453728,
+    "mtime": 1788848608.3327296,
     "ast_hash": "f1ef8a034ea2b9013edac344e0c97ca7",
     "semantic_hash": ""
   },
   "app/heart-study.html": {
-    "mtime": 1788766728.0030587,
+    "mtime": 1788848608.302247,
     "ast_hash": "3be49e1e412a63a1724df184463d57cd",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/README.md": {
-    "mtime": 1788767410.3452287,
+    "mtime": 1788848608.3040915,
     "ast_hash": "f1f6e1cdcb8c4916915acecf96e23317",
     "semantic_hash": ""
   },
   "docs/GRAPHICS-REBUILD.md": {
-    "mtime": 1788847401.7785025,
-    "ast_hash": "63b671bdb5f90d7cd156bb82b277e4b5",
+    "mtime": 1788853821.85025,
+    "ast_hash": "0901674d9bf8ec12e538bfa64e96e84d",
     "semantic_hash": ""
   },
   "docs/HEART-GRAPHICS-WORKBENCH.md": {
-    "mtime": 1788847401.7774954,
+    "mtime": 1788848608.3331952,
     "ast_hash": "1207c203b112d2aa727a479d7b24180c",
     "semantic_hash": ""
   },
@@ -900,58 +900,58 @@
     "semantic_hash": ""
   },
   "content/graphics/heart-study/previews/back-clay.png": {
-    "mtime": 1788767802.6937354,
+    "mtime": 1788848608.3249674,
     "ast_hash": "47c95f543aa94caa70cc64b5df7b92bb",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/previews/front-tissue.png": {
-    "mtime": 1788767802.6882863,
+    "mtime": 1788848608.3289263,
     "ast_hash": "3d7bc0a91b5c7f5521a7f3f4c0b6aec1",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/previews/left-clay.png": {
-    "mtime": 1788767802.6909738,
+    "mtime": 1788848608.3323615,
     "ast_hash": "e1d68cf9cc20341b6fd1dbfcc388cbf5",
     "semantic_hash": ""
   },
   "app/graphics/FlowWorkbench.tsx": {
-    "mtime": 1788847630.4503372,
-    "ast_hash": "11d699af5b0397343c2bc198b0c7236d",
+    "mtime": 1788853560.0996685,
+    "ast_hash": "9571616bcc014b0dcf1d1bd8c1533675",
     "semantic_hash": ""
   },
   "app/graphics/SceneBoundary.tsx": {
-    "mtime": 1788847097.9253194,
+    "mtime": 1788848608.2994807,
     "ast_hash": "cffc78987877d3e49f6221fd709358e7",
     "semantic_hash": ""
   },
   "app/graphics/flow-main.tsx": {
-    "mtime": 1788847028.8374002,
+    "mtime": 1788848608.3000197,
     "ast_hash": "841cccfb65cdb10f9786d68e2f1695cf",
     "semantic_hash": ""
   },
   "app/graphics/flowModel.ts": {
-    "mtime": 1788847630.4497144,
-    "ast_hash": "b5736bcdb92660d84ad628c4a6b09a65",
+    "mtime": 1788853560.0993767,
+    "ast_hash": "fab85e38f7f9e2200ef42570389b2df2",
     "semantic_hash": ""
   },
   "app/graphics/tests/flow.spec.mjs": {
-    "mtime": 1788847172.7738855,
-    "ast_hash": "a107b5430b87dafc6e74355a45a7ac41",
+    "mtime": 1788853685.2859533,
+    "ast_hash": "bc54fb3f3608f9cf6ae33fba4dbec3f5",
     "semantic_hash": ""
   },
   "app/graphics/verify-flow.mjs": {
-    "mtime": 1788847630.451366,
-    "ast_hash": "9730f4812f42f4ac59837ac8a1bef68f",
+    "mtime": 1788853629.8178675,
+    "ast_hash": "106da343b11aa9b375d12e5d2119e44d",
     "semantic_hash": ""
   },
   "app/flow-study.html": {
-    "mtime": 1788847028.8376384,
+    "mtime": 1788848608.298772,
     "ast_hash": "1de589a7019c6fc405cdd75b9c4980ce",
     "semantic_hash": ""
   },
   "docs/VESSEL-FLOW-WORKBENCH.md": {
-    "mtime": 1788847401.7767916,
-    "ast_hash": "cd63b710313a72e2ca75c186039a76fe",
+    "mtime": 1788853821.8497498,
+    "ast_hash": "5ba1f098e8572c539191c71ba194e4d3",
     "semantic_hash": ""
   }
 }

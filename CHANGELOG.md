@@ -4,6 +4,10 @@ All notable changes to PalDawn are documented here.
 
 ## Unreleased
 
+- Extended the synthetic flow workbench with uniform, tapered, and narrowed
+  route profiles. Wall geometry and GPU cell lanes share validated radius data;
+  shape changes pause at the same time and recovery retains the selected profile.
+
 - Added isolated heart and synthetic vessel-flow workbenches, excluded from
   the public app. The flow study provides GPU-instanced 3D cell-shaped
   fixtures, a curved cutaway, pause/seek/restart, reduced-motion still frames,

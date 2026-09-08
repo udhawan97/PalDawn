@@ -78,6 +78,8 @@ test('hidden documents pause without jumping on return', async ({ page }) => {
 
 test('WebGL retry restores the same paused time and detail', async ({ page }) => {
   await ready(page); await seek(page, 5)
+  await page.getByRole('button', { name: 'Narrowed', exact: true }).click()
+  await settled(page)
   await page.getByRole('button', { name: 'Low', exact: true }).click()
   const supported = await scene(page).locator('canvas').evaluate(canvas => {
     const extension = canvas.getContext('webgl2')?.getExtension('WEBGL_lose_context')
@@ -90,6 +92,7 @@ test('WebGL retry restores the same paused time and detail', async ({ page }) =>
   await settled(page)
   await expect(scene(page)).toHaveAttribute('data-time', '5.000')
   await expect(scene(page)).toHaveAttribute('data-quality', 'low')
+  await expect(scene(page)).toHaveAttribute('data-profile', 'narrowed')
   await expect(page.getByRole('button', { name: 'Play flow', exact: true })).toBeVisible()
 })
 
@@ -98,6 +101,7 @@ test('portrait and landscape retain the scene and controls; no storage or heart 
   await ready(page)
   for (const [width, height] of [[390, 844], [844, 390]]) {
     await page.setViewportSize({ width, height }); await settled(page)
+    await page.getByRole('button', { name: 'Tapered', exact: true }).click(); await settled(page)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await expect(page.getByRole('slider', { name: 'Study time' })).toBeEnabled()
     await page.screenshot({ path: `../output/playwright/heart-study/${info.project.name}-flow-${width}.png`, fullPage: true })
@@ -106,4 +110,52 @@ test('portrait and landscape retain the scene and controls; no storage or heart 
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([])
   await page.getByRole('link', { name: 'Return to the heart study' }).click()
   await expect(page.getByRole('heading', { name: 'A heart. With substance.' })).toBeVisible()
+})
+
+test('radius profiles change rendered geometry and reconstruct the same paused frame', async ({ page }, info) => {
+  const errors = []
+  page.on('pageerror', error => errors.push(error.message))
+  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await ready(page); await seek(page, 3)
+  const canvas = scene(page).locator('canvas')
+  const uniform = await canvas.screenshot()
+  for (const profile of ['tapered', 'narrowed']) {
+    await page.getByRole('button', { name: profile === 'tapered' ? 'Tapered' : 'Narrowed', exact: true }).click()
+    await expect(scene(page)).toHaveAttribute('data-profile', profile)
+    await expect(scene(page)).toHaveAttribute('data-time', '3.000')
+    await settled(page)
+    const snapshot = await canvas.screenshot()
+    expect(snapshot.equals(uniform)).toBe(false)
+    await seek(page, 9)
+    expect((await canvas.screenshot()).equals(snapshot)).toBe(false)
+    await seek(page, 3)
+    expect((await canvas.screenshot()).equals(snapshot)).toBe(true)
+    await page.getByRole('button', { name: 'Low', exact: true }).click(); await settled(page)
+    expect((await canvas.screenshot()).equals(snapshot)).toBe(false)
+    await page.getByRole('button', { name: 'High', exact: true }).click(); await settled(page)
+    expect((await canvas.screenshot()).equals(snapshot)).toBe(true)
+    await page.screenshot({ path: `../output/playwright/heart-study/${info.project.name}-flow-${profile}.png`, fullPage: true })
+  }
+  await page.getByRole('button', { name: 'Uniform', exact: true }).click(); await settled(page)
+  expect((await canvas.screenshot()).equals(uniform)).toBe(true)
+  expect(errors).toEqual([])
+})
+
+test('changing profile pauses playback; reduced motion retains keyboard profile selection', async ({ page }) => {
+  await ready(page)
+  await page.getByRole('button', { name: 'Play flow', exact: true }).click()
+  await expect.poll(async () => Number(await scene(page).getAttribute('data-time'))).toBeGreaterThan(.1)
+  await page.getByRole('button', { name: 'Narrowed', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Play flow', exact: true })).toBeVisible()
+  const time = await scene(page).getAttribute('data-time')
+  await page.waitForTimeout(150)
+  await expect(scene(page)).toHaveAttribute('data-time', time)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  const tapered = page.getByRole('button', { name: 'Tapered', exact: true })
+  await tapered.focus(); await page.keyboard.press('Enter')
+  await expect(tapered).toHaveAttribute('aria-pressed', 'true')
+  await expect(scene(page)).toHaveAttribute('data-time', time)
+  await expect(page.getByRole('button', { name: 'Play flow', exact: true })).toBeDisabled()
+  await settled(page)
 })

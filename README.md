@@ -117,7 +117,8 @@ geometry, surface vessels, clay/tissue inspection, and responsive camera fitting
 It is unreviewed artwork, excluded from the public app build; the live app has
 not adopted this model. Run `npm run graphics:dev` from `app/` to inspect it
 locally. A linked [synthetic flow study](docs/VESSEL-FLOW-WORKBENCH.md) adds a
-curved cutaway, 3D cell-shaped fixtures, and repeatable pause/seek playback.
+curved cutaway with uniform, tapered, and narrowed profiles, 3D cell-shaped
+fixtures, and repeatable pause/seek playback.
 Reviewed blood flow, heart interiors, exterior continuity, and the full
 cinematic sequence remain planned; both studies stay out of the public build.
 

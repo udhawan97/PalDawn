@@ -49,6 +49,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 .zoom-label { display: flex; justify-content: space-between; font-size: 11px; color: #53634f; }
 #study-zoom { accent-color: #48664f; width: 100%; margin: 18px 0; height: 5px; }
 .flow-time { accent-color: #48664f; width: 100%; margin: 18px 0; }
+.profile-options { display: grid; gap: 6px; }
+.profile-options button { border: 1px solid #b5bfb0; border-radius: 3px; padding: 10px 12px; text-align: left; color: #566650; background: transparent; font-size: 12px; }
+.profile-options button[aria-pressed=true] { color: #f2f0e5; background: #34463a; }
 .turntable-button { background: transparent; border: 1px solid #b2bbaa; border-radius: 2px; padding: 12px; width: 100%; text-align: left; color: #354a38; font-size: 11px; display: flex; justify-content: space-between; }
 .turntable-button[aria-pressed=true] { background: #d5dccd; }
 .turntable-button span { font-size: 17px; line-height: 12px; }

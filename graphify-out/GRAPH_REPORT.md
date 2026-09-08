@@ -1,16 +1,16 @@
 # Graph Report - PalDawn  (2026-09-08)
 
 ## Corpus Check
-- 170 files · ~263,616 words
+- 170 files · ~264,891 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1027 nodes · 1595 edges · 89 communities (82 shown, 7 thin omitted)
+- 1031 nodes · 1610 edges · 90 communities (81 shown, 9 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 53 edges (avg confidence: 0.83)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `761d69c0`
+- Built from commit: `441e6ee4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -79,7 +79,7 @@
 - App.tsx
 - useSettings
 - package.json
-- HeartWorkbench.tsx
+- executeLocalDataTransaction
 - experience.ts
 - tsconfig.graphics.json
 - Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?
@@ -88,8 +88,9 @@
 - Q: What is the documented next phase after Deep Lens, and can it merge?
 - workbench.spec.mjs
 - route.ts
-- absent
-- VoyageScene
+- HumanSystemsScene.tsx
+- SceneCanvas.tsx
+- NormalizedLookupCurve
 
 ## God Nodes (most connected - your core abstractions)
 1. `useSettings` - 25 edges
@@ -123,7 +124,7 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (89 total, 7 thin omitted)
+## Communities (90 total, 9 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
@@ -135,7 +136,7 @@ Nodes (21): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution
 
 ### Community 3 - "localData.ts"
 Cohesion: 0.08
-Nodes (38): bindValueToGeneration(), CAPTION_SCALES, emptyWorkspace(), failedStorageKeys, ImportedSettings, JourneySession, LOCAL_DATA_KEY_LIST, LOCAL_DATA_KEYS (+30 more)
+Nodes (28): CAPTION_SCALES, emptyWorkspace(), failedStorageKeys, ImportedSettings, JourneySession, LocalDataExportResult, LocalDataImport, LocalDataImportPreview (+20 more)
 
 ### Community 4 - "validate.mjs"
 Cohesion: 0.16
@@ -166,8 +167,8 @@ Cohesion: 0.06
 Nodes (30): Build order, C50.0 — Curriculum registry and discovery (this slice), C50.1 — Disease-pack schema and hypertension dossier, C50.2 — Shared cardiovascular scene family, C50.3 — Cellular visual grammar, C50.4 — Adaptive learning loop, C50.5 — WebGPU/TSL evidence branch, Curriculum 50 and multiscale engine plan (+22 more)
 
 ### Community 12 - "pwa.ts"
-Cohesion: 0.15
-Nodes (26): serviceWorker, rootEl, abandonedUpdateRequests, activatePwaUpdate(), BeforeInstallPromptEvent, beginUpdateHandoff(), blockUpdateHandoffKeyboardInput(), clearActivationWatchdog() (+18 more)
+Cohesion: 0.14
+Nodes (27): serviceWorker, rootEl, abandonedUpdateRequests, activatePwaUpdate(), BeforeInstallPromptEvent, beginUpdateHandoff(), blockUpdateHandoffKeyboardInput(), clearActivationWatchdog() (+19 more)
 
 ### Community 15 - "audit_z_anatomy_blend.py"
 Cohesion: 0.29
@@ -178,8 +179,8 @@ Cohesion: 0.19
 Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Direct Dependency License Bundle (+5 more)
 
 ### Community 17 - "diseases.ts"
-Cohesion: 0.05
-Nodes (53): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+45 more)
+Cohesion: 0.06
+Nodes (51): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+43 more)
 
 ### Community 18 - "test-release.mjs"
 Cohesion: 0.17
@@ -219,7 +220,7 @@ Nodes (8): [0.1.0] — 2026-08-20, [0.2.0] — 2026-08-22, [0.3.0] — 2026-08-2
 
 ### Community 27 - "verify-heart.mjs"
 Cohesion: 0.10
-Nodes (21): manifest, meshes, output, root, source, spec, buildMeshes(), encodeGLB() (+13 more)
+Nodes (20): manifest, meshes, output, root, source, spec, buildMeshes(), gridGeometry() (+12 more)
 
 ### Community 28 - "PalDawn Foundation+"
 Cohesion: 0.33
@@ -287,7 +288,7 @@ Nodes (4): Automated gates, Browser acceptance, Foundation+ acceptance evidence,
 
 ### Community 50 - "FlightDeck.tsx"
 Cohesion: 0.10
-Nodes (36): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, progressForStageId(), stageAt() (+28 more)
+Nodes (38): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, progressForStageId(), stageAt() (+30 more)
 
 ### Community 52 - "PalDawn v0.2.0 — Systems Atlas"
 Cohesion: 0.40
@@ -302,20 +303,20 @@ Cohesion: 0.40
 Nodes (4): Evidence and safety boundary, PalDawn v0.3.0 — Mechanism Lens, Verification, What is included
 
 ### Community 55 - "manifest.json"
-Cohesion: 0.12
-Nodes (16): asset, assetSha256, bytes, creator, generatorSha256, id, license, parts (+8 more)
+Cohesion: 0.08
+Nodes (25): absent, asset, assetSha256, bytes, creator, generatorSha256, id, license (+17 more)
 
 ### Community 56 - "MemoryStorage"
 Cohesion: 0.18
 Nodes (5): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules()
 
 ### Community 57 - "verify-flow.mjs"
-Cohesion: 0.18
-Nodes (19): cellFrame(), cellGeometry(), cellSeeds(), FLOW, FLOW_COUNTS, FLOW_VIEW, flowBounds(), FlowQuality (+11 more)
+Cohesion: 0.09
+Nodes (34): directions, fitStudyCamera(), StudyView, cellFrame(), cellGeometry(), cellSeeds(), createRadiusTable(), FLOW (+26 more)
 
 ### Community 58 - "VoyageScene.tsx"
-Cohesion: 0.15
-Nodes (11): routeFrameAt(), RouteSlice, ArrivalBeacon(), CameraDirector(), CORRIDOR_INK, CorridorRings(), DEEP_INK, FogDirector() (+3 more)
+Cohesion: 0.17
+Nodes (9): routeFrameAt(), RouteSlice, ArrivalBeacon(), CORRIDOR_INK, CorridorRings(), DEEP_INK, RuntimeProbe(), SyntheticCore() (+1 more)
 
 ### Community 60 - "Community conduct"
 Cohesion: 0.50
@@ -334,8 +335,8 @@ Cohesion: 0.50
 Nodes (3): Report a vulnerability, Security policy, Supported version
 
 ### Community 65 - "SettingsPanel"
-Cohesion: 0.16
-Nodes (24): applyDesiredValues(), executeLocalDataTransaction(), exportLocalData(), exportRawLocalDataRecoveryBackup(), getLocalDataRecoveryState(), loadJourneySession(), loadLearnerWorkspace(), loadStageBookmarks() (+16 more)
+Cohesion: 0.27
+Nodes (13): exportLocalData(), exportRawLocalDataRecoveryBackup(), getLocalDataRecoveryState(), loadJourneySession(), loadLearnerWorkspace(), loadStageBookmarks(), readJson(), readString() (+5 more)
 
 ### Community 69 - "scripts"
 Cohesion: 0.15
@@ -346,20 +347,20 @@ Cohesion: 0.80
 Nodes (4): ready(), scene(), seek(), settled()
 
 ### Community 73 - "App.tsx"
-Cohesion: 0.18
-Nodes (6): JourneyPlaybackDriver(), SceneBoundary, SceneBoundaryState, SceneCanvas, TIER_DPR, webgl2Available()
+Cohesion: 0.20
+Nodes (6): App(), SceneBoundary, SceneBoundaryState, SceneCanvas, TIER_DPR, webgl2Available()
 
 ### Community 74 - "useSettings"
-Cohesion: 0.18
-Nodes (20): App(), ROUTE_LOOKUP, smoothRange(), FlowField(), INSTANCE_COUNTS, seededRandom(), Organ(), PhaseSignal() (+12 more)
+Cohesion: 0.28
+Nodes (13): JourneyPlaybackDriver(), Organ(), PhaseSignal(), CameraDirector(), PortalGate(), VoyageScene(), useExperience, resolveTier() (+5 more)
 
 ### Community 75 - "package.json"
 Cohesion: 0.20
 Nodes (9): author, description, keywords, license, main, name, private, type (+1 more)
 
-### Community 76 - "HeartWorkbench.tsx"
+### Community 76 - "executeLocalDataTransaction"
 Cohesion: 0.15
-Nodes (11): directions, fitStudyCamera(), StudyView, disposeModel(), HeartWorkbench(), MaterialMode, Scene(), totalTriangles (+3 more)
+Nodes (22): encodeGLB(), applyDesiredValues(), bindValueToGeneration(), executeLocalDataTransaction(), LOCAL_DATA_KEY_LIST, LOCAL_DATA_KEYS, LocalDataRecoveryState, newResetToken() (+14 more)
 
 ### Community 77 - "experience.ts"
 Cohesion: 0.33
@@ -390,17 +391,13 @@ Cohesion: 1.00
 Nodes (3): ready(), settled(), specimen()
 
 ### Community 84 - "route.ts"
-Cohesion: 0.22
-Nodes (6): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, RouteFrame, voyageRoute
-
-### Community 85 - "absent"
-Cohesion: 0.22
-Nodes (9): absent, blood flow, chamber interiors, complete thorax, patient measurements, physiological deformation, reviewed anatomical accuracy, validated coronary topology (+1 more)
+Cohesion: 0.20
+Nodes (12): AUTHOR_POINTS, authoredCurve, frames, ROUTE_LOOKUP, RouteFrame, smoothRange(), voyageRoute, FlowField() (+4 more)
 
 ## Knowledge Gaps
-- **427 isolated node(s):** `VIEWS`, `totalTriangles`, `MaterialMode`, `root`, `source` (+422 more)
+- **426 isolated node(s):** `VIEWS`, `totalTriangles`, `MaterialMode`, `root`, `source` (+421 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
@@ -411,17 +408,17 @@ Nodes (9): absent, blood flow, chamber interiors, complete thorax, patient measu
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `exportLocalData()` connect `SettingsPanel` to `FlightDeck.tsx`, `localData.ts`?**
-  _High betweenness centrality (0.075) - this node is a cross-community bridge._
-- **Why does `encodeGLB()` connect `verify-heart.mjs` to `SettingsPanel`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
-- **Why does `fitStudyCamera()` connect `HeartWorkbench.tsx` to `verify-flow.mjs`, `verify-heart.mjs`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **Why does `exportLocalData()` connect `SettingsPanel` to `FlightDeck.tsx`, `localData.ts`, `executeLocalDataTransaction`?**
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
+- **Why does `encodeGLB()` connect `executeLocalDataTransaction` to `verify-heart.mjs`?**
+  _High betweenness centrality (0.080) - this node is a cross-community bridge._
+- **Why does `fitStudyCamera()` connect `verify-flow.mjs` to `verify-heart.mjs`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `SettingsPanel()` (e.g. with `getLocalDataRecoveryState()` and `getPwaInstallState()`) actually correct?**
   _`SettingsPanel()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `VIEWS`, `totalTriangles`, `MaterialMode` to the rest of the system?**
-  _427 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _426 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `localData.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07827260458839407 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08374384236453201 - nodes in this community are weakly interconnected._

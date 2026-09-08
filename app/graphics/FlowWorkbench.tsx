@@ -1,16 +1,19 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { InstancedBufferAttribute, InstancedBufferGeometry, MeshStandardMaterial, PerspectiveCamera, Vector3 } from 'three'
+import { DataTexture, FloatType, InstancedBufferAttribute, InstancedBufferGeometry, MeshStandardMaterial, PerspectiveCamera, RGBAFormat, Vector3 } from 'three'
 import { fitStudyCamera } from './cameraFit'
 import { SceneBoundary } from './SceneBoundary'
-import { FLOW, FLOW_COUNTS, FLOW_VIEW, cellGeometry, cellSeeds, flowBounds, flowShader, wallGeometry, type FlowQuality } from './flowModel'
+import { FLOW, FLOW_COUNTS, FLOW_PROFILES, FLOW_ROWS, FLOW_VIEW, cellGeometry, cellSeeds, flowBounds, flowShader, radiusTable, wallGeometry, type FlowProfile, type FlowQuality } from './flowModel'
 
-function FlowScene({ time, quality, reset, onFailure, onPresented }: {
-  time: number; quality: FlowQuality; reset: number; onFailure: () => void; onPresented: (time: number) => void
+function FlowScene({ time, quality, profile, frameKey, reset, onFailure, onPresented }: {
+  time: number; quality: FlowQuality; profile: FlowProfile; frameKey: string; reset: number; onFailure: () => void; onPresented: (key: string) => void
 }) {
   const { camera, size, gl, invalidate } = useThree()
   const [resources] = useState(() => {
+    const radii = radiusTable(profile)
+    const lookup = new DataTexture(radii, FLOW_ROWS + 1, 1, RGBAFormat, FloatType)
+    lookup.needsUpdate = true
     const base = cellGeometry()
     const cells = new InstancedBufferGeometry()
     cells.index = base.index
@@ -20,15 +23,16 @@ function FlowScene({ time, quality, reset, onFailure, onPresented }: {
     const material = new MeshStandardMaterial({ color: '#ae3934', roughness: .49, metalness: 0 })
     material.onBeforeCompile = shader => {
       shader.uniforms.studyTime = clock
+      shader.uniforms.radiusLookup = { value: lookup }
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\n' + flowShader)
         .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nobjectNormal = flowBasis() * objectNormal;')
         .replace('#include <begin_vertex>', 'vec3 transformed = flowCenter() + flowBasis() * position * flowScale();')
     }
-    const wall = wallGeometry(), bounds = flowBounds(wall)
-    return { cells, material, clock, wall, bounds, target: bounds.getCenter(new Vector3()), wallMaterial: new MeshStandardMaterial({ color: '#bb8070', roughness: .72 }) }
+    const wall = wallGeometry(radii), bounds = flowBounds(wall)
+    return { cells, material, clock, wall, lookup, bounds, target: bounds.getCenter(new Vector3()), wallMaterial: new MeshStandardMaterial({ color: '#bb8070', roughness: .72 }) }
   })
-  useEffect(() => () => { resources.cells.dispose(); resources.material.dispose(); resources.wall.dispose(); resources.wallMaterial.dispose() }, [resources])
+  useEffect(() => () => { resources.cells.dispose(); resources.material.dispose(); resources.wall.dispose(); resources.wallMaterial.dispose(); resources.lookup.dispose() }, [resources])
   useEffect(() => {
     const lost = (event: Event) => { event.preventDefault(); onFailure() }
     gl.domElement.addEventListener('webglcontextlost', lost)
@@ -53,7 +57,7 @@ function FlowScene({ time, quality, reset, onFailure, onPresented }: {
     <directionalLight position={[0, 6, 4]} intensity={3} />
     <directionalLight position={[-4, 2, -2]} intensity={1.5} color="#dcc5b2" />
     <mesh geometry={resources.wall} material={resources.wallMaterial} dispose={null} />
-    <mesh geometry={resources.cells} material={resources.material} dispose={null} frustumCulled={false} onAfterRender={() => onPresented(time)} />
+    <mesh geometry={resources.cells} material={resources.material} dispose={null} frustumCulled={false} onAfterRender={() => onPresented(frameKey)} />
     <OrbitControls key={reset} target={resources.target} enablePan={false} enableDamping={false} minDistance={5} maxDistance={100} minPolarAngle={.15} maxPolarAngle={Math.PI * .49} />
   </>
 }
@@ -62,10 +66,12 @@ export function FlowWorkbench() {
   const [time, setTime] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [quality, setQuality] = useState<FlowQuality>('high')
+  const [profile, setProfile] = useState<FlowProfile>('uniform')
   const [reset, setReset] = useState(0)
   const [attempt, setAttempt] = useState(0)
   const [failed, setFailed] = useState(false)
-  const [presented, setPresented] = useState(-1)
+  const [presented, setPresented] = useState('')
+  const frameKey = [attempt, time, quality, profile, reset].join(':')
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches)
   const playhead = useRef(0)
   useEffect(() => {
@@ -102,17 +108,21 @@ export function FlowWorkbench() {
         <p className="boundary">Synthetic engineering fixture, not blood physiology or an anatomical vessel. Arbitrary units, density, shape and speed. The upper half is intentionally removed for inspection.</p>
         <p className="boundary"><a href="./heart-study.html">Return to the heart study</a></p>
       </section>
-      <section className="specimen" aria-label="Interactive flow study" data-renderer={failed ? 'unavailable' : presented === time ? 'ready' : 'loading'} data-time={time.toFixed(3)} data-quality={quality}>
-        <div className="specimen-topline"><span>CURVED CUTAWAY</span><span>ARBITRARY STUDY UNITS</span></div>
+      <section className="specimen" aria-label="Interactive flow study" data-renderer={failed ? 'unavailable' : presented === frameKey ? 'ready' : 'loading'} data-time={time.toFixed(3)} data-quality={quality} data-profile={profile}>
+        <div className="specimen-topline"><span>{FLOW_PROFILES[profile].label.toUpperCase()} CUTAWAY</span><span>ARBITRARY STUDY UNITS</span></div>
         <div className="canvas-stage">
           {!failed ? <SceneBoundary key={attempt} onFailure={failure}><Canvas aria-hidden="true" frameloop="demand" dpr={[1, 1.75]} camera={{ fov: 34, near: .05, far: 100 }} gl={{ antialias: true }}>
-            <FlowScene time={time} quality={quality} reset={reset} onFailure={failure} onPresented={setPresented} />
-          </Canvas></SceneBoundary> : <div className="scene-message" role="alert"><h2>The flow view is unavailable.</h2><p>The explanation remains available. Retry to restore the paused frame.</p><button onClick={() => { setPresented(-1); setAttempt(n => n + 1); setFailed(false) }}>Retry flow view</button></div>}
+            <FlowScene key={profile} time={time} quality={quality} profile={profile} frameKey={frameKey} reset={reset} onFailure={failure} onPresented={setPresented} />
+          </Canvas></SceneBoundary> : <div className="scene-message" role="alert"><h2>The flow view is unavailable.</h2><p>The explanation remains available. Retry to restore the paused frame.</p><button onClick={() => { setPresented(''); setAttempt(n => n + 1); setFailed(false) }}>Retry flow view</button></div>}
         </div>
         <p className="canvas-caption">Drag to inspect · scroll to zoom. Cells enter and leave once; they never wrap around.</p>
       </section>
       <aside className="study-controls" id="flow-controls" aria-label="Flow controls" tabIndex={-1}>
         <p className="eyebrow">A REPEATABLE PASSAGE</p>
+        <fieldset disabled={failed}><legend>Route shape</legend>
+          <div className="profile-options">{(Object.keys(FLOW_PROFILES) as FlowProfile[]).map(id => <button key={id} aria-pressed={profile === id} onClick={() => { setPlaying(false); setProfile(id) }}>{FLOW_PROFILES[id].label}</button>)}</div>
+          <p aria-live="polite">{FLOW_PROFILES[profile].description} Changing shape pauses at the same time and refits the camera.</p>
+        </fieldset>
         <fieldset disabled={failed}><legend>Playback</legend>
           <label className="zoom-label" htmlFor="flow-time">Study time <output>{time.toFixed(1)} / {FLOW.duration} s</output></label>
           <input className="flow-time" id="flow-time" aria-label="Study time" type="range" min="0" max={FLOW.duration} step="0.1" value={time} onChange={e => seek(Number(e.target.value))} />
@@ -121,7 +131,7 @@ export function FlowWorkbench() {
           <p role="status">{reduced ? 'Reduced motion: use the time slider for still frames.' : time >= FLOW.duration ? 'Passage complete. Restart or seek to inspect.' : playing ? 'Playing the synthetic passage.' : 'Paused. Seek in either direction to inspect.'}</p>
         </fieldset>
         <fieldset disabled={failed}><legend>Detail</legend><div className="segmented">{(['low', 'high'] as const).map(level => <button key={level} aria-pressed={quality === level} onClick={() => setQuality(level)}>{level === 'low' ? 'Low' : 'High'}</button>)}</div><p>{FLOW_COUNTS[quality]} seeded fixtures. Density is illustrative, not measured concentration.</p><button className="reset-button" onClick={() => setReset(n => n + 1)}>Reset camera</button></fieldset>
-        <div className="coverage"><p className="eyebrow">ENGINEERING SCOPE</p><ul><li>3D cell-shaped geometry</li><li>Full-extent wall clearance</li><li>Repeatable seeded positions</li><li>One finite passage</li></ul><p>Missing: branches, varying radii, exterior continuity, reviewed cell shape and scale, and physiological motion. Performance targets remain unmeasured.</p></div>
+        <div className="coverage"><p className="eyebrow">ENGINEERING SCOPE</p><ul><li>3D cell-shaped geometry</li><li>Variable-radius wall clearance</li><li>Repeatable seeded positions</li><li>One finite passage</li></ul><p>Missing: branches, deforming walls, exterior continuity, reviewed cell shape and scale, and physiological motion. Performance targets remain unmeasured.</p></div>
       </aside>
     </main>
     <footer className="study-footer"><span>Local development only · excluded from the public app</span><span>No anatomical or clinical approval</span></footer>

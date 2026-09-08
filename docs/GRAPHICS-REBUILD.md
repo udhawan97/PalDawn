@@ -11,6 +11,12 @@ synthetic curved cutaway and deterministic cell-shaped flow fixtures. It
 exercises containment and playback without claiming R3 anatomical acceptance,
 physiological validity, exterior continuity, or measured performance.
 
+Its variable-radius continuation adds uniform, tapered, and narrowed fixtures
+using one radius lookup for walls and GPU cell lanes. Full-extent containment,
+profile switching, and recovery are checked before the remaining branch and
+exterior-continuity work. Static radius variation is implemented; deforming
+walls and branch-junction acceptance remain outstanding.
+
 ## Outcome
 
 Replace the symbolic body map with recognizable, spatially coherent organs,
