@@ -67,6 +67,12 @@ Do not introduce libraries outside the locked stack or the adoption-candidate li
 
 ## 4. Graphics approach — P0 technique directives
 
+The [2026-09-07 graphics rebuild plan](GRAPHICS-REBUILD.md) defines the proposed
+replacement of the procedural body map with authored organ meshes, connected
+vessels, staged microscopic detail, and synchronized cinematic playback. It
+starts with a complete heart experience and preserves the asset-adoption and
+qualified-review requirements below. This is planned work, not shipped anatomy.
+
 1. **Materials:** stock `MeshPhysicalMaterial` first (normal map, roughness, restrained clearcoat). Authored thickness-map SSS (three.js `SubsurfaceScatteringShader` pattern) is reserved for the hero heart exterior later, and only against a measured baseline.
 2. **Lumen (inside-vessel):** rasterized **inward-facing swept tube** along the shared route, stock material + cheap fog. **No raymarching in P0.**
 3. **Portal transition:** prototype drei `MeshPortalMaterial` with a **preloaded/aligned lumen scene** and a measured dual-scene blend; fallback is an **opaque-wall/fog swap**. The dive must survive reduced-motion (see §6: a non-fly-through route must exist).

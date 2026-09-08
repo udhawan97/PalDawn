@@ -1,0 +1,588 @@
+{
+  "id": "paldawn-heart-form-study-v1",
+  "asset": "heart-study.glb",
+  "status": "unreviewed_original_artwork",
+  "publicationEligible": false,
+  "creator": "PalDawn project; authored with Codex, 2026-09-07",
+  "license": "CC-BY-SA-4.0",
+  "sourceSha256": "eb577f155df7c7bd3b62aa55522be40686f8bc26cda151cf878a88334a7c93ef",
+  "assetSha256": "32d496af02cffe55427e1ffd82c0522b74adf84d74e184a1c516a02d65cce019",
+  "generatorSha256": "b87ee8df890549711dab4fd5b72a5875be281b4621e4def1a9a53436b0a9acb5",
+  "bytes": 5688164,
+  "units": "arbitrary study units; not anatomical scale",
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "publicationEligible": false
+  },
+  "parts": [
+    {
+      "name": "ventricular-surface-study",
+      "group": "heart",
+      "vertices": 19783,
+      "triangles": 39300
+    },
+    {
+      "name": "right-atrial-form",
+      "group": "heart",
+      "vertices": 3187,
+      "triangles": 6272
+    },
+    {
+      "name": "left-atrial-form",
+      "group": "heart",
+      "vertices": 3187,
+      "triangles": 6272
+    },
+    {
+      "name": "right-auricle-form",
+      "group": "heart",
+      "vertices": 3187,
+      "triangles": 6272
+    },
+    {
+      "name": "left-auricle-form",
+      "group": "heart",
+      "vertices": 3187,
+      "triangles": 6272
+    },
+    {
+      "name": "aortic-arch-form",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "aortic-arch-form-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "aortic-arch-form-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "aortic-arch-form-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-a",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-a-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-a-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-a-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-b",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-b-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-b-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-b-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-c",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-c-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "arch-branch-c-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "arch-branch-c-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "pulmonary-trunk-form",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "pulmonary-trunk-form-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "pulmonary-trunk-form-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "pulmonary-trunk-form-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "pulmonary-branch-form",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "pulmonary-branch-form-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "pulmonary-branch-form-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "pulmonary-branch-form-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "upper-venous-form",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "upper-venous-form-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "upper-venous-form-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "upper-venous-form-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "lower-venous-form",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "lower-venous-form-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "lower-venous-form-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "lower-venous-form-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "posterior-connection-a",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "posterior-connection-a-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "posterior-connection-a-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "posterior-connection-a-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "posterior-connection-b",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "posterior-connection-b-interior",
+      "group": "great-vessels",
+      "vertices": 2409,
+      "triangles": 4608
+    },
+    {
+      "name": "posterior-connection-b-rim-0",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "posterior-connection-b-rim-1",
+      "group": "vessel-rims",
+      "vertices": 66,
+      "triangles": 64
+    },
+    {
+      "name": "front-descending-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "front-descending-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "front-diagonal-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "front-diagonal-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "front-lower-branch-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "front-lower-branch-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "right-margin-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "right-margin-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "right-front-branch-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "right-front-branch-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "circumferential-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "circumferential-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "posterior-descending-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "posterior-descending-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "posterior-branch-study-fat-bed",
+      "group": "surface-fat",
+      "vertices": 951,
+      "triangles": 1752
+    },
+    {
+      "name": "posterior-branch-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "front-venous-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "posterior-venous-study",
+      "group": "surface-vessels",
+      "vertices": 1097,
+      "triangles": 2044
+    },
+    {
+      "name": "surface-fold-0",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-1",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-2",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-3",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-4",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-5",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-6",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-7",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-8",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-9",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-10",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-11",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-12",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-13",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-14",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-15",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-16",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-17",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-18",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-19",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-20",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-21",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-22",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-23",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-24",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-25",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-26",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "surface-fold-27",
+      "group": "surface-detail",
+      "vertices": 128,
+      "triangles": 210
+    },
+    {
+      "name": "chest-context--1",
+      "group": "context",
+      "vertices": 6563,
+      "triangles": 12960
+    },
+    {
+      "name": "chest-context-1",
+      "group": "context",
+      "vertices": 6563,
+      "triangles": 12960
+    }
+  ],
+  "absent": [
+    "reviewed anatomical accuracy",
+    "chamber interiors",
+    "valves",
+    "validated coronary topology",
+    "blood flow",
+    "physiological deformation",
+    "complete thorax",
+    "patient measurements"
+  ]
+}

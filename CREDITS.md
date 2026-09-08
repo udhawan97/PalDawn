@@ -74,3 +74,11 @@ unlicensed, license-ambiguous, GPL/AGPL, or simply studied as prior art:
 
 No third-party 3D asset is incorporated. First Light's visible model is
 procedural project code, not an anatomy asset. See `NOTICE.md`.
+
+## Original heart graphics workbench
+
+The unpublished [heart form study](content/graphics/heart-study/README.md) is
+original PalDawn artwork authored with Codex on 2026-09-07. Its editable
+profiles, generated mesh, and artwork renders are CC BY-SA 4.0; generator and
+viewer code are MIT. No upstream anatomy mesh or patient data was used.
+Anatomical review is pending, and the pack is excluded from the public app.

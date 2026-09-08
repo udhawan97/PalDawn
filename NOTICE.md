@@ -12,8 +12,15 @@ to exact versions in `app/package.json` / `app/package-lock.json`.
   `app/third-party-license-inventory.json`
 - Per-dependency provenance records: `pipeline/provenance/records/`
 
-**No 3D anatomy assets, medical datasets, or third-party content are
-incorporated in this repository.** First Light's synthetic shell, route,
+**No third-party 3D anatomy assets or medical datasets are incorporated.**
+The separate, unpublished heart graphics workbench contains original,
+unreviewed geometric artwork in `content/graphics/heart-study/`, including its
+editable source and generated GLB, licensed CC BY-SA 4.0. Its renderer and
+generator remain MIT. It is excluded from the public app build and does not
+clear any anatomical/clinical adoption gate. See that pack's README for
+attribution, reproduction, review status, and limitations.
+
+First Light's synthetic shell, route,
 corridor, portal preview, flow markers, SPD mark, and icon are generated from
 project-authored code and vector markup; they are not imported asset files.
 

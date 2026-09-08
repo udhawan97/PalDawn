@@ -27,5 +27,9 @@ jobs:
         working-directory: app
       - run: npm run test:browser
         working-directory: app
+      - run: npm run graphics:build
+        working-directory: app
+      - run: npm run graphics:test
+        working-directory: app
       - run: npm run licenses
         working-directory: app

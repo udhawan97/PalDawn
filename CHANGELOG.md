@@ -2,6 +2,15 @@
 
 All notable changes to PalDawn are documented here.
 
+## Unreleased
+
+- Added isolated heart and synthetic vessel-flow workbenches, excluded from
+  the public app. The flow study provides GPU-instanced 3D cell-shaped
+  fixtures, a curved cutaway, pause/seek/restart, reduced-motion still frames,
+  detail tiers, full-extent containment checks, and WebGL recovery.
+- Anatomy review, physiological validity, exterior continuity, and measured
+  performance remain outstanding. No new clinical content is published.
+
 ## [0.3.0] — 2026-08-24
 
 ### Mechanism Lens
