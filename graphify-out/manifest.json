@@ -810,8 +810,8 @@
     "semantic_hash": ""
   },
   "app/graphics/cameraFit.ts": {
-    "mtime": 1788767003.1337295,
-    "ast_hash": "8bd4ade9be5f1fbc764c9cf29414dc01",
+    "mtime": 1788847630.4490905,
+    "ast_hash": "336ac7b822eaa2cd1cd97cee7c7c4673",
     "semantic_hash": ""
   },
   "app/graphics/main.tsx": {
@@ -915,8 +915,8 @@
     "semantic_hash": ""
   },
   "app/graphics/FlowWorkbench.tsx": {
-    "mtime": 1788847401.7763925,
-    "ast_hash": "2b16540cb977a9ce4068cf8e359c9ab9",
+    "mtime": 1788847630.4503372,
+    "ast_hash": "11d699af5b0397343c2bc198b0c7236d",
     "semantic_hash": ""
   },
   "app/graphics/SceneBoundary.tsx": {
@@ -930,8 +930,8 @@
     "semantic_hash": ""
   },
   "app/graphics/flowModel.ts": {
-    "mtime": 1788847097.9285061,
-    "ast_hash": "9d7849d1f9116b65a6620e7164b30e1b",
+    "mtime": 1788847630.4497144,
+    "ast_hash": "b5736bcdb92660d84ad628c4a6b09a65",
     "semantic_hash": ""
   },
   "app/graphics/tests/flow.spec.mjs": {
@@ -940,8 +940,8 @@
     "semantic_hash": ""
   },
   "app/graphics/verify-flow.mjs": {
-    "mtime": 1788847097.9305952,
-    "ast_hash": "9f027245a2e3b620be0eea1773472414",
+    "mtime": 1788847630.451366,
+    "ast_hash": "9730f4812f42f4ac59837ac8a1bef68f",
     "semantic_hash": ""
   },
   "app/flow-study.html": {

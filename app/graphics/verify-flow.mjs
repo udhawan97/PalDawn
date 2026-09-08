@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
-import { Vector3 } from 'three'
-import { FLOW, FLOW_COUNTS, cellFrame, cellGeometry, cellSeeds, routeFrame, wallGeometry } from './flowModel.ts'
+import { PerspectiveCamera, Vector3 } from 'three'
+import { FLOW, FLOW_COUNTS, FLOW_VIEW, cellFrame, cellGeometry, cellSeeds, flowBounds, routeFrame, wallGeometry } from './flowModel.ts'
+import { fitStudyCamera } from './cameraFit.ts'
 
 const seeds = cellSeeds(FLOW_COUNTS.high)
 assert.deepEqual(cellSeeds(FLOW_COUNTS.low), seeds.slice(0, FLOW_COUNTS.low), 'quality must preserve shared identities')
@@ -12,6 +13,17 @@ for (const geometry of [cell, wall]) {
   for (const index of geometry.index.array) assert.ok(index < geometry.getAttribute('position').count)
 }
 const start = routeFrame(0), end = routeFrame(1)
+const bounds = flowBounds(wall)
+for (const aspect of [.45, .7, 1, 1.8, 2.8]) {
+  const fit = fitStudyCamera(bounds, aspect, FLOW_VIEW)
+  const camera = new PerspectiveCamera(34, aspect, .05, 100)
+  camera.position.copy(fit.position); camera.lookAt(fit.target); camera.updateMatrixWorld(true)
+  for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+    const projected = new Vector3(x, y, z).project(camera)
+    assert.ok(Math.abs(projected.x) <= .801 && Math.abs(projected.y) <= .801, 'cutaway or cells clipped by camera')
+    assert.ok(projected.z > -1 && projected.z < 1)
+  }
+}
 let visible = 0
 for (let tick = 0; tick <= 120; tick++) for (const seed of seeds) {
   const { center, scale } = cellFrame(seed, tick / 10)

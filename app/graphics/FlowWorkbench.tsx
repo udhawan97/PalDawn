@@ -1,10 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { Box3, InstancedBufferAttribute, InstancedBufferGeometry, MeshStandardMaterial, PerspectiveCamera, Vector3 } from 'three'
+import { InstancedBufferAttribute, InstancedBufferGeometry, MeshStandardMaterial, PerspectiveCamera, Vector3 } from 'three'
 import { fitStudyCamera } from './cameraFit'
 import { SceneBoundary } from './SceneBoundary'
-import { FLOW, FLOW_COUNTS, cellGeometry, cellSeeds, flowShader, wallGeometry, type FlowQuality } from './flowModel'
+import { FLOW, FLOW_COUNTS, FLOW_VIEW, cellGeometry, cellSeeds, flowBounds, flowShader, wallGeometry, type FlowQuality } from './flowModel'
 
 function FlowScene({ time, quality, reset, onFailure, onPresented }: {
   time: number; quality: FlowQuality; reset: number; onFailure: () => void; onPresented: (time: number) => void
@@ -25,7 +25,8 @@ function FlowScene({ time, quality, reset, onFailure, onPresented }: {
         .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nobjectNormal = flowBasis() * objectNormal;')
         .replace('#include <begin_vertex>', 'vec3 transformed = flowCenter() + flowBasis() * position * flowScale();')
     }
-    return { cells, material, clock, wall: wallGeometry(), wallMaterial: new MeshStandardMaterial({ color: '#bb8070', roughness: .72 }) }
+    const wall = wallGeometry(), bounds = flowBounds(wall)
+    return { cells, material, clock, wall, bounds, target: bounds.getCenter(new Vector3()), wallMaterial: new MeshStandardMaterial({ color: '#bb8070', roughness: .72 }) }
   })
   useEffect(() => () => { resources.cells.dispose(); resources.material.dispose(); resources.wall.dispose(); resources.wallMaterial.dispose() }, [resources])
   useEffect(() => {
@@ -40,13 +41,12 @@ function FlowScene({ time, quality, reset, onFailure, onPresented }: {
   }, [resources, time, quality, invalidate])
   useLayoutEffect(() => {
     if (!(camera instanceof PerspectiveCamera)) return
-    const bounds = new Box3(new Vector3(-4.8, -1.1, -2.5), new Vector3(4.8, 1.1, 1.1))
-    const fit = fitStudyCamera(bounds, size.width / Math.max(1, size.height), 'front', camera.fov)
-    camera.position.set(0, fit.distance * .68, fit.distance * .74)
-    camera.lookAt(0, 0, -.7)
+    const fit = fitStudyCamera(resources.bounds, size.width / Math.max(1, size.height), FLOW_VIEW, camera.fov)
+    camera.position.copy(fit.position)
+    camera.lookAt(fit.target)
     camera.updateProjectionMatrix()
     invalidate()
-  }, [camera, size, reset, invalidate])
+  }, [camera, size, reset, resources, invalidate])
   return <>
     <color attach="background" args={['#263030']} />
     <ambientLight intensity={1.6} />
@@ -54,7 +54,7 @@ function FlowScene({ time, quality, reset, onFailure, onPresented }: {
     <directionalLight position={[-4, 2, -2]} intensity={1.5} color="#dcc5b2" />
     <mesh geometry={resources.wall} material={resources.wallMaterial} dispose={null} />
     <mesh geometry={resources.cells} material={resources.material} dispose={null} frustumCulled={false} onAfterRender={() => onPresented(time)} />
-    <OrbitControls key={reset} target={[0, 0, -.7]} enablePan={false} enableDamping={false} minDistance={5} maxDistance={35} minPolarAngle={.15} maxPolarAngle={Math.PI * .49} />
+    <OrbitControls key={reset} target={resources.target} enablePan={false} enableDamping={false} minDistance={5} maxDistance={100} minPolarAngle={.15} maxPolarAngle={Math.PI * .49} />
   </>
 }
 

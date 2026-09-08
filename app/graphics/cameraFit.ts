@@ -7,9 +7,9 @@ const directions: Record<StudyView, [number, number, number]> = {
 
 // Fit all eight world-space bounds corners inside the actual canvas aspect.
 // No sidebar offsets: the canvas occupies only the unobscured layout column.
-export function fitStudyCamera(bounds: Box3, aspect: number, view: StudyView, fov = 34) {
+export function fitStudyCamera(bounds: Box3, aspect: number, view: StudyView | Vector3, fov = 34) {
   const target = bounds.getCenter(new Vector3())
-  const direction = new Vector3(...directions[view]).normalize()
+  const direction = (typeof view === 'string' ? new Vector3(...directions[view]) : view.clone()).normalize()
   const right = new Vector3(0, 1, 0).cross(direction).normalize()
   const up = direction.clone().cross(right)
   const tangent = Math.tan(fov * Math.PI / 360)

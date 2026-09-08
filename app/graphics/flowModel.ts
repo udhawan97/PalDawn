@@ -4,6 +4,15 @@ import { BufferGeometry, Float32BufferAttribute, SphereGeometry, Vector3 } from 
 export const FLOW = Object.freeze({ radius: 6, arc: 1.4, wall: .9, cell: .18, clearance: .08, duration: 12, speed: .12 })
 export const FLOW_COUNTS = { low: 80, high: 240 } as const
 export type FlowQuality = keyof typeof FLOW_COUNTS
+export const FLOW_VIEW = new Vector3(0, .68, .74)
+
+export function flowBounds(wall: BufferGeometry) {
+  wall.computeBoundingBox()
+  const bounds = wall.boundingBox!.clone()
+  // Include cells in the removed upper half, not just the visible wall.
+  bounds.max.y = FLOW.wall
+  return bounds
+}
 
 export function routeFrame(s: number) {
   const angle = (s - .5) * FLOW.arc
