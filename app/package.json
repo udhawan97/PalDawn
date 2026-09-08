@@ -14,7 +14,7 @@
     "graphics:generate": "node graphics/build-heart.mjs",
     "graphics:dev": "vite --config vite.graphics.config.ts --open /heart-study.html",
     "graphics:build": "tsc --noEmit -p tsconfig.graphics.json && vite build --config vite.graphics.config.ts",
-    "graphics:verify": "node --experimental-strip-types graphics/verify-heart.mjs",
+    "graphics:verify": "node --experimental-strip-types graphics/verify-heart.mjs && node --experimental-strip-types graphics/verify-flow.mjs",
     "graphics:test": "playwright test --config playwright.graphics.config.mjs"
   },
   "keywords": [],

@@ -6,6 +6,11 @@ now supplies original editable exterior artwork and an isolated static viewer.
 Anatomical acceptance, public-app adoption, blood flow, and cinematic playback
 remain outstanding; no clinical approvals have been delivered.
 
+The [R3 engineering slice](VESSEL-FLOW-WORKBENCH.md) now adds an isolated
+synthetic curved cutaway and deterministic cell-shaped flow fixtures. It
+exercises containment and playback without claiming R3 anatomical acceptance,
+physiological validity, exterior continuity, or measured performance.
+
 ## Outcome
 
 Replace the symbolic body map with recognizable, spatially coherent organs,

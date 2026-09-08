@@ -91,6 +91,10 @@ remain unverified.
 
 ## Next step
 
+The separate [synthetic flow study](VESSEL-FLOW-WORKBENCH.md) now exercises
+R3's GPU motion, cutaway, and containment infrastructure. It adds no interior
+or blood to this heart asset and does not clear its anatomical review gate.
+
 Review the clay turntables against qualified anatomical references and record
 specific geometry corrections. Complete the missing heart/chest geometry and
 review ownership before adopting the asset into the public app. The accepted

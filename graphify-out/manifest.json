@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1788767971.2221506,
-    "ast_hash": "b4ed2d1b8b2c34d15e5857c00c8a3dba",
+    "mtime": 1788847486.3726208,
+    "ast_hash": "2e1869b70e3373813e91b7e519768c30",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788767289.5804138,
+    "mtime": 1788847243.8849258,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788767410.4221256,
-    "ast_hash": "c3b2e95dea30987a0b37cfcd6296dcfb",
+    "mtime": 1788847420.6457784,
+    "ast_hash": "ae7e7a1f2d73eaf9276f4dfcb6e2d0b0",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787596840.8228645,
-    "ast_hash": "69c6eadb3e5484a412f3f5eb3bad5701",
+    "mtime": 1788847401.7796245,
+    "ast_hash": "8e7de0aea1edf0758a01f882bbdb3f66",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "app/graphics/HeartWorkbench.tsx": {
-    "mtime": 1788767656.9234266,
-    "ast_hash": "acc98babb96d0df77273c401a5a1c36a",
+    "mtime": 1788847097.926135,
+    "ast_hash": "85546e7a645a2dd896745e4c5926caf8",
     "semantic_hash": ""
   },
   "app/graphics/build-heart.mjs": {
@@ -830,8 +830,8 @@
     "semantic_hash": ""
   },
   "app/graphics/verify-heart.mjs": {
-    "mtime": 1788767253.5358627,
-    "ast_hash": "8d63edf6565269f6776ec013b3a6e037",
+    "mtime": 1788847097.9303823,
+    "ast_hash": "5d30db86d4313fc40e45ee9a37587d57",
     "semantic_hash": ""
   },
   "app/playwright.graphics.config.mjs": {
@@ -845,8 +845,8 @@
     "semantic_hash": ""
   },
   "app/vite.graphics.config.ts": {
-    "mtime": 1788766728.0033278,
-    "ast_hash": "e9bbe36284ae56379d8730045fb46d19",
+    "mtime": 1788847097.9293537,
+    "ast_hash": "b743a29e606761129eac5b950da23214",
     "semantic_hash": ""
   },
   "content/graphics/heart-study/manifest.json": {
@@ -870,13 +870,13 @@
     "semantic_hash": ""
   },
   "docs/GRAPHICS-REBUILD.md": {
-    "mtime": 1788767410.3466563,
-    "ast_hash": "f1e04449a7917d1b6ab18f35d3dcea33",
+    "mtime": 1788847401.7785025,
+    "ast_hash": "63b671bdb5f90d7cd156bb82b277e4b5",
     "semantic_hash": ""
   },
   "docs/HEART-GRAPHICS-WORKBENCH.md": {
-    "mtime": 1788767802.7333467,
-    "ast_hash": "a43fd77e84e10520fdb3fcd9293a60f5",
+    "mtime": 1788847401.7774954,
+    "ast_hash": "1207c203b112d2aa727a479d7b24180c",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md": {
@@ -912,6 +912,46 @@
   "content/graphics/heart-study/previews/left-clay.png": {
     "mtime": 1788767802.6909738,
     "ast_hash": "e1d68cf9cc20341b6fd1dbfcc388cbf5",
+    "semantic_hash": ""
+  },
+  "app/graphics/FlowWorkbench.tsx": {
+    "mtime": 1788847401.7763925,
+    "ast_hash": "2b16540cb977a9ce4068cf8e359c9ab9",
+    "semantic_hash": ""
+  },
+  "app/graphics/SceneBoundary.tsx": {
+    "mtime": 1788847097.9253194,
+    "ast_hash": "cffc78987877d3e49f6221fd709358e7",
+    "semantic_hash": ""
+  },
+  "app/graphics/flow-main.tsx": {
+    "mtime": 1788847028.8374002,
+    "ast_hash": "841cccfb65cdb10f9786d68e2f1695cf",
+    "semantic_hash": ""
+  },
+  "app/graphics/flowModel.ts": {
+    "mtime": 1788847097.9285061,
+    "ast_hash": "9d7849d1f9116b65a6620e7164b30e1b",
+    "semantic_hash": ""
+  },
+  "app/graphics/tests/flow.spec.mjs": {
+    "mtime": 1788847172.7738855,
+    "ast_hash": "a107b5430b87dafc6e74355a45a7ac41",
+    "semantic_hash": ""
+  },
+  "app/graphics/verify-flow.mjs": {
+    "mtime": 1788847097.9305952,
+    "ast_hash": "9f027245a2e3b620be0eea1773472414",
+    "semantic_hash": ""
+  },
+  "app/flow-study.html": {
+    "mtime": 1788847028.8376384,
+    "ast_hash": "1de589a7019c6fc405cdd75b9c4980ce",
+    "semantic_hash": ""
+  },
+  "docs/VESSEL-FLOW-WORKBENCH.md": {
+    "mtime": 1788847401.7767916,
+    "ast_hash": "cd63b710313a72e2ca75c186039a76fe",
     "semantic_hash": ""
   }
 }

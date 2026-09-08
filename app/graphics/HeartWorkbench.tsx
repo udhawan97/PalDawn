@@ -1,10 +1,11 @@
-import { Component, useEffect, useLayoutEffect, useRef, useState, type ReactNode, type ComponentRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentRef } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Box3, Group, Mesh, MeshPhysicalMaterial, PerspectiveCamera } from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import manifest from '../../content/graphics/heart-study/manifest.json'
 import { fitStudyCamera, type StudyView } from './cameraFit'
+import { SceneBoundary } from './SceneBoundary'
 
 const assetUrl = new URL('../../content/graphics/heart-study/heart-study.glb', import.meta.url).href
 const VIEWS: StudyView[] = ['front', 'left', 'back', 'right']
@@ -17,13 +18,6 @@ function disposeModel(model: Group) {
     object.geometry.dispose()
     for (const material of Array.isArray(object.material) ? object.material : [object.material]) material.dispose()
   })
-}
-
-class SceneBoundary extends Component<{ children: ReactNode; onFailure: () => void }, { failed: boolean }> {
-  state = { failed: false }
-  static getDerivedStateFromError() { return { failed: true } }
-  componentDidCatch() { this.props.onFailure() }
-  render() { return this.state.failed ? null : this.props.children }
 }
 
 function Scene({ model, mode, view, context, vessels, rotate, zoom, reset, onContextLost, onInspect, frameKey, onPresented }: {
@@ -188,6 +182,7 @@ export function HeartWorkbench() {
           <div><dt>Review</dt><dd>Not anatomically validated</dd></div>
         </dl>
         <p className="boundary">This is a visual development study, not an anatomical reference. Interiors, valves, and blood flow are not included.</p>
+        <p className="boundary"><a href="./flow-study.html">Open the separate synthetic flow study</a></p>
       </section>
 
       <section className="specimen" aria-label="Interactive heart form study" data-renderer={error ? 'unavailable' : model && presented === frameKey ? 'ready' : 'loading'} data-view={inspecting || rotate ? 'free' : view} data-material={mode} data-context={context ? 'chest' : 'heart'}>

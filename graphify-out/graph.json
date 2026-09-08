@@ -51,125 +51,169 @@
   },
   "nodes": [
     {
+      "label": "FlowWorkbench.tsx",
+      "file_type": "code",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_flowworkbench",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flowworkbench.tsx"
+    },
+    {
+      "label": "FlowScene()",
+      "file_type": "code",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_graphics_flowworkbench_flowscene",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flowscene()"
+    },
+    {
+      "label": "FlowWorkbench()",
+      "file_type": "code",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "app_graphics_flowworkbench_flowworkbench",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flowworkbench()"
+    },
+    {
       "label": "HeartWorkbench.tsx",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "heartworkbench.tsx"
     },
     {
       "label": "VIEWS",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_views",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "views"
     },
     {
       "label": "totalTriangles",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_totaltriangles",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "totaltriangles"
     },
     {
       "label": "MaterialMode",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_materialmode",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "materialmode"
     },
     {
       "label": "disposeModel()",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_disposemodel",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "disposemodel()"
-    },
-    {
-      "label": "SceneBoundary",
-      "file_type": "code",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "app_graphics_heartworkbench_sceneboundary",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
-      "norm_label": "sceneboundary"
-    },
-    {
-      "label": ".getDerivedStateFromError()",
-      "file_type": "code",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "app_graphics_heartworkbench_sceneboundary_getderivedstatefromerror",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
-      "norm_label": ".getderivedstatefromerror()"
-    },
-    {
-      "label": ".componentDidCatch()",
-      "file_type": "code",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "app_graphics_heartworkbench_sceneboundary_componentdidcatch",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
-      "norm_label": ".componentdidcatch()"
-    },
-    {
-      "label": ".render()",
-      "file_type": "code",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "app_graphics_heartworkbench_sceneboundary_render",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
-      "norm_label": ".render()"
     },
     {
       "label": "Scene()",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L29",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_scene",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "scene()"
     },
     {
       "label": "HeartWorkbench()",
       "file_type": "code",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L107",
+      "source_location": "L101",
       "_origin": "ast",
       "id": "app_graphics_heartworkbench_heartworkbench",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "heartworkbench()"
+    },
+    {
+      "label": "SceneBoundary.tsx",
+      "file_type": "code",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_sceneboundary",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "sceneboundary.tsx"
+    },
+    {
+      "label": "SceneBoundary",
+      "file_type": "code",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_graphics_sceneboundary_sceneboundary",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "sceneboundary"
+    },
+    {
+      "label": ".getDerivedStateFromError()",
+      "file_type": "code",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_graphics_sceneboundary_sceneboundary_getderivedstatefromerror",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": ".getderivedstatefromerror()"
+    },
+    {
+      "label": ".componentDidCatch()",
+      "file_type": "code",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_graphics_sceneboundary_sceneboundary_componentdidcatch",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": ".componentdidcatch()"
+    },
+    {
+      "label": ".render()",
+      "file_type": "code",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_graphics_sceneboundary_sceneboundary_render",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": ".render()"
     },
     {
       "label": "build-heart.mjs",
@@ -266,8 +310,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_graphics_camerafit",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "camerafit.ts"
     },
     {
@@ -277,8 +321,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_graphics_camerafit_studyview",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "studyview"
     },
     {
@@ -288,8 +332,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_graphics_camerafit_directions",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "directions"
     },
     {
@@ -299,9 +343,119 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_graphics_camerafit_fitstudycamera",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "fitstudycamera()"
+    },
+    {
+      "label": "flow-main.tsx",
+      "file_type": "code",
+      "source_file": "app/graphics/flow-main.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_flow_main",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flow-main.tsx"
+    },
+    {
+      "label": "flowModel.ts",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flowmodel.ts"
+    },
+    {
+      "label": "FLOW",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_flow",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flow"
+    },
+    {
+      "label": "FLOW_COUNTS",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_flow_counts",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flow_counts"
+    },
+    {
+      "label": "FlowQuality",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_flowquality",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "flowquality"
+    },
+    {
+      "label": "routeFrame()",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_routeframe",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "routeframe()"
+    },
+    {
+      "label": "cellSeeds()",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_cellseeds",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "cellseeds()"
+    },
+    {
+      "label": "cellFrame()",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_cellframe",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "cellframe()"
+    },
+    {
+      "label": "cellGeometry()",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_cellgeometry",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "cellgeometry()"
+    },
+    {
+      "label": "wallGeometry()",
+      "file_type": "code",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "app_graphics_flowmodel_wallgeometry",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "wallgeometry()"
     },
     {
       "label": "graphics/main.tsx",
@@ -310,8 +464,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_graphics_main",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "graphics/main.tsx"
     },
     {
@@ -321,8 +475,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_graphics_main_root",
-      "community": 27,
-      "community_name": "verify-heart.mjs",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
       "norm_label": "root"
     },
     {
@@ -387,9 +541,64 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_graphics_mesh_builder_encodeglb",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "encodeglb()"
+    },
+    {
+      "label": "flow.spec.mjs",
+      "file_type": "code",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_tests_flow_spec",
+      "community": 70,
+      "community_name": "flow.spec.mjs",
+      "norm_label": "flow.spec.mjs"
+    },
+    {
+      "label": "scene()",
+      "file_type": "code",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_graphics_tests_flow_spec_scene",
+      "community": 70,
+      "community_name": "flow.spec.mjs",
+      "norm_label": "scene()"
+    },
+    {
+      "label": "settled()",
+      "file_type": "code",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "app_graphics_tests_flow_spec_settled",
+      "community": 70,
+      "community_name": "flow.spec.mjs",
+      "norm_label": "settled()"
+    },
+    {
+      "label": "ready()",
+      "file_type": "code",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_graphics_tests_flow_spec_ready",
+      "community": 70,
+      "community_name": "flow.spec.mjs",
+      "norm_label": "ready()"
+    },
+    {
+      "label": "seek()",
+      "file_type": "code",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_graphics_tests_flow_spec_seek",
+      "community": 70,
+      "community_name": "flow.spec.mjs",
+      "norm_label": "seek()"
     },
     {
       "label": "workbench.spec.mjs",
@@ -434,6 +643,83 @@
       "community": 83,
       "community_name": "workbench.spec.mjs",
       "norm_label": "ready()"
+    },
+    {
+      "label": "verify-flow.mjs",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "verify-flow.mjs"
+    },
+    {
+      "label": "seeds",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_seeds",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "seeds"
+    },
+    {
+      "label": "cell",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_cell",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "cell"
+    },
+    {
+      "label": "wall",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_wall",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "wall"
+    },
+    {
+      "label": "start",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_start",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "start"
+    },
+    {
+      "label": "end",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_end",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "end"
+    },
+    {
+      "label": "p",
+      "file_type": "code",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "app_graphics_verify_flow_p",
+      "community": 57,
+      "community_name": "FlowWorkbench.tsx",
+      "norm_label": "p"
     },
     {
       "label": "verify-heart.mjs",
@@ -2147,8 +2433,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_scripts_test_foundation_runtime_memorystorage_key",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": ".key()"
     },
     {
@@ -2709,7 +2995,7 @@
       "_origin": "ast",
       "id": "app_src_app",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "app.tsx"
     },
     {
@@ -2720,7 +3006,7 @@
       "_origin": "ast",
       "id": "app_src_app_scenecanvas",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "scenecanvas"
     },
     {
@@ -2731,7 +3017,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundarystate",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "sceneboundarystate"
     },
     {
@@ -2741,8 +3027,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary",
-      "community": 74,
-      "community_name": "App.tsx",
+      "community": 73,
+      "community_name": "SceneBoundary",
       "norm_label": "sceneboundary"
     },
     {
@@ -2752,8 +3038,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_getderivedstatefromerror",
-      "community": 74,
-      "community_name": "App.tsx",
+      "community": 73,
+      "community_name": "SceneBoundary",
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -2763,8 +3049,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_componentdidcatch",
-      "community": 74,
-      "community_name": "App.tsx",
+      "community": 73,
+      "community_name": "SceneBoundary",
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -2774,8 +3060,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_render",
-      "community": 74,
-      "community_name": "App.tsx",
+      "community": 73,
+      "community_name": "SceneBoundary",
       "norm_label": ".render()"
     },
     {
@@ -2785,7 +3071,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_app_journeyplaybackdriver",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "journeyplaybackdriver()"
     },
@@ -2797,7 +3083,7 @@
       "_origin": "ast",
       "id": "app_src_app_renderfallback",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "renderfallback()"
     },
     {
@@ -2808,7 +3094,7 @@
       "_origin": "ast",
       "id": "app_src_app_app",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "app()"
     },
     {
@@ -3599,8 +3885,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_journey",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "journey.ts"
     },
     {
@@ -3621,8 +3907,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeystage",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "journeystage"
     },
     {
@@ -3632,8 +3918,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeydefinition",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "journeydefinition"
     },
     {
@@ -3654,8 +3940,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_src_journey_journey_clampprogress",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "clampprogress()"
     },
     {
@@ -3665,8 +3951,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageindexat",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "stageindexat()"
     },
     {
@@ -3676,8 +3962,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageat",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "stageat()"
     },
     {
@@ -3687,8 +3973,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_src_journey_journey_progressforstageid",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "progressforstageid()"
     },
     {
@@ -3698,8 +3984,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageidfromhash",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "stageidfromhash()"
     },
     {
@@ -3709,8 +3995,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageurl",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "stageurl()"
     },
     {
@@ -3720,8 +4006,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_journey_journey_transcripttext",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "transcripttext()"
     },
     {
@@ -3731,8 +4017,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatjourneytime",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "formatjourneytime()"
     },
     {
@@ -3742,8 +4028,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatduration",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "formatduration()"
     },
     {
@@ -3753,8 +4039,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_route",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "route.ts"
     },
     {
@@ -3764,8 +4050,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_journey_route_author_points",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "author_points"
     },
     {
@@ -3775,8 +4061,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_journey_route_authoredcurve",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "authoredcurve"
     },
     {
@@ -3786,8 +4072,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_route_route_lookup",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "route_lookup"
     },
     {
@@ -3797,8 +4083,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve",
-      "community": 85,
-      "community_name": "NormalizedLookupCurve",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "normalizedlookupcurve"
     },
     {
@@ -3808,8 +4094,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_constructor",
-      "community": 85,
-      "community_name": "NormalizedLookupCurve",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".constructor()"
     },
     {
@@ -3819,8 +4105,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_getpoint",
-      "community": 85,
-      "community_name": "NormalizedLookupCurve",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": ".getpoint()"
     },
     {
@@ -3830,8 +4116,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "app_src_journey_route_voyageroute",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "voyageroute"
     },
     {
@@ -3841,8 +4127,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_src_journey_route_frames",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "frames"
     },
     {
@@ -3852,8 +4138,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframe",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "routeframe"
     },
     {
@@ -3907,8 +4193,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_src_journey_route_smoothrange",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "smoothrange()"
     },
     {
@@ -3962,8 +4248,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticreport",
-      "community": 9,
-      "community_name": "settings.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "diagnosticreport()"
     },
     {
@@ -3973,8 +4259,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_downloads",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "downloads.ts"
     },
     {
@@ -3984,8 +4270,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_downloads_copytext",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "copytext()"
     },
     {
@@ -3995,8 +4281,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_src_platform_downloads_downloadtext",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "downloadtext()"
     },
     {
@@ -4171,8 +4457,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "app_src_platform_localdata_localdatarecoverystate",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "localdatarecoverystate"
     },
     {
@@ -4204,8 +4490,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "app_src_platform_localdata_local_data_key_list",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "local_data_key_list"
     },
     {
@@ -4248,8 +4534,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_src_platform_localdata_local_data_keys",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "local_data_keys"
     },
     {
@@ -4325,8 +4611,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storage",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "storage()"
     },
     {
@@ -4336,8 +4622,8 @@
       "source_location": "L156",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragefailure",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "reportstoragefailure()"
     },
     {
@@ -4347,8 +4633,8 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragesuccess",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "reportstoragesuccess()"
     },
     {
@@ -4358,8 +4644,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readstring",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "readstring()"
     },
     {
@@ -4369,8 +4655,8 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "app_src_platform_localdata_newresettoken",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "newresettoken()"
     },
     {
@@ -4380,8 +4666,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "app_src_platform_localdata_releasetransactionguard",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "releasetransactionguard()"
     },
     {
@@ -4391,8 +4677,8 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "app_src_platform_localdata_resetdesiredvalues",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "resetdesiredvalues()"
     },
     {
@@ -4402,8 +4688,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "app_src_platform_localdata_serializependingtransaction",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "serializependingtransaction()"
     },
     {
@@ -4413,8 +4699,8 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "app_src_platform_localdata_parsependingtransaction",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "parsependingtransaction()"
     },
     {
@@ -4424,8 +4710,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "app_src_platform_localdata_bindvaluetogeneration",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "bindvaluetogeneration()"
     },
     {
@@ -4435,8 +4721,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "app_src_platform_localdata_valuegeneration",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "valuegeneration()"
     },
     {
@@ -4446,8 +4732,8 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "app_src_platform_localdata_applydesiredvalues",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "applydesiredvalues()"
     },
     {
@@ -4457,8 +4743,8 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "app_src_platform_localdata_restoretransactiondesiredvalue",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "restoretransactiondesiredvalue()"
     },
     {
@@ -4468,8 +4754,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "app_src_platform_localdata_pendingfenceisactive",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "pendingfenceisactive()"
     },
     {
@@ -4479,8 +4765,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "app_src_platform_localdata_getlocaldatarecoverystate",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "getlocaldatarecoverystate()"
     },
     {
@@ -4490,8 +4776,8 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readlocalstoragevalue",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "readlocalstoragevalue()"
     },
     {
@@ -4501,8 +4787,8 @@
       "source_location": "L326",
       "_origin": "ast",
       "id": "app_src_platform_localdata_writelocalstoragevalue",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "writelocalstoragevalue()"
     },
     {
@@ -4512,8 +4798,8 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "app_src_platform_localdata_recoverinterruptedlocaldatatransaction",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "recoverinterruptedlocaldatatransaction()"
     },
     {
@@ -4523,8 +4809,8 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readjson",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "readjson()"
     },
     {
@@ -4534,8 +4820,8 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadjourneysession",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadjourneysession()"
     },
     {
@@ -4556,8 +4842,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadstagebookmarks",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadstagebookmarks()"
     },
     {
@@ -4578,8 +4864,8 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadlearnerworkspace",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadlearnerworkspace()"
     },
     {
@@ -4589,8 +4875,8 @@
       "source_location": "L489",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savelearnerworkspace",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "savelearnerworkspace()"
     },
     {
@@ -4633,8 +4919,8 @@
       "source_location": "L573",
       "_origin": "ast",
       "id": "app_src_platform_localdata_restorestoredvalue",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "restorestoredvalue()"
     },
     {
@@ -4644,8 +4930,8 @@
       "source_location": "L578",
       "_origin": "ast",
       "id": "app_src_platform_localdata_executelocaldatatransaction",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "executelocaldatatransaction()"
     },
     {
@@ -4655,8 +4941,8 @@
       "source_location": "L655",
       "_origin": "ast",
       "id": "app_src_platform_localdata_replacelocaldatafromimport",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "replacelocaldatafromimport()"
     },
     {
@@ -4666,8 +4952,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportlocaldata",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "exportlocaldata()"
     },
     {
@@ -4677,8 +4963,8 @@
       "source_location": "L732",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportrawlocaldatarecoverybackup",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "exportrawlocaldatarecoverybackup()"
     },
     {
@@ -4688,8 +4974,8 @@
       "source_location": "L766",
       "_origin": "ast",
       "id": "app_src_platform_localdata_resetlocaldata",
-      "community": 57,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "resetlocaldata()"
     },
     {
@@ -4787,8 +5073,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_platform_pwa_isstandalone",
-      "community": 12,
-      "community_name": "pwa.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "isstandalone()"
     },
     {
@@ -4952,8 +5238,8 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "app_src_platform_pwa_getpwainstallstate",
-      "community": 12,
-      "community_name": "pwa.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "getpwainstallstate()"
     },
     {
@@ -4963,8 +5249,8 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "app_src_platform_pwa_requestpwainstall",
-      "community": 12,
-      "community_name": "pwa.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "requestpwainstall()"
     },
     {
@@ -4996,8 +5282,8 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "app_src_platform_pwa_checkforpwaupdate",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "checkforpwaupdate()"
     },
     {
@@ -5007,8 +5293,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_share",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "share.ts"
     },
     {
@@ -5018,8 +5304,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_platform_share_sharepayload",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "sharepayload"
     },
     {
@@ -5040,8 +5326,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_platform_share_shareorcopy",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "shareorcopy()"
     },
     {
@@ -5073,8 +5359,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield.tsx"
     },
     {
@@ -5084,8 +5370,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "instance_counts"
     },
     {
@@ -5095,8 +5381,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "seededrandom()"
     },
     {
@@ -5106,8 +5392,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield()"
     },
     {
@@ -5117,8 +5403,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "humansystemsscene.tsx"
     },
     {
@@ -5128,8 +5414,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_body_detail_points",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "body_detail_points"
     },
     {
@@ -5139,8 +5425,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organprops",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "organprops"
     },
     {
@@ -5150,8 +5436,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organgeometry",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "organgeometry()"
     },
     {
@@ -5161,8 +5447,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organ",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "organ()"
     },
     {
@@ -5172,8 +5458,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_vesselnetwork",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "vesselnetwork()"
     },
     {
@@ -5183,8 +5469,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_nervenetwork",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "nervenetwork()"
     },
     {
@@ -5194,8 +5480,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_shellsegment",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "shellsegment()"
     },
     {
@@ -5205,8 +5491,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_bodyshell",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "bodyshell()"
     },
     {
@@ -5216,8 +5502,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_skeleton",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "skeleton()"
     },
     {
@@ -5227,8 +5513,8 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_phasesignal",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "phasesignal()"
     },
     {
@@ -5238,8 +5524,8 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_systemdetaillayer",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "systemdetaillayer()"
     },
     {
@@ -5249,8 +5535,8 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_humansystemsscene",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 17,
+      "community_name": "diseases.ts",
       "norm_label": "humansystemsscene()"
     },
     {
@@ -5260,8 +5546,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas",
-      "community": 87,
-      "community_name": "SceneCanvas.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "scenecanvas.tsx"
     },
     {
@@ -5271,8 +5557,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvasprops",
-      "community": 87,
-      "community_name": "SceneCanvas.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "scenecanvasprops"
     },
     {
@@ -5282,8 +5568,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvas",
-      "community": 87,
-      "community_name": "SceneCanvas.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "scenecanvas()"
     },
     {
@@ -5326,8 +5612,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_cameradirector",
-      "community": 86,
-      "community_name": "useSettings",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "cameradirector()"
     },
     {
@@ -5337,8 +5623,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_fogdirector",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "fogdirector()"
     },
     {
@@ -5370,8 +5656,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_dawnroute",
-      "community": 65,
-      "community_name": "route.ts",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "dawnroute()"
     },
     {
@@ -5425,7 +5711,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalgate",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "portalgate()"
     },
@@ -5447,7 +5733,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "voyagescene()"
     },
@@ -5678,7 +5964,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_state_experience_useexperience",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "useexperience"
     },
@@ -5755,8 +6041,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 73,
-      "community_name": "HumanSystemsScene.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "resolvetier()"
     },
     {
@@ -5766,8 +6052,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_src_state_settings_tier_dpr",
-      "community": 74,
-      "community_name": "App.tsx",
+      "community": 9,
+      "community_name": "settings.ts",
       "norm_label": "tier_dpr"
     },
     {
@@ -5854,7 +6140,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "app_src_state_settings_usesettings",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "usesettings"
     },
@@ -6140,8 +6426,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_orderedbookmarks",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "orderedbookmarks()"
     },
     {
@@ -6173,8 +6459,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_sharestatus",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "sharestatus()"
     },
     {
@@ -6184,8 +6470,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_replacestagehash",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "replacestagehash()"
     },
     {
@@ -6217,7 +6503,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panelbutton",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "panelbutton()"
     },
@@ -6228,7 +6514,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 86,
+      "community": 74,
       "community_name": "useSettings",
       "norm_label": "intro()"
     },
@@ -6239,8 +6525,8 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_phaserail",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "phaserail()"
     },
     {
@@ -6250,8 +6536,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_companioncaption",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "companioncaption()"
     },
     {
@@ -6261,8 +6547,8 @@
       "source_location": "L316",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_controldeck",
-      "community": 86,
-      "community_name": "useSettings",
+      "community": 77,
+      "community_name": "experience.ts",
       "norm_label": "controldeck()"
     },
     {
@@ -6283,8 +6569,8 @@
       "source_location": "L403",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_transcriptpanel",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "transcriptpanel()"
     },
     {
@@ -6294,8 +6580,8 @@
       "source_location": "L496",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_workspacepanel",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "workspacepanel()"
     },
     {
@@ -6327,8 +6613,8 @@
       "source_location": "L680",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
-      "community": 70,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "settingspanel()"
     },
     {
@@ -6349,8 +6635,8 @@
       "source_location": "L1271",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 74,
+      "community_name": "useSettings",
       "norm_label": "telemetry()"
     },
     {
@@ -6360,8 +6646,8 @@
       "source_location": "L1293",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_completionsummary",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 65,
+      "community_name": "copyText",
       "norm_label": "completionsummary()"
     },
     {
@@ -6405,7 +6691,7 @@
       "_origin": "ast",
       "id": "app_src_webgl",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "webgl.ts"
     },
     {
@@ -6416,7 +6702,7 @@
       "_origin": "ast",
       "id": "app_src_webgl_webgl2available",
       "community": 74,
-      "community_name": "App.tsx",
+      "community_name": "useSettings",
       "norm_label": "webgl2available()"
     },
     {
@@ -8015,10 +8301,21 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.3.0] \u2014 2026-08-24",
+      "label": "Unreleased",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "_origin": "ast",
+      "id": "changelog_unreleased",
+      "community": 26,
+      "community_name": "Changelog",
+      "norm_label": "unreleased"
+    },
+    {
+      "label": "[0.3.0] \u2014 2026-08-24",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "changelog_0_3_0_2026_08_24",
       "community": 26,
@@ -8029,7 +8326,7 @@
       "label": "Mechanism Lens",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L7",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "changelog_mechanism_lens",
       "community": 26,
@@ -8040,7 +8337,7 @@
       "label": "[0.2.0] \u2014 2026-08-22",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L22",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "changelog_0_2_0_2026_08_22",
       "community": 26,
@@ -8051,7 +8348,7 @@
       "label": "Systems Atlas",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L24",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "changelog_systems_atlas",
       "community": 26,
@@ -8062,7 +8359,7 @@
       "label": "[0.1.0] \u2014 2026-08-20",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L45",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "changelog_0_1_0_2026_08_20",
       "community": 26,
@@ -8073,7 +8370,7 @@
       "label": "First Light",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L47",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "changelog_first_light",
       "community": 26,
@@ -9085,7 +9382,7 @@
       "label": "Outcome",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L9",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_outcome",
       "community": 25,
@@ -9096,7 +9393,7 @@
       "label": "Evidence: why the current scene cannot meet this target",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L29",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_evidence_why_the_current_scene_cannot_meet_this_target",
       "community": 25,
@@ -9107,7 +9404,7 @@
       "label": "Visual direction and definition of detail",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L54",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_visual_direction_and_definition_of_detail",
       "community": 25,
@@ -9118,7 +9415,7 @@
       "label": "First complete experience: body \u2192 heart \u2192 blood",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L79",
+      "source_location": "L84",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_first_complete_experience_body_heart_blood",
       "community": 25,
@@ -9129,7 +9426,7 @@
       "label": "Asset production: the critical path",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L106",
+      "source_location": "L111",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_asset_production_the_critical_path",
       "community": 25,
@@ -9140,7 +9437,7 @@
       "label": "Rendering and playback design",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L145",
+      "source_location": "L150",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_rendering_and_playback_design",
       "community": 25,
@@ -9151,7 +9448,7 @@
       "label": "Retain the platform, replace the representation",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L147",
+      "source_location": "L152",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_retain_the_platform_replace_the_representation",
       "community": 25,
@@ -9162,7 +9459,7 @@
       "label": "A single playback frame",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L166",
+      "source_location": "L171",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_a_single_playback_frame",
       "community": 25,
@@ -9173,7 +9470,7 @@
       "label": "Geometry and camera share spatial truth",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L183",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_geometry_and_camera_share_spatial_truth",
       "community": 25,
@@ -9184,7 +9481,7 @@
       "label": "Ordered implementation milestones",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L204",
+      "source_location": "L209",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_ordered_implementation_milestones",
       "community": 25,
@@ -9195,7 +9492,7 @@
       "label": "Acceptance: what \u201ctop notch\u201d must demonstrate",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L226",
+      "source_location": "L231",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_acceptance_what_top_notch_must_demonstrate",
       "community": 25,
@@ -9206,7 +9503,7 @@
       "label": "Source and scope notes",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L260",
+      "source_location": "L265",
       "_origin": "ast",
       "id": "docs_graphics_rebuild_source_and_scope_notes",
       "community": 25,
@@ -9294,7 +9591,7 @@
       "label": "Verification recorded for this implementation",
       "file_type": "document",
       "source_file": "docs/HEART-GRAPHICS-WORKBENCH.md",
-      "source_location": "L99",
+      "source_location": "L103",
       "_origin": "ast",
       "id": "docs_heart_graphics_workbench_verification_recorded_for_this_implementation",
       "community": 25,
@@ -9366,6 +9663,72 @@
       "community": 24,
       "community_name": "PalDawn living-instrument brand system",
       "norm_label": "verification contract"
+    },
+    {
+      "label": "VESSEL-FLOW-WORKBENCH.md",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "vessel-flow-workbench.md"
+    },
+    {
+      "label": "Vessel flow workbench \u2014 R3 engineering slice",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "vessel flow workbench \u2014 r3 engineering slice"
+    },
+    {
+      "label": "Delivered behavior",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench_delivered_behavior",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "delivered behavior"
+    },
+    {
+      "label": "Geometry and ownership",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench_geometry_and_ownership",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "geometry and ownership"
+    },
+    {
+      "label": "Run and check",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench_run_and_check",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "run and check"
+    },
+    {
+      "label": "Remaining R3 acceptance",
+      "file_type": "document",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "docs_vessel_flow_workbench_remaining_r3_acceptance",
+      "community": 25,
+      "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
+      "norm_label": "remaining r3 acceptance"
     },
     {
       "label": "VISION.md",
@@ -10163,14 +10526,14 @@
       "label": "Locked WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked webgl2 stack",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "app_readme_locked_webgl2_stack"
     },
     {
@@ -10233,28 +10596,28 @@
       "label": "Locked Three.js and WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked three.js and webgl2 stack",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_plan_locked_webgl2_stack"
     },
     {
       "label": "Minimal Linear Journey Schema",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "minimal linear journey schema",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_minimal_linear_journey_schema"
     },
     {
@@ -10289,14 +10652,14 @@
       "label": "Product Pillars",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "product pillars",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_product_pillars"
     },
     {
@@ -10387,14 +10750,14 @@
       "label": "Unpublished Medical Content",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 23,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "unpublished medical content",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "Attribution and Licensing Chain",
       "id": "notice_unpublished_medical_content"
     },
     {
@@ -10415,14 +10778,14 @@
       "label": "Journeys, Inside, Atlas, and Research Modes",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "journeys, inside, atlas, and research modes",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "readme_product_modes"
     },
     {
@@ -10443,35 +10806,35 @@
       "label": "Medical Accuracy Report",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "document",
       "norm_label": "medical accuracy report",
       "source_file": ".github/ISSUE_TEMPLATE/accuracy_report.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "_github_issue_template_accuracy_report_medical_accuracy_report"
     },
     {
       "label": "Journey Proposal",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "document",
       "norm_label": "journey proposal",
       "source_file": ".github/ISSUE_TEMPLATE/journey_proposal.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "_github_issue_template_journey_proposal_journey_proposal"
     },
     {
       "label": "Credits and Prior Art",
       "author": null,
       "captured_at": null,
-      "community": 84,
+      "community": 20,
       "contributor": null,
       "file_type": "document",
       "norm_label": "credits and prior art",
@@ -10485,14 +10848,14 @@
       "label": "PalDawn Full Project Brief",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn full project brief",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_full_project_brief"
     },
     {
@@ -10569,7 +10932,7 @@
       "label": "Clean-Room Influences",
       "author": null,
       "captured_at": null,
-      "community": 84,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room influences",
@@ -10583,49 +10946,49 @@
       "label": "Engine Council Evidence",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 19,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "engine council evidence",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_engine_council_evidence"
     },
     {
       "label": "Medical Content Source Boundary",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical content source boundary",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_content_source_boundary"
     },
     {
       "label": "Medical Guardrails",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical guardrails",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_medical_guardrails"
     },
     {
       "label": "Clean-Room Rejection Rule",
       "author": null,
       "captured_at": null,
-      "community": 84,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room rejection rule",
@@ -10653,14 +11016,14 @@
       "label": "Medical Harvest and Content-Reuse Boundary",
       "author": null,
       "captured_at": null,
-      "community": 76,
+      "community": 0,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical harvest and content-reuse boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Medical Guardrails",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_research_github_recon_evidence_medical_harvest_and_content_reuse_boundary"
     },
     {
@@ -10807,14 +11170,14 @@
       "label": "Quality and Reduced-Motion Settings",
       "author": null,
       "captured_at": null,
-      "community": 16,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "quality and reduced-motion settings",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Engineering Scaffold",
+      "community_name": "PalDawn Project Plan",
       "id": "app_readme_quality_and_reduced_motion_settings"
     },
     {
@@ -10842,35 +11205,35 @@
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Credits and Prior Art",
       "id": "contributing_code_content_licensing_split"
     },
     {
       "label": "Used Direct Dependencies",
       "author": null,
       "captured_at": null,
-      "community": 84,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "used direct dependencies",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "credits_used_direct_dependencies"
     },
     {
       "label": "Performance Proof Protocol",
       "author": null,
       "captured_at": null,
-      "community": 16,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "performance proof protocol",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Engineering Scaffold",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_performance_proof_protocol"
     },
     {
@@ -10884,7 +11247,7 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Credits and Prior Art",
       "id": "pipeline_provenance_readme_passing_provenance_record"
     },
     {
@@ -11010,7 +11373,7 @@
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Credits and Prior Art",
       "id": "credits_candidate_adoption_boundary"
     },
     {
@@ -11024,21 +11387,21 @@
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Credits and Prior Art",
       "id": "docs_plan_provenance_precedes_adoption"
     },
     {
       "label": "License Adoption Boundary",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 21,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "license adoption boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Codex Reconnaissance Prompt",
       "id": "docs_research_github_recon_evidence_license_adoption_boundary"
     },
     {
@@ -11052,21 +11415,21 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Credits and Prior Art",
       "id": "pipeline_provenance_readme_fail_closed_validator_rules"
     },
     {
       "label": "Codex-Claude Working Model",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 19,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "codex-claude working model",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "PalDawn Overview",
       "id": "docs_brief_for_codex_codex_claude_working_model"
     },
     {
@@ -11157,18 +11520,244 @@
       "label": "Attribution and License Compliance Mission",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 21,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "attribution and license compliance mission",
       "source_file": "docs/PROMPT-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Provenance Precedes Adoption",
+      "community_name": "Codex Reconnaissance Prompt",
       "id": "docs_prompt_for_codex_attribution_compliance_mission"
     }
   ],
   "links": [
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flow-main.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flow_main",
+      "target": "app_graphics_flowworkbench",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_camerafit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_camerafit_fitstudycamera",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_cellgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_cellseeds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_flow_counts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_flowquality",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowmodel_wallgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowworkbench_flowscene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_flowworkbench_flowworkbench",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_sceneboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench",
+      "target": "app_graphics_sceneboundary_sceneboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench_flowscene",
+      "target": "app_graphics_camerafit_fitstudycamera"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench_flowscene",
+      "target": "app_graphics_flowmodel_cellgeometry"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench_flowscene",
+      "target": "app_graphics_flowmodel_cellseeds"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/graphics/FlowWorkbench.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowworkbench_flowscene",
+      "target": "app_graphics_flowmodel_wallgeometry"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flow-main.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flow_main",
+      "target": "app_graphics_flowworkbench_flowworkbench",
+      "confidence_score": 1.0
+    },
     {
       "relation": "imports_from",
       "context": "import",
@@ -11209,7 +11798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
@@ -11220,7 +11809,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L107",
+      "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
@@ -11231,7 +11820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
@@ -11242,7 +11831,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L29",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
@@ -11253,18 +11842,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "app_graphics_heartworkbench",
-      "target": "app_graphics_heartworkbench_sceneboundary",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
@@ -11275,11 +11853,35 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench",
       "target": "app_graphics_heartworkbench_views",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/HeartWorkbench.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_heartworkbench",
+      "target": "app_graphics_sceneboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/HeartWorkbench.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_heartworkbench",
+      "target": "app_graphics_sceneboundary_sceneboundary",
       "confidence_score": 1.0
     },
     {
@@ -11311,44 +11913,11 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L166",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench_heartworkbench",
       "target": "app_graphics_heartworkbench_disposemodel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "app_graphics_heartworkbench_sceneboundary",
-      "target": "app_graphics_heartworkbench_sceneboundary_componentdidcatch",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "app_graphics_heartworkbench_sceneboundary",
-      "target": "app_graphics_heartworkbench_sceneboundary_getderivedstatefromerror",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "app_graphics_heartworkbench_sceneboundary",
-      "target": "app_graphics_heartworkbench_sceneboundary_render",
       "confidence_score": 1.0
     },
     {
@@ -11357,7 +11926,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/graphics/HeartWorkbench.tsx",
-      "source_location": "L67",
+      "source_location": "L61",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_graphics_heartworkbench_scene",
@@ -11373,6 +11942,50 @@
       "_origin": "ast",
       "source": "app_graphics_main",
       "target": "app_graphics_heartworkbench_heartworkbench",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_sceneboundary",
+      "target": "app_graphics_sceneboundary_sceneboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_sceneboundary_sceneboundary",
+      "target": "app_graphics_sceneboundary_sceneboundary_componentdidcatch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_sceneboundary_sceneboundary",
+      "target": "app_graphics_sceneboundary_sceneboundary_getderivedstatefromerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/SceneBoundary.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_sceneboundary_sceneboundary",
+      "target": "app_graphics_sceneboundary_sceneboundary_render",
       "confidence_score": 1.0
     },
     {
@@ -11543,6 +12156,214 @@
       "_origin": "ast",
       "source": "app_graphics_verify_heart",
       "target": "app_graphics_camerafit_fitstudycamera",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_cellframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_cellgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_cellseeds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_flow_counts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_flowquality",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_routeframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel",
+      "target": "app_graphics_flowmodel_wallgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_flow_counts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel_cellframe",
+      "target": "app_graphics_flowmodel_routeframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/flowModel.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_flowmodel_wallgeometry",
+      "target": "app_graphics_flowmodel_routeframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_routeframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_cellseeds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_cellframe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_cellgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_flowmodel_wallgeometry",
       "confidence_score": 1.0
     },
     {
@@ -11722,6 +12543,98 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec",
+      "target": "app_graphics_tests_flow_spec_ready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec",
+      "target": "app_graphics_tests_flow_spec_scene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec",
+      "target": "app_graphics_tests_flow_spec_seek",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec",
+      "target": "app_graphics_tests_flow_spec_settled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec_seek",
+      "target": "app_graphics_tests_flow_spec_scene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec_settled",
+      "target": "app_graphics_tests_flow_spec_scene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec_ready",
+      "target": "app_graphics_tests_flow_spec_settled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/tests/flow.spec.mjs",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_tests_flow_spec_seek",
+      "target": "app_graphics_tests_flow_spec_settled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "app/graphics/tests/workbench.spec.mjs",
       "source_location": "L10",
       "weight": 1.0,
@@ -11786,6 +12699,72 @@
       "_origin": "ast",
       "source": "app_graphics_tests_workbench_spec_ready",
       "target": "app_graphics_tests_workbench_spec_settled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_cell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_end",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_p",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_seeds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_start",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/graphics/verify-flow.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_graphics_verify_flow",
+      "target": "app_graphics_verify_flow_wall",
       "confidence_score": 1.0
     },
     {
@@ -25350,7 +26329,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L45",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -25361,7 +26340,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L22",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -25372,7 +26351,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -25383,7 +26362,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L7",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "changelog_changelog",
+      "target": "changelog_unreleased",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_3_0_2026_08_24",
@@ -25394,7 +26384,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L24",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_2_0_2026_08_22",
@@ -25405,7 +26395,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L47",
+      "source_location": "L56",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_1_0_2026_08_20",
@@ -26307,7 +27297,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L47",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild",
@@ -26315,10 +27305,21 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GRAPHICS-REBUILD.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_graphics_rebuild",
+      "target": "docs_vessel_flow_workbench",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L226",
+      "source_location": "L231",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26329,7 +27330,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L106",
+      "source_location": "L111",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26340,7 +27341,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L29",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26351,7 +27352,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L79",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26362,7 +27363,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L204",
+      "source_location": "L209",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26373,7 +27374,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L9",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26384,7 +27385,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L145",
+      "source_location": "L150",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26395,7 +27396,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L260",
+      "source_location": "L265",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26406,7 +27407,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L54",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_paldawn_graphics_rebuild",
@@ -26417,7 +27418,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L166",
+      "source_location": "L171",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_rendering_and_playback_design",
@@ -26428,7 +27429,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L183",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_rendering_and_playback_design",
@@ -26439,7 +27440,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
-      "source_location": "L147",
+      "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_graphics_rebuild_rendering_and_playback_design",
@@ -26455,6 +27456,17 @@
       "_origin": "ast",
       "source": "docs_heart_graphics_workbench",
       "target": "docs_heart_graphics_workbench_heart_graphics_workbench_first_implementation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/HEART-GRAPHICS-WORKBENCH.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_heart_graphics_workbench",
+      "target": "docs_vessel_flow_workbench",
       "confidence_score": 1.0
     },
     {
@@ -26516,7 +27528,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/HEART-GRAPHICS-WORKBENCH.md",
-      "source_location": "L99",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_heart_graphics_workbench_heart_graphics_workbench_first_implementation",
@@ -26576,6 +27588,61 @@
       "_origin": "ast",
       "source": "docs_mechanism_lens_mechanism_lens",
       "target": "docs_mechanism_lens_visual_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_vessel_flow_workbench",
+      "target": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "target": "docs_vessel_flow_workbench_delivered_behavior",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "target": "docs_vessel_flow_workbench_geometry_and_ownership",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "target": "docs_vessel_flow_workbench_remaining_r3_acceptance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/VESSEL-FLOW-WORKBENCH.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_vessel_flow_workbench_vessel_flow_workbench_r3_engineering_slice",
+      "target": "docs_vessel_flow_workbench_run_and_check",
       "confidence_score": 1.0
     },
     {
@@ -28486,5 +29553,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "dad34b7ab3a59f5cd99fa55fb6ebb73c503afc03"
+  "built_at_commit": "09391c4870e970335393fee652826f459f33559a"
 }

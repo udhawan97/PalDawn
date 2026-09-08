@@ -12,6 +12,6 @@ export default defineConfig({
   build: {
     outDir: 'dist-graphics',
     target: 'es2022',
-    rollupOptions: { input: resolve('heart-study.html') },
+    rollupOptions: { input: [resolve('heart-study.html'), resolve('flow-study.html')] },
   },
 })
