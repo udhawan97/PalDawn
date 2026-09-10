@@ -59,6 +59,10 @@ The candidate is excluded from the normal public build; **the live website has
 not been updated with this feature**. See the candidate guide for preparation,
 local preview, tests, attribution, graphics controls and remaining limits.
 
+The existing First Light learner workspace searches stage labels, both authored tracks,
+and your local notes. Selecting a result opens its comparison view without moving
+the current journey.
+
 ## Choose how to start
 
 | Path | What you get | Requirement | Start |

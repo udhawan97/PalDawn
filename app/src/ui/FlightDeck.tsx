@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useDeferredValue, useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react'
 import {
   JOURNEY,
   formatDuration,
@@ -509,7 +509,18 @@ function WorkspacePanel({
   const setProgress = useExperience((state) => state.setProgress)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const [selectedStageId, setSelectedStageId] = useState(stageAt(progress).id)
+  const [query, setQuery] = useState('')
   const [status, setStatus] = useState('')
+  const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase())
+  const searchResults = useMemo(() => deferredQuery
+    ? JOURNEY.stages.filter((stage) => [
+      stage.label,
+      stage.level,
+      stage.guide,
+      stage.engineering,
+      workspace.notes[stage.id] ?? '',
+    ].join(' ').toLocaleLowerCase().includes(deferredQuery))
+    : [], [deferredQuery, workspace.notes])
   const selectedStage = JOURNEY.stages.find((stage) => stage.id === selectedStageId) ?? JOURNEY.stages[0]
   const note = workspace.notes[selectedStage.id] ?? ''
   const checkpointed = workspace.checkpoints.includes(selectedStage.id)
@@ -556,6 +567,35 @@ function WorkspacePanel({
               : 'Browser storage is still unavailable. Keep this page open or export your work.')
           }}>Retry saving</button>
         </aside>
+      ) : null}
+      <label className="workspace-search" htmlFor="workspace-search">
+        <span>Find authored text or a private note</span>
+        <input
+          id="workspace-search"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search this local workspace"
+        />
+      </label>
+      {query.trim() ? (
+        <section className="workspace-search-results" aria-labelledby="workspace-search-results-title">
+          <div className="workspace-search-meta">
+            <h3 id="workspace-search-results-title">Matches</h3>
+            <output aria-live="polite">{searchResults.length} {searchResults.length === 1 ? 'stage' : 'stages'}</output>
+          </div>
+          {searchResults.length ? (
+            <div>
+              {searchResults.map((stage) => (
+                <button key={stage.id} type="button" onClick={() => setSelectedStageId(stage.id)}>
+                  <span>{stage.level}</span>
+                  <strong>{stage.label}</strong>
+                  <small>{workspace.notes[stage.id]?.trim() ? 'Authored tracks + private note' : 'Authored tracks'}</small>
+                </button>
+              ))}
+            </div>
+          ) : <p>No authored stage or private note matches that phrase.</p>}
+        </section>
       ) : null}
       <nav className="workspace-stage-nav" aria-label="Workspace stages">
         {JOURNEY.stages.map((stage, index) => (
@@ -782,6 +822,11 @@ function SettingsPanel({
     setResult: (result: Extract<LocalDataImportResult, { ok: true }> | null) => void,
     readyMessage: string,
   ) => {
+    if (file.size > 256 * 1024) {
+      setResult(null)
+      reportStatus('That backup is larger than the 256 KiB local-data limit.')
+      return
+    }
     void file.text().then((text) => {
       const result = parseLocalDataImport(text)
       if (!result.ok) {

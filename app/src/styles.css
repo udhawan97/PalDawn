@@ -2474,6 +2474,80 @@ kbd {
   margin: 24px 0;
 }
 
+.workspace-search {
+  display: grid;
+  gap: 7px;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.workspace-search input {
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--bone);
+  background: linear-gradient(90deg, rgba(10, 17, 25, 0.94), rgba(18, 28, 39, 0.72));
+}
+
+.workspace-search-results {
+  margin-top: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.workspace-search-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workspace-search-meta h3,
+.workspace-search-meta output {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace-search-results > div:last-child {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.workspace-search-results button {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  color: var(--bone);
+  background: rgba(10, 17, 25, 0.48);
+  text-align: left;
+}
+
+.workspace-search-results button span,
+.workspace-search-results button small {
+  color: var(--aqua);
+  font-family: 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.52rem;
+  font-weight: 400;
+}
+
+.workspace-search-results button small {
+  color: var(--dim);
+  text-align: right;
+}
+
 .workspace-stage-nav button {
   display: grid;
   gap: 4px;
@@ -6209,3 +6283,8 @@ html[data-contrast='high'] {
 }
 
 .anatomy-return { display:block; width:100%; padding:10px 12px; margin:8px 0; border:1px solid #c6ddb766; border-radius:6px; color:#c6ddb7; background:#14232e; text-align:left; cursor:pointer; font:inherit; }
+
+@media (max-width: 640px) {
+  .workspace-search-results button { grid-template-columns: minmax(0, 1fr); overflow-wrap: anywhere; }
+  .workspace-search-results button small { text-align: left; }
+}

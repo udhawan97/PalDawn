@@ -5,6 +5,49 @@ test.describe.configure({ timeout: 60_000 })
 
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
 
+test('oversized backups are rejected before reading or replacing local data', async ({ page }) => {
+  await page.addInitScript(() => {
+    File.prototype.text = function () { throw new Error('Oversized file must not be read') }
+  })
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Settings' }).click()
+  const before = await page.evaluate(() => JSON.stringify(localStorage))
+  await page.locator('#local-data-import').setInputFiles({
+    name: 'oversized.json', mimeType: 'application/json', buffer: Buffer.alloc(256 * 1024 + 1, ' '),
+  })
+  await expect(page.getByText('That backup is larger than the 256 KiB local-data limit.')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Replacement preview' })).toHaveCount(0)
+  expect(await page.evaluate(() => JSON.stringify(localStorage))).toBe(before)
+})
+
+test('workspace search finds authored tracks and current private notes without moving the journey', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Begin the voyage' }).click()
+  await pauseOnCurrentStage(page)
+  await page.getByRole('button', { name: 'Compare tracks' }).click()
+  const query = page.getByLabel('Find authored text or a private note')
+  const matches = page.getByRole('region', { name: 'Matches' })
+  const journeyPosition = await page.getByLabel('Journey position').inputValue()
+  await page.getByLabel('Private note for Approach').fill('distinctive-study-reminder')
+  await query.fill('  DISTINCTIVE-study-reminder  ')
+  await expect(matches.getByRole('button')).toHaveCount(1)
+  await expect(matches.getByRole('button')).toContainText('Approach')
+  await page.getByRole('navigation', { name: 'Workspace stages' }).getByRole('button', { name: 'Portal' }).click()
+  await matches.getByRole('button').click()
+  await expect(page.getByLabel('Private note for Approach')).toHaveValue('distinctive-study-reminder')
+  await expect(page.getByLabel('Journey position')).toHaveValue(journeyPosition)
+  await page.getByLabel('Private note for Approach').fill('')
+  await expect(matches.getByRole('button')).toHaveCount(0)
+  await expect(matches).toContainText('No authored stage or private note matches')
+  await query.fill('Portal')
+  await expect(matches.getByRole('button').filter({ hasText: 'Portal' })).toBeVisible()
+  await page.setViewportSize({ width: 320, height: 700 })
+  await expect(query).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320)
+  await query.fill('')
+  await expect(matches).toHaveCount(0)
+})
+
 async function pauseOnCurrentStage(page) {
   await page.bringToFront()
   await page.getByRole('button', { name: 'Pause' }).click()

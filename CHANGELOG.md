@@ -17,6 +17,10 @@ All notable changes to PalDawn are documented here.
 
 ## Unreleased
 
+- Recovered local workspace search from Foundation+4: find authored stages and
+  private notes, open their comparison view, and retain the current journey position.
+- Recovered the 256 KiB backup pre-read limit for normal import and recovery.
+
 - Extended the synthetic flow workbench with uniform, tapered, and narrowed
   route profiles. Wall geometry and GPU cell lanes share validated radius data;
   shape changes pause at the same time and recovery retains the selected profile.

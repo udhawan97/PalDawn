@@ -651,8 +651,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_graphics_mesh_builder_encodeglb",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "encodeglb()"
     },
     {
@@ -2807,8 +2807,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_scripts_test_foundation_runtime_memorystorage_key",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": ".key()"
     },
     {
@@ -3401,8 +3401,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary",
-      "community": 74,
-      "community_name": "SceneBoundary",
+      "community": 73,
+      "community_name": "App.tsx",
       "norm_label": "sceneboundary"
     },
     {
@@ -3412,8 +3412,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_getderivedstatefromerror",
-      "community": 74,
-      "community_name": "SceneBoundary",
+      "community": 73,
+      "community_name": "App.tsx",
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -3423,8 +3423,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_componentdidcatch",
-      "community": 74,
-      "community_name": "SceneBoundary",
+      "community": 73,
+      "community_name": "App.tsx",
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -3434,8 +3434,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_render",
-      "community": 74,
-      "community_name": "SceneBoundary",
+      "community": 73,
+      "community_name": "App.tsx",
       "norm_label": ".render()"
     },
     {
@@ -3445,8 +3445,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_app_journeyplaybackdriver",
-      "community": 73,
-      "community_name": "App.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "journeyplaybackdriver()"
     },
     {
@@ -4744,7 +4744,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "journey.ts"
     },
     {
@@ -4755,7 +4755,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_narrationmode",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "narrationmode"
     },
     {
@@ -4766,7 +4766,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_journeystage",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "journeystage"
     },
     {
@@ -4777,7 +4777,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_journeydefinition",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "journeydefinition"
     },
     {
@@ -4787,8 +4787,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_journey_journey_journey",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "journey"
     },
     {
@@ -4799,7 +4799,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_clampprogress",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "clampprogress()"
     },
     {
@@ -4810,7 +4810,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_stageindexat",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "stageindexat()"
     },
     {
@@ -4821,7 +4821,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_stageat",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageat()"
     },
     {
@@ -4832,7 +4832,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_progressforstageid",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "progressforstageid()"
     },
     {
@@ -4843,7 +4843,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_stageidfromhash",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "stageidfromhash()"
     },
     {
@@ -4854,7 +4854,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_stageurl",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageurl()"
     },
     {
@@ -4865,7 +4865,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_transcripttext",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "transcripttext()"
     },
     {
@@ -4876,7 +4876,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_formatjourneytime",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "formatjourneytime()"
     },
     {
@@ -4887,7 +4887,7 @@
       "_origin": "ast",
       "id": "app_src_journey_journey_formatduration",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "formatduration()"
     },
     {
@@ -4897,8 +4897,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_route",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "route.ts"
     },
     {
@@ -4908,8 +4908,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_journey_route_author_points",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "author_points"
     },
     {
@@ -4919,8 +4919,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_journey_route_authoredcurve",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "authoredcurve"
     },
     {
@@ -4930,8 +4930,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_route_route_lookup",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "route_lookup"
     },
     {
@@ -4941,8 +4941,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "normalizedlookupcurve"
     },
     {
@@ -4952,8 +4952,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_constructor",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -4963,8 +4963,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_getpoint",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -4974,8 +4974,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "app_src_journey_route_voyageroute",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "voyageroute"
     },
     {
@@ -4985,8 +4985,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_src_journey_route_frames",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "frames"
     },
     {
@@ -4996,8 +4996,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframe",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "routeframe"
     },
     {
@@ -5051,8 +5051,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_src_journey_route_smoothrange",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "smoothrange()"
     },
     {
@@ -5106,8 +5106,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticreport",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 9,
+      "community_name": "settings.ts",
       "norm_label": "diagnosticreport()"
     },
     {
@@ -5118,7 +5118,7 @@
       "_origin": "ast",
       "id": "app_src_platform_downloads",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "downloads.ts"
     },
     {
@@ -5129,7 +5129,7 @@
       "_origin": "ast",
       "id": "app_src_platform_downloads_copytext",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "copytext()"
     },
     {
@@ -5140,7 +5140,7 @@
       "_origin": "ast",
       "id": "app_src_platform_downloads_downloadtext",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "downloadtext()"
     },
     {
@@ -5161,8 +5161,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storagefailuredetail",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "storagefailuredetail"
     },
     {
@@ -5216,8 +5216,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_src_platform_localdata_learnerworkspace",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "learnerworkspace"
     },
     {
@@ -5271,8 +5271,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "app_src_platform_localdata_localdataimportresult",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "localdataimportresult"
     },
     {
@@ -5469,8 +5469,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storage",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "storage()"
     },
     {
@@ -5480,8 +5480,8 @@
       "source_location": "L156",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragefailure",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "reportstoragefailure()"
     },
     {
@@ -5491,8 +5491,8 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragesuccess",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "reportstoragesuccess()"
     },
     {
@@ -5502,8 +5502,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readstring",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "readstring()"
     },
     {
@@ -5513,8 +5513,8 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "app_src_platform_localdata_newresettoken",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "newresettoken()"
     },
     {
@@ -5524,8 +5524,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "app_src_platform_localdata_releasetransactionguard",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "releasetransactionguard()"
     },
     {
@@ -5546,8 +5546,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "app_src_platform_localdata_serializependingtransaction",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "serializependingtransaction()"
     },
     {
@@ -5579,8 +5579,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "app_src_platform_localdata_valuegeneration",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "valuegeneration()"
     },
     {
@@ -5590,8 +5590,8 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "app_src_platform_localdata_applydesiredvalues",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "applydesiredvalues()"
     },
     {
@@ -5623,8 +5623,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "app_src_platform_localdata_getlocaldatarecoverystate",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "getlocaldatarecoverystate()"
     },
     {
@@ -5656,8 +5656,8 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "app_src_platform_localdata_recoverinterruptedlocaldatatransaction",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "recoverinterruptedlocaldatatransaction()"
     },
     {
@@ -5667,8 +5667,8 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readjson",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "readjson()"
     },
     {
@@ -5678,8 +5678,8 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadjourneysession",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "loadjourneysession()"
     },
     {
@@ -5690,7 +5690,7 @@
       "_origin": "ast",
       "id": "app_src_platform_localdata_savejourneysession",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "savejourneysession()"
     },
     {
@@ -5700,8 +5700,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadstagebookmarks",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "loadstagebookmarks()"
     },
     {
@@ -5711,8 +5711,8 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savestagebookmarks",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "savestagebookmarks()"
     },
     {
@@ -5722,8 +5722,8 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadlearnerworkspace",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "loadlearnerworkspace()"
     },
     {
@@ -5733,8 +5733,8 @@
       "source_location": "L489",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savelearnerworkspace",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "savelearnerworkspace()"
     },
     {
@@ -5777,8 +5777,8 @@
       "source_location": "L573",
       "_origin": "ast",
       "id": "app_src_platform_localdata_restorestoredvalue",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "restorestoredvalue()"
     },
     {
@@ -5788,8 +5788,8 @@
       "source_location": "L578",
       "_origin": "ast",
       "id": "app_src_platform_localdata_executelocaldatatransaction",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "executelocaldatatransaction()"
     },
     {
@@ -5799,8 +5799,8 @@
       "source_location": "L655",
       "_origin": "ast",
       "id": "app_src_platform_localdata_replacelocaldatafromimport",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "replacelocaldatafromimport()"
     },
     {
@@ -5810,8 +5810,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportlocaldata",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "exportlocaldata()"
     },
     {
@@ -5822,7 +5822,7 @@
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportrawlocaldatarecoverybackup",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "exportrawlocaldatarecoverybackup()"
     },
     {
@@ -5832,8 +5832,8 @@
       "source_location": "L766",
       "_origin": "ast",
       "id": "app_src_platform_localdata_resetlocaldata",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 74,
+      "community_name": "executeLocalDataTransaction",
       "norm_label": "resetlocaldata()"
     },
     {
@@ -5887,8 +5887,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_platform_pwa_pwainstallstate",
-      "community": 12,
-      "community_name": "pwa.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "pwainstallstate"
     },
     {
@@ -5920,8 +5920,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_src_platform_pwa_pwaupdateblockeddetail",
-      "community": 12,
-      "community_name": "pwa.ts",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "pwaupdateblockeddetail"
     },
     {
@@ -5932,7 +5932,7 @@
       "_origin": "ast",
       "id": "app_src_platform_pwa_isstandalone",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "isstandalone()"
     },
     {
@@ -6097,7 +6097,7 @@
       "_origin": "ast",
       "id": "app_src_platform_pwa_getpwainstallstate",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "getpwainstallstate()"
     },
     {
@@ -6108,7 +6108,7 @@
       "_origin": "ast",
       "id": "app_src_platform_pwa_requestpwainstall",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "requestpwainstall()"
     },
     {
@@ -6129,8 +6129,8 @@
       "source_location": "L320",
       "_origin": "ast",
       "id": "app_src_platform_pwa_registerpwaupdatepreparation",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "registerpwaupdatepreparation()"
     },
     {
@@ -6141,7 +6141,7 @@
       "_origin": "ast",
       "id": "app_src_platform_pwa_checkforpwaupdate",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "checkforpwaupdate()"
     },
     {
@@ -6152,7 +6152,7 @@
       "_origin": "ast",
       "id": "app_src_platform_share",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "share.ts"
     },
     {
@@ -6163,7 +6163,7 @@
       "_origin": "ast",
       "id": "app_src_platform_share_sharepayload",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "sharepayload"
     },
     {
@@ -6173,7 +6173,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_src_platform_share_shareoutcome",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "shareoutcome"
     },
@@ -6185,7 +6185,7 @@
       "_origin": "ast",
       "id": "app_src_platform_share_shareorcopy",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "shareorcopy()"
     },
     {
@@ -6195,8 +6195,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_study",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "study.ts"
     },
     {
@@ -6206,8 +6206,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_platform_study_studyworkspacemarkdown",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "studyworkspacemarkdown()"
     },
     {
@@ -6217,8 +6217,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "flowfield.tsx"
     },
     {
@@ -6228,8 +6228,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "instance_counts"
     },
     {
@@ -6239,8 +6239,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "seededrandom()"
     },
     {
@@ -6250,8 +6250,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "flowfield()"
     },
     {
@@ -6371,8 +6371,8 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_phasesignal",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "phasesignal()"
     },
     {
@@ -6404,8 +6404,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 92,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas.tsx"
     },
     {
@@ -6415,8 +6415,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvasprops",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 92,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvasprops"
     },
     {
@@ -6426,8 +6426,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvas",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 92,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas()"
     },
     {
@@ -6470,8 +6470,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_cameradirector",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "cameradirector()"
     },
     {
@@ -6481,8 +6481,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_fogdirector",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "fogdirector()"
     },
     {
@@ -6514,8 +6514,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_dawnroute",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "FlowField.tsx",
       "norm_label": "dawnroute()"
     },
     {
@@ -6569,8 +6569,8 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalgate",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "portalgate()"
     },
     {
@@ -6591,8 +6591,8 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "voyagescene()"
     },
     {
@@ -6768,7 +6768,7 @@
       "_origin": "ast",
       "id": "app_src_state_experience",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "experience.ts"
     },
     {
@@ -6779,7 +6779,7 @@
       "_origin": "ast",
       "id": "app_src_state_experience_openpanel",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "openpanel"
     },
     {
@@ -6790,7 +6790,7 @@
       "_origin": "ast",
       "id": "app_src_state_experience_experiencestate",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "experiencestate"
     },
     {
@@ -6801,7 +6801,7 @@
       "_origin": "ast",
       "id": "app_src_state_experience_initialsession",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "initialsession"
     },
     {
@@ -6812,7 +6812,7 @@
       "_origin": "ast",
       "id": "app_src_state_experience_stageentryprogress",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "stageentryprogress()"
     },
     {
@@ -6822,8 +6822,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_state_experience_useexperience",
-      "community": 50,
-      "community_name": "useExperience",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "useexperience"
     },
     {
@@ -6899,8 +6899,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "resolvetier()"
     },
     {
@@ -6998,8 +6998,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "app_src_state_settings_usesettings",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "usesettings"
     },
     {
@@ -7218,7 +7218,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "flightdeck.tsx"
     },
@@ -7229,7 +7229,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_tiers",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "tiers"
     },
@@ -7240,7 +7240,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_caption_scales",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "caption_scales"
     },
@@ -7251,7 +7251,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_playback_rates",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "playback_rates"
     },
@@ -7262,7 +7262,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_stage_ids",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "stage_ids"
     },
@@ -7273,7 +7273,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panel_labels",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "panel_labels"
     },
@@ -7285,7 +7285,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_orderedbookmarks",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "orderedbookmarks()"
     },
     {
@@ -7295,7 +7295,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_drawerfocusables",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "drawerfocusables()"
     },
@@ -7306,7 +7306,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_visiblefocustarget",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "visiblefocustarget()"
     },
@@ -7318,7 +7318,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_sharestatus",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "sharestatus()"
     },
     {
@@ -7329,7 +7329,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_replacestagehash",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "replacestagehash()"
     },
     {
@@ -7339,8 +7339,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_istypingtarget",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "istypingtarget()"
     },
     {
@@ -7350,7 +7350,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_spdmark",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "spdmark()"
     },
@@ -7361,8 +7361,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panelbutton",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "panelbutton()"
     },
     {
@@ -7372,8 +7372,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 50,
-      "community_name": "useExperience",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "intro()"
     },
     {
@@ -7383,8 +7383,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_phaserail",
-      "community": 50,
-      "community_name": "useExperience",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "phaserail()"
     },
     {
@@ -7395,7 +7395,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_companioncaption",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "companioncaption()"
     },
     {
@@ -7406,7 +7406,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_controldeck",
       "community": 77,
-      "community_name": "experience.ts",
+      "community_name": "FlightDeck",
       "norm_label": "controldeck()"
     },
     {
@@ -7416,7 +7416,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_missionpanel",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "missionpanel()"
     },
@@ -7428,7 +7428,7 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_transcriptpanel",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "transcriptpanel()"
     },
     {
@@ -7439,17 +7439,17 @@
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_workspacepanel",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "workspacepanel()"
     },
     {
       "label": "SettingToggle()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L638",
+      "source_location": "L678",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingtoggle",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "settingtoggle()"
     },
@@ -7457,10 +7457,10 @@
       "label": "HelpPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L659",
+      "source_location": "L699",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_helppanel",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "helppanel()"
     },
@@ -7468,21 +7468,21 @@
       "label": "SettingsPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L681",
+      "source_location": "L721",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
       "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community_name": "SettingsPanel",
       "norm_label": "settingspanel()"
     },
     {
       "label": "Drawer()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1102",
+      "source_location": "L1147",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_drawer",
-      "community": 76,
+      "community": 50,
       "community_name": "FlightDeck.tsx",
       "norm_label": "drawer()"
     },
@@ -7490,33 +7490,33 @@
       "label": "Telemetry()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1272",
+      "source_location": "L1317",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 85,
+      "community_name": "useSettings",
       "norm_label": "telemetry()"
     },
     {
       "label": "CompletionSummary()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1294",
+      "source_location": "L1339",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_completionsummary",
       "community": 50,
-      "community_name": "useExperience",
+      "community_name": "FlightDeck.tsx",
       "norm_label": "completionsummary()"
     },
     {
       "label": "FlightDeck()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1338",
+      "source_location": "L1383",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_flightdeck",
-      "community": 76,
-      "community_name": "FlightDeck.tsx",
+      "community": 77,
+      "community_name": "FlightDeck",
       "norm_label": "flightdeck()"
     },
     {
@@ -7707,10 +7707,21 @@
       "norm_label": "foundation-plus-3.spec.mjs"
     },
     {
+      "label": ".text()",
+      "file_type": "code",
+      "source_file": "app/tests/foundation-plus-3.spec.mjs",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_tests_foundation_plus_3_spec_file_text",
+      "community": 90,
+      "community_name": ".text",
+      "norm_label": ".text()"
+    },
+    {
       "label": "pauseOnCurrentStage()",
       "file_type": "code",
       "source_file": "app/tests/foundation-plus-3.spec.mjs",
-      "source_location": "L8",
+      "source_location": "L51",
       "_origin": "ast",
       "id": "app_tests_foundation_plus_3_spec_pauseoncurrentstage",
       "community": 44,
@@ -9195,7 +9206,7 @@
       "label": "[0.3.0] \u2014 2026-08-24",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L31",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "changelog_0_3_0_2026_08_24",
       "community": 26,
@@ -9206,7 +9217,7 @@
       "label": "Mechanism Lens",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L33",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "changelog_mechanism_lens",
       "community": 26,
@@ -9217,7 +9228,7 @@
       "label": "[0.2.0] \u2014 2026-08-22",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L48",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "changelog_0_2_0_2026_08_22",
       "community": 26,
@@ -9228,7 +9239,7 @@
       "label": "Systems Atlas",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L50",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "changelog_systems_atlas",
       "community": 26,
@@ -9239,7 +9250,7 @@
       "label": "[0.1.0] \u2014 2026-08-20",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L71",
+      "source_location": "L75",
       "_origin": "ast",
       "id": "changelog_0_1_0_2026_08_20",
       "community": 26,
@@ -9250,7 +9261,7 @@
       "label": "First Light",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L73",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "changelog_first_light",
       "community": 26,
@@ -10565,6 +10576,61 @@
       "community": 25,
       "community_name": "PalDawn backlog #3: heart/coronary per-object asset audit dossier",
       "norm_label": "verification recorded for this implementation"
+    },
+    {
+      "label": "MAIN-CLEANUP-2026-09-10.md",
+      "file_type": "document",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_main_cleanup_2026_09_10",
+      "community": 91,
+      "community_name": "Main cleanup \u2014 2026-09-10",
+      "norm_label": "main-cleanup-2026-09-10.md"
+    },
+    {
+      "label": "Main cleanup \u2014 2026-09-10",
+      "file_type": "document",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_main_cleanup_2026_09_10_main_cleanup_2026_09_10",
+      "community": 91,
+      "community_name": "Main cleanup \u2014 2026-09-10",
+      "norm_label": "main cleanup \u2014 2026-09-10"
+    },
+    {
+      "label": "Recovered work",
+      "file_type": "document",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_main_cleanup_2026_09_10_recovered_work",
+      "community": 91,
+      "community_name": "Main cleanup \u2014 2026-09-10",
+      "norm_label": "recovered work"
+    },
+    {
+      "label": "Complete branch inventory",
+      "file_type": "document",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "docs_main_cleanup_2026_09_10_complete_branch_inventory",
+      "community": 91,
+      "community_name": "Main cleanup \u2014 2026-09-10",
+      "norm_label": "complete branch inventory"
+    },
+    {
+      "label": "Verification and promotion",
+      "file_type": "document",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_main_cleanup_2026_09_10_verification_and_promotion",
+      "community": 91,
+      "community_name": "Main cleanup \u2014 2026-09-10",
+      "norm_label": "verification and promotion"
     },
     {
       "label": "MECHANISM-LENS.md",
@@ -20431,7 +20497,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1680",
+      "source_location": "L1725",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -20479,7 +20545,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1547",
+      "source_location": "L1592",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -20527,7 +20593,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1513",
+      "source_location": "L1558",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -20551,7 +20617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L579",
+      "source_location": "L619",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -20575,7 +20641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1511",
+      "source_location": "L1556",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -20611,7 +20677,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1322",
+      "source_location": "L1367",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -21125,7 +21191,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1713",
+      "source_location": "L1758",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -21338,7 +21404,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L760",
+      "source_location": "L800",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -21444,7 +21510,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1322",
+      "source_location": "L1367",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -21456,7 +21522,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L982",
+      "source_location": "L1027",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -21480,7 +21546,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L626",
+      "source_location": "L666",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -21504,7 +21570,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L842",
+      "source_location": "L887",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -21528,7 +21594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L629",
+      "source_location": "L669",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -22318,7 +22384,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1394",
+      "source_location": "L1439",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23086,7 +23152,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L714",
+      "source_location": "L754",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23182,7 +23248,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1428",
+      "source_location": "L1473",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23266,7 +23332,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1422",
+      "source_location": "L1467",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23290,7 +23356,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1368",
+      "source_location": "L1413",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23302,7 +23368,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L767",
+      "source_location": "L807",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23326,7 +23392,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1398",
+      "source_location": "L1443",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23350,7 +23416,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1369",
+      "source_location": "L1414",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23374,7 +23440,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1409",
+      "source_location": "L1454",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -23422,7 +23488,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L786",
+      "source_location": "L831",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23482,7 +23548,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L889",
+      "source_location": "L934",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23506,7 +23572,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L995",
+      "source_location": "L1040",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23530,7 +23596,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L837",
+      "source_location": "L882",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -23554,7 +23620,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L847",
+      "source_location": "L892",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24211,7 +24277,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L715",
+      "source_location": "L755",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24235,7 +24301,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L965",
+      "source_location": "L1010",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24271,7 +24337,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1475",
+      "source_location": "L1520",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24295,7 +24361,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L955",
+      "source_location": "L1000",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24388,7 +24454,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1326",
+      "source_location": "L1371",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -24447,7 +24513,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L516",
+      "source_location": "L527",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -25782,7 +25848,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1350",
+      "source_location": "L1395",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -25818,7 +25884,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1502",
+      "source_location": "L1547",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -25957,7 +26023,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1295",
+      "source_location": "L1340",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -25981,7 +26047,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1121",
+      "source_location": "L1166",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -25993,7 +26059,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1345",
+      "source_location": "L1390",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -26041,7 +26107,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L707",
+      "source_location": "L747",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -26303,7 +26369,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L762",
+      "source_location": "L802",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -26315,7 +26381,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1274",
+      "source_location": "L1319",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -26339,7 +26405,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1298",
+      "source_location": "L1343",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -26363,7 +26429,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1123",
+      "source_location": "L1168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -26375,7 +26441,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1357",
+      "source_location": "L1402",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -26411,7 +26477,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L692",
+      "source_location": "L732",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -26423,7 +26489,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1273",
+      "source_location": "L1318",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -26504,7 +26570,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1275",
+      "source_location": "L1320",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -26752,7 +26818,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1294",
+      "source_location": "L1339",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26774,7 +26840,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1102",
+      "source_location": "L1147",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26796,7 +26862,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1338",
+      "source_location": "L1383",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26807,7 +26873,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L659",
+      "source_location": "L699",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26917,7 +26983,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L681",
+      "source_location": "L721",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26928,7 +26994,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L638",
+      "source_location": "L678",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -26972,7 +27038,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1272",
+      "source_location": "L1317",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27028,7 +27094,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1368",
+      "source_location": "L1413",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27040,7 +27106,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L767",
+      "source_location": "L807",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -27052,7 +27118,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1205",
+      "source_location": "L1250",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -27064,7 +27130,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1175",
+      "source_location": "L1220",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -27088,7 +27154,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1330",
+      "source_location": "L1375",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -27124,7 +27190,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1321",
+      "source_location": "L1366",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -27148,7 +27214,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1550",
+      "source_location": "L1595",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27184,7 +27250,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L581",
+      "source_location": "L621",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -27196,7 +27262,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1669",
+      "source_location": "L1714",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27306,7 +27372,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/tests/foundation-plus-3.spec.mjs",
-      "source_location": "L8",
+      "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_tests_foundation_plus_3_spec",
@@ -28930,7 +28996,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L71",
+      "source_location": "L75",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -28941,7 +29007,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L48",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -28952,7 +29018,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L31",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -28985,7 +29051,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L33",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_3_0_2026_08_24",
@@ -28996,7 +29062,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L50",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_2_0_2026_08_22",
@@ -29007,7 +29073,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L73",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_1_0_2026_08_20",
@@ -30211,6 +30277,50 @@
       "_origin": "ast",
       "source": "docs_heart_graphics_workbench_heart_graphics_workbench_first_implementation",
       "target": "docs_heart_graphics_workbench_verification_recorded_for_this_implementation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_main_cleanup_2026_09_10",
+      "target": "docs_main_cleanup_2026_09_10_main_cleanup_2026_09_10",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_main_cleanup_2026_09_10_main_cleanup_2026_09_10",
+      "target": "docs_main_cleanup_2026_09_10_complete_branch_inventory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_main_cleanup_2026_09_10_main_cleanup_2026_09_10",
+      "target": "docs_main_cleanup_2026_09_10_recovered_work",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/MAIN-CLEANUP-2026-09-10.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_main_cleanup_2026_09_10_main_cleanup_2026_09_10",
+      "target": "docs_main_cleanup_2026_09_10_verification_and_promotion",
       "confidence_score": 1.0
     },
     {
@@ -32055,5 +32165,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "1b083897717ffee0c2b059cc934d0a6292929b10"
+  "built_at_commit": "ed800e6f99345d8bbbe611f0e5098864ce02ab50"
 }
