@@ -15,7 +15,13 @@
 
 All notable changes to PalDawn are documented here.
 
-## Unreleased
+## [0.4.0] — 2026-09-10
+
+- Added Atlas Wayfinder and Research Lens navigation, a 50-condition curriculum
+  plan with ten existing previews, and a gated hypertension planning pack.
+- Improved the living-mark interface, responsive navigation, focus recovery,
+  local-data corruption recovery, cross-tab transactions and safe PWA updates.
+- Added verified-tag release publishing gated on exact-commit CI and Pages.
 
 - Recovered local workspace search from Foundation+4: find authored stages and
   private notes, open their comparison view, and retain the current journey position.

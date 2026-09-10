@@ -1,6 +1,6 @@
 {
   "name": "paldawn-app",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "PalDawn Mechanism Lens \u2014 high-detail phase views across source-linked disease journeys",
   "main": "index.js",
   "scripts": {

@@ -25,14 +25,14 @@ the procedural model as reviewed anatomy.
 
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Launch the web app</strong></a>
-  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0">Mechanism Lens release</a>
+  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0">Study and Reliability release</a>
   · <a href="pipeline/provenance/README.md">Evidence gate</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-f0aa54.svg"></a>
-  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0"><img alt="Latest tagged release: v0.3.0" src="https://img.shields.io/badge/release-v0.3.0-75d9d2.svg"></a>
+  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0"><img alt="Latest tagged release: v0.4.0" src="https://img.shields.io/badge/release-v0.4.0-75d9d2.svg"></a>
 </p>
 
 > [!IMPORTANT]
@@ -69,15 +69,15 @@ the current journey.
 |---|---|---|---|
 | Web app | Current `main`, deployed as a static installable web app | JavaScript; WebGL2 for the 3D scene | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
 | Text voyage | The same five authored stages without the 3D scene | JavaScript; choose **Use text voyage** in Settings or from the WebGL recovery screen | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
-| Release snapshot | Immutable Mechanism Lens source at `v0.3.0` | Git or GitHub | [View v0.3.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.3.0) |
+| Release snapshot | Immutable source at `v0.4.0` | Git or GitHub | [View v0.4.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0) |
 | Local source | Current code, tests, and provenance checks | Node.js 22+; WebGL2 for 3D | [Run locally](#run-locally) |
 
 There is no packaged desktop or mobile download. If your browser supports web
 app installation, open **Settings → Installation help**; the browser remains
 in charge of whether it offers **Install App** or **Add to Home Screen**.
 
-The live website follows current `main`. The `v0.3.0` tag is the immutable
-Mechanism Lens release snapshot. Systems Atlas remains available at `v0.2.0`,
+The live website follows current `main`. The `v0.4.0` tag records the Study and
+Reliability release; `v0.3.0` preserves the earlier Mechanism Lens snapshot. Systems Atlas remains available at `v0.2.0`,
 and the original First Light systems release remains available at `v0.1.0`.
 
 ## What you can do today

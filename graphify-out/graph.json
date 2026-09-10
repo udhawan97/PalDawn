@@ -651,8 +651,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_graphics_mesh_builder_encodeglb",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "encodeglb()"
     },
     {
@@ -2807,8 +2807,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_scripts_test_foundation_runtime_memorystorage_key",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": ".key()"
     },
     {
@@ -3445,8 +3445,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_app_journeyplaybackdriver",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 73,
+      "community_name": "App.tsx",
       "norm_label": "journeyplaybackdriver()"
     },
     {
@@ -4743,8 +4743,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_journey",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journey.ts"
     },
     {
@@ -4754,8 +4754,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_src_journey_journey_narrationmode",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "narrationmode"
     },
     {
@@ -4765,8 +4765,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeystage",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journeystage"
     },
     {
@@ -4776,8 +4776,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeydefinition",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journeydefinition"
     },
     {
@@ -4787,8 +4787,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_journey_journey_journey",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journey"
     },
     {
@@ -4798,8 +4798,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_src_journey_journey_clampprogress",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "clampprogress()"
     },
     {
@@ -4809,8 +4809,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageindexat",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageindexat()"
     },
     {
@@ -4842,8 +4842,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageidfromhash",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageidfromhash()"
     },
     {
@@ -4864,8 +4864,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_journey_journey_transcripttext",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "transcripttext()"
     },
     {
@@ -4875,8 +4875,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatjourneytime",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "formatjourneytime()"
     },
     {
@@ -4886,8 +4886,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatduration",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "formatduration()"
     },
     {
@@ -4930,8 +4930,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_route_route_lookup",
-      "community": 87,
-      "community_name": "FlowField.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "route_lookup"
     },
     {
@@ -5007,8 +5007,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframeat",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "routeframeat()"
     },
     {
@@ -5018,8 +5018,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "routeslice"
     },
     {
@@ -5029,8 +5029,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_constructor",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5040,8 +5040,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_getpoint",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -5052,7 +5052,7 @@
       "_origin": "ast",
       "id": "app_src_journey_route_smoothrange",
       "community": 87,
-      "community_name": "FlowField.tsx",
+      "community_name": "useSettings",
       "norm_label": "smoothrange()"
     },
     {
@@ -5161,8 +5161,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storagefailuredetail",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "storagefailuredetail"
     },
     {
@@ -5216,8 +5216,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_src_platform_localdata_learnerworkspace",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "learnerworkspace"
     },
     {
@@ -5271,8 +5271,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "app_src_platform_localdata_localdataimportresult",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "localdataimportresult"
     },
     {
@@ -5469,8 +5469,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storage",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "storage()"
     },
     {
@@ -5480,8 +5480,8 @@
       "source_location": "L156",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragefailure",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "reportstoragefailure()"
     },
     {
@@ -5491,8 +5491,8 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "app_src_platform_localdata_reportstoragesuccess",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "reportstoragesuccess()"
     },
     {
@@ -5502,8 +5502,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readstring",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "readstring()"
     },
     {
@@ -5513,8 +5513,8 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "app_src_platform_localdata_newresettoken",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "newresettoken()"
     },
     {
@@ -5524,8 +5524,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "app_src_platform_localdata_releasetransactionguard",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "releasetransactionguard()"
     },
     {
@@ -5546,8 +5546,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "app_src_platform_localdata_serializependingtransaction",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "serializependingtransaction()"
     },
     {
@@ -5579,8 +5579,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "app_src_platform_localdata_valuegeneration",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "valuegeneration()"
     },
     {
@@ -5590,8 +5590,8 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "app_src_platform_localdata_applydesiredvalues",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "applydesiredvalues()"
     },
     {
@@ -5623,8 +5623,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "app_src_platform_localdata_getlocaldatarecoverystate",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "getlocaldatarecoverystate()"
     },
     {
@@ -5656,8 +5656,8 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "app_src_platform_localdata_recoverinterruptedlocaldatatransaction",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "recoverinterruptedlocaldatatransaction()"
     },
     {
@@ -5667,8 +5667,8 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readjson",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "readjson()"
     },
     {
@@ -5678,8 +5678,8 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadjourneysession",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadjourneysession()"
     },
     {
@@ -5689,8 +5689,8 @@
       "source_location": "L438",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savejourneysession",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "savejourneysession()"
     },
     {
@@ -5700,8 +5700,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadstagebookmarks",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadstagebookmarks()"
     },
     {
@@ -5711,8 +5711,8 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savestagebookmarks",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "savestagebookmarks()"
     },
     {
@@ -5722,8 +5722,8 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadlearnerworkspace",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "loadlearnerworkspace()"
     },
     {
@@ -5777,8 +5777,8 @@
       "source_location": "L573",
       "_origin": "ast",
       "id": "app_src_platform_localdata_restorestoredvalue",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "restorestoredvalue()"
     },
     {
@@ -5788,8 +5788,8 @@
       "source_location": "L578",
       "_origin": "ast",
       "id": "app_src_platform_localdata_executelocaldatatransaction",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "executelocaldatatransaction()"
     },
     {
@@ -5799,8 +5799,8 @@
       "source_location": "L655",
       "_origin": "ast",
       "id": "app_src_platform_localdata_replacelocaldatafromimport",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "replacelocaldatafromimport()"
     },
     {
@@ -5810,8 +5810,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportlocaldata",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "exportlocaldata()"
     },
     {
@@ -5821,8 +5821,8 @@
       "source_location": "L732",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportrawlocaldatarecoverybackup",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "exportrawlocaldatarecoverybackup()"
     },
     {
@@ -5832,8 +5832,8 @@
       "source_location": "L766",
       "_origin": "ast",
       "id": "app_src_platform_localdata_resetlocaldata",
-      "community": 74,
-      "community_name": "executeLocalDataTransaction",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "resetlocaldata()"
     },
     {
@@ -5887,8 +5887,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_src_platform_pwa_pwainstallstate",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 12,
+      "community_name": "pwa.ts",
       "norm_label": "pwainstallstate"
     },
     {
@@ -5920,8 +5920,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_src_platform_pwa_pwaupdateblockeddetail",
-      "community": 50,
-      "community_name": "FlightDeck.tsx",
+      "community": 12,
+      "community_name": "pwa.ts",
       "norm_label": "pwaupdateblockeddetail"
     },
     {
@@ -5931,8 +5931,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_platform_pwa_isstandalone",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "isstandalone()"
     },
     {
@@ -6096,8 +6096,8 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "app_src_platform_pwa_getpwainstallstate",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "getpwainstallstate()"
     },
     {
@@ -6107,8 +6107,8 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "app_src_platform_pwa_requestpwainstall",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "requestpwainstall()"
     },
     {
@@ -6129,8 +6129,8 @@
       "source_location": "L320",
       "_origin": "ast",
       "id": "app_src_platform_pwa_registerpwaupdatepreparation",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "registerpwaupdatepreparation()"
     },
     {
@@ -6140,8 +6140,8 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "app_src_platform_pwa_checkforpwaupdate",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "checkforpwaupdate()"
     },
     {
@@ -6195,8 +6195,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_platform_study",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "study.ts"
     },
     {
@@ -6206,8 +6206,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_platform_study_studyworkspacemarkdown",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "studyworkspacemarkdown()"
     },
     {
@@ -6218,7 +6218,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
       "community": 87,
-      "community_name": "FlowField.tsx",
+      "community_name": "useSettings",
       "norm_label": "flowfield.tsx"
     },
     {
@@ -6229,7 +6229,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
       "community": 87,
-      "community_name": "FlowField.tsx",
+      "community_name": "useSettings",
       "norm_label": "instance_counts"
     },
     {
@@ -6240,7 +6240,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
       "community": 87,
-      "community_name": "FlowField.tsx",
+      "community_name": "useSettings",
       "norm_label": "seededrandom()"
     },
     {
@@ -6251,7 +6251,7 @@
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
       "community": 87,
-      "community_name": "FlowField.tsx",
+      "community_name": "useSettings",
       "norm_label": "flowfield()"
     },
     {
@@ -6305,8 +6305,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organ",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 87,
+      "community_name": "useSettings",
       "norm_label": "organ()"
     },
     {
@@ -6371,7 +6371,7 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_phasesignal",
-      "community": 85,
+      "community": 87,
       "community_name": "useSettings",
       "norm_label": "phasesignal()"
     },
@@ -6404,8 +6404,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas",
-      "community": 92,
-      "community_name": "SceneCanvas.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "scenecanvas.tsx"
     },
     {
@@ -6415,8 +6415,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvasprops",
-      "community": 92,
-      "community_name": "SceneCanvas.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "scenecanvasprops"
     },
     {
@@ -6426,8 +6426,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvas",
-      "community": 92,
-      "community_name": "SceneCanvas.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "scenecanvas()"
     },
     {
@@ -6470,8 +6470,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_cameradirector",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "cameradirector()"
     },
     {
@@ -6481,8 +6481,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_fogdirector",
-      "community": 87,
-      "community_name": "FlowField.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "fogdirector()"
     },
     {
@@ -6503,8 +6503,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_syntheticcore",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 87,
+      "community_name": "useSettings",
       "norm_label": "syntheticcore()"
     },
     {
@@ -6514,8 +6514,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_dawnroute",
-      "community": 87,
-      "community_name": "FlowField.tsx",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "dawnroute()"
     },
     {
@@ -6525,8 +6525,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridorrings",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "corridorrings()"
     },
     {
@@ -6536,8 +6536,8 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_arrivalbeacon",
-      "community": 58,
-      "community_name": "VoyageScene.tsx",
+      "community": 86,
+      "community_name": "route.ts",
       "norm_label": "arrivalbeacon()"
     },
     {
@@ -6569,7 +6569,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalgate",
-      "community": 85,
+      "community": 87,
       "community_name": "useSettings",
       "norm_label": "portalgate()"
     },
@@ -6591,8 +6591,8 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "voyagescene()"
     },
     {
@@ -6767,8 +6767,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_state_experience",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "experience.ts"
     },
     {
@@ -6778,8 +6778,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_state_experience_openpanel",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "openpanel"
     },
     {
@@ -6789,8 +6789,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_src_state_experience_experiencestate",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "experiencestate"
     },
     {
@@ -6800,8 +6800,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_src_state_experience_initialsession",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "initialsession"
     },
     {
@@ -6811,8 +6811,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_src_state_experience_stageentryprogress",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageentryprogress()"
     },
     {
@@ -6822,8 +6822,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_state_experience_useexperience",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "useexperience"
     },
     {
@@ -6899,7 +6899,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 85,
+      "community": 87,
       "community_name": "useSettings",
       "norm_label": "resolvetier()"
     },
@@ -6998,7 +6998,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "app_src_state_settings_usesettings",
-      "community": 85,
+      "community": 87,
       "community_name": "useSettings",
       "norm_label": "usesettings"
     },
@@ -7284,8 +7284,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_orderedbookmarks",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "orderedbookmarks()"
     },
     {
@@ -7339,8 +7339,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_istypingtarget",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "istypingtarget()"
     },
     {
@@ -7361,8 +7361,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panelbutton",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "panelbutton()"
     },
     {
@@ -7372,8 +7372,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "intro()"
     },
     {
@@ -7383,8 +7383,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_phaserail",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "phaserail()"
     },
     {
@@ -7405,8 +7405,8 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_controldeck",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "controldeck()"
     },
     {
@@ -7471,8 +7471,8 @@
       "source_location": "L721",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
-      "community": 76,
-      "community_name": "SettingsPanel",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "settingspanel()"
     },
     {
@@ -7493,8 +7493,8 @@
       "source_location": "L1317",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
-      "community": 85,
-      "community_name": "useSettings",
+      "community": 58,
+      "community_name": "VoyageScene.tsx",
       "norm_label": "telemetry()"
     },
     {
@@ -7515,8 +7515,8 @@
       "source_location": "L1383",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_flightdeck",
-      "community": 77,
-      "community_name": "FlightDeck",
+      "community": 50,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "flightdeck()"
     },
     {
@@ -9192,21 +9192,21 @@
       "norm_label": "unreleased \u2014 anatomy lab local candidate"
     },
     {
-      "label": "Unreleased",
+      "label": "[0.4.0] \u2014 2026-09-10",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "changelog_unreleased",
+      "id": "changelog_0_4_0_2026_09_10",
       "community": 26,
       "community_name": "Changelog",
-      "norm_label": "unreleased"
+      "norm_label": "[0.4.0] \u2014 2026-09-10"
     },
     {
       "label": "[0.3.0] \u2014 2026-08-24",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L35",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "changelog_0_3_0_2026_08_24",
       "community": 26,
@@ -9217,7 +9217,7 @@
       "label": "Mechanism Lens",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L37",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "changelog_mechanism_lens",
       "community": 26,
@@ -9228,7 +9228,7 @@
       "label": "[0.2.0] \u2014 2026-08-22",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L52",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "changelog_0_2_0_2026_08_22",
       "community": 26,
@@ -9239,7 +9239,7 @@
       "label": "Systems Atlas",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L54",
+      "source_location": "L60",
       "_origin": "ast",
       "id": "changelog_systems_atlas",
       "community": 26,
@@ -9250,7 +9250,7 @@
       "label": "[0.1.0] \u2014 2026-08-20",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L75",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "changelog_0_1_0_2026_08_20",
       "community": 26,
@@ -9261,7 +9261,7 @@
       "label": "First Light",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L77",
+      "source_location": "L83",
       "_origin": "ast",
       "id": "changelog_first_light",
       "community": 26,
@@ -11084,6 +11084,61 @@
       "norm_label": "verification"
     },
     {
+      "label": "v0.4.0.md",
+      "file_type": "document",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_v0_4_0",
+      "community": 76,
+      "community_name": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "norm_label": "v0.4.0.md"
+    },
+    {
+      "label": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "file_type": "document",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_v0_4_0_paldawn_v0_4_0_study_and_reliability",
+      "community": 76,
+      "community_name": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "norm_label": "paldawn v0.4.0 \u2014 study and reliability"
+    },
+    {
+      "label": "In the public app",
+      "file_type": "document",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_releases_v0_4_0_in_the_public_app",
+      "community": 76,
+      "community_name": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "norm_label": "in the public app"
+    },
+    {
+      "label": "Included as development candidates",
+      "file_type": "document",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_releases_v0_4_0_included_as_development_candidates",
+      "community": 76,
+      "community_name": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "norm_label": "included as development candidates"
+    },
+    {
+      "label": "Verification and distribution",
+      "file_type": "document",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "docs_releases_v0_4_0_verification_and_distribution",
+      "community": 76,
+      "community_name": "PalDawn v0.4.0 \u2014 Study and Reliability",
+      "norm_label": "verification and distribution"
+    },
+    {
       "label": "hypertension-pack-dossier.md",
       "file_type": "document",
       "source_file": "docs/research/hypertension-pack-dossier.md",
@@ -11351,14 +11406,14 @@
       "label": "Locked WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked webgl2 stack",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "app_readme_locked_webgl2_stack"
     },
     {
@@ -11421,28 +11476,28 @@
       "label": "Locked Three.js and WebGL2 Stack",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "locked three.js and webgl2 stack",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_plan_locked_webgl2_stack"
     },
     {
       "label": "Minimal Linear Journey Schema",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "minimal linear journey schema",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_minimal_linear_journey_schema"
     },
     {
@@ -11477,14 +11532,14 @@
       "label": "Product Pillars",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "product pillars",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_product_pillars"
     },
     {
@@ -11575,14 +11630,14 @@
       "label": "Unpublished Medical Content",
       "author": null,
       "captured_at": null,
-      "community": 23,
+      "community": 74,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "unpublished medical content",
       "source_file": "NOTICE.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Attribution and Licensing Chain",
+      "community_name": "Medical Guardrails",
       "id": "notice_unpublished_medical_content"
     },
     {
@@ -11603,14 +11658,14 @@
       "label": "Journeys, Inside, Atlas, and Research Modes",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "journeys, inside, atlas, and research modes",
       "source_file": "README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "readme_product_modes"
     },
     {
@@ -11631,35 +11686,35 @@
       "label": "Medical Accuracy Report",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "document",
       "norm_label": "medical accuracy report",
       "source_file": ".github/ISSUE_TEMPLATE/accuracy_report.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "_github_issue_template_accuracy_report_medical_accuracy_report"
     },
     {
       "label": "Journey Proposal",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "document",
       "norm_label": "journey proposal",
       "source_file": ".github/ISSUE_TEMPLATE/journey_proposal.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "_github_issue_template_journey_proposal_journey_proposal"
     },
     {
       "label": "Credits and Prior Art",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 77,
       "contributor": null,
       "file_type": "document",
       "norm_label": "credits and prior art",
@@ -11673,14 +11728,14 @@
       "label": "PalDawn Full Project Brief",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "document",
       "norm_label": "paldawn full project brief",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_brief_for_codex_full_project_brief"
     },
     {
@@ -11757,7 +11812,7 @@
       "label": "Clean-Room Influences",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 77,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room influences",
@@ -11771,49 +11826,49 @@
       "label": "Engine Council Evidence",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 0,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "engine council evidence",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "PalDawn Project Plan",
       "id": "docs_brief_for_codex_engine_council_evidence"
     },
     {
       "label": "Medical Content Source Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical content source boundary",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_content_source_boundary"
     },
     {
       "label": "Medical Guardrails",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical guardrails",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_plan_medical_guardrails"
     },
     {
       "label": "Clean-Room Rejection Rule",
       "author": null,
       "captured_at": null,
-      "community": 20,
+      "community": 77,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "clean-room rejection rule",
@@ -11841,14 +11896,14 @@
       "label": "Medical Harvest and Content-Reuse Boundary",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 74,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "medical harvest and content-reuse boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "Medical Guardrails",
       "id": "docs_research_github_recon_evidence_medical_harvest_and_content_reuse_boundary"
     },
     {
@@ -11995,14 +12050,14 @@
       "label": "Quality and Reduced-Motion Settings",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "quality and reduced-motion settings",
       "source_file": "app/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "app_readme_quality_and_reduced_motion_settings"
     },
     {
@@ -12030,35 +12085,35 @@
       "source_file": "CONTRIBUTING.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "contributing_code_content_licensing_split"
     },
     {
       "label": "Used Direct Dependencies",
       "author": null,
       "captured_at": null,
-      "community": 16,
+      "community": 77,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "used direct dependencies",
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Engineering Scaffold",
+      "community_name": "Credits and Prior Art",
       "id": "credits_used_direct_dependencies"
     },
     {
       "label": "Performance Proof Protocol",
       "author": null,
       "captured_at": null,
-      "community": 0,
+      "community": 16,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "performance proof protocol",
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Project Plan",
+      "community_name": "PalDawn Engineering Scaffold",
       "id": "docs_plan_performance_proof_protocol"
     },
     {
@@ -12072,7 +12127,7 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "pipeline_provenance_readme_passing_provenance_record"
     },
     {
@@ -12198,7 +12253,7 @@
       "source_file": "CREDITS.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "credits_candidate_adoption_boundary"
     },
     {
@@ -12212,21 +12267,21 @@
       "source_file": "docs/PLAN.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_plan_provenance_precedes_adoption"
     },
     {
       "label": "License Adoption Boundary",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "license adoption boundary",
       "source_file": "docs/research/github-recon-evidence.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_research_github_recon_evidence_license_adoption_boundary"
     },
     {
@@ -12240,21 +12295,21 @@
       "source_file": "pipeline/provenance/README.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Credits and Prior Art",
+      "community_name": "Provenance Precedes Adoption",
       "id": "pipeline_provenance_readme_fail_closed_validator_rules"
     },
     {
       "label": "Codex-Claude Working Model",
       "author": null,
       "captured_at": null,
-      "community": 19,
+      "community": 21,
       "contributor": null,
       "file_type": "concept",
       "norm_label": "codex-claude working model",
       "source_file": "docs/BRIEF-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "PalDawn Overview",
+      "community_name": "Codex Reconnaissance Prompt",
       "id": "docs_brief_for_codex_codex_claude_working_model"
     },
     {
@@ -12345,14 +12400,14 @@
       "label": "Attribution and License Compliance Mission",
       "author": null,
       "captured_at": null,
-      "community": 21,
+      "community": 20,
       "contributor": null,
       "file_type": "rationale",
       "norm_label": "attribution and license compliance mission",
       "source_file": "docs/PROMPT-FOR-CODEX.md",
       "source_location": null,
       "source_url": null,
-      "community_name": "Codex Reconnaissance Prompt",
+      "community_name": "Provenance Precedes Adoption",
       "id": "docs_prompt_for_codex_attribution_compliance_mission"
     }
   ],
@@ -28996,7 +29051,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L75",
+      "source_location": "L81",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -29007,7 +29062,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L52",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -29018,7 +29073,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L35",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -29033,7 +29088,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
-      "target": "changelog_unreleased",
+      "target": "changelog_0_4_0_2026_09_10",
       "confidence_score": 1.0
     },
     {
@@ -29051,7 +29106,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L37",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_3_0_2026_08_24",
@@ -29062,7 +29117,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L54",
+      "source_location": "L60",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_2_0_2026_08_22",
@@ -29073,7 +29128,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L77",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_1_0_2026_08_20",
@@ -30700,6 +30755,50 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_v0_4_0",
+      "target": "docs_releases_v0_4_0_paldawn_v0_4_0_study_and_reliability",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_v0_4_0_paldawn_v0_4_0_study_and_reliability",
+      "target": "docs_releases_v0_4_0_in_the_public_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_v0_4_0_paldawn_v0_4_0_study_and_reliability",
+      "target": "docs_releases_v0_4_0_included_as_development_candidates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/v0.4.0.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_v0_4_0_paldawn_v0_4_0_study_and_reliability",
+      "target": "docs_releases_v0_4_0_verification_and_distribution",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/research/hypertension-pack-dossier.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -32165,5 +32264,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "ed800e6f99345d8bbbe611f0e5098864ce02ab50"
+  "built_at_commit": "e0fe9318c433e399e12cbac995e99b9542b0b765"
 }

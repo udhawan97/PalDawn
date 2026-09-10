@@ -1,4 +1,4 @@
-# PalDawn app — v0.3.0 Mechanism Lens
+# PalDawn app — v0.4.0 — Study and Reliability
 
 The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +

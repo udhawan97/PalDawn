@@ -1,0 +1,52 @@
+name: Publish verified release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with: { node-version: 22 }
+      - name: Verify release identity and hosted gates
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test "$RELEASE_TAG" = "v$(node -p "require('./app/package.json').version")"
+          test "$(git rev-parse "$RELEASE_TAG^{commit}")" = "$GITHUB_SHA"
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+          test -s "docs/releases/$RELEASE_TAG.md"
+          gh api "repos/$GH_REPO/actions/runs?head_sha=$GITHUB_SHA&event=push&per_page=100" > "$RUNNER_TEMP/release-checks.json"
+          for workflow in ci.yml deploy.yml; do
+            jq -e --arg path ".github/workflows/$workflow" --arg sha "$GITHUB_SHA" \
+              '[.workflow_runs[] | select(.path == $path and .head_sha == $sha and .head_branch == "main")] | sort_by(.run_number) | last | .status == "completed" and .conclusion == "success"' \
+              "$RUNNER_TEMP/release-checks.json"
+          done
+      - name: Publish source release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          notes="docs/releases/$RELEASE_TAG.md"
+          title="$(head -n 1 "$notes")"
+          title="${title#\# }"
+          gh release create "$RELEASE_TAG" --verify-tag --title "$title" --notes-file "$notes" --latest
