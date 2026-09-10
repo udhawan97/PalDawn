@@ -12,7 +12,7 @@ to exact versions in `app/package.json` / `app/package-lock.json`.
   `app/third-party-license-inventory.json`
 - Per-dependency provenance records: `pipeline/provenance/records/`
 
-**No third-party 3D anatomy assets or medical datasets are incorporated.**
+**No third-party 3D anatomy assets or medical datasets are incorporated in the normal public build.**
 The separate, unpublished heart graphics workbench contains original,
 unreviewed geometric artwork in `content/graphics/heart-study/`, including its
 editable source and generated GLB, licensed CC BY-SA 4.0. Its renderer and
@@ -64,3 +64,11 @@ of Medicine.`
 ## Code
 
 Application and pipeline code is MIT — see `LICENSE`.
+
+
+The unpublished Anatomy Lab candidate prepares separately attributed
+BodyParts3D and HRA female reference packs in an ignored local directory for
+review. These packs and the candidate website are excluded from `app/dist/`.
+Human Atlas viewer code is MIT; its notice is preserved at
+`app/src/anatomy/LICENSE`. See `docs/ANATOMY-LAB.md` and `CREDITS.md` for
+source-specific attribution and pending qualified-review status.

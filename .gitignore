@@ -20,3 +20,8 @@ graphify-out/reflections/
 graphify-out/cost.json
 graphify-out/graph.html
 app/dist-graphics/
+
+# Unreviewed source anatomy is prepared locally, never shipped by the default build.
+app/node_modules
+app/public/anatomy/
+app/dist-anatomy/

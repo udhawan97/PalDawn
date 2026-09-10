@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — Anatomy Lab local candidate
+
+- Added separately sourced male and female reference exploration, full upstream
+  selection/search/layer/explosion controls, and source attribution.
+- Added organ-level disease-pathway links, searchable source reading, session
+  study lists, recall cards, guided system tours and visual cutaway controls.
+- Improved material detail, selection lighting, shadows, camera transitions,
+  quality controls and reduced-motion behavior.
+- Redesigned the candidate website with live references and explicit coverage.
+- Anatomy/clinical approval remains pending. Public anatomy remains disabled;
+  reference packs and candidate pages are excluded from the normal build.
+
+
 All notable changes to PalDawn are documented here.
 
 ## Unreleased

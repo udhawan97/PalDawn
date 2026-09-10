@@ -102,7 +102,7 @@ function RenderFallback({
   )
 }
 
-export default function App() {
+function JourneyApp() {
   // Probe once at mount; locked decision: P0 requires WebGL2.
   const [webgl2, setWebgl2] = useState(webgl2Available)
   const [sceneIssue, setSceneIssue] = useState<string | null>(null)
@@ -201,4 +201,31 @@ export default function App() {
       <FlightDeck textVoyage={false} onTextVoyageChange={changeTextVoyagePreference} />
     </div>
   )
+}
+
+
+const AnatomyStudy = import.meta.env.VITE_ANATOMY_PREVIEW ? lazy(() => import('./anatomy/AnatomyStudy')) : null
+const AnatomyLanding = import.meta.env.VITE_ANATOMY_PREVIEW ? lazy(() => import('./anatomy/AnatomyLanding')) : null
+function AnatomyCandidate() {
+  const [view, setView] = useState(() => new URL(window.location.href).searchParams.get('study') ?? 'home')
+  const navigate = (next: string, reference?: 'male' | 'female') => {
+    useExperience.getState().pause()
+    const url = new URL(window.location.href)
+    if (reference) url.searchParams.set('reference', reference)
+    if (next === 'home') url.searchParams.delete('study'); else url.searchParams.set('study', next)
+    window.history.pushState(window.history.state, '', url); setView(next)
+  }
+  useEffect(() => {
+    const follow = () => setView(new URL(window.location.href).searchParams.get('study') ?? 'home')
+    const open = () => navigate('anatomy')
+    window.addEventListener('paldawn:open-anatomy', open); window.addEventListener('popstate', follow)
+    return () => { window.removeEventListener('paldawn:open-anatomy', open); window.removeEventListener('popstate', follow) }
+  }, [])
+  const closeStudy = () => navigate('journeys')
+  return <Suspense fallback={<main className="fallback"><h1>Opening PalDawn…</h1><button onClick={() => navigate('journeys')}>Continue to disease pathways</button></main>}>
+    {view === 'anatomy' && AnatomyStudy ? <AnatomyStudy onClose={closeStudy}/> : view === 'home' && AnatomyLanding ? <AnatomyLanding onExplore={(sex) => navigate('anatomy', sex)} onJourneys={() => navigate('journeys')}/> : <JourneyApp/>}
+  </Suspense>
+}
+export default function App() {
+  return import.meta.env.VITE_ANATOMY_PREVIEW ? <AnatomyCandidate/> : <JourneyApp/>
 }

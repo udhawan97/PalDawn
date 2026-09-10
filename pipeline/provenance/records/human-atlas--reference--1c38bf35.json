@@ -1,0 +1,54 @@
+{
+  "record_id": "human-atlas--reference--1c38bf35",
+  "subject": {
+    "name": "BodyParts3D reference via Human Atlas, local review candidate",
+    "type": "dataset"
+  },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://github.com/ashemag/human-atlas",
+    "path": "public/models/atlas.json and associated chunks",
+    "version_or_commit": "1c38bf35c254a891200d3cedecfd57abebe83d8d",
+    "source_digest": "sha256:c359f4bcd2cba90b7411d66d5e9fc04dc81294d46cd5c1e8b212c824f2e5bbee",
+    "creator": "The Database Center for Life Science; ashemag (web adaptations)"
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+    "object_level_status": "resolved"
+  },
+  "lineage": "BodyParts3D 4.0 -> Human Atlas pinned simplified binary geometry -> ignored local PalDawn preview pack.",
+  "reproduction": {
+    "tools": [
+      "git",
+      "node"
+    ],
+    "commands": [
+      "node scripts/prepare-anatomy.mjs"
+    ]
+  },
+  "modifications": "No geometry changes; runtime URLs are rebased. No TA2 equivalences inferred.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "BodyParts3D, \u00a9 The Database Center for Life Science licensed under CC Attribution 4.0 International",
+    "source_pack_url": "https://github.com/ashemag/human-atlas/tree/1c38bf35c254a891200d3cedecfd57abebe83d8d/public/models"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "required",
+    "status": "pending",
+    "claim_scope": "All 2234 reference meshes, 3432 concepts and anatomy-to-lesson navigation."
+  },
+  "adoption_gate": {
+    "status": "blocked",
+    "blockers": [
+      "Named qualified anatomy and clinical review pending."
+    ],
+    "validator_pass_meaning": "Pending record only; does not approve local preview assets for publication."
+  }
+}

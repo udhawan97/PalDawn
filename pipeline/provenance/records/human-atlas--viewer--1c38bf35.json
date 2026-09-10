@@ -1,0 +1,48 @@
+{
+  "record_id": "human-atlas--viewer--1c38bf35",
+  "subject": {
+    "name": "Human Atlas renderer and interaction helpers",
+    "type": "vendored_code"
+  },
+  "medical_scope": false,
+  "upstream": {
+    "repository": "https://github.com/ashemag/human-atlas",
+    "version_or_commit": "1c38bf35c254a891200d3cedecfd57abebe83d8d",
+    "path": "app/scene.tsx, app/anatomy.ts, app/explosion-layout.ts, app/model-download.ts, app/pointer-tap.ts, app/agent-tools.ts",
+    "source_digest": "sha256:8dc79679597d481a6b8ec3ee1aaea5cd43b90067b079f9efd13e333b2809ebcf",
+    "creator": "ashemag"
+  },
+  "license": {
+    "spdx": "MIT",
+    "license_url": "https://opensource.org/license/mit",
+    "source_url": "https://github.com/ashemag/human-atlas/blob/1c38bf35c254a891200d3cedecfd57abebe83d8d/LICENSE"
+  },
+  "lineage": "Human Atlas MIT viewer -> PalDawn anatomy study candidate; data tracked separately.",
+  "reproduction": {
+    "tools": [
+      "git",
+      "Python 3"
+    ],
+    "commands": [
+      "git clone https://github.com/ashemag/human-atlas.git; git checkout 1c38bf35c254a891200d3cedecfd57abebe83d8d",
+      "Copy listed helpers; see app/src/anatomy/UPSTREAM.md for adaptations."
+    ]
+  },
+  "modifications": "See app/src/anatomy/UPSTREAM.md. Rendering helpers plus type/display contracts only; medical text remains in the ignored candidate pack.",
+  "output_digest": "sha256:34481b75da3f090e24be93c36ac1cad77346ffe0b790c339b95e7a60a61da659",
+  "attribution": {
+    "required_text": "Human Atlas \u2014 Copyright (c) 2026 ashemag \u2014 MIT",
+    "source_pack_url": "https://github.com/ashemag/human-atlas/tree/1c38bf35c254a891200d3cedecfd57abebe83d8d"
+  },
+  "landing_zone": "app",
+  "usage_status": "used",
+  "approval": {
+    "status": "approved",
+    "approved_by": "User request to reuse Human Atlas with credit, 2026-09-10",
+    "date": "2026-09-10"
+  },
+  "review": {
+    "applicability": "not_applicable",
+    "rationale": "Rendering and interaction algorithms only. Anatomy metadata and explanatory text are separate pending content."
+  }
+}

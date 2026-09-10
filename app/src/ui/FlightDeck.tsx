@@ -161,6 +161,7 @@ function Intro() {
         step by step. The 3D body is a conceptual learning map, not reviewed anatomy.
       </p>
       <div className="intro-actions" data-resume-available={resumeAvailable}>
+        {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="secondary-action" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Explore Anatomy Lab ↗</button> : null}
         <button
           className="primary-action"
           type="button"
@@ -1752,6 +1753,7 @@ export function FlightDeck({
         </a>
         <p className="build-mark">PAL · DAWN / MECHANISM LENS</p>
         <nav className="utility-nav" aria-label="Release information">
+          {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="text-button" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Anatomy Lab</button> : null}
           <button className="text-button" type="button" data-atlas-opener="utility-atlas" aria-expanded={atlasOpen} onClick={() => {
             setOpenPanel(null, { resumePlayback: false })
             openDisease('diabetes', '[data-atlas-opener="utility-atlas"]')

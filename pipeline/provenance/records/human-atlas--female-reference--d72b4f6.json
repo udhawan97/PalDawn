@@ -1,0 +1,54 @@
+{
+  "record_id": "human-atlas--female-reference--d72b4f6",
+  "subject": {
+    "name": "HRA female v1.5 via Human Atlas, local review candidate",
+    "type": "dataset"
+  },
+  "medical_scope": true,
+  "upstream": {
+    "repository": "https://github.com/ashemag/human-atlas",
+    "path": "public/models/atlas-female.json and female-*.bin*",
+    "version_or_commit": "d72b4f6db42e41a8db84b1c19ff6d86ee7b65284",
+    "source_digest": "sha256:1525c07d2ed46263c086d1c6b2e52eb9b8f8985746e9a8259036bd6e1d9a1ced",
+    "creator": "Kristen Browne and Heidi Schlehlein; Human Reference Atlas / HuBMAP; ashemag (web adaptations)"
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://lod.humanatlas.io/ref-organ/united-female/v1.5/",
+    "object_level_status": "resolved"
+  },
+  "lineage": "HRA united-female v1.5 -> Human Atlas pinned simplified binary geometry -> ignored local PalDawn preview pack.",
+  "reproduction": {
+    "tools": [
+      "git",
+      "node"
+    ],
+    "commands": [
+      "node scripts/prepare-anatomy.mjs"
+    ]
+  },
+  "modifications": "No geometry changes; runtime URLs are rebased. No TA2 equivalences inferred.",
+  "output_digest": null,
+  "attribution": {
+    "required_text": "Female reference: Kristen Browne and Heidi Schlehlein, Human Reference Atlas / HuBMAP, 3D Reference Organ Set for Female v1.5 (2023), CC BY 4.0. Web adaptations by ashemag.",
+    "source_pack_url": "https://github.com/ashemag/human-atlas/tree/d72b4f6db42e41a8db84b1c19ff6d86ee7b65284/public/models"
+  },
+  "landing_zone": "content",
+  "usage_status": "planned",
+  "approval": {
+    "status": "pending"
+  },
+  "review": {
+    "applicability": "required",
+    "status": "pending",
+    "claim_scope": "All 888 female meshes, 1073 source nodes, partial coverage and pregnancy context; clinical and anatomy review pending."
+  },
+  "adoption_gate": {
+    "status": "blocked",
+    "blockers": [
+      "Named qualified anatomy and clinical review pending."
+    ],
+    "validator_pass_meaning": "Pending record only; does not approve local preview assets for publication."
+  }
+}

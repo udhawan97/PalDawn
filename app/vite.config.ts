@@ -3,6 +3,8 @@ import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { anatomyPreview } from './anatomy-preview.ts'
+const anatomyEnabled = process.env.PALDAWN_ANATOMY_PREVIEW === '1'
 
 const SERVICE_WORKER_BUILD_TOKEN = '__PALDAWN_BUILD_ID__'
 
@@ -11,7 +13,7 @@ function stampServiceWorker() {
     name: 'paldawn-service-worker-build-stamp',
     apply: 'build' as const,
     closeBundle() {
-      const distRoot = resolve(process.cwd(), 'dist')
+      const distRoot = resolve(process.cwd(), anatomyEnabled ? 'dist-anatomy' : 'dist')
       const workerPath = resolve(distRoot, 'sw.js')
       const assetFiles = readdirSync(resolve(distRoot, 'assets'))
         .sort()
@@ -56,6 +58,7 @@ function stampServiceWorker() {
 // VITE_BASE_PATH=/PalDawn/. Default '/' keeps local dev/preview simple.
 export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? '/',
-  plugins: [react(), stampServiceWorker()],
-  build: { target: 'es2022', sourcemap: false },
+  define: { 'import.meta.env.VITE_ANATOMY_PREVIEW': JSON.stringify(anatomyEnabled) },
+  plugins: [react(), stampServiceWorker(), anatomyPreview(anatomyEnabled)],
+  build: { outDir: anatomyEnabled ? 'dist-anatomy' : 'dist', target: 'es2022', sourcemap: false },
 })

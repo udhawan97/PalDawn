@@ -13,4 +13,4 @@ createRoot(rootEl).render(
   </StrictMode>,
 )
 
-registerPwa()
+if (!import.meta.env.VITE_ANATOMY_PREVIEW) registerPwa()

@@ -6207,3 +6207,5 @@ html[data-contrast='high'] {
     color: black;
   }
 }
+
+.anatomy-return { display:block; width:100%; padding:10px 12px; margin:8px 0; border:1px solid #c6ddb766; border-radius:6px; color:#c6ddb7; background:#14232e; text-align:left; cursor:pointer; font:inherit; }

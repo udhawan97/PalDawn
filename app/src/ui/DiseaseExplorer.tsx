@@ -434,6 +434,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
             <button type="button" onClick={() => close()}>Back to overview <span aria-hidden="true">×</span></button>
           </div>
         </div>
+        {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="anatomy-return" type="button" onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>← Return to Anatomy Lab</button> : null}
         <p className="atlas-category">{disease.category} · source-backed preview</p>
         <h1 id="atlas-title">{disease.title}</h1>
         <p className="atlas-summary">{disease.summary}</p>

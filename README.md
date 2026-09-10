@@ -40,9 +40,24 @@ the procedural model as reviewed anatomy.
 > Lens adds high-detail procedural layers and source-linked educational
 > synthesis, but neither has been reviewed by a
 > named qualified clinician and cannot diagnose symptoms, calculate personal
-> risk, or recommend treatment. No third-party anatomy asset or patient data is
-> incorporated. If you think you may be having a medical emergency, contact
+> risk, or recommend treatment. No third-party anatomy asset is incorporated in the normal public build,
+> and no patient data is used. If you think you may be having a medical emergency, contact
 > your local emergency services immediately.
+
+## Anatomy Lab candidate — local preview
+
+A new, unpublished [Anatomy Lab candidate](docs/ANATOMY-LAB.md) adds the full
+Human Atlas male reference and its earlier HRA female assembly, searchable
+structures, layered/exploded inspection, organ-level disease links, source
+reading, recall practice and per-reference session lists. Its redesigned
+website previews both sources and makes their different coverage explicit.
+
+The candidate uses 2,234 male meshes and 888 female meshes. Female skeletal and
+muscle coverage is partial. These references do not cover every structure,
+variation or ailment. Qualified anatomy and clinical review is pending.
+The candidate is excluded from the normal public build; **the live website has
+not been updated with this feature**. See the candidate guide for preparation,
+local preview, tests, attribution, graphics controls and remaining limits.
 
 ## Choose how to start
 

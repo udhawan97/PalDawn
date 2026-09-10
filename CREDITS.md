@@ -72,7 +72,7 @@ unlicensed, license-ambiguous, GPL/AGPL, or simply studied as prior art:
 
 ## 3D assets
 
-No third-party 3D asset is incorporated. First Light's visible model is
+No third-party 3D asset is incorporated in the normal public build. First Light's visible model is
 procedural project code, not an anatomy asset. See `NOTICE.md`.
 
 ## Original heart graphics workbench
@@ -82,3 +82,19 @@ original PalDawn artwork authored with Codex on 2026-09-07. Its editable
 profiles, generated mesh, and artwork renders are CC BY-SA 4.0; generator and
 viewer code are MIT. No upstream anatomy mesh or patient data was used.
 Anatomical review is pending, and the pack is excluded from the public app.
+
+## Anatomy Lab — local candidate
+
+The candidate adapts [Human Atlas](https://github.com/ashemag/human-atlas),
+© 2026 ashemag, MIT. Its full license and adaptation details are preserved in
+[the viewer source](app/src/anatomy/UPSTREAM.md).
+
+The locally prepared, unreviewed reference packs are separate from the public
+build: BodyParts3D, © The Database Center for Life Science licensed under CC
+Attribution 4.0 International; and Kristen Browne and Heidi Schlehlein,
+Human Reference Atlas / HuBMAP, *3D Reference Organ Set for Female v1.5* (2023),
+CC BY 4.0. Full source lineage, adaptations and coverage limits are linked in
+the candidate website and study interface. Medical approval remains pending.
+
+Source reading titles/links: MedlinePlus, National Library of Medicine.
+No linked medical articles or images are copied. See [Anatomy Lab](docs/ANATOMY-LAB.md).
