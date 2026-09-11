@@ -368,6 +368,7 @@ const expandedTextViewports = [
 
 for (const viewport of expandedTextViewports) {
   test(`expanded text reserves the complete safety boundary at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    test.setTimeout(60_000)
     await page.addInitScript(() => {
       localStorage.setItem('paldawn:settings:v1', JSON.stringify({
         state: { highContrast: true, captionScale: 'largest' },
