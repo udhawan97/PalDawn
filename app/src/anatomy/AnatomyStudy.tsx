@@ -5,10 +5,12 @@ import { registerAtlasTools } from './agent-tools'
 import { useAtlas } from '../state/atlas'
 import { useSettings } from '../state/settings'
 import './study.css'
+import ResearchDesk from './ResearchDesk'
 const AnatomyScene = lazy(() => import('./scene'))
 const initial = (): SceneState => ({ explode: 0, visible: [...DEFAULT_VISIBLE], selected: [], isolate: false, view: 'three-quarter', rotate: false, reset: 0 })
 type StudySession = { state: SceneState; chosen: Concept | null; query: string; saved: string[] }
 const sessions: Record<'male' | 'female', StudySession> = { male: { state: initial(), chosen: null, query: '', saved: [] }, female: { state: { ...initial(), visible: [...DEFAULT_VISIBLE, 'integumentary'] }, chosen: null, query: '', saved: [] } }
+let readingQueue: string[] = []
 let lastSex: 'male' | 'female' = 'male'
 type Context = { systems: Record<string, string>; structures: Record<string, string>; femaleSystems?: Record<string, string>; femaleStructures?: Record<string, string>; femaleReading?: Context['reading']; reading?: Record<string, { source: string; checked: string; topics: { title: string; url: string }[] }> }
 export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
@@ -35,6 +37,8 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   const [savedOnly, setSavedOnly] = useState(false)
   const [textOnly, setTextOnly] = useState(false)
   const [conditionQuery, setConditionQuery] = useState('')
+  const [queue, setQueue] = useState<string[]>(readingQueue)
+  const [researchFocus, setResearchFocus] = useState(false)
   const title = useRef<HTMLHeadingElement>(null)
   const reducedMotion = useSettings(s => s.reducedMotion)
   const deferred = useDeferredValue(query)
@@ -100,9 +104,9 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
     setState(s => ({ ...s, selected: [part.id], isolate: true, explode: 0, cutaway: 0, rotate: false }))
   }
   return <main className="anatomy-study">
-    <header className="study-header"><div><p className="study-kicker">PALDAWN / ANATOMY LAB</p><h1>Know the body.<br className="mobile-break"/> Follow the connections.</h1></div><div className="study-header-controls"><div className="study-reference-switch" role="group" aria-label="Reference anatomy"><button aria-pressed={sex === 'male'} onClick={() => changeSex('male')}>Male reference</button><button aria-pressed={sex === 'female'} onClick={() => changeSex('female')}>Female reference</button></div><button onClick={onClose}>Back to PalDawn ↗</button></div></header>
+    <header className="study-header"><div><p className="study-kicker">PALDAWN / ANATOMY LAB</p><h1>Know the body.<br className="mobile-break"/> Follow the connections.</h1></div><div className="study-header-controls"><div className="study-reference-switch" role="group" aria-label="Reference anatomy"><button aria-pressed={sex === 'male'} onClick={() => changeSex('male')}>Male reference</button><button aria-pressed={sex === 'female'} onClick={() => changeSex('female')}>Female reference</button></div><button className="study-layout-toggle" aria-pressed={researchFocus} onClick={() => setResearchFocus(v => !v)}>{researchFocus ? 'Show library' : 'Focus on research'}</button><button onClick={onClose}>Back to PalDawn ↗</button></div></header>
     <div className="study-scope">Local study candidate · Qualified anatomy and clinical review pending · {sex === 'male' ? 'BodyParts3D adult male reference · Anatomical variations are not fully represented.' : 'HRA female reference assembly · Skeleton and muscle coverage are partial; pregnancy structures are optional.'}</div>
-    <div className="study-workspace">
+    <div className={`study-workspace ${researchFocus ? 'research-focus' : ''}`}>
       <aside className={`study-library ${tab === 'study' ? 'mobile-hidden' : ''}`} aria-label="Anatomy library">
         <nav className="study-tabs" aria-label="Library view"><button aria-pressed={tab !== 'systems'} onClick={() => setTab('structures')}>Structures</button><button aria-pressed={tab === 'systems'} onClick={() => setTab('systems')}>System layers</button></nav>
         {tab === 'systems' ? <><p className="study-kicker">{availableSystems.length} SYSTEMS / INDIVIDUAL LAYERS</p><div className="study-presets"><button onClick={() => preset(['skeletal'])}>Skeleton</button><button onClick={() => preset(['cardiac', 'respiratory', 'digestive', 'urinary', 'reproductive', 'endocrine', 'lymphatic', 'sensory'])}>Organs</button><button onClick={() => preset(availableSystems.filter(x => x.id !== 'pregnancy').map(x => x.id))}>All</button><button onClick={() => preset([])}>Hide all</button></div>
@@ -134,19 +138,21 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
           {concealed ? <><p>Use its shape and position to recall its name.</p><button onClick={() => setRevealed(true)}>Reveal answer</button></> : <>
             <p className="study-meta">{chosen.id} · {selectedParts.length} source {selectedParts.length === 1 ? 'mesh' : 'meshes'}</p>
             <div className="study-actions"><button aria-pressed={state.isolate} onClick={() => setState(s => ({ ...s, isolate: !s.isolate, selected: chosen.elements, explode: 0 }))}>{state.isolate ? 'Show surroundings' : 'Isolate structure'}</button><button aria-pressed={saved.includes(chosen.id)} onClick={() => setSaved(s => s.includes(chosen.id) ? s.filter(id => id !== chosen.id) : [...s, chosen.id])}>{saved.includes(chosen.id) ? 'Remove from study list' : 'Add to study list'}</button><button onClick={() => { setChosen(null); setQuiz(false); setState(s => ({ ...s, selected: [], isolate: false })) }}>Clear selection</button></div>
-            <h3>{activeStructures?.[chosen.name.toLowerCase()] ? 'Structure overview' : 'System context'}</h3>
+            <details><summary>Structure overview & system context</summary><h3>{activeStructures?.[chosen.name.toLowerCase()] ? 'Structure overview' : 'System context'}</h3>
             <p>{activeStructures?.[chosen.name.toLowerCase()] ?? selectedSystems.map(id => activeContext?.[id]).filter(Boolean).join(' ')}</p><p className="study-note">Adapted Human Atlas context · Unreviewed. A system overview does not describe every individual structure.</p>
-            <h3>Linked ailment pathways</h3><p className="study-note">Organ-level learning connections from existing PalDawn lessons. They do not establish disease involvement of this exact mesh.</p>
+            </details><ResearchDesk atlas={atlas} chosen={chosen} onChoose={choose} queue={queue} onQueue={next => { readingQueue = next; setQueue(next) }}/>
+            <details><summary>Existing PalDawn disease pathways ({lessons.length})</summary><h3>Linked ailment pathways</h3><p className="study-note">Organ-level learning connections from existing PalDawn lessons. They do not establish disease involvement of this exact mesh.</p>
             {lessons.length ? lessons.map(({ disease, stepIndex, bodyPart, sources }) => <article className="study-lesson" key={disease.id}><button onClick={() => { useAtlas.getState().openDisease(disease.id); useAtlas.getState().setTarget(disease.id, stepIndex, bodyPart); onClose() }}>{disease.title} ↗<small>{disease.steps[stepIndex].label}</small></button>{sources.map(source => <a key={source.id} href={source.url} target="_blank" rel="noreferrer">{source.organization} · {source.title} ↗</a>)}</article>) : <p>No organ-level PalDawn pathway is mapped here yet. Explore the system reading below.</p>}
-            <h3>Conditions & further reading</h3><p className="study-note">System-level reading directories, not a complete list of ailments for this structure.</p>
+            </details><details><summary>Full system reading directory</summary><h3>Conditions & further reading</h3><p className="study-note">System-level reading directories, not a complete list of ailments for this structure.</p>
             <label className="study-label" htmlFor="condition-search">Find a reading topic</label><input id="condition-search" type="search" placeholder="Search conditions and topics…" value={conditionQuery} onChange={e => setConditionQuery(e.target.value)}/><p className="study-note" role="status">{readingTopics.length} source-linked topics for these systems</p><div className="study-topic-list">{readingTopics.map(topic => <a key={topic.url} href={topic.url} target="_blank" rel="noreferrer">{topic.title} ↗</a>)}</div>
             {selectedSystems.map(id => <a className="study-reading" key={id} href={`https://medlineplus.gov/${sex === 'female' && id === 'reproductive' ? 'femalereproductivesystem.html' : SYSTEM_READING[id].path}`} target="_blank" rel="noreferrer">{sex === 'female' && id === 'reproductive' ? 'Female reproductive health' : SYSTEM_READING[id].title} ↗</a>)}
             <a className="study-reading" href={`https://medlineplus.gov/search/?query=${encodeURIComponent(chosen.name + ' disorders')}`} target="_blank" rel="noreferrer">Search MedlinePlus for {chosen.name} ↗</a>
             <p className="study-note">Source: MedlinePlus, National Library of Medicine. Reading links open externally.</p>
-            <details><summary>Included source pieces ({selectedParts.length})</summary><div className="study-members">{selectedParts.map(p => <button key={p.id} onClick={() => choosePart(p.id)}>{p.name}<small>{p.id}</small></button>)}</div></details>
+            </details><details><summary>Included source pieces ({selectedParts.length})</summary><div className="study-members">{selectedParts.map(p => <button key={p.id} onClick={() => choosePart(p.id)}>{p.name}<small>{p.id}</small></button>)}</div></details>
           </>}
           {quiz && revealed ? <button onClick={recall}>Next recall card</button> : null}
         </> : <p>Select any part of the model or search the full inventory. Then move from its source identity to organ-level pathways and further reading.</p>}
+        {!chosen ? <ResearchDesk atlas={atlas} chosen={null} onChoose={choose} queue={queue} onQueue={next => { readingQueue = next; setQueue(next) }}/> : null}
         <div className="study-recall"><h3>Practice recall</h3><p>Identify one visible structure, then reveal its source name. This is self-study, not an assessed exam.</p><button disabled={!atlas || !state.visible.length || textOnly || Boolean(sceneError) || progress < 100} onClick={recall}>Identify a structure</button></div>
         <details className="study-credits"><summary>Coverage, sources & credits</summary><p>{atlas?.concepts.length.toLocaleString() ?? '…'} named concepts can group multiple meshes. {sex === 'male' ? 'The adult male reference does not cover female-specific anatomy.' : 'The female reference assembly has partial skeleton and muscle coverage. Eight pregnancy reference meshes are hidden by default.'} Developmental stages and many variations remain outside these datasets. Ailment coverage is incomplete.</p><p>Viewer adapted from <a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noreferrer">Human Atlas by ashemag</a> (MIT). BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Female reference: Kristen Browne and Heidi Schlehlein, Human Reference Atlas / HuBMAP, 3D Reference Organ Set for Female v1.5 (2023), CC BY 4.0.</p><a href={`${import.meta.env.BASE_URL}anatomy/ATTRIBUTION.md`} target="_blank" rel="noreferrer">Full anatomy attribution and adaptations</a><p>PalDawn adds its own study interface, recall practice, session list and disease-pathway navigation. Education only; not diagnosis or clinical guidance.</p></details>
       </aside>

@@ -44,7 +44,9 @@ No deploy, tag, release or medical approval is implied by a local build.
 | Mobile | Stacked model and library/inspector, persistent panel navigation |
 | Optional WebMCP | Upstream search and inspect tools with registration lifecycle cleanup |
 | PalDawn learning | Explicit organ-level links into existing disease steps with their source links |
-| Further reading | Searchable MedlinePlus directory titles and URLs; female-specific reproductive directory |
+| Further reading | Full MedlinePlus system directories plus 20 body-area research tracks and 113 curated condition topics |
+| Research desk | Source-linked function explanations, comparative research questions, PubMed searches and source-ID organ locators |
+| Personal reading | Cross-reference session queue, condition search across all areas, compact cards, Markdown reading-plan export and wider research focus layout |
 | Recall | Identify a visible mesh, reveal its name, next card; unscored self-study |
 | Study list | In-memory lists per reference, retained when visiting a disease lesson; reset on reload |
 | Graphics | Physical tissue materials, soft shadows, rim selection, high/standard detail, smooth camera framing |
@@ -74,7 +76,7 @@ they are **not hundreds of newly authored lessons or disease animations**.
   *3D Reference Organ Set for Female v1.5*, CC BY 4.0. Source:
   <https://lod.humanatlas.io/ref-organ/united-female/v1.5/>.
 - MedlinePlus: National Library of Medicine; only source titles and links,
-  with source URL and retrieval date. No protected article/image copying.
+  with source URL and retrieval date. No protected article/image copying. The research desk adds short, attributed educational summaries and authored study questions; both remain unreviewed within the candidate.
 - Preparation writes `output/anatomy/manifest.json` with both immutable
   upstream pins and SHA-256 hashes for every prepared file.
 
@@ -83,7 +85,7 @@ Named qualified anatomy/clinical review remains pending under `docs/PLAN.md`
 public asset adoption. Pending provenance records are not approval receipts.
 The assistant cannot invent signoffs or certify anatomical correctness.
 
-Runtime searches and session lists stay in memory. The candidate serves its
+Runtime searches, structure lists and the reading queue stay in memory. The reading queue is shared across references and survives visiting an existing disease pathway, but resets on page reload. Its Markdown export contains only explicitly saved topics and their sources. The candidate serves its
 reference data locally. Opening a source link contacts that external site.
 Preparation downloads public GitHub snapshots and MedlinePlus pages. The
 candidate does not add telemetry, accounts, patient data or persisted notes.

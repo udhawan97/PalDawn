@@ -1,0 +1,968 @@
+{
+  "checked": "2026-09-11",
+  "tracks": [
+    {
+      "id": "heart",
+      "title": "Heart",
+      "systems": [
+        "cardiac"
+      ],
+      "anchors": [
+        "FMA7088",
+        "HRA:VH_F_heart"
+      ],
+      "function": {
+        "title": "How does electrical timing become a coordinated heartbeat?",
+        "url": "https://www.nhlbi.nih.gov/health/heart/heart-beats",
+        "publisher": "NHLBI",
+        "overview": "The sinoatrial node initiates an electrical signal that spreads through the atria. A delay at the atrioventricular node allows ventricular filling before the ventricles contract. Electrical coordination and valve function support forward blood flow."
+      },
+      "prompt": "Compare electrical conduction, valve movement and blood flow. What does each explain that the others do not?",
+      "conditions": [
+        {
+          "id": "atrialfibrillation",
+          "title": "Atrial Fibrillation",
+          "url": "https://medlineplus.gov/atrialfibrillation.html"
+        },
+        {
+          "id": "heartvalvediseases",
+          "title": "Heart Valve Diseases",
+          "url": "https://medlineplus.gov/heartvalvediseases.html"
+        },
+        {
+          "id": "cardiomyopathy",
+          "title": "Cardiomyopathy",
+          "url": "https://medlineplus.gov/cardiomyopathy.html"
+        },
+        {
+          "id": "endocarditis",
+          "title": "Endocarditis",
+          "url": "https://medlineplus.gov/endocarditis.html"
+        },
+        {
+          "id": "pericardialdisorders",
+          "title": "Pericardial Disorders",
+          "url": "https://medlineplus.gov/pericardialdisorders.html"
+        },
+        {
+          "id": "heartfailure",
+          "title": "Heart Failure",
+          "url": "https://medlineplus.gov/heartfailure.html"
+        }
+      ]
+    },
+    {
+      "id": "vessels",
+      "title": "Blood vessels",
+      "systems": [
+        "arterial",
+        "venous"
+      ],
+      "anchors": [],
+      "function": {
+        "title": "How does blood travel through two circulations?",
+        "url": "https://www.nhlbi.nih.gov/health/heart/blood-flow",
+        "publisher": "NHLBI",
+        "overview": "The right side of the heart sends blood to the lungs; the left side sends returning blood to the body. Arteries carry blood away from the heart, while veins carry it back."
+      },
+      "prompt": "Trace a red blood cell through pulmonary and systemic circulation. Where do pressure, oxygenation and vessel structure enter the explanation?",
+      "conditions": [
+        {
+          "id": "atherosclerosis",
+          "title": "Atherosclerosis",
+          "url": "https://medlineplus.gov/atherosclerosis.html"
+        },
+        {
+          "id": "aorticaneurysm",
+          "title": "Aortic Aneurysm",
+          "url": "https://medlineplus.gov/aorticaneurysm.html"
+        },
+        {
+          "id": "peripheralarterialdisease",
+          "title": "Peripheral Arterial Disease",
+          "url": "https://medlineplus.gov/peripheralarterialdisease.html"
+        },
+        {
+          "id": "deepveinthrombosis",
+          "title": "Deep Vein Thrombosis",
+          "url": "https://medlineplus.gov/deepveinthrombosis.html"
+        },
+        {
+          "id": "vasculitis",
+          "title": "Vasculitis",
+          "url": "https://medlineplus.gov/vasculitis.html"
+        },
+        {
+          "id": "varicoseveins",
+          "title": "Varicose Veins",
+          "url": "https://medlineplus.gov/varicoseveins.html"
+        }
+      ]
+    },
+    {
+      "id": "lungs",
+      "title": "Lungs & airways",
+      "systems": [
+        "respiratory"
+      ],
+      "anchors": [
+        "FMA7309",
+        "FMA7310",
+        "HRA:VH_F_lungs"
+      ],
+      "function": {
+        "title": "What makes ventilation different from gas exchange?",
+        "url": "https://www.nhlbi.nih.gov/health/lungs",
+        "publisher": "NHLBI",
+        "overview": "Air movement brings oxygen into the lungs. Gas exchange then transfers oxygen into blood and carbon dioxide out of blood. Airways, lung tissue, respiratory muscles and blood vessels all contribute to this process."
+      },
+      "prompt": "Compare airway narrowing, altered lung tissue and interrupted pulmonary blood flow. Which part of breathing would you investigate for each?",
+      "conditions": [
+        {
+          "id": "asthma",
+          "title": "Asthma",
+          "url": "https://medlineplus.gov/asthma.html"
+        },
+        {
+          "id": "copd",
+          "title": "COPD",
+          "url": "https://medlineplus.gov/copd.html"
+        },
+        {
+          "id": "pulmonaryfibrosis",
+          "title": "Pulmonary Fibrosis",
+          "url": "https://medlineplus.gov/pulmonaryfibrosis.html"
+        },
+        {
+          "id": "pulmonaryembolism",
+          "title": "Pulmonary Embolism",
+          "url": "https://medlineplus.gov/pulmonaryembolism.html"
+        },
+        {
+          "id": "collapsedlung",
+          "title": "Collapsed Lung",
+          "url": "https://medlineplus.gov/collapsedlung.html"
+        },
+        {
+          "id": "cysticfibrosis",
+          "title": "Cystic Fibrosis",
+          "url": "https://medlineplus.gov/cysticfibrosis.html"
+        },
+        {
+          "id": "sleepapnea",
+          "title": "Sleep Apnea",
+          "url": "https://medlineplus.gov/sleepapnea.html"
+        }
+      ]
+    },
+    {
+      "id": "brain",
+      "title": "Brain",
+      "systems": [
+        "nervous"
+      ],
+      "anchors": [
+        "FMA50801",
+        "HRA:Allen_brain"
+      ],
+      "function": {
+        "title": "How are sleep and wakefulness studied?",
+        "url": "https://medlineplus.gov/healthysleep.html",
+        "publisher": "MedlinePlus",
+        "overview": "Sleep cycles through non-REM and REM stages. Brain activity, breathing and heart rate change across those stages. Sleep supports learning and memory; it is an active physiological process rather than a shutdown."
+      },
+      "prompt": "Compare a symptom, a syndrome and a mechanism in neurology. What evidence would help localize a problem before naming a condition?",
+      "conditions": [
+        {
+          "id": "epilepsy",
+          "title": "Epilepsy",
+          "url": "https://medlineplus.gov/epilepsy.html"
+        },
+        {
+          "id": "migraine",
+          "title": "Migraine",
+          "url": "https://medlineplus.gov/migraine.html"
+        },
+        {
+          "id": "multiplesclerosis",
+          "title": "Multiple Sclerosis",
+          "url": "https://medlineplus.gov/multiplesclerosis.html"
+        },
+        {
+          "id": "parkinsonsdisease",
+          "title": "Parkinson's Disease",
+          "url": "https://medlineplus.gov/parkinsonsdisease.html"
+        },
+        {
+          "id": "meningitis",
+          "title": "Meningitis",
+          "url": "https://medlineplus.gov/meningitis.html"
+        },
+        {
+          "id": "stroke",
+          "title": "Stroke",
+          "url": "https://medlineplus.gov/stroke.html"
+        }
+      ]
+    },
+    {
+      "id": "nerves",
+      "title": "Spinal cord & nerves",
+      "systems": [
+        "nervous"
+      ],
+      "anchors": [
+        "FMA7647",
+        "HRA:VH_F_spinal_cord"
+      ],
+      "function": {
+        "title": "How do sensory and motor pathways differ?",
+        "url": "https://medlineplus.gov/peripheralnervedisorders.html",
+        "publisher": "MedlinePlus",
+        "overview": "Peripheral nerves carry information between the central nervous system and the body. Motor pathways control movement, sensory pathways convey sensations, and autonomic pathways help regulate internal organs."
+      },
+      "prompt": "Draw separate paths for sensation and movement. What would distinguish a peripheral nerve problem from a spinal cord problem?",
+      "conditions": [
+        {
+          "id": "peripheralnervedisorders",
+          "title": "Peripheral Nerve Disorders",
+          "url": "https://medlineplus.gov/peripheralnervedisorders.html"
+        },
+        {
+          "id": "guillainbarresyndrome",
+          "title": "Guillain-Barre Syndrome",
+          "url": "https://medlineplus.gov/guillainbarresyndrome.html"
+        },
+        {
+          "id": "myastheniagravis",
+          "title": "Myasthenia Gravis",
+          "url": "https://medlineplus.gov/myastheniagravis.html"
+        },
+        {
+          "id": "carpaltunnelsyndrome",
+          "title": "Carpal Tunnel Syndrome",
+          "url": "https://medlineplus.gov/carpaltunnelsyndrome.html"
+        },
+        {
+          "id": "spinalcordinjuries",
+          "title": "Spinal Cord Injuries",
+          "url": "https://medlineplus.gov/spinalcordinjuries.html"
+        },
+        {
+          "id": "sciatica",
+          "title": "Sciatica",
+          "url": "https://medlineplus.gov/sciatica.html"
+        }
+      ]
+    },
+    {
+      "id": "eyes",
+      "title": "Eyes",
+      "systems": [
+        "sensory"
+      ],
+      "anchors": [
+        "FMA12514",
+        "FMA12515",
+        "HRA:VH_F_eyes"
+      ],
+      "function": {
+        "title": "How does the eye turn light into vision?",
+        "url": "https://www.nei.nih.gov/learn-about-eye-health/healthy-vision/how-eyes-work",
+        "publisher": "NEI",
+        "overview": "The cornea and lens focus incoming light onto the retina. Photoreceptors convert light into electrical signals, which travel through the optic nerve to the brain for visual processing."
+      },
+      "prompt": "Follow light from the front of the eye to the retina. Compare optical, retinal and neural explanations for altered vision.",
+      "conditions": [
+        {
+          "id": "cataract",
+          "title": "Cataract",
+          "url": "https://medlineplus.gov/cataract.html"
+        },
+        {
+          "id": "glaucoma",
+          "title": "Glaucoma",
+          "url": "https://medlineplus.gov/glaucoma.html"
+        },
+        {
+          "id": "retinaldetachment",
+          "title": "Retinal Detachment",
+          "url": "https://medlineplus.gov/retinaldetachment.html"
+        },
+        {
+          "id": "maculardegeneration",
+          "title": "Macular Degeneration",
+          "url": "https://medlineplus.gov/maculardegeneration.html"
+        },
+        {
+          "id": "diabeticeyeproblems",
+          "title": "Diabetic Eye Problems",
+          "url": "https://medlineplus.gov/diabeticeyeproblems.html"
+        }
+      ]
+    },
+    {
+      "id": "stomach",
+      "title": "Stomach & esophagus",
+      "systems": [
+        "digestive"
+      ],
+      "anchors": [
+        "FMA7148",
+        "FMA7131"
+      ],
+      "function": {
+        "title": "How does food move and break down?",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works",
+        "publisher": "NIDDK",
+        "overview": "Muscle contractions propel food through the digestive tract. In the stomach, mixing and digestive juices help break food down before it enters the small intestine."
+      },
+      "prompt": "Trace swallowing, propulsion and digestion as separate processes. How would you distinguish reflux, ulceration and impaired movement?",
+      "conditions": [
+        {
+          "id": "gerd",
+          "title": "GERD",
+          "url": "https://medlineplus.gov/gerd.html"
+        },
+        {
+          "id": "pepticulcer",
+          "title": "Peptic Ulcer",
+          "url": "https://medlineplus.gov/pepticulcer.html"
+        },
+        {
+          "id": "eosinophilicesophagitis",
+          "title": "Eosinophilic Esophagitis",
+          "url": "https://medlineplus.gov/eosinophilicesophagitis.html"
+        },
+        {
+          "id": "hiatalhernia",
+          "title": "Hiatal Hernia",
+          "url": "https://medlineplus.gov/hiatalhernia.html"
+        },
+        {
+          "id": "swallowingdisorders",
+          "title": "Swallowing Disorders",
+          "url": "https://medlineplus.gov/swallowingdisorders.html"
+        }
+      ]
+    },
+    {
+      "id": "intestines",
+      "title": "Intestines",
+      "systems": [
+        "digestive"
+      ],
+      "anchors": [
+        "FMA7200",
+        "FMA7201",
+        "HRA:VH_F_small_intestine"
+      ],
+      "function": {
+        "title": "Where does digestion become absorption?",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works",
+        "publisher": "NIDDK",
+        "overview": "The small intestine absorbs most nutrients from digested food. The large intestine absorbs water and helps turn remaining material into stool."
+      },
+      "prompt": "Compare inflammation, malabsorption and altered bowel function. What evidence would distinguish them?",
+      "conditions": [
+        {
+          "id": "celiacdisease",
+          "title": "Celiac Disease",
+          "url": "https://medlineplus.gov/celiacdisease.html"
+        },
+        {
+          "id": "crohnsdisease",
+          "title": "Crohn's Disease",
+          "url": "https://medlineplus.gov/crohnsdisease.html"
+        },
+        {
+          "id": "ulcerativecolitis",
+          "title": "Ulcerative Colitis",
+          "url": "https://medlineplus.gov/ulcerativecolitis.html"
+        },
+        {
+          "id": "irritablebowelsyndrome",
+          "title": "Irritable Bowel Syndrome",
+          "url": "https://medlineplus.gov/irritablebowelsyndrome.html"
+        },
+        {
+          "id": "intestinalobstruction",
+          "title": "Intestinal Obstruction",
+          "url": "https://medlineplus.gov/intestinalobstruction.html"
+        },
+        {
+          "id": "appendicitis",
+          "title": "Appendicitis",
+          "url": "https://medlineplus.gov/appendicitis.html"
+        }
+      ]
+    },
+    {
+      "id": "liver",
+      "title": "Liver & gallbladder",
+      "systems": [
+        "digestive"
+      ],
+      "anchors": [
+        "FMA7197",
+        "FMA7202",
+        "HRA:VH_F_liver",
+        "HRA:VH_F_gallbladder"
+      ],
+      "function": {
+        "title": "What roles do bile and the liver play in digestion?",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works",
+        "publisher": "NIDDK",
+        "overview": "The liver produces bile, which supports fat digestion. The gallbladder stores bile and releases it into the small intestine."
+      },
+      "prompt": "Map bile production, storage and delivery. Compare injury within the liver with obstruction along the biliary route.",
+      "conditions": [
+        {
+          "id": "hepatitis",
+          "title": "Hepatitis",
+          "url": "https://medlineplus.gov/hepatitis.html"
+        },
+        {
+          "id": "cirrhosis",
+          "title": "Cirrhosis",
+          "url": "https://medlineplus.gov/cirrhosis.html"
+        },
+        {
+          "id": "steatoticliverdisease",
+          "title": "Steatotic Liver Disease",
+          "url": "https://medlineplus.gov/steatoticliverdisease.html"
+        },
+        {
+          "id": "gallstones",
+          "title": "Gallstones",
+          "url": "https://medlineplus.gov/gallstones.html"
+        },
+        {
+          "id": "hemochromatosis",
+          "title": "Hemochromatosis",
+          "url": "https://medlineplus.gov/hemochromatosis.html"
+        },
+        {
+          "id": "wilsondisease",
+          "title": "Wilson Disease",
+          "url": "https://medlineplus.gov/wilsondisease.html"
+        }
+      ]
+    },
+    {
+      "id": "pancreas",
+      "title": "Pancreas",
+      "systems": [
+        "endocrine"
+      ],
+      "anchors": [
+        "FMA7198",
+        "HRA:VH_F_pancreas"
+      ],
+      "function": {
+        "title": "How does insulin participate in glucose regulation?",
+        "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/what-is-diabetes",
+        "publisher": "NIDDK",
+        "overview": "Insulin from the pancreas helps glucose enter cells for energy. Diabetes can involve insufficient insulin production or an inadequate response to insulin, leaving blood glucose elevated."
+      },
+      "prompt": "Compare the pancreas as a digestive organ and a hormone-producing organ. Which questions concern each role?",
+      "conditions": [
+        {
+          "id": "pancreatitis",
+          "title": "Pancreatitis",
+          "url": "https://medlineplus.gov/pancreatitis.html"
+        },
+        {
+          "id": "diabetestype1",
+          "title": "Diabetes Type 1",
+          "url": "https://medlineplus.gov/diabetestype1.html"
+        },
+        {
+          "id": "diabetestype2",
+          "title": "Diabetes Type 2",
+          "url": "https://medlineplus.gov/diabetestype2.html"
+        },
+        {
+          "id": "pancreaticcancer",
+          "title": "Pancreatic Cancer",
+          "url": "https://medlineplus.gov/pancreaticcancer.html"
+        },
+        {
+          "id": "hyperglycemia",
+          "title": "Hyperglycemia",
+          "url": "https://medlineplus.gov/hyperglycemia.html"
+        }
+      ]
+    },
+    {
+      "id": "kidneys",
+      "title": "Kidneys",
+      "systems": [
+        "urinary"
+      ],
+      "anchors": [
+        "FMA7203",
+        "HRA:VH_F_kidney"
+      ],
+      "function": {
+        "title": "How do filtration and reabsorption shape urine?",
+        "url": "https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work",
+        "publisher": "NIDDK",
+        "overview": "Each nephron combines a glomerular filter with a tubule. Filtration moves fluid and small substances out of blood; tubular processing returns needed substances and water while helping remove wastes and excess acid."
+      },
+      "prompt": "Trace blood and filtrate along separate routes. Connect renal function with fluid balance, acid handling and hormone production.",
+      "conditions": [
+        {
+          "id": "chronickidneydisease",
+          "title": "Chronic Kidney Disease",
+          "url": "https://medlineplus.gov/chronickidneydisease.html"
+        },
+        {
+          "id": "kidneystones",
+          "title": "Kidney Stones",
+          "url": "https://medlineplus.gov/kidneystones.html"
+        },
+        {
+          "id": "kidneycysts",
+          "title": "Kidney Cysts",
+          "url": "https://medlineplus.gov/kidneycysts.html"
+        },
+        {
+          "id": "diabetickidneyproblems",
+          "title": "Diabetic Kidney Problems",
+          "url": "https://medlineplus.gov/diabetickidneyproblems.html"
+        },
+        {
+          "id": "kidneyfailure",
+          "title": "Kidney Failure",
+          "url": "https://medlineplus.gov/kidneyfailure.html"
+        }
+      ]
+    },
+    {
+      "id": "bladder",
+      "title": "Bladder & urinary tract",
+      "systems": [
+        "urinary"
+      ],
+      "anchors": [
+        "FMA15900",
+        "HRA:VH_F_urinary_bladder"
+      ],
+      "function": {
+        "title": "How are urine storage and emptying coordinated?",
+        "url": "https://www.niddk.nih.gov/health-information/urologic-diseases/urinary-tract-how-it-works",
+        "publisher": "NIDDK",
+        "overview": "The kidneys produce urine, ureters transport it, and the bladder stores it. Bladder muscle, sphincters and nerve signals coordinate storage and the release of urine through the urethra."
+      },
+      "prompt": "Distinguish urine production, transport, storage and emptying. Where would infection, obstruction or altered control fit into the questions?",
+      "conditions": [
+        {
+          "id": "urinarytractinfections",
+          "title": "Urinary Tract Infections",
+          "url": "https://medlineplus.gov/urinarytractinfections.html"
+        },
+        {
+          "id": "interstitialcystitis",
+          "title": "Interstitial Cystitis",
+          "url": "https://medlineplus.gov/interstitialcystitis.html"
+        },
+        {
+          "id": "overactivebladder",
+          "title": "Overactive Bladder",
+          "url": "https://medlineplus.gov/overactivebladder.html"
+        },
+        {
+          "id": "urinaryincontinence",
+          "title": "Urinary Incontinence",
+          "url": "https://medlineplus.gov/urinaryincontinence.html"
+        },
+        {
+          "id": "bladdercancer",
+          "title": "Bladder Cancer",
+          "url": "https://medlineplus.gov/bladdercancer.html"
+        }
+      ]
+    },
+    {
+      "id": "bones",
+      "title": "Bones & joints",
+      "systems": [
+        "skeletal",
+        "connective"
+      ],
+      "anchors": [
+        "FMA9611",
+        "HRA:VH_F_femur_R",
+        "HRA:VH_F_femur_L"
+      ],
+      "function": {
+        "title": "How can bone strength be investigated?",
+        "url": "https://medlineplus.gov/bonedensity.html",
+        "publisher": "MedlinePlus",
+        "overview": "Bone is living tissue that is continually broken down and rebuilt. Bone density reflects mineral content; losing more bone than is replaced can reduce density and weaken bone."
+      },
+      "prompt": "Compare bone remodeling, cartilage function and joint inflammation. What can imaging or density measurements tell you, and what can they not?",
+      "conditions": [
+        {
+          "id": "osteoporosis",
+          "title": "Osteoporosis",
+          "url": "https://medlineplus.gov/osteoporosis.html"
+        },
+        {
+          "id": "osteoarthritis",
+          "title": "Osteoarthritis",
+          "url": "https://medlineplus.gov/osteoarthritis.html"
+        },
+        {
+          "id": "rheumatoidarthritis",
+          "title": "Rheumatoid Arthritis",
+          "url": "https://medlineplus.gov/rheumatoidarthritis.html"
+        },
+        {
+          "id": "gout",
+          "title": "Gout",
+          "url": "https://medlineplus.gov/gout.html"
+        },
+        {
+          "id": "fractures",
+          "title": "Fractures",
+          "url": "https://medlineplus.gov/fractures.html"
+        },
+        {
+          "id": "boneinfections",
+          "title": "Bone Infections",
+          "url": "https://medlineplus.gov/boneinfections.html"
+        }
+      ]
+    },
+    {
+      "id": "muscles",
+      "title": "Muscles & tendons",
+      "systems": [
+        "muscular"
+      ],
+      "anchors": [],
+      "function": {
+        "title": "How do muscles and tendons contribute to movement?",
+        "url": "https://medlineplus.gov/muscledisorders.html",
+        "publisher": "MedlinePlus",
+        "overview": "Different muscle types support movement and other body functions. Muscle problems may arise from injury, inflammation, inherited conditions or diseases affecting the nerves that control muscles."
+      },
+      "prompt": "Compare weakness, fatigue and pain. Build a research question that separates muscle, nerve and tendon involvement.",
+      "conditions": [
+        {
+          "id": "musculardystrophy",
+          "title": "Muscular Dystrophy",
+          "url": "https://medlineplus.gov/musculardystrophy.html"
+        },
+        {
+          "id": "myositis",
+          "title": "Myositis",
+          "url": "https://medlineplus.gov/myositis.html"
+        },
+        {
+          "id": "tendinitis",
+          "title": "Tendinitis",
+          "url": "https://medlineplus.gov/tendinitis.html"
+        },
+        {
+          "id": "sprainsandstrains",
+          "title": "Sprains and Strains",
+          "url": "https://medlineplus.gov/sprainsandstrains.html"
+        },
+        {
+          "id": "rotatorcuffinjuries",
+          "title": "Rotator Cuff Injuries",
+          "url": "https://medlineplus.gov/rotatorcuffinjuries.html"
+        }
+      ]
+    },
+    {
+      "id": "skin",
+      "title": "Skin",
+      "systems": [
+        "integumentary"
+      ],
+      "anchors": [
+        "FMA7163",
+        "HRA:VH_F_integumentary_system"
+      ],
+      "function": {
+        "title": "How does skin act as a barrier?",
+        "url": "https://medlineplus.gov/skinconditions.html",
+        "publisher": "MedlinePlus",
+        "overview": "Skin limits fluid loss, helps keep harmful microbes out and contributes to temperature control. It also supports sensations such as touch, heat, cold and pain."
+      },
+      "prompt": "Compare barrier disruption, inflammation and infection. Which observations relate to skin layers, and which require cellular evidence?",
+      "conditions": [
+        {
+          "id": "eczema",
+          "title": "Eczema",
+          "url": "https://medlineplus.gov/eczema.html"
+        },
+        {
+          "id": "psoriasis",
+          "title": "Psoriasis",
+          "url": "https://medlineplus.gov/psoriasis.html"
+        },
+        {
+          "id": "cellulitis",
+          "title": "Cellulitis",
+          "url": "https://medlineplus.gov/cellulitis.html"
+        },
+        {
+          "id": "melanoma",
+          "title": "Melanoma",
+          "url": "https://medlineplus.gov/melanoma.html"
+        },
+        {
+          "id": "burns",
+          "title": "Burns",
+          "url": "https://medlineplus.gov/burns.html"
+        },
+        {
+          "id": "pressuresores",
+          "title": "Pressure Sores",
+          "url": "https://medlineplus.gov/pressuresores.html"
+        }
+      ]
+    },
+    {
+      "id": "immune",
+      "title": "Spleen & immunity",
+      "systems": [
+        "lymphatic"
+      ],
+      "anchors": [
+        "FMA7196",
+        "HRA:VH_F_spleen"
+      ],
+      "function": {
+        "title": "How does the immune system recognize a threat?",
+        "url": "https://medlineplus.gov/immunesystemanddisorders.html",
+        "publisher": "MedlinePlus",
+        "overview": "Immune protection involves barriers, cells and lymphatic tissues. Recognition of antigens can trigger immune responses, including antibody production. Adaptive immune memory helps the body respond to later encounters."
+      },
+      "prompt": "Compare immune defense, allergy and autoimmunity. Separate the location of immune tissues from the mechanisms you want to investigate.",
+      "conditions": [
+        {
+          "id": "lupus",
+          "title": "Lupus",
+          "url": "https://medlineplus.gov/lupus.html"
+        },
+        {
+          "id": "lymphoma",
+          "title": "Lymphoma",
+          "url": "https://medlineplus.gov/lymphoma.html"
+        },
+        {
+          "id": "lymphedema",
+          "title": "Lymphedema",
+          "url": "https://medlineplus.gov/lymphedema.html"
+        },
+        {
+          "id": "spleendiseases",
+          "title": "Spleen Diseases",
+          "url": "https://medlineplus.gov/spleendiseases.html"
+        },
+        {
+          "id": "allergy",
+          "title": "Allergy",
+          "url": "https://medlineplus.gov/allergy.html"
+        },
+        {
+          "id": "autoimmunediseases",
+          "title": "Autoimmune Diseases",
+          "url": "https://medlineplus.gov/autoimmunediseases.html"
+        }
+      ]
+    },
+    {
+      "id": "hormones",
+      "title": "Hormones & glands",
+      "systems": [
+        "endocrine"
+      ],
+      "anchors": [
+        "FMA9604"
+      ],
+      "function": {
+        "title": "How do hormones coordinate distant organs?",
+        "url": "https://medlineplus.gov/hormones.html",
+        "publisher": "MedlinePlus",
+        "overview": "Endocrine glands release hormones that travel through blood to other tissues. These signals influence processes including growth, metabolism and reproduction; altered hormone amounts can disrupt normal function."
+      },
+      "prompt": "Sketch a feedback loop. Compare excessive secretion, insufficient secretion and a change in tissue response.",
+      "conditions": [
+        {
+          "id": "hyperthyroidism",
+          "title": "Hyperthyroidism",
+          "url": "https://medlineplus.gov/hyperthyroidism.html"
+        },
+        {
+          "id": "hypothyroidism",
+          "title": "Hypothyroidism",
+          "url": "https://medlineplus.gov/hypothyroidism.html"
+        },
+        {
+          "id": "addisondisease",
+          "title": "Addison Disease",
+          "url": "https://medlineplus.gov/addisondisease.html"
+        },
+        {
+          "id": "cushingssyndrome",
+          "title": "Cushing's Syndrome",
+          "url": "https://medlineplus.gov/cushingssyndrome.html"
+        },
+        {
+          "id": "pituitarydisorders",
+          "title": "Pituitary Disorders",
+          "url": "https://medlineplus.gov/pituitarydisorders.html"
+        },
+        {
+          "id": "parathyroiddisorders",
+          "title": "Parathyroid Disorders",
+          "url": "https://medlineplus.gov/parathyroiddisorders.html"
+        }
+      ]
+    },
+    {
+      "id": "pelvis",
+      "title": "Uterus & ovaries",
+      "systems": [
+        "reproductive"
+      ],
+      "anchors": [
+        "HRA:VH_F_uterus",
+        "HRA:VH_F_ovary"
+      ],
+      "function": {
+        "title": "How can the menstrual cycle be understood as a feedback loop?",
+        "url": "https://medlineplus.gov/menstruation.html",
+        "publisher": "MedlinePlus",
+        "overview": "The menstrual cycle prepares the body for pregnancy. When pregnancy does not occur, the uterine lining is shed. Cycle timing varies, making a single fixed calendar an incomplete description."
+      },
+      "prompt": "Compare uterine, ovarian and endocrine research questions. What makes two conditions with overlapping symptoms mechanistically different?",
+      "conditions": [
+        {
+          "id": "endometriosis",
+          "title": "Endometriosis",
+          "url": "https://medlineplus.gov/endometriosis.html"
+        },
+        {
+          "id": "polycysticovarysyndrome",
+          "title": "Polycystic Ovary Syndrome",
+          "url": "https://medlineplus.gov/polycysticovarysyndrome.html"
+        },
+        {
+          "id": "uterinefibroids",
+          "title": "Uterine Fibroids",
+          "url": "https://medlineplus.gov/uterinefibroids.html"
+        },
+        {
+          "id": "ovariancysts",
+          "title": "Ovarian Cysts",
+          "url": "https://medlineplus.gov/ovariancysts.html"
+        },
+        {
+          "id": "pelvicinflammatorydisease",
+          "title": "Pelvic Inflammatory Disease",
+          "url": "https://medlineplus.gov/pelvicinflammatorydisease.html"
+        },
+        {
+          "id": "femaleinfertility",
+          "title": "Female Infertility",
+          "url": "https://medlineplus.gov/femaleinfertility.html"
+        }
+      ]
+    },
+    {
+      "id": "male-pelvis",
+      "title": "Prostate & testes",
+      "systems": [
+        "reproductive"
+      ],
+      "anchors": [
+        "FMA9600",
+        "FMA7210"
+      ],
+      "function": {
+        "title": "How is male reproductive function investigated?",
+        "url": "https://medlineplus.gov/maleinfertility.html",
+        "publisher": "MedlinePlus",
+        "overview": "Male fertility research considers testicular function, the ducts that carry sperm and hormonal regulation. Problems in any of these areas can contribute to infertility."
+      },
+      "prompt": "Separate questions about sperm production, transport and hormonal regulation. How do prostate and testicular conditions differ in location and function?",
+      "conditions": [
+        {
+          "id": "enlargedprostatebph",
+          "title": "Enlarged Prostate (BPH)",
+          "url": "https://medlineplus.gov/enlargedprostatebph.html"
+        },
+        {
+          "id": "prostatecancer",
+          "title": "Prostate Cancer",
+          "url": "https://medlineplus.gov/prostatecancer.html"
+        },
+        {
+          "id": "testicularcancer",
+          "title": "Testicular Cancer",
+          "url": "https://medlineplus.gov/testicularcancer.html"
+        },
+        {
+          "id": "testiculardisorders",
+          "title": "Testicular Disorders",
+          "url": "https://medlineplus.gov/testiculardisorders.html"
+        },
+        {
+          "id": "maleinfertility",
+          "title": "Male Infertility",
+          "url": "https://medlineplus.gov/maleinfertility.html"
+        }
+      ]
+    },
+    {
+      "id": "pregnancy",
+      "title": "Pregnancy & placenta",
+      "systems": [
+        "pregnancy"
+      ],
+      "anchors": [],
+      "function": {
+        "title": "What changes are followed across pregnancy?",
+        "url": "https://medlineplus.gov/pregnancy.html",
+        "publisher": "MedlinePlus",
+        "overview": "Pregnancy involves changes in the maternal body as the fetus develops. Prenatal monitoring follows both maternal health and the progress of pregnancy over time."
+      },
+      "prompt": "Distinguish maternal physiology, placental function and fetal development. How do gestational age and study population change a research question?",
+      "conditions": [
+        {
+          "id": "ectopicpregnancy",
+          "title": "Ectopic Pregnancy",
+          "url": "https://medlineplus.gov/ectopicpregnancy.html"
+        },
+        {
+          "id": "highbloodpressureinpregnancy",
+          "title": "High Blood Pressure in Pregnancy",
+          "url": "https://medlineplus.gov/highbloodpressureinpregnancy.html"
+        },
+        {
+          "id": "diabetesandpregnancy",
+          "title": "Diabetes and Pregnancy",
+          "url": "https://medlineplus.gov/diabetesandpregnancy.html"
+        },
+        {
+          "id": "pretermlabor",
+          "title": "Preterm Labor",
+          "url": "https://medlineplus.gov/pretermlabor.html"
+        },
+        {
+          "id": "miscarriage",
+          "title": "Miscarriage",
+          "url": "https://medlineplus.gov/miscarriage.html"
+        }
+      ]
+    }
+  ]
+}

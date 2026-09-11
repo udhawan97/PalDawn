@@ -78,3 +78,48 @@ await assert.rejects(decodeModelResponse(new Response('', { status: 404 }), 0, f
 assert.ok(!existsSync(resolve('dist/anatomy')), 'Normal build must exclude pending anatomy pack')
 assert.ok(!readdirSync('dist/assets').some(f => f.startsWith('AnatomyStudy') || f.startsWith('AnatomyLanding')), 'Normal build must exclude candidate study chunks')
 console.log('Anatomy checks passed: all meshes/buffers/concepts, all available-system browse coverage, explicit lesson mappings and source resolution, packing, picking, WebMCP, gzip handling, normal-build exclusion.')
+
+// Research navigation uses source membership, preserves unknowns and exports only selected reading.
+const researchBuild = await build({ configFile: false, logLevel: 'silent', build: { write: false, minify: false, lib: { entry: resolve('src/anatomy/research.ts'), formats: ['es'], fileName: 'research' } } })
+const researchCode = (Array.isArray(researchBuild) ? researchBuild[0] : researchBuild).output.find(o => o.type === 'chunk').code
+const { RESEARCH_TRACKS, ALL_RESEARCH_TOPICS, trackConcepts, suggestedTracks, researchContext, searchReading, exportReadingPlan } = await import('data:text/javascript;base64,' + Buffer.from(researchCode).toString('base64'))
+const male = JSON.parse(readFileSync(resolve(base, 'atlas.json'))), female = JSON.parse(readFileSync(resolve(base, 'atlas-female.json')))
+const allConceptIds = new Set([...male.concepts, ...female.concepts].map(c => c.id))
+for (const track of RESEARCH_TRACKS) {
+  assert.ok(track.conditions.length >= 5)
+  for (const id of track.anchors) assert.ok(allConceptIds.has(id), `Missing source anchor ${id}`)
+  for (const system of track.systems) assert.ok(SYSTEMS.some(s => s.id === system))
+  assert.equal(new Set(track.conditions.map(t => t.id)).size, track.conditions.length)
+}
+assert.equal(RESEARCH_TRACKS.length, 20)
+assert.equal(new Set(RESEARCH_TRACKS.flatMap(t => t.conditions.map(c => c.id))).size, 113)
+assert.equal(new Set(ALL_RESEARCH_TOPICS.map(t => t.id)).size, ALL_RESEARCH_TOPICS.length)
+for (const atlas of [male, female]) {
+  const heartTrack = RESEARCH_TRACKS.find(t => t.id === 'heart')
+  const heart = trackConcepts(atlas, heartTrack)[0]
+  assert.deepEqual(suggestedTracks(atlas, heart).tracks.map(t => t.id), ['heart'])
+  const piece = { id: 'selected-piece', name: 'Unknown label', elements: [heart.elements[0]] }
+  assert.ok(suggestedTracks(atlas, piece).tracks.some(t => t.id === 'heart'), 'Child meshes retain organ reading context')
+  const unknown = { id: 'missing', name: 'heart', elements: ['unknown-piece'] }
+  assert.equal(suggestedTracks(atlas, unknown).tracks.length, 0, 'A similar label must not invent a connection')
+}
+assert.equal(trackConcepts(male, RESEARCH_TRACKS.find(t => t.id === 'pelvis')).length, 0)
+assert.equal(trackConcepts(female, RESEARCH_TRACKS.find(t => t.id === 'pelvis')).length, 2)
+assert.equal(trackConcepts(female, RESEARCH_TRACKS.find(t => t.id === 'male-pelvis')).length, 0)
+assert.equal(searchReading(ALL_RESEARCH_TOPICS, '  kidney   chronic ')[0].title, 'Chronic Kidney Disease')
+const plan = exportReadingPlan(['function:kidneys', 'endometriosis', 'missing'])
+assert.ok(plan.includes('filtration and reabsorption'))
+assert.ok(plan.includes('https://medlineplus.gov/endometriosis.html'))
+assert.ok(!plan.includes('Cardiomyopathy'))
+assert.ok(!plan.includes('missing'))
+console.log('Research checks passed: 20 study tracks, 113 condition topics, exact source anchors, child membership, unmapped references, search and bounded export.')
+
+const noConnection = researchContext(suggestedTracks(male, { id: 'unmapped', name: 'heart', elements: ['unknown-piece'] }), '')
+assert.equal(noConnection.scope, 'Browse independently · no study connection mapped')
+assert.equal(researchContext(null, 'kidneys').scope, 'Your chosen reading area')
+const ligament = male.parts.find(p => p.id === 'FJ1284')
+assert.ok(ligament)
+const ligamentContext = researchContext(suggestedTracks(male, { id: ligament.conceptId, name: ligament.name, elements: [ligament.id] }), '')
+assert.equal(ligamentContext.track.id, 'bones')
+assert.equal(ligamentContext.scope, 'Broader system reading · no exact organ mapping')
+console.log('Unmapped research context and actual connective-tissue fallback checks passed.')
