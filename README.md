@@ -1,173 +1,108 @@
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/">
-    <img src="app/public/icon.svg" width="136" height="136" alt="PalDawn living mark: a protected passage reaching a dawn disc">
+    <img src="app/public/icon-static.svg" width="104" height="104" alt="PalDawn: a porcelain listening tube reaching a gold disc">
   </a>
 </p>
 
 <h1 align="center">PalDawn</h1>
-
 <p align="center"><strong>Enter the body. Follow what happens next.</strong></p>
 
-PalDawn is a source-linked 3D learning voyage for following cause and effect
-through the body. The live app on `main` pairs ten WHO-ranked starting journeys
-with a project-authored conceptual systems map, organ-level close focus, and
-phase signals that make each authored mechanism step visible. A local Atlas
-Wayfinder searches the existing conditions, phases, and structures, then opens
-the exact preview route without sending or storing the query. A Research Lens
-maps the bundled source records to the authored steps they support while
-keeping index context and pending qualified review visibly separate. A new
-Curriculum 50 planning catalog makes the intended breadth searchable across
-twelve system families while only the ten existing previews can open; the
-other forty remain visibly gated on sources and qualified review. Its
-living-instrument design carries the animated PalDawn mark through the intro,
-controls, scene materials, installed icon, and link preview without presenting
-the procedural model as reviewed anatomy.
+Explore how body systems connect, follow a disease mechanism one step at a time,
+and find the sources behind the explanation. PalDawn is a browser-based study
+companion for curious learners, including medical students exploring further
+reading. Its educational content is **unreviewed**; it is not a clinical training
+curriculum, diagnostic tool, or treatment guide.
 
 <p align="center">
-  <a href="https://udhawan97.github.io/PalDawn/"><strong>Launch the web app</strong></a>
-  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0">Study and Reliability release</a>
-  · <a href="pipeline/provenance/README.md">Evidence gate</a>
+  <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
+  · <a href="docs/GETTING-STARTED.md">Getting started</a>
+  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0">v0.4.0 source release</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-f0aa54.svg"></a>
-  <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0"><img alt="Latest tagged release: v0.4.0" src="https://img.shields.io/badge/release-v0.4.0-75d9d2.svg"></a>
+  <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-e0b653.svg"></a>
 </p>
 
-> [!IMPORTANT]
-> **The 3D body is a conceptual systems map, not reviewed anatomy.** Mechanism
-> Lens adds high-detail procedural layers and source-linked educational
-> synthesis, but neither has been reviewed by a
-> named qualified clinician and cannot diagnose symptoms, calculate personal
-> risk, or recommend treatment. No third-party anatomy asset is incorporated in the normal public build,
-> and no patient data is used. If you think you may be having a medical emergency, contact
-> your local emergency services immediately.
+## Choose your study space
 
-## Anatomy Lab candidate — local preview
+| Start here | What you can explore | What you need |
+|---|---|---|
+| [Web app](https://udhawan97.github.io/PalDawn/) | Ten disease previews, source navigation, a conceptual body map, and a private learner workspace | JavaScript; WebGL2 for 3D. A text voyage is available. |
+| [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
+| [v0.4.0 source](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0) | The immutable Study and Reliability snapshot | Source archives, not a native installer. New research-desk work is on `main`, after this tag. |
 
-A new, unpublished [Anatomy Lab candidate](docs/ANATOMY-LAB.md) adds the full
-Human Atlas male reference and its earlier HRA female assembly, searchable
-structures, layered/exploded inspection, organ-level disease links, source
-reading, recall practice and per-reference session lists. Its redesigned
-website previews both sources and makes their different coverage explicit.
+The public app is deployed from `main` through GitHub Pages. **Anatomy Lab is
+excluded from that build.** A merge does not publish the reference anatomy.
+No desktop or mobile installer is provided; supported browsers may offer web-app
+installation. See [installation, updates, and help](docs/GETTING-STARTED.md).
 
-The candidate uses 2,234 male meshes and 888 female meshes. Female skeletal and
-muscle coverage is partial. These references do not cover every structure,
-variation or ailment. Qualified anatomy and clinical review is pending.
-The candidate is excluded from the normal public build; **the live website has
-not been updated with this feature**. See the candidate guide for preparation,
-local preview, tests, attribution, graphics controls and remaining limits.
+## Follow a mechanism, then inspect its sources
 
-The existing First Light learner workspace searches stage labels, both authored tracks,
-and your local notes. Selecting a result opens its comparison view without moving
-the current journey.
+Start with **Explore diabetes**, choose an explanation depth, and move through
+its authored steps. Select a highlighted structure for a closer view. Open
+**Research Lens** to see which bundled source records link to the current step.
 
-## Choose how to start
+- **Find a route:** Atlas Wayfinder searches existing conditions, phases, and
+  structures and opens the matching preview.
+- **Read at your depth:** Plain English and Clinical terms offer two explanations
+  of the same disease step.
+- **Keep your place:** First Light supports saved stages, private notes,
+  checkpoints, transcript comparison, and study/backup exports.
+- **Set the pace:** choose reduced motion, text voyage, caption sizing, high
+  contrast, and keyboard navigation.
 
-| Path | What you get | Requirement | Start |
-|---|---|---|---|
-| Web app | Current `main`, deployed as a static installable web app | JavaScript; WebGL2 for the 3D scene | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
-| Text voyage | The same five authored stages without the 3D scene | JavaScript; choose **Use text voyage** in Settings or from the WebGL recovery screen | [Open PalDawn](https://udhawan97.github.io/PalDawn/) |
-| Release snapshot | Immutable source at `v0.4.0` | Git or GitHub | [View v0.4.0](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0) |
-| Local source | Current code, tests, and provenance checks | Node.js 22+; WebGL2 for 3D | [Run locally](#run-locally) |
+![PalDawn web introduction with its porcelain-and-gold listening mark, disease and voyage actions, and conceptual body map](docs/assets/paldawn-web-introduction.png)
 
-There is no packaged desktop or mobile download. If your browser supports web
-app installation, open **Settings → Installation help**; the browser remains
-in charge of whether it offers **Install App** or **Add to Home Screen**.
+*Public-build introduction captured from current source. The procedural body is
+illustrative, not to scale, and not reviewed anatomy. The ten previews are
+unreviewed educational synthesis. Curriculum 50 is a plan: forty entries remain
+gated, not forty additional lessons.*
 
-The live website follows current `main`. The `v0.4.0` tag records the Study and
-Reliability release; `v0.3.0` preserves the earlier Mechanism Lens snapshot. Systems Atlas remains available at `v0.2.0`,
-and the original First Light systems release remains available at `v0.1.0`.
+## Anatomy Lab: turn a body part into a research question
 
-## What you can do today
+**Local candidate · not in the public web app.** Start with a structure or choose
+any reading area independently. The research desk connects short function
+introductions, condition topics, inquiry prompts, and authoritative source links.
 
-- **Find an existing route.** Search the Atlas for a condition, mechanism
-  phase, or highlighted structure, then arrive at the matching preview step and
-  close-focus target. Search stays local and only indexes bundled content.
-- **Trace the authored evidence map.** Open Research Lens to distinguish index
-  context from step-linked WHO and NIH/NIDDK records, then return directly to a
-  covered mechanism phase. The map describes linkage, not evidentiary strength.
-- **Explore ten disease pathways.** Start from the WHO 2021 top ten global
-  causes of death and follow a compact, source-linked mechanism through the
-  body. The ranking describes global mortality, not personal risk.
-- **Inspect the 50-condition plan.** Search or filter the wider global-burden
-  curriculum by system. It is a coverage plan rather than a universal rank;
-  forty entries are deliberately non-explorable until their source, asset, and
-  qualified-review gates pass.
-- **See each phase change.** Follow a data-driven signal route across only the
-  structures named by the current step, then select a highlighted structure to
-  enter close focus with layered geometry and a visible phase lens.
-- **Follow diabetes in depth.** Move through digestion, glucose absorption,
-  insulin release, cellular response, type 1/type 2/gestational divergence,
-  hyperglycaemia, kidney response, ketones, and long-term vessel, eye, kidney,
-  and nerve effects.
-- **Inspect a 3D systems map.** Highlight or separate the brain, eyes, lungs,
-  heart, vessels, liver, pancreas, digestive tract, kidneys, bladder, nerves,
-  muscles, adipose tissue, immune system, and skeleton. Every form is
-  project-authored procedural geometry and deliberately not to scale.
-- **Choose reading depth.** Switch each disease step between Plain English and
-  Clinical terms, then open its direct WHO or NIH/NIDDK evidence links.
-- **Follow one coherent route.** Move through Approach → Surface trace → Portal
-  → Flow corridor → Arrival using play, scrub, stage, or keyboard controls.
-- **Change the explanation, not the scene.** Switch between Guide and
-  Engineering narration, search the complete transcript, or compare both
-  tracks side by side.
-- **Make the voyage yours—locally.** Resume, save stages, write bounded private
-  notes, mark personal checkpoints, and export study Markdown or a validated
-  local backup. PalDawn warns against entering patient or personal health data.
-- **Choose a calmer route.** Use reduced motion, a stage-by-stage text voyage,
-  caption sizing, high contrast, a comfort vignette, and keyboard navigation.
-- **Inspect the boundary.** On-device diagnostics, quality controls, evidence
-  records, and fail-closed adoption checks stay visible rather than becoming
-  invisible implementation detail.
+1. **Explore the reference.** Search a structure, isolate it, switch layers, or
+   use a visual cutaway. Male and female assemblies have different coverage.
+2. **Ask how it works.** Choose from 20 body-area tracks—from heart and lungs to
+   nerves, eyes, immunity, hormones, and reproductive anatomy.
+3. **Broaden the reading.** Search 113 distinct condition topics, open MedlinePlus
+   sources, and follow PubMed searches into the literature.
+4. **Make your own plan.** Save questions or conditions, choose compact cards or
+   a wider research layout, then export your selected reading as Markdown.
 
-![PalDawn introduction in Royal Void violet, with the porcelain-and-gold living mark, source-linked journey controls, and a visibly synthetic body map](docs/assets/paldawn-first-light.png)
+![Anatomy Lab local preview with the research desk beside a selected reference structure and a source-linked function question](docs/assets/paldawn-research-desk.png)
 
-*Current `main` introduction after the animated-logo redesign. The body remains
-deliberately project-authored, conceptual, and visibly synthetic; it is not an
-anatomical reconstruction.*
+*An actual local study view. The 113 topics are reading links, not newly authored
+lessons or disease animations. PubMed links are searches, not appraised papers.
+The reading queue survives navigation between references but resets on reload;
+export it before closing.*
 
-## Graphics development
+The male reference contains 2,234 meshes; the female assembly contains 888,
+with **partial skeleton and muscle coverage**. They are not a matched pair and
+do not cover every body part, variation, or ailment. A related reading suggestion
+does not establish disease in the selected mesh. Source attribution remains
+visible in the viewer and [candidate guide](docs/ANATOMY-LAB.md).
 
-A separate [heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) starts the
-[graphics rebuild](docs/GRAPHICS-REBUILD.md) with original editable exterior
-geometry, surface vessels, clay/tissue inspection, and responsive camera fitting.
-It is unreviewed artwork, excluded from the public app build; the live app has
-not adopted this model. Run `npm run graphics:dev` from `app/` to inspect it
-locally. A linked [synthetic flow study](docs/VESSEL-FLOW-WORKBENCH.md) adds a
-curved cutaway with uniform, tapered, and narrowed profiles, 3D cell-shaped
-fixtures, and repeatable pause/seek playback.
-Reviewed blood flow, heart interiors, exterior continuity, and the full
-cinematic sequence remain planned; both studies stay out of the public build.
+[Run Anatomy Lab →](docs/ANATOMY-LAB.md) ·
+[Research-desk details →](docs/ANATOMY-RESEARCH-DESK.md)
 
-## How the voyage works
+## Your work and your sources
 
-1. **Approach** — establish the synthetic route and its limits.
-2. **Surface trace** — follow one normalized path shared by the scene systems.
-3. **Portal** — cross a bounded transition with a non-transparent fallback.
-4. **Flow corridor** — observe route-driven analytic markers without treating
-   them as blood flow or anatomy.
-5. **Arrival** — review the route, transcript, saved stages, and private study
-   material on your device.
-
-## Trust boundary
-
-| Area | Current behavior |
+| Area | What to expect |
 |---|---|
-| Data | No account or backend. Resume state, preferences, bookmarks, private notes, and checkpoints stay in browser storage until you export or reset them. Atlas search queries are transient and are neither stored nor sent. |
-| Network | The deployed app loads static same-origin files. It has no analytics SDK or outbound telemetry path; the offline shell caches only PalDawn-owned assets. |
-| AI | No runtime AI provider, model call, or API key is used. SPD is authored interface guidance, not a diagnostic agent. |
-| Medical content | Mechanism Lens contains source-linked, unreviewed educational synthesis and project-authored illustrative geometry. Both are visibly bounded and never presented as diagnosis, treatment selection, reviewed anatomy, or professional clinical training. |
-| Provenance | Candidate assets and content fail closed until license, lineage, source, and—where medical—named qualified-human review requirements pass. |
-| Updates | Modern clients offer **Update and reload open tabs** and activate only after every open PalDawn tab verifies its local work is saved; a failed save pauses the update without reloading. If the open tab set changes after activation commits, PalDawn freezes the remaining app, preserves the previous cache, and shows a focused instruction to close every PalDawn tab and reopen on one version—there is no unusable retry action. An older client’s legacy **Update now** request is intentionally vetoed because it cannot verify memory-only work: keep that tab open to copy or save its work, then close and reopen PalDawn before retrying. The browser may also activate a waiting build after all PalDawn tabs close. |
-
-The audited Z-Anatomy heart and coronary candidates remain
-planned/pending/blocked with null adoption output. See the
-[asset audit](docs/research/paldawn-heart-coronary-asset-audit.md),
-[project plan](docs/PLAN.md), [NOTICE](NOTICE.md), and [credits](CREDITS.md).
+| Local work | No account or backend. Public-app preferences and learner work use browser storage. Anatomy study lists and reading queues use session memory only. Do not enter patient or personal health data. |
+| Network | Static app files load from the site. Opening an evidence or PubMed link contacts that external site. Anatomy preparation downloads public source packs and directories. No analytics SDK or runtime AI provider is used. |
+| Evidence | Citations help you inspect the source; they do not certify the synthesis. Named qualified-human review remains pending. |
+| Updates and backups | Export important work. Public-app updates check that open tabs can save before reloading. See the [update and recovery guide](docs/GETTING-STARTED.md#updates-and-local-work). |
+| Scope | Education only. No diagnosis, personal-risk calculation, treatment selection, validated physiology, or patient-specific simulation. |
 
 ## Run locally
+
+Install Node.js 22+ and Git, then:
 
 ```bash
 git clone https://github.com/udhawan97/PalDawn.git
@@ -177,60 +112,36 @@ npm test
 npm run dev
 ```
 
-Open the URL printed by Vite. `npm test` type-checks, builds, validates the
-five-stage journey and synthetic-only boundary, checks the offline/local-data
-and Atlas-wayfinding contracts, and enforces the 500 KB gzip JavaScript budget.
-The same gate also validates the local Research Lens source-to-step map.
+Open the URL printed by Vite. This starts the normal public app; follow the
+[separate preparation steps](docs/ANATOMY-LAB.md#run-the-complete-candidate) for
+Anatomy Lab. For the GitHub Pages base path, run
+`VITE_BASE_PATH=/PalDawn/ npm test` from `app/`.
 
-Run the independent provenance gate from the repository root:
+From the repository root, verify source/asset adoption boundaries:
 
 ```bash
 node pipeline/provenance/run-checks.mjs
 ```
 
-For a project-site production build, use the same base path as GitHub Pages:
+[App commands and architecture](app/README.md) ·
+[Troubleshooting](docs/GETTING-STARTED.md#troubleshooting) ·
+[Changelog](CHANGELOG.md)
 
-```bash
-cd app
-VITE_BASE_PATH=/PalDawn/ npm test
-```
+## Contribute and explore the plan
 
-<details>
-<summary><strong>Repository map</strong></summary>
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[evidence gate](pipeline/provenance/README.md) before proposing content or assets.
+Code checks and browser acceptance do not replace qualified medical review.
 
-| Path | Purpose |
-|---|---|
-| `app/` | Vite, React, TypeScript, Three.js, React Three Fiber, PWA shell, and browser tests |
-| `app/src/data/p0-journey.json` | Bounded five-stage journey data |
-| `app/src/data/diseases.ts` | Ten sourced disease definitions and body-system steps |
-| `app/src/data/diseaseCatalog.ts` | Fifty-condition curriculum registry with explorable/planned gates |
-| `app/src/data/atlasSearch.ts` | Bounded local index over existing Atlas routes and structures |
-| `app/src/data/atlasEvidence.ts` | Fail-closed source-to-step coverage map for the Research Lens |
-| `app/src/scene/HumanSystemsScene.tsx` | Project-authored layered body map, phase signals, and organ close-focus camera |
-| `app/src/scene/SceneCanvas.tsx` | Lazy-loaded WebGL scene boundary kept available through the offline asset manifest |
-| `docs/BRAND-SYSTEM.md` | Living mark, palette, typography, motion, generated assets, and authority boundary |
-| `docs/MECHANISM-LENS.md` | v0.3 visual contract, interaction model, and safety boundary |
-| `docs/ATLAS-WAYFINDING.md` | P2 route-search behavior, privacy boundary, and verification contract |
-| `docs/ATLAS-RESEARCH-LENS.md` | Evidence-navigation behavior, review boundary, and verification contract |
-| `docs/CURRICULUM-50.md` | Global-burden curriculum method, multiscale engine plan, and content gates |
-| `docs/VISION.md` | Mission, body/disease/drug simulation north star, quality bar, and current limits |
-| `docs/FOUNDATION-PLUS-4.md` | Disease explorer guide, sources, controls, and boundaries |
-| `pipeline/provenance/` | Schema, validator, fixtures, and adoption records |
-| `docs/PLAN.md` | Product architecture, medical gates, and roadmap |
-| `docs/research/` | Primary-source reconnaissance and asset-audit dossiers |
-| `.github/workflows/` | CI and GitHub Pages publication |
+- [Vision and limits](docs/VISION.md) · [Project plan](docs/PLAN.md)
+- [Curriculum 50](docs/CURRICULUM-50.md) · [Evidence navigation](docs/ATLAS-RESEARCH-LENS.md)
+- [Brand and editable assets](docs/BRAND-SYSTEM.md)
+- [Heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) ·
+  [Synthetic flow study](docs/VESSEL-FLOW-WORKBENCH.md)—separate unreviewed studies,
+  excluded from the public build.
 
-</details>
-
-## Contribute
-
-Start with [CONTRIBUTING.md](CONTRIBUTING.md). Code changes must pass the app
-and provenance checks. Art, model, and medical-content proposals must preserve
-the repository’s license zones and evidence-before-adoption rule.
-
-Code is MIT licensed. Future PalDawn-authored educational content and compatible
-derived asset packs are intended for CC BY-SA 4.0; each adopted upstream keeps
-its own exact license and lineage.
-
-PalDawn was formerly named Antaryaan. Historical research prompts retain their
-original wording where changing it would damage the audit trail.
+Code is [MIT licensed](LICENSE). Upstream anatomy retains its own license and
+lineage; see [credits](CREDITS.md) and [NOTICE](NOTICE.md). Future authored content
+and compatible derived packs are intended for CC BY-SA 4.0, subject to adoption
+review. PalDawn was formerly named Antaryaan; historical research keeps that name
+where it preserves the audit trail.

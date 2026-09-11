@@ -19,7 +19,7 @@ export function anatomyPreview(enabled: boolean): Plugin {
     name: 'paldawn-local-anatomy-preview',
     transformIndexHtml(html) {
       if (!enabled) return html
-      return html.replace(/<title>.*?<\/title>/, '<title>PalDawn — Anatomy Lab</title>').replace(/(<meta name="description" content=")[^"]*/, '$1Explore male and female reference anatomy, source-linked disease pathways and recall practice. Local candidate; qualified review pending.')
+      return html.replace(/<title>.*?<\/title>/, '<title>PalDawn — Anatomy Lab</title>').replace(/(<meta (?:property|name)="(?:og|twitter):title" content=")[^"]*/g, '$1PalDawn — Anatomy Lab local preview').replace(/(<meta (?:name|property)="(?:(?:og|twitter):)?description" content=")[^"]*/g, '$1Explore reference anatomy, 20 body-area research tracks and 113 condition-reading topics. Local preview; qualified review pending.')
     },
     configureServer(server) { server.middlewares.use(middleware) },
     configurePreviewServer(server) { server.middlewares.use(middleware) },

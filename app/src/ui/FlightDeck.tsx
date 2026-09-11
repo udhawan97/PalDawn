@@ -157,8 +157,7 @@ function Intro() {
         <span>Follow what happens next.</span>
       </h1>
       <p className="intro-copy">
-        Choose a source-linked condition, then follow its authored systems path
-        step by step. The 3D body is a conceptual learning map, not reviewed anatomy.
+        Follow a disease mechanism step by step and inspect its sources. The 3D body is a conceptual learning map, not reviewed anatomy.
       </p>
       <div className="intro-actions" data-resume-available={resumeAvailable}>
         {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="secondary-action" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Explore Anatomy Lab ↗</button> : null}

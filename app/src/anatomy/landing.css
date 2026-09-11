@@ -2,3 +2,29 @@
 @media(max-width:900px){.anatomy-hero{min-height:600px;max-height:none;height:auto}.anatomy-hero-copy{padding:60px 8%}.anatomy-hero h1{font-size:54px}.site-actions{flex-direction:column;align-items:flex-start}.anatomy-learning,.anatomy-references{gap:35px;padding:70px 6%}.anatomy-site-nav nav{gap:15px}}
 @media(max-width:640px){.anatomy-site-nav{padding:14px 20px}.anatomy-site-nav nav>a{display:none}.anatomy-site-nav button{font-size:12px;padding:8px 13px}.anatomy-hero{display:flex;flex-direction:column}.anatomy-hero-copy{padding:48px 26px 35px}.anatomy-hero h1{font-size:55px;letter-spacing:-2px}.anatomy-hero .site-lede{font-size:14px}.site-actions{flex-direction:row}.site-actions button{font-size:12px}.site-reference-caption{margin-top:25px}.anatomy-hero-stage{height:540px;min-height:540px}.anatomy-learning,.anatomy-references{grid-template-columns:1fr;padding:60px 26px;gap:40px}.site-reference-table{gap:22px}.site-reference-table h3{font-size:23px}.anatomy-site-footer{padding:30px 26px}.site-eyebrow{margin-bottom:18px!important}}
 @media(prefers-reduced-motion:reduce){.anatomy-landing{scroll-behavior:auto}}
+
+/* Research spreads retain the lab's paper, navy and copper study palette. */
+.anatomy-research-story{padding:90px 7%;background:#eeeae1;color:#182d3b}
+.research-story-heading{display:grid;grid-template-columns:1fr 1fr;column-gap:80px;align-items:end}
+.research-story-heading .site-eyebrow{grid-column:1/-1;color:#78512d}
+.research-story-heading>p:last-child{max-width:480px;color:#485c66}
+.research-story-questions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin:48px 0}
+.research-story-questions article{border-top:2px solid #a5673c;padding-top:20px}
+.research-story-questions span{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#78512d}
+.research-story-questions h3{font:25px/1.2 Georgia,serif;margin:15px 0}
+.research-story-questions p{font-size:13px;color:#485c66;margin-bottom:16px}
+.research-story-questions a{display:inline-block;padding:10px 0;font-size:12px;color:#265a78}
+.research-story-proof{margin:0;border:1px solid #aab6ba;background:#14222e}
+.research-story-proof img{display:block;width:100%;height:auto}
+.research-story-proof figcaption{padding:16px 22px;color:#c1cfd5;font-size:12px}
+.research-story-control{display:flex;align-items:center;justify-content:space-between;gap:40px;margin-top:36px}
+.research-story-control h3{font:28px Georgia,serif;margin-bottom:12px}
+.research-story-control p{max-width:650px;color:#485c66;font-size:14px}
+.research-story-control button{flex-shrink:0;padding:14px 22px;background:#183b52;color:#f0eee5;border:0;border-radius:4px}
+.anatomy-site-help{padding:75px 7%;display:grid;grid-template-columns:1fr 1.3fr;gap:80px;background:#142633}
+.anatomy-site-help p:not(.site-eyebrow){color:#a8bcc8;margin-bottom:18px;font-size:14px}
+.anatomy-site-help nav{display:flex;flex-wrap:wrap;gap:12px 24px}
+.anatomy-site-help a{display:inline-block;padding:12px 0;color:#e8c58d;font-size:13px}
+.anatomy-landing button:disabled{cursor:default;opacity:.55}
+@media(max-width:900px){.anatomy-site-nav nav{gap:16px}.research-story-heading,.anatomy-site-help{gap:30px}.research-story-questions{gap:24px}.research-story-control{align-items:flex-start;flex-direction:column}}
+@media(max-width:640px){.anatomy-research-story,.anatomy-site-help{padding:60px 26px}.research-story-heading,.research-story-questions,.anatomy-site-help{grid-template-columns:1fr;gap:26px}.research-story-questions{margin:35px 0}.research-story-proof figcaption{padding:14px}.research-story-control{gap:22px}.anatomy-landing button{min-height:44px}.site-model-switch{left:18px;right:18px;justify-content:center}.site-model-switch button{padding:8px 17px}}

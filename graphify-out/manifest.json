@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1788853822.162881,
+    "mtime": 1789101767.2105353,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789084292.001135,
-    "ast_hash": "109e03317bb4ddf1a27df2391f3eaa77",
+    "mtime": 1789103645.5636964,
+    "ast_hash": "4de6d2911d1f819531fc51af9af35464",
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1789084292.001898,
-    "ast_hash": "b08c881a97660ab15255df91b80f8fc3",
+    "mtime": 1789102906.0992534,
+    "ast_hash": "096143d53efa0864e027a96ed1380592",
     "semantic_hash": ""
   },
   "app/THIRD_PARTY_LICENSES.md": {
@@ -420,13 +420,13 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1789083285.8876343,
-    "ast_hash": "f34b07af3d412faf511a8f53c4b72fce",
+    "mtime": 1789103998.0402825,
+    "ast_hash": "90db1df1cc5f58d53b865169372ffa7a",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789084292.000761,
-    "ast_hash": "06f7870d0121f2aee495878d0634607f",
+    "mtime": 1789102906.1047716,
+    "ast_hash": "a7a2b24d63a46dfa9818acdcca93eab8",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -935,8 +935,8 @@
     "semantic_hash": ""
   },
   "app/anatomy-preview.ts": {
-    "mtime": 1789082733.210576,
-    "ast_hash": "7087a76765aee136449eb64e39b00699",
+    "mtime": 1789103404.4542053,
+    "ast_hash": "6e17fa88e4613c8c6da4bdd2c4b1eee3",
     "semantic_hash": ""
   },
   "app/scripts/prepare-anatomy-reading.mjs": {
@@ -950,12 +950,12 @@
     "semantic_hash": ""
   },
   "app/scripts/test-anatomy.mjs": {
-    "mtime": 1789101603.5481935,
+    "mtime": 1789101869.5413842,
     "ast_hash": "b1d372fd21e019f42970f15a770328c2",
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyStudy.tsx": {
-    "mtime": 1789101603.547968,
+    "mtime": 1789101869.5417395,
     "ast_hash": "664556257f23f415c4fcb4f320b5ef42",
     "semantic_hash": ""
   },
@@ -1005,8 +1005,8 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyLanding.tsx": {
-    "mtime": 1789101173.8266096,
-    "ast_hash": "5727e947abc882ee29f3cdf30ae7b976",
+    "mtime": 1789102986.3921356,
+    "ast_hash": "c91c06c7faabeff250e75ab2b29da3dd",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/human-atlas--female-reference--d72b4f6.json": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "docs/ANATOMY-LAB.md": {
-    "mtime": 1789101457.5887697,
-    "ast_hash": "52d0e40583688381aac7352e7394630d",
+    "mtime": 1789102906.1009223,
+    "ast_hash": "c714862aa0163e766082fa4710411ee7",
     "semantic_hash": ""
   },
   "docs/MAIN-CLEANUP-2026-09-10.md": {
@@ -1040,23 +1040,23 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/ResearchDesk.tsx": {
-    "mtime": 1789101603.5477033,
+    "mtime": 1789101869.541865,
     "ast_hash": "e2ad037509e607123def082780e8973f",
     "semantic_hash": ""
   },
   "app/src/anatomy/research.ts": {
-    "mtime": 1789101603.5475907,
+    "mtime": 1789101869.5420935,
     "ast_hash": "7dc25424099bf25750bcbb37bb721373",
     "semantic_hash": ""
   },
   "app/src/anatomy/researchCatalog.json": {
-    "mtime": 1789101603.5474613,
+    "mtime": 1789101869.5422468,
     "ast_hash": "879ee378b21af39b44bade03651c43f1",
     "semantic_hash": ""
   },
   "docs/ANATOMY-RESEARCH-DESK.md": {
-    "mtime": 1789101457.5957315,
-    "ast_hash": "eee85ad38faeab637c98b2894c466356",
+    "mtime": 1789101869.5425217,
+    "ast_hash": "eee5ecf2a0eaef797fa34297a62f625f",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260821_011614_how_do_paldawn_per_object_anatomy_provenance_recor.md": {
@@ -1077,6 +1077,26 @@
   "graphify-out/memory/query_20260827_043952_what_is_the_documented_next_phase_after_deep_lens.md": {
     "mtime": 1787805592.4874034,
     "ast_hash": "ee667ab97c2d5bbf4a7862cbca775e73",
+    "semantic_hash": ""
+  },
+  "docs/GETTING-STARTED.md": {
+    "mtime": 1789103028.3778913,
+    "ast_hash": "df791c38d0d270dad70a4f67ea811bd2",
+    "semantic_hash": ""
+  },
+  "docs/PUBLIC-SURFACE-EVIDENCE.md": {
+    "mtime": 1789103581.1668246,
+    "ast_hash": "9e4088377a0d21a5446880ebbf2a928c",
+    "semantic_hash": ""
+  },
+  "docs/assets/paldawn-research-desk.png": {
+    "mtime": 1789103261.2771714,
+    "ast_hash": "7ca4642366db8c31805a099189f9f6c1",
+    "semantic_hash": ""
+  },
+  "docs/assets/paldawn-web-introduction.png": {
+    "mtime": 1789103164.598833,
+    "ast_hash": "0dcbaa714f3e8e29892f95465b60aac9",
     "semantic_hash": ""
   }
 }

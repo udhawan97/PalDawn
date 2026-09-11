@@ -3446,7 +3446,7 @@
       "_origin": "ast",
       "id": "app_src_app",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "app.tsx"
     },
     {
@@ -3457,7 +3457,7 @@
       "_origin": "ast",
       "id": "app_src_app_scenecanvas",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "scenecanvas"
     },
     {
@@ -3468,7 +3468,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundarystate",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "sceneboundarystate"
     },
     {
@@ -3479,7 +3479,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "sceneboundary"
     },
     {
@@ -3490,7 +3490,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_getderivedstatefromerror",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -3501,7 +3501,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_componentdidcatch",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -3512,7 +3512,7 @@
       "_origin": "ast",
       "id": "app_src_app_sceneboundary_render",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": ".render()"
     },
     {
@@ -3522,7 +3522,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_app_journeyplaybackdriver",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "journeyplaybackdriver()"
     },
@@ -3534,7 +3534,7 @@
       "_origin": "ast",
       "id": "app_src_app_renderfallback",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "renderfallback()"
     },
     {
@@ -3545,7 +3545,7 @@
       "_origin": "ast",
       "id": "app_src_app_journeyapp",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "journeyapp()"
     },
     {
@@ -3556,7 +3556,7 @@
       "_origin": "ast",
       "id": "app_src_app_anatomycandidate",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "anatomycandidate()"
     },
     {
@@ -3567,7 +3567,7 @@
       "_origin": "ast",
       "id": "app_src_app_app",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "app()"
     },
     {
@@ -3582,10 +3582,21 @@
       "norm_label": "anatomylanding.tsx"
     },
     {
+      "label": "featuredTracks",
+      "file_type": "code",
+      "source_file": "app/src/anatomy/AnatomyLanding.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_src_anatomy_anatomylanding_featuredtracks",
+      "community": 79,
+      "community_name": "AnatomyStudy.tsx",
+      "norm_label": "featuredtracks"
+    },
+    {
       "label": "Scene",
       "file_type": "code",
       "source_file": "app/src/anatomy/AnatomyLanding.tsx",
-      "source_location": "L6",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "app_src_anatomy_anatomylanding_scene",
       "community": 79,
@@ -4919,8 +4930,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "app_src_data_diseases_diseases",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 79,
+      "community_name": "AnatomyStudy.tsx",
       "norm_label": "diseases"
     },
     {
@@ -4974,8 +4985,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_journey",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journey.ts"
     },
     {
@@ -4996,8 +5007,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeystage",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journeystage"
     },
     {
@@ -5007,8 +5018,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_journey_journey_journeydefinition",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "journeydefinition"
     },
     {
@@ -5029,8 +5040,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_src_journey_journey_clampprogress",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "clampprogress()"
     },
     {
@@ -5040,8 +5051,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageindexat",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageindexat()"
     },
     {
@@ -5073,8 +5084,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_src_journey_journey_stageidfromhash",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "stageidfromhash()"
     },
     {
@@ -5095,8 +5106,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_src_journey_journey_transcripttext",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "transcripttext()"
     },
     {
@@ -5106,8 +5117,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatjourneytime",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "formatjourneytime()"
     },
     {
@@ -5117,8 +5128,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_journey_formatduration",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "formatduration()"
     },
     {
@@ -5128,8 +5139,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_journey_route",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "route.ts"
     },
     {
@@ -5139,8 +5150,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_src_journey_route_author_points",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "author_points"
     },
     {
@@ -5150,8 +5161,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_src_journey_route_authoredcurve",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "authoredcurve"
     },
     {
@@ -5161,7 +5172,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_journey_route_route_lookup",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "route_lookup"
     },
@@ -5172,8 +5183,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "normalizedlookupcurve"
     },
     {
@@ -5183,8 +5194,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_constructor",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5194,8 +5205,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_src_journey_route_normalizedlookupcurve_getpoint",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -5205,8 +5216,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "app_src_journey_route_voyageroute",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "voyageroute"
     },
     {
@@ -5216,8 +5227,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_src_journey_route_frames",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "frames"
     },
     {
@@ -5227,8 +5238,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframe",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "routeframe"
     },
     {
@@ -5238,8 +5249,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "app_src_journey_route_routeframeat",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "routeframeat()"
     },
     {
@@ -5249,8 +5260,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "routeslice"
     },
     {
@@ -5260,8 +5271,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_constructor",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5271,8 +5282,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "app_src_journey_route_routeslice_getpoint",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": ".getpoint()"
     },
     {
@@ -5282,7 +5293,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_src_journey_route_smoothrange",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "smoothrange()"
     },
@@ -5316,7 +5327,7 @@
       "_origin": "ast",
       "id": "app_src_platform_diagnostics",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "diagnostics.ts"
     },
     {
@@ -5327,7 +5338,7 @@
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticinput",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "diagnosticinput"
     },
     {
@@ -5337,8 +5348,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_src_platform_diagnostics_diagnosticreport",
-      "community": 50,
-      "community_name": "SettingsPanel",
+      "community": 9,
+      "community_name": "settings.ts",
       "norm_label": "diagnosticreport()"
     },
     {
@@ -5392,8 +5403,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storagefailuredetail",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "storagefailuredetail"
     },
     {
@@ -5502,8 +5513,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "app_src_platform_localdata_localdataimportresult",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "localdataimportresult"
     },
     {
@@ -5623,8 +5634,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_src_platform_localdata_local_data_keys",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "local_data_keys"
     },
     {
@@ -5700,8 +5711,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_src_platform_localdata_storage",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "storage()"
     },
     {
@@ -5733,8 +5744,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readstring",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "readstring()"
     },
     {
@@ -5799,8 +5810,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "app_src_platform_localdata_bindvaluetogeneration",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "bindvaluetogeneration()"
     },
     {
@@ -5810,8 +5821,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "app_src_platform_localdata_valuegeneration",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "valuegeneration()"
     },
     {
@@ -5843,8 +5854,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "app_src_platform_localdata_pendingfenceisactive",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "pendingfenceisactive()"
     },
     {
@@ -5854,8 +5865,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "app_src_platform_localdata_getlocaldatarecoverystate",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "getlocaldatarecoverystate()"
     },
     {
@@ -5865,8 +5876,8 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readlocalstoragevalue",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "readlocalstoragevalue()"
     },
     {
@@ -5876,8 +5887,8 @@
       "source_location": "L326",
       "_origin": "ast",
       "id": "app_src_platform_localdata_writelocalstoragevalue",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "writelocalstoragevalue()"
     },
     {
@@ -5898,8 +5909,8 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "app_src_platform_localdata_readjson",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "readjson()"
     },
     {
@@ -5909,8 +5920,8 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadjourneysession",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "loadjourneysession()"
     },
     {
@@ -5920,8 +5931,8 @@
       "source_location": "L438",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savejourneysession",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "savejourneysession()"
     },
     {
@@ -5931,8 +5942,8 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadstagebookmarks",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "loadstagebookmarks()"
     },
     {
@@ -5942,8 +5953,8 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savestagebookmarks",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "savestagebookmarks()"
     },
     {
@@ -5953,8 +5964,8 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "app_src_platform_localdata_loadlearnerworkspace",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "loadlearnerworkspace()"
     },
     {
@@ -5964,8 +5975,8 @@
       "source_location": "L489",
       "_origin": "ast",
       "id": "app_src_platform_localdata_savelearnerworkspace",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "savelearnerworkspace()"
     },
     {
@@ -5975,8 +5986,8 @@
       "source_location": "L497",
       "_origin": "ast",
       "id": "app_src_platform_localdata_normalizeimportedsettings",
-      "community": 50,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "normalizeimportedsettings()"
     },
     {
@@ -5986,8 +5997,8 @@
       "source_location": "L520",
       "_origin": "ast",
       "id": "app_src_platform_localdata_normalizeimportedjourney",
-      "community": 50,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "normalizeimportedjourney()"
     },
     {
@@ -5997,8 +6008,8 @@
       "source_location": "L532",
       "_origin": "ast",
       "id": "app_src_platform_localdata_parselocaldataimport",
-      "community": 50,
-      "community_name": "SettingsPanel",
+      "community": 3,
+      "community_name": "localData.ts",
       "norm_label": "parselocaldataimport()"
     },
     {
@@ -6041,8 +6052,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "app_src_platform_localdata_exportlocaldata",
-      "community": 3,
-      "community_name": "localData.ts",
+      "community": 50,
+      "community_name": "SettingsPanel",
       "norm_label": "exportlocaldata()"
     },
     {
@@ -6360,8 +6371,8 @@
       "source_location": "L320",
       "_origin": "ast",
       "id": "app_src_platform_pwa_registerpwaupdatepreparation",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "registerpwaupdatepreparation()"
     },
     {
@@ -6448,7 +6459,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_flowfield",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield.tsx"
     },
@@ -6459,7 +6470,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_instance_counts",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "instance_counts"
     },
@@ -6470,7 +6481,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_seededrandom",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "seededrandom()"
     },
@@ -6481,7 +6492,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_scene_flowfield_flowfield",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "flowfield()"
     },
@@ -6492,8 +6503,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "humansystemsscene.tsx"
     },
     {
@@ -6503,8 +6514,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_body_detail_points",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "body_detail_points"
     },
     {
@@ -6525,8 +6536,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organgeometry",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "organgeometry()"
     },
     {
@@ -6536,8 +6547,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_organ",
-      "community": 73,
-      "community_name": "useSettings",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "organ()"
     },
     {
@@ -6547,8 +6558,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_vesselnetwork",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "vesselnetwork()"
     },
     {
@@ -6558,8 +6569,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_nervenetwork",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "nervenetwork()"
     },
     {
@@ -6569,8 +6580,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_shellsegment",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "shellsegment()"
     },
     {
@@ -6580,8 +6591,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_bodyshell",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "bodyshell()"
     },
     {
@@ -6591,8 +6602,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_skeleton",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "skeleton()"
     },
     {
@@ -6602,8 +6613,8 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_phasesignal",
-      "community": 73,
-      "community_name": "useSettings",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "phasesignal()"
     },
     {
@@ -6613,8 +6624,8 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "app_src_scene_humansystemsscene_systemdetaillayer",
-      "community": 17,
-      "community_name": "diseases.ts",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "systemdetaillayer()"
     },
     {
@@ -6635,8 +6646,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 97,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas.tsx"
     },
     {
@@ -6646,8 +6657,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvasprops",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 97,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvasprops"
     },
     {
@@ -6657,8 +6668,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_src_scene_scenecanvas_scenecanvas",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 97,
+      "community_name": "SceneCanvas.tsx",
       "norm_label": "scenecanvas()"
     },
     {
@@ -6668,7 +6679,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "voyagescene.tsx"
     },
@@ -6679,7 +6690,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_deep_ink",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "deep_ink"
     },
@@ -6690,7 +6701,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridor_ink",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "corridor_ink"
     },
@@ -6701,7 +6712,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_cameradirector",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "cameradirector()"
     },
@@ -6712,7 +6723,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_fogdirector",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "fogdirector()"
     },
@@ -6723,8 +6734,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_runtimeprobe",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 98,
+      "community_name": "useTelemetry",
       "norm_label": "runtimeprobe()"
     },
     {
@@ -6734,7 +6745,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_syntheticcore",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "syntheticcore()"
     },
@@ -6745,7 +6756,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_dawnroute",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "dawnroute()"
     },
@@ -6756,8 +6767,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridorrings",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "corridorrings()"
     },
     {
@@ -6767,8 +6778,8 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_arrivalbeacon",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 53,
+      "community_name": "route.ts",
       "norm_label": "arrivalbeacon()"
     },
     {
@@ -6778,7 +6789,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_corridor",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "corridor()"
     },
@@ -6789,7 +6800,7 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalpreview",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "portalpreview()"
     },
@@ -6800,7 +6811,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_portalgate",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "portalgate()"
     },
@@ -6811,7 +6822,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_signaldust",
-      "community": 9,
+      "community": 65,
       "community_name": "VoyageScene.tsx",
       "norm_label": "signaldust()"
     },
@@ -6822,7 +6833,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "app_src_scene_voyagescene_voyagescene",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "voyagescene()"
     },
@@ -7053,7 +7064,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_src_state_experience_useexperience",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "useexperience"
     },
@@ -7065,7 +7076,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "settings.ts"
     },
     {
@@ -7076,7 +7087,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_qualitytier",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "qualitytier"
     },
     {
@@ -7087,7 +7098,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_resolvedtier",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "resolvedtier"
     },
     {
@@ -7098,7 +7109,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_captionscale",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "captionscale"
     },
     {
@@ -7109,7 +7120,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_playbackrate",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "playbackrate"
     },
     {
@@ -7120,7 +7131,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_prefersreducedmotion",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "prefersreducedmotion()"
     },
     {
@@ -7130,8 +7141,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_src_state_settings_resolvetier",
-      "community": 73,
-      "community_name": "useSettings",
+      "community": 74,
+      "community_name": "HumanSystemsScene.tsx",
       "norm_label": "resolvetier()"
     },
     {
@@ -7142,7 +7153,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_tier_dpr",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "tier_dpr"
     },
     {
@@ -7153,7 +7164,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_settingsstate",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "settingsstate"
     },
     {
@@ -7164,7 +7175,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_persistedsettings",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "persistedsettings"
     },
     {
@@ -7175,7 +7186,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_qualitytiers",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "qualitytiers"
     },
     {
@@ -7186,7 +7197,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_captionscales",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "captionscales"
     },
     {
@@ -7197,7 +7208,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_playbackrates",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "playbackrates"
     },
     {
@@ -7208,7 +7219,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_mergepersistedsettings",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "mergepersistedsettings()"
     },
     {
@@ -7219,7 +7230,7 @@
       "_origin": "ast",
       "id": "app_src_state_settings_safestorage",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "safestorage"
     },
     {
@@ -7229,7 +7240,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "app_src_state_settings_usesettings",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "usesettings"
     },
@@ -7241,7 +7252,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "telemetry.ts"
     },
     {
@@ -7252,7 +7263,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry_runtimetelemetry",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "runtimetelemetry"
     },
     {
@@ -7263,7 +7274,7 @@
       "_origin": "ast",
       "id": "app_src_state_telemetry_telemetrystate",
       "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community_name": "settings.ts",
       "norm_label": "telemetrystate"
     },
     {
@@ -7273,8 +7284,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_src_state_telemetry_usetelemetry",
-      "community": 9,
-      "community_name": "VoyageScene.tsx",
+      "community": 98,
+      "community_name": "useTelemetry",
       "norm_label": "usetelemetry"
     },
     {
@@ -7526,7 +7537,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_drawerfocusables",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "drawerfocusables()"
     },
@@ -7537,7 +7548,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_visiblefocustarget",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "visiblefocustarget()"
     },
@@ -7570,8 +7581,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_istypingtarget",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "istypingtarget()"
     },
     {
@@ -7592,7 +7603,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_panelbutton",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "panelbutton()"
     },
@@ -7603,7 +7614,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_intro",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "intro()"
     },
@@ -7611,18 +7622,18 @@
       "label": "PhaseRail()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L192",
+      "source_location": "L191",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_phaserail",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "phaserail()"
     },
     {
       "label": "CompanionCaption()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L220",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_companioncaption",
       "community": 58,
@@ -7633,18 +7644,18 @@
       "label": "ControlDeck()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L317",
+      "source_location": "L316",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_controldeck",
-      "community": 85,
-      "community_name": "experience.ts",
+      "community": 58,
+      "community_name": "FlightDeck.tsx",
       "norm_label": "controldeck()"
     },
     {
       "label": "MissionPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L377",
+      "source_location": "L376",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_missionpanel",
       "community": 58,
@@ -7655,7 +7666,7 @@
       "label": "TranscriptPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L404",
+      "source_location": "L403",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_transcriptpanel",
       "community": 58,
@@ -7666,7 +7677,7 @@
       "label": "WorkspacePanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L497",
+      "source_location": "L496",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_workspacepanel",
       "community": 58,
@@ -7677,7 +7688,7 @@
       "label": "SettingToggle()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L678",
+      "source_location": "L677",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingtoggle",
       "community": 58,
@@ -7688,7 +7699,7 @@
       "label": "HelpPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L699",
+      "source_location": "L698",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_helppanel",
       "community": 58,
@@ -7699,7 +7710,7 @@
       "label": "SettingsPanel()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L721",
+      "source_location": "L720",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_settingspanel",
       "community": 50,
@@ -7710,10 +7721,10 @@
       "label": "Drawer()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1147",
+      "source_location": "L1146",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_drawer",
-      "community": 73,
+      "community": 77,
       "community_name": "useSettings",
       "norm_label": "drawer()"
     },
@@ -7721,18 +7732,18 @@
       "label": "Telemetry()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1317",
+      "source_location": "L1316",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_telemetry",
-      "community": 73,
-      "community_name": "useSettings",
+      "community": 98,
+      "community_name": "useTelemetry",
       "norm_label": "telemetry()"
     },
     {
       "label": "CompletionSummary()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1339",
+      "source_location": "L1338",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_completionsummary",
       "community": 58,
@@ -7743,11 +7754,11 @@
       "label": "FlightDeck()",
       "file_type": "code",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1383",
+      "source_location": "L1382",
       "_origin": "ast",
       "id": "app_src_ui_flightdeck_flightdeck",
-      "community": 58,
-      "community_name": "FlightDeck.tsx",
+      "community": 86,
+      "community_name": "FlightDeck",
       "norm_label": "flightdeck()"
     },
     {
@@ -7780,7 +7791,7 @@
       "_origin": "ast",
       "id": "app_src_webgl",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "webgl.ts"
     },
     {
@@ -7791,7 +7802,7 @@
       "_origin": "ast",
       "id": "app_src_webgl_webgl2available",
       "community": 73,
-      "community_name": "useSettings",
+      "community_name": "App.tsx",
       "norm_label": "webgl2available()"
     },
     {
@@ -9448,7 +9459,7 @@
       "label": "[0.4.0] \u2014 2026-09-10",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L18",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "changelog_0_4_0_2026_09_10",
       "community": 26,
@@ -9459,7 +9470,7 @@
       "label": "[0.3.0] \u2014 2026-08-24",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L41",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "changelog_0_3_0_2026_08_24",
       "community": 26,
@@ -9470,7 +9481,7 @@
       "label": "Mechanism Lens",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L43",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "changelog_mechanism_lens",
       "community": 26,
@@ -9481,7 +9492,7 @@
       "label": "[0.2.0] \u2014 2026-08-22",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L58",
+      "source_location": "L65",
       "_origin": "ast",
       "id": "changelog_0_2_0_2026_08_22",
       "community": 26,
@@ -9492,7 +9503,7 @@
       "label": "Systems Atlas",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L60",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "changelog_systems_atlas",
       "community": 26,
@@ -9503,7 +9514,7 @@
       "label": "[0.1.0] \u2014 2026-08-20",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L81",
+      "source_location": "L88",
       "_origin": "ast",
       "id": "changelog_0_1_0_2026_08_20",
       "community": 26,
@@ -9514,7 +9525,7 @@
       "label": "First Light",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L83",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "changelog_first_light",
       "community": 26,
@@ -9693,8 +9704,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_anatomy_lab",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "anatomy-lab.md"
     },
     {
@@ -9704,8 +9715,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_anatomy_lab_anatomy_lab_local_review_candidate",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "anatomy lab \u2014 local review candidate"
     },
     {
@@ -9715,8 +9726,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_anatomy_lab_run_the_complete_candidate",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "run the complete candidate"
     },
     {
@@ -9726,8 +9737,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "docs_anatomy_lab_coverage_and_upstream_parity",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "coverage and upstream parity"
     },
     {
@@ -9737,8 +9748,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "docs_anatomy_lab_provenance_and_publication_boundary",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "provenance and publication boundary"
     },
     {
@@ -9748,8 +9759,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "docs_anatomy_lab_acceptance_evidence",
-      "community": 65,
-      "community_name": "Anatomy Lab \u2014 local review candidate",
+      "community": 92,
+      "community_name": "Anatomy research desk",
       "norm_label": "acceptance evidence"
     },
     {
@@ -10666,6 +10677,83 @@
       "norm_label": "verification contract"
     },
     {
+      "label": "GETTING-STARTED.md",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_getting_started",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "getting-started.md"
+    },
+    {
+      "label": "Start studying with PalDawn",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_getting_started_start_studying_with_paldawn",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "start studying with paldawn"
+    },
+    {
+      "label": "Open the web app",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_getting_started_open_the_web_app",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "open the web app"
+    },
+    {
+      "label": "Study with reference anatomy",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_getting_started_study_with_reference_anatomy",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "study with reference anatomy"
+    },
+    {
+      "label": "Install as a web app",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "docs_getting_started_install_as_a_web_app",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "install as a web app"
+    },
+    {
+      "label": "Updates and local work",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "docs_getting_started_updates_and_local_work",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "updates and local work"
+    },
+    {
+      "label": "Troubleshooting",
+      "file_type": "document",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "docs_getting_started_troubleshooting",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "troubleshooting"
+    },
+    {
       "label": "GRAPHICS-REBUILD.md",
       "file_type": "document",
       "source_file": "docs/GRAPHICS-REBUILD.md",
@@ -11027,6 +11115,61 @@
       "community": 24,
       "community_name": "PalDawn living-instrument brand system",
       "norm_label": "verification contract"
+    },
+    {
+      "label": "PUBLIC-SURFACE-EVIDENCE.md",
+      "file_type": "document",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_public_surface_evidence",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "public-surface-evidence.md"
+    },
+    {
+      "label": "Public surface evidence \u2014 September 2026 refresh",
+      "file_type": "document",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_public_surface_evidence_public_surface_evidence_september_2026_refresh",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "public surface evidence \u2014 september 2026 refresh"
+    },
+    {
+      "label": "Product facts and coverage",
+      "file_type": "document",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_public_surface_evidence_product_facts_and_coverage",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "product facts and coverage"
+    },
+    {
+      "label": "Asset and capture record",
+      "file_type": "document",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "docs_public_surface_evidence_asset_and_capture_record",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "asset and capture record"
+    },
+    {
+      "label": "Verification and limits",
+      "file_type": "document",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "docs_public_surface_evidence_verification_and_limits",
+      "community": 92,
+      "community_name": "Anatomy research desk",
+      "norm_label": "verification and limits"
     },
     {
       "label": "VESSEL-FLOW-WORKBENCH.md",
@@ -11945,7 +12088,7 @@
       "label": "AnatomyLanding",
       "file_type": "code",
       "source_file": "app/src/anatomy/AnatomyLanding.tsx",
-      "source_location": "L7",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "app_src_anatomy_anatomylanding_anatomylanding",
       "community": 84,
@@ -18119,7 +18262,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/anatomy/AnatomyLanding.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_src_anatomy_anatomylanding",
+      "target": "app_src_anatomy_anatomylanding_featuredtracks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/anatomy/AnatomyLanding.tsx",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_anatomy_anatomylanding",
@@ -21611,7 +21765,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L327",
+      "source_location": "L326",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -21623,7 +21777,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1725",
+      "source_location": "L1724",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -21635,7 +21789,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L196",
+      "source_location": "L195",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_phaserail",
@@ -21659,7 +21813,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L234",
+      "source_location": "L233",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -21671,7 +21825,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1592",
+      "source_location": "L1591",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -21683,7 +21837,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L179",
+      "source_location": "L178",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_intro",
@@ -21695,7 +21849,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L511",
+      "source_location": "L510",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -21719,7 +21873,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1558",
+      "source_location": "L1557",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -21731,7 +21885,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L425",
+      "source_location": "L424",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -21743,7 +21897,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L619",
+      "source_location": "L618",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -21767,7 +21921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1556",
+      "source_location": "L1555",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -21791,7 +21945,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L292",
+      "source_location": "L291",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -21803,7 +21957,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1367",
+      "source_location": "L1366",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -21827,7 +21981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L416",
+      "source_location": "L415",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -21851,7 +22005,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L354",
+      "source_location": "L353",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -21875,7 +22029,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L354",
+      "source_location": "L353",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -22317,7 +22471,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1758",
+      "source_location": "L1757",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -22530,7 +22684,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L800",
+      "source_location": "L799",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -22624,7 +22778,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L304",
+      "source_location": "L303",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -22636,7 +22790,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1367",
+      "source_location": "L1366",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -22648,7 +22802,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1027",
+      "source_location": "L1026",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -22660,7 +22814,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L477",
+      "source_location": "L476",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -22672,7 +22826,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L666",
+      "source_location": "L665",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -22696,7 +22850,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L887",
+      "source_location": "L886",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -22708,7 +22862,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L480",
+      "source_location": "L479",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -22720,7 +22874,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L669",
+      "source_location": "L668",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -23510,7 +23664,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1439",
+      "source_location": "L1438",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24278,7 +24432,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L754",
+      "source_location": "L753",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24374,7 +24528,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1473",
+      "source_location": "L1472",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24458,7 +24612,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1467",
+      "source_location": "L1466",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24482,7 +24636,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1413",
+      "source_location": "L1412",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24494,7 +24648,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L807",
+      "source_location": "L806",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24518,7 +24672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1443",
+      "source_location": "L1442",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24542,7 +24696,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1414",
+      "source_location": "L1413",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24566,7 +24720,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1454",
+      "source_location": "L1453",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -24614,7 +24768,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L831",
+      "source_location": "L830",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24674,7 +24828,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L934",
+      "source_location": "L933",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24698,7 +24852,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1040",
+      "source_location": "L1039",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24722,7 +24876,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L882",
+      "source_location": "L881",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -24746,7 +24900,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L892",
+      "source_location": "L891",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -25403,7 +25557,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L755",
+      "source_location": "L754",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -25427,7 +25581,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1010",
+      "source_location": "L1009",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -25463,7 +25617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1520",
+      "source_location": "L1519",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -25487,7 +25641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1000",
+      "source_location": "L999",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -25568,7 +25722,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L289",
+      "source_location": "L288",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -25580,7 +25734,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1371",
+      "source_location": "L1370",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -25592,7 +25746,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L484",
+      "source_location": "L483",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -25639,7 +25793,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L527",
+      "source_location": "L526",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -26974,7 +27128,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1395",
+      "source_location": "L1394",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27010,7 +27164,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1547",
+      "source_location": "L1546",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27137,7 +27291,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L229",
+      "source_location": "L228",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -27149,7 +27303,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1340",
+      "source_location": "L1339",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -27161,7 +27315,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L318",
+      "source_location": "L317",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -27173,7 +27327,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1166",
+      "source_location": "L1165",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -27185,7 +27339,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1390",
+      "source_location": "L1389",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27221,7 +27375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L193",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_phaserail",
@@ -27233,7 +27387,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L747",
+      "source_location": "L746",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -27245,7 +27399,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L411",
+      "source_location": "L410",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -27257,7 +27411,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L508",
+      "source_location": "L507",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -27495,7 +27649,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L802",
+      "source_location": "L801",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -27507,7 +27661,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1319",
+      "source_location": "L1318",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -27531,7 +27685,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1343",
+      "source_location": "L1342",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -27543,7 +27697,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L325",
+      "source_location": "L324",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -27555,7 +27709,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1168",
+      "source_location": "L1167",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -27567,7 +27721,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1402",
+      "source_location": "L1401",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -27603,7 +27757,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L732",
+      "source_location": "L731",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -27615,7 +27769,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1318",
+      "source_location": "L1317",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -27696,7 +27850,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1320",
+      "source_location": "L1319",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_telemetry",
@@ -27933,7 +28087,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L220",
+      "source_location": "L219",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27944,7 +28098,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1339",
+      "source_location": "L1338",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27955,7 +28109,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L317",
+      "source_location": "L316",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27966,7 +28120,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1147",
+      "source_location": "L1146",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27988,7 +28142,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1383",
+      "source_location": "L1382",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -27999,7 +28153,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L699",
+      "source_location": "L698",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28032,7 +28186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L377",
+      "source_location": "L376",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28076,7 +28230,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L192",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28109,7 +28263,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L721",
+      "source_location": "L720",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28120,7 +28274,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L678",
+      "source_location": "L677",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28164,7 +28318,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1317",
+      "source_location": "L1316",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28186,7 +28340,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L404",
+      "source_location": "L403",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28208,7 +28362,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L497",
+      "source_location": "L496",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck",
@@ -28220,7 +28374,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1413",
+      "source_location": "L1412",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -28232,7 +28386,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L807",
+      "source_location": "L806",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_settingspanel",
@@ -28244,7 +28398,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1250",
+      "source_location": "L1249",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -28256,7 +28410,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1220",
+      "source_location": "L1219",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_drawer",
@@ -28268,7 +28422,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L293",
+      "source_location": "L292",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -28280,7 +28434,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1375",
+      "source_location": "L1374",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -28292,7 +28446,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L488",
+      "source_location": "L487",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -28304,7 +28458,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L288",
+      "source_location": "L287",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_companioncaption",
@@ -28316,7 +28470,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1366",
+      "source_location": "L1365",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_completionsummary",
@@ -28328,7 +28482,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L334",
+      "source_location": "L333",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_controldeck",
@@ -28340,7 +28494,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1595",
+      "source_location": "L1594",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -28352,7 +28506,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L208",
+      "source_location": "L207",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_phaserail",
@@ -28364,7 +28518,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L427",
+      "source_location": "L426",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_transcriptpanel",
@@ -28376,7 +28530,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L621",
+      "source_location": "L620",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_workspacepanel",
@@ -28388,7 +28542,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/src/ui/FlightDeck.tsx",
-      "source_location": "L1714",
+      "source_location": "L1713",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_src_ui_flightdeck_flightdeck",
@@ -30144,7 +30298,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L81",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -30155,7 +30309,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L58",
+      "source_location": "L65",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -30166,7 +30320,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L41",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -30177,7 +30331,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L18",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_changelog",
@@ -30199,7 +30353,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L43",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_3_0_2026_08_24",
@@ -30210,7 +30364,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L60",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_2_0_2026_08_22",
@@ -30221,7 +30375,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CHANGELOG.md",
-      "source_location": "L83",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "source": "changelog_0_1_0_2026_08_20",
@@ -30369,6 +30523,39 @@
       "_origin": "ast",
       "source": "docs_anatomy_lab",
       "target": "docs_anatomy_lab_anatomy_lab_local_review_candidate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANATOMY-LAB.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_anatomy_lab",
+      "target": "docs_anatomy_research_desk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANATOMY-LAB.md",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_anatomy_lab",
+      "target": "docs_public_surface_evidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started",
+      "target": "docs_anatomy_lab",
       "confidence_score": 1.0
     },
     {
@@ -31232,6 +31419,72 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started",
+      "target": "docs_getting_started_start_studying_with_paldawn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started_start_studying_with_paldawn",
+      "target": "docs_getting_started_install_as_a_web_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started_start_studying_with_paldawn",
+      "target": "docs_getting_started_open_the_web_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started_start_studying_with_paldawn",
+      "target": "docs_getting_started_study_with_reference_anatomy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started_start_studying_with_paldawn",
+      "target": "docs_getting_started_troubleshooting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/GETTING-STARTED.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_getting_started_start_studying_with_paldawn",
+      "target": "docs_getting_started_updates_and_local_work",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/GRAPHICS-REBUILD.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -31590,6 +31843,50 @@
       "_origin": "ast",
       "source": "docs_mechanism_lens_mechanism_lens",
       "target": "docs_mechanism_lens_visual_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_public_surface_evidence",
+      "target": "docs_public_surface_evidence_public_surface_evidence_september_2026_refresh",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_public_surface_evidence_public_surface_evidence_september_2026_refresh",
+      "target": "docs_public_surface_evidence_asset_and_capture_record",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_public_surface_evidence_public_surface_evidence_september_2026_refresh",
+      "target": "docs_public_surface_evidence_product_facts_and_coverage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PUBLIC-SURFACE-EVIDENCE.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_public_surface_evidence_public_surface_evidence_september_2026_refresh",
+      "target": "docs_public_surface_evidence_verification_and_limits",
       "confidence_score": 1.0
     },
     {
@@ -33599,5 +33896,5 @@
       "source_file": "docs/PLAN.md"
     }
   ],
-  "built_at_commit": "0589af2cc932e0b4328bc263507c26c9981944dc"
+  "built_at_commit": "7ac6037c9d3894a8fcab8ea8e6cd761dd41457ca"
 }

@@ -1,7 +1,7 @@
 # Anatomy Lab — local review candidate
 
-This candidate extends `main` at `1b08389`. It is not a released or deployed
-medical atlas. The existing Mechanism Lens public build remains separate.
+This candidate is available in current source on `main`. It is not a released
+or deployed medical atlas. The existing Mechanism Lens public build remains separate.
 
 ## Run the complete candidate
 
@@ -92,8 +92,9 @@ candidate does not add telemetry, accounts, patient data or persisted notes.
 
 ## Acceptance evidence
 
-See `output/anatomy-acceptance.md` for this working session's checks and known
-limits. Deterministic tests cover mesh buffers, all concept memberships,
+See the [research-desk verification notes](ANATOMY-RESEARCH-DESK.md#verification)
+and [public-surface evidence](PUBLIC-SURFACE-EVIDENCE.md) for recorded checks
+and known limits. Local `output/` logs are working artifacts, not distributed docs. Deterministic tests cover mesh buffers, all concept memberships,
 source-ID lookup, per-system coverage, compound selections, packing, pointer
 classification, optional tools, gzip decoding and default-build exclusion.
 Browser rendering is separately inspected; automated tests do not constitute

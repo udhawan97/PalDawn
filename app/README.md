@@ -4,11 +4,22 @@ The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +
 postprocessing stack.
 
-Every visible form is project-authored procedural geometry. Mechanism Lens adds
+In the normal public build, every visible form is project-authored procedural geometry. Mechanism Lens adds
 layered surface detail, small same-origin phase signals, and organ close focus
 to the source-linked disease explorer, but no third-party anatomy asset,
 medical dataset, patient data, diagnostic logic, or treatment recommender. The
 content and visual model remain marked as an unreviewed educational preview.
+
+## Start here
+
+For study, installation, updates, and troubleshooting, use the
+[getting-started guide](../docs/GETTING-STARTED.md). Run `npm ci` with Node.js 22+
+before the commands below.
+
+The separately prepared [Anatomy Lab candidate](../docs/ANATOMY-LAB.md) lives in
+`src/anatomy/`. It includes imported male/female reference meshes and a research
+desk with 20 body-area tracks and 113 condition-reading topics. It is excluded
+from `dist/` and the public website; qualified review remains pending.
 
 ## Living-instrument visual system
 
@@ -33,6 +44,11 @@ derivatives; do not hand-edit them.
 | `npm run build` | Build `dist/` for production |
 | `npm test` | Type-check, build, validate journey/release invariants, and enforce the gzip budget |
 | `npm run preview` | Serve the current production build locally |
+| `npm run anatomy:prepare` | Download and verify separate local reference packs; requires Git and curl |
+| `npm run anatomy:dev` | Open the local anatomy candidate after preparation |
+| `npm run anatomy:test` | Validate reference mappings, research content contracts, and public-build exclusion |
+| `npm run anatomy:build` | Build the local review artifact in `dist-anatomy/` |
+| `npm run anatomy:preview` | Serve that review artifact locally |
 | `npm run licenses` | Rebuild the transitive dependency license inventory |
 
 Use `npm ci`, not `npm install`, for a clean verification run.

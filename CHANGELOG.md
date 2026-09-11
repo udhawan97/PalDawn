@@ -2,6 +2,13 @@
 
 ## Unreleased — Anatomy Lab local candidate
 
+- Added a body-part research desk with 20 function introductions, 113 distinct
+  condition-reading topics, inquiry prompts, PubMed searches and a session queue
+  that exports selected reading as Markdown. These are not 113 new lessons.
+- Added independent area selection, source-ID locators, cross-area search, compact
+  cards and a wider research layout.
+- Refreshed onboarding, README, candidate study website and current screenshots,
+  with separate public-app, local-preview and source-release paths.
 - Added separately sourced male and female reference exploration, full upstream
   selection/search/layer/explosion controls, and source attribution.
 - Added organ-level disease-pathway links, searchable source reading, session
