@@ -264,66 +264,65 @@ test('system notices stay collapsed until requested', async ({ page }) => {
   await expect(page.locator('.system-banner-update-ready')).toBeHidden()
 })
 
-test('the branded introduction does not overflow target viewports', async ({ page }) => {
-  test.setTimeout(90_000)
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  const viewports = [
-    { width: 320, height: 568 },
-    { width: 320, height: 812 },
-    { width: 350, height: 812 },
-    { width: 375, height: 801 },
-    { width: 375, height: 812 },
-    { width: 414, height: 896 },
-    { width: 667, height: 375 },
-    { width: 720, height: 450 },
-    { width: 766, height: 480 },
-    { width: 766, height: 481 },
-    { width: 766, height: 559 },
-    { width: 766, height: 560 },
-    { width: 766, height: 561 },
-    { width: 766, height: 575 },
-    { width: 766, height: 576 },
-    { width: 821, height: 480 },
-    { width: 844, height: 390 },
-    { width: 896, height: 414 },
-    { width: 562, height: 561 },
-    { width: 600, height: 561 },
-    { width: 667, height: 561 },
-    { width: 691, height: 690 },
-    { width: 719, height: 561 },
-    { width: 720, height: 561 },
-    { width: 720, height: 690 },
-    { width: 819, height: 561 },
-    { width: 819, height: 690 },
-    { width: 820, height: 560 },
-    { width: 820, height: 561 },
-    { width: 820, height: 575 },
-    { width: 820, height: 576 },
-    { width: 821, height: 560 },
-    { width: 821, height: 561 },
-    { width: 821, height: 575 },
-    { width: 844, height: 561 },
-    { width: 896, height: 561 },
-    { width: 900, height: 560 },
-    { width: 900, height: 561 },
-    { width: 900, height: 690 },
-    { width: 900, height: 691 },
-    { width: 901, height: 691 },
-    { width: 900, height: 800 },
-    { width: 1200, height: 500 },
-    { width: 1200, height: 560 },
-    { width: 1200, height: 561 },
-    { width: 1440, height: 561 },
-    { width: 1440, height: 600 },
-    { width: 1440, height: 690 },
-    { width: 1440, height: 691 },
-    { width: 1440, height: 700 },
-    { width: 1440, height: 701 },
-    { width: 768, height: 1024 },
-    { width: 1440, height: 900 },
-  ]
+const introViewports = [
+  { width: 320, height: 568 },
+  { width: 320, height: 812 },
+  { width: 350, height: 812 },
+  { width: 375, height: 801 },
+  { width: 375, height: 812 },
+  { width: 414, height: 896 },
+  { width: 667, height: 375 },
+  { width: 720, height: 450 },
+  { width: 766, height: 480 },
+  { width: 766, height: 481 },
+  { width: 766, height: 559 },
+  { width: 766, height: 560 },
+  { width: 766, height: 561 },
+  { width: 766, height: 575 },
+  { width: 766, height: 576 },
+  { width: 821, height: 480 },
+  { width: 844, height: 390 },
+  { width: 896, height: 414 },
+  { width: 562, height: 561 },
+  { width: 600, height: 561 },
+  { width: 667, height: 561 },
+  { width: 691, height: 690 },
+  { width: 719, height: 561 },
+  { width: 720, height: 561 },
+  { width: 720, height: 690 },
+  { width: 819, height: 561 },
+  { width: 819, height: 690 },
+  { width: 820, height: 560 },
+  { width: 820, height: 561 },
+  { width: 820, height: 575 },
+  { width: 820, height: 576 },
+  { width: 821, height: 560 },
+  { width: 821, height: 561 },
+  { width: 821, height: 575 },
+  { width: 844, height: 561 },
+  { width: 896, height: 561 },
+  { width: 900, height: 560 },
+  { width: 900, height: 561 },
+  { width: 900, height: 690 },
+  { width: 900, height: 691 },
+  { width: 901, height: 691 },
+  { width: 900, height: 800 },
+  { width: 1200, height: 500 },
+  { width: 1200, height: 560 },
+  { width: 1200, height: 561 },
+  { width: 1440, height: 561 },
+  { width: 1440, height: 600 },
+  { width: 1440, height: 690 },
+  { width: 1440, height: 691 },
+  { width: 1440, height: 700 },
+  { width: 1440, height: 701 },
+  { width: 768, height: 1024 },
+  { width: 1440, height: 900 },
+]
 
-  for (const viewport of viewports) {
+for (const viewport of introViewports) {
+  test(`the branded introduction does not overflow at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize(viewport)
     await page.goto('./')
     await useFallbackHeadingFont(page)
@@ -390,8 +389,8 @@ test('the branded introduction does not overflow target viewports', async ({ pag
     if (viewport.width <= 540 && viewport.height >= 681 && viewport.height > viewport.width) {
       expect(panels.diseaseTop - panels.intro.bottom, `${viewport.width}x${viewport.height} intro-to-disease reserve`).toBeGreaterThanOrEqual(8)
     }
-  }
-})
+  })
+}
 
 test('a saved voyage keeps resume controls inside constrained landscape layouts', async ({ page }) => {
   test.setTimeout(90_000)

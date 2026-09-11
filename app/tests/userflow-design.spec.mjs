@@ -359,22 +359,21 @@ test('temporary WebGL recovery can be promoted to a persistent text-voyage prefe
   await expect(page.getByRole('button', { name: 'Return to 3D scene' })).toBeVisible()
 })
 
-test('expanded text reserves the complete safety boundary across the Atlas acceptance matrix', async ({ page }) => {
-  test.setTimeout(60_000)
-  await page.addInitScript(() => {
-    localStorage.setItem('paldawn:settings:v1', JSON.stringify({
-      state: { highContrast: true, captionScale: 'largest' },
-      version: 1,
-    }))
-  })
-  const viewports = [
-    { width: 320, height: 568 },
-    { width: 375, height: 812 },
-    { width: 414, height: 896 },
-    { width: 667, height: 375 },
-  ]
+const expandedTextViewports = [
+  { width: 320, height: 568 },
+  { width: 375, height: 812 },
+  { width: 414, height: 896 },
+  { width: 667, height: 375 },
+]
 
-  for (const viewport of viewports) {
+for (const viewport of expandedTextViewports) {
+  test(`expanded text reserves the complete safety boundary at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('paldawn:settings:v1', JSON.stringify({
+        state: { highContrast: true, captionScale: 'largest' },
+        version: 1,
+      }))
+    })
     await page.setViewportSize(viewport)
     await page.goto('./')
     await page.addStyleTag({ content: 'html { font-size: 20.8px !important; }' })
@@ -389,5 +388,5 @@ test('expanded text reserves the complete safety boundary across the Atlas accep
       return Math.max(0, detail.bottom - safety.top)
     })).toBeLessThanOrEqual(1)
     await expect(page.locator('.safety-line')).toContainText('Education only · never diagnosis')
-  }
-})
+  })
+}
