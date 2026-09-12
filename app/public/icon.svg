@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title description">
   <title id="title">PalDawn living mark</title>
-  <desc id="description">A cyan signal travels through a porcelain listening tube into a gold disc, which answers with two quiet rings. Motion stops when reduced motion is preferred.</desc>
+  <desc id="description">A cyan signal travels through a porcelain listening tube into a copper disc, which answers with two quiet rings. Motion stops when reduced motion is preferred.</desc>
   <defs>
     <linearGradient id="tube" x1="0" y1="0" x2=".72" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
@@ -19,20 +19,20 @@
     </linearGradient>
     <linearGradient id="bezel" x1=".14" y1="0" x2=".86" y2="1">
       <stop offset="0" stop-color="#fff8e4"/>
-      <stop offset=".3" stop-color="#e0b653"/>
+      <stop offset=".3" stop-color="#cba573"/>
       <stop offset=".66" stop-color="#80631f"/>
       <stop offset="1" stop-color="#3f2e0d"/>
     </linearGradient>
     <radialGradient id="disc" cx=".34" cy=".28" r=".82">
       <stop offset="0" stop-color="#fff3c6"/>
-      <stop offset=".38" stop-color="#e0b653"/>
+      <stop offset=".38" stop-color="#cba573"/>
       <stop offset=".8" stop-color="#6a4f18"/>
       <stop offset="1" stop-color="#2f2108"/>
     </radialGradient>
     <radialGradient id="pulse" cx=".5" cy=".5" r=".5">
       <stop offset="0" stop-color="#d8fff7" stop-opacity=".96"/>
-      <stop offset=".28" stop-color="#45e6cf" stop-opacity=".82"/>
-      <stop offset="1" stop-color="#45e6cf" stop-opacity="0"/>
+      <stop offset=".28" stop-color="#9fd8df" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#9fd8df" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="ground" cx=".5" cy=".5" r=".5">
       <stop offset="0" stop-color="#000000" stop-opacity=".34"/>
@@ -109,8 +109,8 @@
         <path d="M62 10 C62 26 60 32 50 37.5"/>
       </g>
     </g>
-    <circle class="echo" cx="68" cy="58" r="11.8" fill="none" stroke="#45e6cf" stroke-width="1.5" opacity="0"/>
-    <circle class="echo-two" cx="68" cy="58" r="11.8" fill="none" stroke="#45e6cf" stroke-width=".9" opacity="0"/>
+    <circle class="echo" cx="68" cy="58" r="11.8" fill="none" stroke="#9fd8df" stroke-width="1.5" opacity="0"/>
+    <circle class="echo-two" cx="68" cy="58" r="11.8" fill="none" stroke="#9fd8df" stroke-width=".9" opacity="0"/>
     <g class="traveler" opacity="0">
       <circle r="6.6" fill="url(#pulse)"/>
       <circle r="2.1" fill="#d8fff7"/>

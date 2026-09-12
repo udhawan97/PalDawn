@@ -24,19 +24,25 @@ that the educational synthesis is diagnostic guidance.
 
 | Token | Value | Role |
 |---|---:|---|
-| Royal Void | `#050412` | deepest scene and page field |
-| Instrument Violet | `#0A0820` | primary interface field and installed-app theme |
-| Chamber Violet | `#151134` | panel depth and atmospheric separation |
-| Porcelain | `#F2EDE0` | primary type and the listening tube |
-| Imperial Gold | `#E0B653` | arrival, selection, listening disc, primary action |
-| Bright Gold | `#F3D98A` | high-emphasis gold and small utility labels |
-| Vital Cyan | `#45E6CF` | signal travel, evidence, active focus, motion cue |
-| Aqua | `#7FE9D5` | focus rings and accessible focus outlines |
-| Clinical Rose | `#F07D86` | bounded pathology/system accent, never the general brand |
+| Midnight Study | `#07121B` | deepest scene and page field |
+| Anatomy Navy | `#101C27` | primary interface field and installed-app theme |
+| Slate Chamber | `#142633` | panel depth and atmospheric separation |
+| Study Paper | `#EDF0E9` | primary type, the listening tube, and reference-viewer canvas |
+| Instrument Copper | `#CBA573` | arrival, selection, listening disc, primary action |
+| Warm Brass | `#E8C58D` | high-emphasis copper and small utility labels |
+| Reference Cyan | `#9FD8DF` | signal travel, evidence, active focus, motion cue |
+| Study Green | `#B9DDC9` | focus rings and selected reference controls |
+| Mechanism Coral | `#CF765F` | bounded pathology/system accent, never the general brand |
 
-Gold means **arrival or selection**. Cyan means **signal, evidence, or focus**.
+Copper means **arrival or selection**. Cyan means **signal, evidence, or focus**.
 System colors remain semantically distinct in the 3D map; the brand palette
 does not recolor arteries, organs, or pathology merely for decoration.
+
+The public welcome screen uses the same split working-table composition as
+Anatomy Lab: navy for orientation and controls, a light study surface for the
+inspectable condition index, and copper as the active seam between them. The
+normal public build still contains only the conceptual systems map; this visual
+alignment does not publish the separately prepared reference anatomy.
 
 ## Typography and composition
 
@@ -50,7 +56,7 @@ does not recolor arteries, organs, or pathology merely for decoration.
 
 ## The living mark
 
-The mark is a continuous porcelain listening tube reaching a machined gold
+The mark is a continuous porcelain listening tube reaching a machined copper
 disc. A cyan signal travels through the tube; the disc answers with two quiet
 auscultation rings. The primary loop is 7.5 seconds, with a slower 9-second
 breath. Product motion reuses the same passage → arrival → response grammar.
@@ -63,8 +69,8 @@ to the static source.
 
 | Surface | Source of truth | Generated derivatives |
 |---|---|---|
-| Animated header/README mark | `app/public/icon.svg` | none |
-| Static reduced-motion mark | `app/public/icon-static.svg` | none |
+| Animated header/favicon mark | `app/public/icon.svg` | none |
+| Static README/reduced-motion mark | `app/public/icon-static.svg` | none |
 | Installed-app icon | `app/public/icon-app.svg` | `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` |
 | Maskable installed icon | `app/public/icon-maskable.svg` | `icon-maskable-192.png`, `icon-maskable-512.png` |
 | Link-preview card | `app/public/paldawn-social.svg` | `paldawn-social.png` |
@@ -96,7 +102,7 @@ anatomy assets remain subject to per-object lineage, license, and review.
 ## Acceptance checklist
 
 - The mark, product field, primary action, installed icon, and social card use
-  the same porcelain/gold/cyan material language.
+  the same porcelain/copper/cyan material language.
 - Motion has a static reduced-motion equivalent and never carries information
   that text does not expose.
 - Focus is visible; control targets remain inside 320–1440 px target layouts.

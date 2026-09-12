@@ -235,12 +235,12 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789103645.5636964,
-    "ast_hash": "4de6d2911d1f819531fc51af9af35464",
+    "mtime": 1789248895.6205132,
+    "ast_hash": "a2037ab175deb35b91273739b644e92b",
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1789102906.0992534,
+    "mtime": 1789104155.8446348,
     "ast_hash": "096143d53efa0864e027a96ed1380592",
     "semantic_hash": ""
   },
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/index.html": {
-    "mtime": 1787740048.4025831,
-    "ast_hash": "c052f37d367ba6becb018dbd779884be",
+    "mtime": 1789247677.66034,
+    "ast_hash": "1de5f2761040fc55e413673059921a33",
     "semantic_hash": ""
   },
   "docs/BRIEF-FOR-CODEX.md": {
@@ -420,12 +420,12 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1789103998.0402825,
-    "ast_hash": "90db1df1cc5f58d53b865169372ffa7a",
+    "mtime": 1789248006.7689748,
+    "ast_hash": "6b91945bd8595442851bd0f10daeafa2",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789102906.1047716,
+    "mtime": 1789104155.823959,
     "ast_hash": "a7a2b24d63a46dfa9818acdcca93eab8",
     "semantic_hash": ""
   },
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "app/public/icon.svg": {
-    "mtime": 1787740048.4067802,
-    "ast_hash": "2b493284417b0f57d600e1235feb02cf",
+    "mtime": 1789248616.7010858,
+    "ast_hash": "45eaaff3f29f4a90c78c36117fea87be",
     "semantic_hash": ""
   },
   "app/public/sw.js": {
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "app/tests/brand.spec.mjs": {
-    "mtime": 1789085298.9202204,
-    "ast_hash": "49fbde2a3042665526b7aeab28d0b076",
+    "mtime": 1789247702.3234239,
+    "ast_hash": "f3068e4bada36e767be007c2d7398ccf",
     "semantic_hash": ""
   },
   "paldawn-brand-and-site.html": {
@@ -575,43 +575,43 @@
     "semantic_hash": ""
   },
   "app/public/apple-touch-icon.png": {
-    "mtime": 1787740048.403341,
-    "ast_hash": "12de3fe62feafb290c65412f784fd401",
+    "mtime": 1789247762.0938768,
+    "ast_hash": "d14a048b2df5c87e1252915416cfdcdf",
     "semantic_hash": ""
   },
   "app/public/icon-192.png": {
-    "mtime": 1787740048.4034746,
-    "ast_hash": "b2209afa093a1048d2a791095e7289cd",
+    "mtime": 1789247762.0473967,
+    "ast_hash": "559a64838e1216bf242d60f1d42ca29f",
     "semantic_hash": ""
   },
   "app/public/icon-512.png": {
-    "mtime": 1787740048.4044666,
-    "ast_hash": "a53094011c92980b9e75abee72646c0f",
+    "mtime": 1789247762.0773175,
+    "ast_hash": "a91a8e2f3d9c51686aae3ed0c3574bd2",
     "semantic_hash": ""
   },
   "app/public/icon-maskable-192.png": {
-    "mtime": 1787740048.4049516,
-    "ast_hash": "db7446e8e1e6d5e319a39c8c8c95f2e6",
+    "mtime": 1789247762.1105177,
+    "ast_hash": "80c075bae21e623c5f36b9978e761ad5",
     "semantic_hash": ""
   },
   "app/public/icon-maskable-512.png": {
-    "mtime": 1787740048.405654,
-    "ast_hash": "de8b2d684423e95feff58ddd1a04aa89",
+    "mtime": 1789247762.1384494,
+    "ast_hash": "42c3af124017340ecb50dfb7f5cc590d",
     "semantic_hash": ""
   },
   "app/public/icon-maskable.svg": {
-    "mtime": 1787740048.4061253,
-    "ast_hash": "69df3cddd0313b6355897349ab9baa74",
+    "mtime": 1789247752.8820362,
+    "ast_hash": "a545c511d70ddd481eddf75bf7eccf8d",
     "semantic_hash": ""
   },
   "app/public/paldawn-social.png": {
-    "mtime": 1787740048.4078114,
-    "ast_hash": "94d9ca6d2f9135e39315dc21d51ea30e",
+    "mtime": 1789247762.268002,
+    "ast_hash": "c8c76e5d23483c6d5558293f7de87eb1",
     "semantic_hash": ""
   },
   "app/public/paldawn-social.svg": {
-    "mtime": 1787740048.4079578,
-    "ast_hash": "e4f000574e10ab331c1e1b953f1085f1",
+    "mtime": 1789247752.8824637,
+    "ast_hash": "50f81131ace112add53a439058de1be8",
     "semantic_hash": ""
   },
   "docs/assets/paldawn-first-light.png": {
@@ -620,8 +620,8 @@
     "semantic_hash": ""
   },
   "app/public/icon-static.svg": {
-    "mtime": 1787740048.4065814,
-    "ast_hash": "9a901f6aa22879c54ba28109d9e52af4",
+    "mtime": 1789248616.7016518,
+    "ast_hash": "1c779bdbcdec1c316af853d06efaaf54",
     "semantic_hash": ""
   },
   "app/tests/userflow-design.spec.mjs": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "docs/BRAND-SYSTEM.md": {
-    "mtime": 1787740048.413473,
-    "ast_hash": "c4276f4ba6e2703ee51de6b8d1d21ec0",
+    "mtime": 1789248895.6213722,
+    "ast_hash": "ed934a1d84a2e6b2ca3542b935e078fd",
     "semantic_hash": ""
   },
   "docs/VISION.md": {
@@ -695,8 +695,8 @@
     "semantic_hash": ""
   },
   "app/public/icon-app.svg": {
-    "mtime": 1787740048.4048011,
-    "ast_hash": "a37f960e047836d3842a28d37f933ace",
+    "mtime": 1789247752.8811812,
+    "ast_hash": "bce036f34aaa1402887cba50ba34b2fb",
     "semantic_hash": ""
   },
   "app/scripts/test-atlas-wayfinding.mjs": {
@@ -935,7 +935,7 @@
     "semantic_hash": ""
   },
   "app/anatomy-preview.ts": {
-    "mtime": 1789103404.4542053,
+    "mtime": 1789104155.858597,
     "ast_hash": "6e17fa88e4613c8c6da4bdd2c4b1eee3",
     "semantic_hash": ""
   },
@@ -1005,7 +1005,7 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyLanding.tsx": {
-    "mtime": 1789102986.3921356,
+    "mtime": 1789104155.8592248,
     "ast_hash": "c91c06c7faabeff250e75ab2b29da3dd",
     "semantic_hash": ""
   },
@@ -1020,7 +1020,7 @@
     "semantic_hash": ""
   },
   "docs/ANATOMY-LAB.md": {
-    "mtime": 1789102906.1009223,
+    "mtime": 1789104155.8796406,
     "ast_hash": "c714862aa0163e766082fa4710411ee7",
     "semantic_hash": ""
   },
@@ -1080,23 +1080,23 @@
     "semantic_hash": ""
   },
   "docs/GETTING-STARTED.md": {
-    "mtime": 1789103028.3778913,
+    "mtime": 1789104155.8873,
     "ast_hash": "df791c38d0d270dad70a4f67ea811bd2",
     "semantic_hash": ""
   },
   "docs/PUBLIC-SURFACE-EVIDENCE.md": {
-    "mtime": 1789103581.1668246,
-    "ast_hash": "9e4088377a0d21a5446880ebbf2a928c",
+    "mtime": 1789248631.18512,
+    "ast_hash": "a825aa327844fa059b91d2c269d96594",
     "semantic_hash": ""
   },
   "docs/assets/paldawn-research-desk.png": {
-    "mtime": 1789103261.2771714,
+    "mtime": 1789104156.0537703,
     "ast_hash": "7ca4642366db8c31805a099189f9f6c1",
     "semantic_hash": ""
   },
   "docs/assets/paldawn-web-introduction.png": {
-    "mtime": 1789103164.598833,
-    "ast_hash": "0dcbaa714f3e8e29892f95465b60aac9",
+    "mtime": 1789248807.8646529,
+    "ast_hash": "732cfc9dbcd9629016aa6ce760ec0fd2",
     "semantic_hash": ""
   }
 }

@@ -1,17 +1,19 @@
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/">
-    <img src="app/public/icon-static.svg" width="104" height="104" alt="PalDawn: a porcelain listening tube reaching a gold disc">
+    <img src="app/public/icon-static.svg" width="104" height="104" alt="PalDawn: a porcelain listening tube reaching a copper disc">
   </a>
 </p>
 
 <h1 align="center">PalDawn</h1>
-<p align="center"><strong>Enter the body. Follow what happens next.</strong></p>
+<p align="center"><strong>Know the body. Follow the connections.</strong></p>
 
-Explore how body systems connect, follow a disease mechanism one step at a time,
-and find the sources behind the explanation. PalDawn is a browser-based study
-companion for curious learners, including medical students exploring further
-reading. Its educational content is **unreviewed**; it is not a clinical training
-curriculum, diagnostic tool, or treatment guide.
+PalDawn brings structure and mechanism into one visual study companion. Follow a
+disease pathway through the public conceptual systems map, or prepare the local
+Anatomy Lab to examine credited male and female reference assemblies and turn a
+body part into a source-linked research question. It is for curious learners,
+including medical students exploring further reading. Its educational content
+is **unreviewed**; it is not a clinical training curriculum, diagnostic tool, or
+treatment guide.
 
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
@@ -21,10 +23,10 @@ curriculum, diagnostic tool, or treatment guide.
 
 <p align="center">
   <a href="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/udhawan97/PalDawn/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-e0b653.svg"></a>
+  <a href="LICENSE"><img alt="Code license: MIT" src="https://img.shields.io/badge/code-MIT-cba573.svg"></a>
 </p>
 
-## Choose your study space
+## Two ways into the body
 
 | Start here | What you can explore | What you need |
 |---|---|---|
@@ -32,12 +34,13 @@ curriculum, diagnostic tool, or treatment guide.
 | [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
 | [v0.4.0 source](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0) | The immutable Study and Reliability snapshot | Source archives, not a native installer. New research-desk work is on `main`, after this tag. |
 
-The public app is deployed from `main` through GitHub Pages. **Anatomy Lab is
-excluded from that build.** A merge does not publish the reference anatomy.
+Both paths share PalDawn's source-first study language, but they do not share a
+distribution boundary. The public app is deployed from `main` through GitHub
+Pages. **Anatomy Lab is excluded from that build.** A merge does not publish the reference anatomy.
 No desktop or mobile installer is provided; supported browsers may offer web-app
 installation. See [installation, updates, and help](docs/GETTING-STARTED.md).
 
-## Follow a mechanism, then inspect its sources
+## Follow a mechanism from system to source
 
 Start with **Explore diabetes**, choose an explanation depth, and move through
 its authored steps. Select a highlighted structure for a closer view. Open
@@ -52,7 +55,7 @@ its authored steps. Select a highlighted structure for a closer view. Open
 - **Set the pace:** choose reduced motion, text voyage, caption sizing, high
   contrast, and keyboard navigation.
 
-![PalDawn web introduction with its porcelain-and-gold listening mark, disease and voyage actions, and conceptual body map](docs/assets/paldawn-web-introduction.png)
+![PalDawn web introduction with its navy study surface, porcelain-and-copper listening mark, disease and voyage actions, and conceptual body map](docs/assets/paldawn-web-introduction.png)
 
 *Public-build introduction captured from current source. The procedural body is
 illustrative, not to scale, and not reviewed anatomy. The ten previews are

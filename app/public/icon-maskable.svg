@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
   <title id="title">PalDawn maskable app icon</title>
-  <desc id="description">The PalDawn listening mark held inside the maskable safe zone on a royal-violet field.</desc>
+  <desc id="description">The PalDawn listening mark held inside the maskable safe zone on a deep navy field.</desc>
   <defs>
     <radialGradient id="field" cx=".68" cy=".3" r=".8">
-      <stop offset="0" stop-color="#1b1745"/>
-      <stop offset=".58" stop-color="#0a0820"/>
-      <stop offset="1" stop-color="#050412"/>
+      <stop offset="0" stop-color="#183b52"/>
+      <stop offset=".58" stop-color="#101c27"/>
+      <stop offset="1" stop-color="#07121b"/>
     </radialGradient>
     <linearGradient id="tube" x1="0" y1="0" x2=".72" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
@@ -14,13 +14,13 @@
     </linearGradient>
     <linearGradient id="bezel" x1=".14" y1="0" x2=".86" y2="1">
       <stop offset="0" stop-color="#fff8e4"/>
-      <stop offset=".3" stop-color="#e0b653"/>
+      <stop offset=".3" stop-color="#cba573"/>
       <stop offset=".66" stop-color="#80631f"/>
       <stop offset="1" stop-color="#3f2e0d"/>
     </linearGradient>
     <radialGradient id="disc" cx=".34" cy=".28" r=".82">
       <stop offset="0" stop-color="#fff3c6"/>
-      <stop offset=".38" stop-color="#e0b653"/>
+      <stop offset=".38" stop-color="#cba573"/>
       <stop offset=".8" stop-color="#6a4f18"/>
       <stop offset="1" stop-color="#2f2108"/>
     </radialGradient>
@@ -32,7 +32,7 @@
     </mask>
   </defs>
   <rect width="512" height="512" fill="url(#field)"/>
-  <circle cx="354" cy="174" r="138" fill="none" stroke="#45e6cf" stroke-opacity=".07" stroke-width="2"/>
+  <circle cx="354" cy="174" r="138" fill="none" stroke="#9fd8df" stroke-opacity=".07" stroke-width="2"/>
   <g transform="translate(121.6 121.6) scale(2.8)">
     <ellipse cx="69.6" cy="61.2" rx="15.5" ry="14.5" fill="#000" opacity=".2"/>
     <circle cx="34" cy="10.4" r="5.3" fill="url(#tube)"/>

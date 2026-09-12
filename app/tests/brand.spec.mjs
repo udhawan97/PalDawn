@@ -52,16 +52,16 @@ test('the living-instrument contract reaches the intro and install surfaces', as
     return Object.fromEntries(['--ink-0', '--ink-1', '--bone', '--dawn', '--vital'].map((token) => [token, style.getPropertyValue(token).trim()]))
   })
   expect(tokens).toEqual({
-    '--ink-0': '#050412',
-    '--ink-1': '#0a0820',
-    '--bone': '#f2ede0',
-    '--dawn': '#e0b653',
-    '--vital': '#45e6cf',
+    '--ink-0': '#07121b',
+    '--ink-1': '#101c27',
+    '--bone': '#edf0e9',
+    '--dawn': '#cba573',
+    '--vital': '#9fd8df',
   })
 
   const manifest = await page.evaluate(async () => fetch('./site.webmanifest').then((response) => response.json()))
-  expect(manifest.theme_color).toBe('#0a0820')
-  expect(manifest.background_color).toBe('#050412')
+  expect(manifest.theme_color).toBe('#101c27')
+  expect(manifest.background_color).toBe('#07121b')
   expect(manifest.icons).toEqual(expect.arrayContaining([
     expect.objectContaining({ src: 'icon-app.svg', purpose: 'any' }),
     expect.objectContaining({ src: 'icon-maskable-512.png', purpose: 'maskable' }),

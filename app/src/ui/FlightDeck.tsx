@@ -144,7 +144,7 @@ function Intro() {
 
   return (
     <section className="intro" aria-labelledby="intro-title">
-      <p className="eyebrow">A companion voyage through the human body</p>
+      <p className="eyebrow">Body systems, with connections</p>
       <h1 id="intro-title" aria-label="Enter the body. Follow what happens next." tabIndex={-1}>
         <span>Enter the body.</span>
         <span className="intro-brand-route" aria-hidden="true">
@@ -157,7 +157,13 @@ function Intro() {
         <span>Follow what happens next.</span>
       </h1>
       <p className="intro-copy">
-        Follow a disease mechanism step by step and inspect its sources. The 3D body is a conceptual learning map, not reviewed anatomy.
+        Follow a disease mechanism from structure to system and inspect each source. The 3D body is a conceptual learning map, not reviewed anatomy.
+      </p>
+      <p className="intro-study-map" aria-label="Study from structure to system to mechanism to source">
+        <span>Structure</span><i aria-hidden="true" />
+        <span>System</span><i aria-hidden="true" />
+        <span>Mechanism</span><i aria-hidden="true" />
+        <span>Source</span>
       </p>
       <div className="intro-actions" data-resume-available={resumeAvailable}>
         {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="secondary-action" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Explore Anatomy Lab ↗</button> : null}

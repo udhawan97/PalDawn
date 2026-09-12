@@ -23,12 +23,17 @@ over older README prose.
 | Current screenshot pair | Isolated WebKit sessions at 1440×900, no user notes or accounts | Current source | README; research image in candidate website only |
 | Old first-light screenshot | Earlier genuine capture, no longer used by README | Historical | Retained asset, not labeled current |
 
+The README now opens with the shared learner promise, **Know the body. Follow the
+connections.**, then separates the public conceptual map from the locally prepared
+reference-anatomy candidate before a visitor can mistake one for the other.
+
 The public welcome screen is part of the app (`FlightDeck.tsx`), not a separate
-marketing framework. Its existing brand, actions, and education boundary remain;
-the supporting explanation now makes the source-reading step clearer. The
-candidate welcome page adds an editorial research spread, real study screenshot,
-reading-plan action, and setup/help navigation. It retains the porcelain/gold
-listening mark and navy/paper study palette.
+marketing framework. Its actions and education boundary remain, while the
+presentation now shares Anatomy Lab's navy, paper, copper, and study-green
+working-table palette. A structure-to-source guide makes the relationship between
+the two learning modes explicit without exposing the candidate anatomy chunks.
+The candidate welcome page keeps its longer editorial research spread, real
+study screenshot, reading-plan action, and setup/help navigation.
 
 ## Asset and capture record
 
@@ -42,8 +47,9 @@ listening mark and navy/paper study palette.
   mode. For the study view, choose Heart, **Locate heart**, **Isolate structure**,
   **Focus on research**, and scroll the inspector to the research question.
   Use a 1440×900 viewport, pause optional rotation, and save PNG without resizing.
-- Editable logos and the social SVG remain unchanged. PNG icon sizes and social
-  dimensions match the manifest/HTML; SVGs parse and have `viewBox` attributes.
+- Editable logos and the social SVG now share the navy, copper, and reference-cyan
+  palette. PNG icon sizes and social dimensions match the manifest/HTML; SVGs
+  parse and have `viewBox` attributes.
   No new fonts, stock images, invented demo data, or external image requests.
 
 ## Verification and limits
@@ -68,7 +74,7 @@ WebKit reduced-motion emulation disables ambient rotation. Keyboard focus is
 visible. The 720×450 reflow check covers the effective viewport of 200% desktop
 zoom; CSS 200% magnification is inspected separately and is not native browser
 zoom certification. Light/dark theme switching is not offered by the candidate;
-its fixed navy/paper palette and the public violet palette are preserved.
+its fixed navy/paper palette now anchors both study modes.
 Development capture logged a WebKit manifest warning and Vite reconnect during
 source reload; the served manifest is valid JSON. Production builds and default
 asset exclusion are checked independently.

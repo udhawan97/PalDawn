@@ -4,8 +4,8 @@
   "description": "Trace source-linked disease mechanisms through a conceptual 3D systems map, step by step.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#050412",
-  "theme_color": "#0a0820",
+  "background_color": "#07121b",
+  "theme_color": "#101c27",
   "icons": [
     {
       "src": "icon-app.svg",
