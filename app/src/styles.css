@@ -6170,7 +6170,7 @@ html[data-contrast='high'] {
 
 @media (max-height: 690px) and (orientation: landscape) {
   .intro {
-    top: 70px;
+    top: 82px;
     width: min(520px, calc(100vw - 390px));
     transform: none;
     animation: none;
@@ -6362,7 +6362,7 @@ html[data-contrast='high'] {
 
 @media (max-height: 560px) and (orientation: landscape) {
   .intro {
-    top: 70px;
+    top: 82px;
     left: 24px;
     width: min(520px, calc(52% - 42px));
     transform: none;
