@@ -5990,12 +5990,21 @@ html[data-contrast='high'] {
 }
 
 .flight-ui[data-entered='false'] .top-diseases {
+  z-index: 3;
   border: 1px solid rgba(72, 92, 102, 0.28);
   border-top: 3px solid #a5673c;
   color: #182d3b;
   background: rgba(237, 240, 233, 0.78);
   box-shadow: 0 20px 56px rgba(18, 35, 43, 0.12);
   backdrop-filter: blur(8px);
+}
+
+.flight-ui[data-entered='false'] .top-diseases-heading {
+  pointer-events: none;
+}
+
+.flight-ui[data-entered='false'] .top-diseases-heading .curriculum-launch {
+  pointer-events: auto;
 }
 
 .flight-ui[data-entered='false'] .top-diseases .eyebrow,
@@ -6111,6 +6120,41 @@ html[data-contrast='high'] {
   .flight-ui[data-entered='false'] .safety-line {
     color: var(--muted);
   }
+
+  .top-diseases-heading {
+    flex: 0 0 32px;
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    min-height: 32px;
+    padding: 0 2px 6px;
+  }
+
+  .top-diseases-heading .eyebrow {
+    display: none;
+  }
+
+  .top-diseases h2 {
+    overflow: hidden;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .top-diseases ol {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .top-diseases li {
+    scroll-margin-inline: 70px;
+  }
+
+  .top-diseases .curriculum-launch {
+    min-height: 24px;
+    padding: 3px 6px;
+    font-size: 9px;
+  }
 }
 
 @media (max-height: 690px) and (orientation: landscape) {
@@ -6126,7 +6170,7 @@ html[data-contrast='high'] {
 
 @media (max-height: 690px) and (orientation: landscape) {
   .intro {
-    top: 82px;
+    top: 70px;
     width: min(520px, calc(100vw - 390px));
     transform: none;
     animation: none;
@@ -6318,7 +6362,7 @@ html[data-contrast='high'] {
 
 @media (max-height: 560px) and (orientation: landscape) {
   .intro {
-    top: 82px;
+    top: 70px;
     left: 24px;
     width: min(520px, calc(52% - 42px));
     transform: none;
