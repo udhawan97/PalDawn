@@ -6277,6 +6277,10 @@ html[data-contrast='high'] {
 }
 
 @media (min-height: 561px) and (max-height: 690px) and (max-width: 819px) and (orientation: landscape) {
+  .intro {
+    top: 74px;
+  }
+
   .intro h1 {
     font-size: clamp(2.25rem, 6.7vw, 3.2rem);
   }
@@ -6427,7 +6431,7 @@ html[data-contrast='high'] {
 
 @media (max-width: 820px) and (max-height: 560px) and (orientation: landscape) {
   .intro {
-    top: 72px;
+    top: 64px;
   }
 }
 
