@@ -6166,6 +6166,10 @@ html[data-contrast='high'] {
     left: 24px;
     width: min(520px, calc(52% - 42px));
   }
+
+  .flight-ui[data-entered='false'] .intro-actions {
+    margin-top: 6px;
+  }
 }
 
 @media (max-height: 690px) and (orientation: landscape) {
