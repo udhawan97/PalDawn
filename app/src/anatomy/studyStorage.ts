@@ -14,6 +14,22 @@ export interface AnatomyStudyData {
   lastSelection: Record<'male' | 'female', string | null>
 }
 
+export interface AnatomyStudySession {
+  data: AnatomyStudyData
+  persisted: boolean
+  status: string
+}
+
+export function anatomyStudyCapacityError(data: AnatomyStudyData): string | null {
+  if (data.queue.length > MAX_ANATOMY_READING_ITEMS) {
+    return `Your reading queue is full (${MAX_ANATOMY_READING_ITEMS} readings). Remove a reading before adding another.`
+  }
+  if (data.saved.male.length > MAX_ANATOMY_SAVED_STRUCTURES || data.saved.female.length > MAX_ANATOMY_SAVED_STRUCTURES) {
+    return `This reference’s study list is full (${MAX_ANATOMY_SAVED_STRUCTURES} structures). Remove a structure before adding another.`
+  }
+  return null
+}
+
 export type AnatomyStudyImportResult =
   | { ok: true; data: AnatomyStudyData }
   | { ok: false; error: string }
@@ -75,6 +91,7 @@ export function loadAnatomyStudy(): { data: AnatomyStudyData; storageAvailable: 
 }
 
 export function saveAnatomyStudy(data: AnatomyStudyData): boolean {
+  if (anatomyStudyCapacityError(data)) return false
   try {
     const normalized = normalizeAnatomyStudy(data)
     const value = JSON.stringify(normalized)

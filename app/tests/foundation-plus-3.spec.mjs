@@ -216,3 +216,70 @@ test('workspace remains readable without horizontal overflow at 320 pixels', asy
   expect(geometry.scrollOwners.every((owner) => owner.left >= -1 && owner.right <= 321 && owner.scrollWidth > owner.clientWidth)).toBe(true)
   expect(geometry.unownedEscapes).toBe(0)
 })
+
+
+async function stubUpdateWorker(page) {
+  await page.addInitScript(() => {
+    // Exercise the real page-side preparation protocol without installing a worker.
+    window.updateReplies = []
+    class UpdateWorker {
+      scriptURL = new URL('sw.js', window.location.href).href
+      postMessage(message) { window.updateReplies.push(message) }
+    }
+    Object.defineProperty(window, 'ServiceWorker', { configurable: true, value: UpdateWorker })
+    const worker = new UpdateWorker()
+    const serviceWorker = Object.assign(new EventTarget(), {
+      controller: worker,
+      register: async () => ({ waiting: null, addEventListener() {} }),
+    })
+    Object.defineProperty(navigator, 'serviceWorker', { configurable: true, value: serviceWorker })
+    window.sendUpdateMessage = data => {
+      const event = new Event('message')
+      Object.defineProperties(event, { data: { value: data }, source: { value: worker } })
+      serviceWorker.dispatchEvent(event)
+    }
+  })
+}
+
+async function expectUpdateBlockedByUnsavedWork(page, requestId) {
+  await page.evaluate(requestId => window.sendUpdateMessage({ type: 'PALDAWN_PREPARE_UPDATE', requestId }), requestId)
+  await expect.poll(() => page.evaluate(requestId => window.updateReplies.find(message => message.type === 'PALDAWN_UPDATE_PREPARED' && message.requestId === requestId), requestId)).toEqual({ type: 'PALDAWN_UPDATE_PREPARED', requestId, ready: false })
+  await page.evaluate(requestId => window.sendUpdateMessage({ type: 'PALDAWN_UPDATE_BLOCKED', requestId, reason: 'unsaved' }), requestId)
+}
+
+test('a sibling save preserves the only unsaved draft and does not overwrite the sibling on further edits', async ({ page }) => {
+  await stubUpdateWorker(page)
+  await page.addInitScript((key) => {
+    localStorage.setItem('paldawn:settings:v1', JSON.stringify({ version: 1, state: { textVoyagePreferred: true, reducedMotion: true } }))
+    window.workspaceWritesBlocked = true
+    const setItem = Storage.prototype.setItem
+    Storage.prototype.setItem = function (name, value) {
+      if (name === key && window.workspaceWritesBlocked) throw new DOMException('blocked', 'QuotaExceededError')
+      return setItem.call(this, name, value)
+    }
+  }, WORKSPACE_KEY)
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Enter step mode' }).click()
+  await page.getByRole('button', { name: 'Private note', exact: true }).click()
+  const note = page.getByLabel('Private note for Approach')
+  await note.fill('Fictional draft retained only in this tab')
+  await expect(page.getByText('Browser storage is unavailable.', { exact: true })).toBeVisible()
+  const sibling = await page.context().newPage()
+  await sibling.goto('./')
+  const remote = { notes: { portal: 'Fictional sibling note' }, checkpoints: ['portal'], resetToken: null }
+  await sibling.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: WORKSPACE_KEY, value: remote })
+  await expect(page.getByText('Another tab changed your workspace.', { exact: true })).toBeVisible()
+  await expect(note).toHaveValue('Fictional draft retained only in this tab')
+  await page.evaluate(() => { window.workspaceWritesBlocked = false })
+  await note.fill('Fictional draft retained and edited after conflict')
+  await page.getByRole('button', { name: 'Mark personal checkpoint' }).click()
+  await expect(page.getByRole('button', { name: 'Retry saving', exact: true })).toHaveCount(0)
+  await expectUpdateBlockedByUnsavedWork(page, 'workspace-conflict')
+  expect(await sibling.evaluate((key) => JSON.parse(localStorage.getItem(key)), WORKSPACE_KEY)).toEqual(remote)
+  const downloadEvent = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download study Markdown' }).click()
+  const markdown = await readFile(await (await downloadEvent).path(), 'utf8')
+  expect(markdown).toContain('Fictional draft retained and edited after conflict')
+  expect(markdown).toContain('Personal checkpoint: Complete')
+  await expect(page.getByText('Another tab changed your workspace.', { exact: true })).toBeVisible()
+})

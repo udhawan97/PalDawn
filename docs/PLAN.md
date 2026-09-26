@@ -17,7 +17,7 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 - **License:** code MIT · PalDawn-authored and compatible derived content/asset packs CC BY-SA 4.0; upstream material additionally retains its exact source license and lineage record
 - **Hosting:** 100% free tier — static GitHub Pages; immutable versioned GLB packs later streamed from GitHub Releases; no backend, no paid services
-- **Status:** v0.5.0 Study Navigation release, retaining Mechanism Lens: the ten source-linked disease
+- **Status:** v0.5.1 Recovery Integrity release, retaining Study Navigation and Mechanism Lens: the ten source-linked disease
   previews and eleven-step diabetes mechanism now drive high-detail procedural
   body layers, phase signals, and organ close focus alongside the preserved
   First Light voyage. No reviewed anatomy, patient data, diagnosis, or

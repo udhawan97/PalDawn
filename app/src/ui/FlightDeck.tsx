@@ -504,11 +504,13 @@ function TranscriptPanel({
 function WorkspacePanel({
   workspace,
   workspacePersisted,
+  workspaceConflict,
   onUpdateWorkspace,
   onRetryPersistence,
 }: {
   workspace: LearnerWorkspace
   workspacePersisted: boolean
+  workspaceConflict: boolean
   onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
   onRetryPersistence: () => boolean
 }) {
@@ -566,13 +568,15 @@ function WorkspacePanel({
       </p>
       {!workspacePersisted ? (
         <aside className="persistence-warning" role="alert">
-          <strong>Browser storage is unavailable.</strong>
-          <p>Keep this page open while editing. Reloading may lose these private notes and checkpoints; copy or download them before leaving.</p>
-          <button type="button" onClick={() => {
+          <strong>{workspaceConflict ? 'Another tab changed your workspace.' : 'Browser storage is unavailable.'}</strong>
+          <p>{workspaceConflict
+            ? 'Your unsaved notes and checkpoints remain in this tab. Copy or download them before reloading to use the other tab’s saved workspace. Further edits here remain unsaved.'
+            : 'Keep this page open while editing. Reloading may lose these private notes and checkpoints; copy or download them before leaving.'}</p>
+          {!workspaceConflict ? <button type="button" onClick={() => {
             setStatus(onRetryPersistence()
               ? 'Private workspace saved in this browser.'
               : 'Browser storage is still unavailable. Keep this page open or export your work.')
-          }}>Retry saving</button>
+          }}>Retry saving</button> : null}
         </aside>
       ) : null}
       <label className="workspace-search" htmlFor="workspace-search">
@@ -1160,6 +1164,7 @@ function Drawer({
   onToggleBookmark,
   workspace,
   workspacePersisted,
+  workspaceConflict,
   onUpdateWorkspace,
   onRetryWorkspacePersistence,
 }: {
@@ -1169,6 +1174,7 @@ function Drawer({
   onToggleBookmark: (id: string) => boolean
   workspace: LearnerWorkspace
   workspacePersisted: boolean
+  workspaceConflict: boolean
   onUpdateWorkspace: (update: (current: LearnerWorkspace) => LearnerWorkspace) => void
   onRetryWorkspacePersistence: () => boolean
 }) {
@@ -1305,6 +1311,7 @@ function Drawer({
           <WorkspacePanel
             workspace={workspace}
             workspacePersisted={workspacePersisted}
+            workspaceConflict={workspaceConflict}
             onUpdateWorkspace={onUpdateWorkspace}
             onRetryPersistence={onRetryWorkspacePersistence}
           />
@@ -1422,6 +1429,9 @@ export function FlightDeck({
   const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
   const [workspace, setWorkspace] = useState(loadLearnerWorkspace)
   const [workspacePersisted, setWorkspacePersisted] = useState(true)
+  const workspacePersistedRef = useRef(true)
+  const [workspaceConflict, setWorkspaceConflict] = useState(false)
+  const workspaceConflictRef = useRef(false)
   const [failedStorageKeys, setFailedStorageKeys] = useState<string[]>([])
   const [bookmarkStatus, setBookmarkStatus] = useState('')
   const [atlasRouteNotice, setAtlasRouteNotice] = useState('')
@@ -1457,18 +1467,20 @@ export function FlightDeck({
     return persisted
   }, [])
 
+  const retryWorkspacePersistence = useCallback(() => {
+    // A retry must not overwrite another tab's work after detecting a conflict.
+    const persisted = !workspaceConflictRef.current && saveLearnerWorkspace(workspaceRef.current)
+    workspacePersistedRef.current = persisted
+    setWorkspacePersisted(persisted)
+    return persisted
+  }, [])
+
   const updateWorkspace = useCallback((update: (current: LearnerWorkspace) => LearnerWorkspace) => {
     const next = update(workspaceRef.current)
     workspaceRef.current = next
     setWorkspace(next)
-    setWorkspacePersisted(saveLearnerWorkspace(next))
-  }, [])
-
-  const retryWorkspacePersistence = useCallback(() => {
-    const persisted = saveLearnerWorkspace(workspaceRef.current)
-    setWorkspacePersisted(persisted)
-    return persisted
-  }, [])
+    retryWorkspacePersistence()
+  }, [retryWorkspacePersistence])
 
   const preparePwaUpdate = useCallback(() => {
     const experience = useExperience.getState()
@@ -1479,7 +1491,7 @@ export function FlightDeck({
       narrationMode: experience.narrationMode,
     })
     const bookmarksSaved = saveStageBookmarks(bookmarksRef.current)
-    const workspaceSaved = saveLearnerWorkspace(workspaceRef.current)
+    const workspaceSaved = retryWorkspacePersistence()
     const atlasStudySaved = useAtlasStudy.getState().persist()
     const settingsSaved = writeLocalStorageValue(PALDAWN_SETTINGS_KEY, JSON.stringify({
       state: {
@@ -1496,7 +1508,7 @@ export function FlightDeck({
     }))
     setWorkspacePersisted(workspaceSaved)
     return journeySaved && bookmarksSaved && workspaceSaved && atlasStudySaved && settingsSaved
-  }, [])
+  }, [retryWorkspacePersistence])
 
   const openWorkspace = useCallback((focusNote: boolean) => {
     setOpenPanel('workspace')
@@ -1591,9 +1603,15 @@ export function FlightDeck({
         return
       }
       if (event.key === PALDAWN_WORKSPACE_KEY) {
+        if (!workspacePersistedRef.current) {
+          workspaceConflictRef.current = true
+          setWorkspaceConflict(true)
+          return
+        }
         const next = loadLearnerWorkspace()
         workspaceRef.current = next
         setWorkspace(next)
+        workspacePersistedRef.current = true
         setWorkspacePersisted(true)
         return
       }
@@ -1913,6 +1931,7 @@ export function FlightDeck({
         onToggleBookmark={toggleStageBookmark}
         workspace={workspace}
         workspacePersisted={workspacePersisted}
+        workspaceConflict={workspaceConflict}
         onUpdateWorkspace={updateWorkspace}
         onRetryWorkspacePersistence={retryWorkspacePersistence}
       />

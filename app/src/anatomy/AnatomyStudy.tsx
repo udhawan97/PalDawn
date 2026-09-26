@@ -10,6 +10,7 @@ import './study.css'
 import ResearchDesk from './ResearchDesk'
 import {
   PALDAWN_ANATOMY_STUDY_KEY,
+  anatomyStudyCapacityError,
   clearAnatomyStudy,
   emptyAnatomyStudy,
   exportAnatomyStudy,
@@ -18,6 +19,7 @@ import {
   saveAnatomyStudy,
   type AnatomyReadingItem,
   type AnatomyStudyData,
+  type AnatomyStudySession,
 } from './studyStorage'
 const AnatomyScene = lazy(() => import('./scene'))
 const initial = (): SceneState => ({ explode: 0, visible: [...DEFAULT_VISIBLE], selected: [], isolate: false, view: 'three-quarter', rotate: false, reset: 0 })
@@ -25,7 +27,11 @@ type StudySession = { state: SceneState; chosen: Concept | null; query: string }
 const sessions: Record<'male' | 'female', StudySession> = { male: { state: initial(), chosen: null, query: '' }, female: { state: { ...initial(), visible: [...DEFAULT_VISIBLE, 'integumentary'] }, chosen: null, query: '' } }
 let lastSex: 'male' | 'female' = 'male'
 type Context = { systems: Record<string, string>; structures: Record<string, string>; femaleSystems?: Record<string, string>; femaleStructures?: Record<string, string>; femaleReading?: Context['reading']; reading?: Record<string, { source: string; checked: string; topics: { title: string; url: string }[] }> }
-export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
+export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: {
+  onClose: () => void
+  retainedStudy: AnatomyStudySession | null
+  onRetainStudy: (session: AnatomyStudySession) => void
+}) {
   const [sex, setSex] = useState<'male' | 'female'>(() => { const ref = new URL(window.location.href).searchParams.get('reference'); return ref === 'male' || ref === 'female' ? ref : lastSex })
   const session = sessions[sex]
   const [tour, setTour] = useState(false)
@@ -45,11 +51,24 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<'structures' | 'systems' | 'study'>(session.chosen ? 'study' : 'structures')
   const [quiz, setQuiz] = useState(false)
   const [revealed, setRevealed] = useState(false)
-  const [initialStoredStudy] = useState(loadAnatomyStudy)
+  const [initialStoredStudy] = useState<AnatomyStudySession>(() => {
+    if (retainedStudy && !retainedStudy.persisted) return retainedStudy
+    const loaded = loadAnatomyStudy()
+    return { data: loaded.data, persisted: loaded.storageAvailable, status: loaded.storageAvailable ? '' : 'Browser storage is unavailable. Anatomy study changes will remain in this tab only.' }
+  })
   const [studyData, setStudyData] = useState<AnatomyStudyData>(initialStoredStudy.data)
   const studyDataRef = useRef(studyData)
-  const [studyPersisted, setStudyPersisted] = useState(initialStoredStudy.storageAvailable)
-  const [studyStatus, setStudyStatus] = useState(initialStoredStudy.storageAvailable ? '' : 'Browser storage is unavailable. Anatomy study changes will remain in this tab only.')
+  const [studyPersisted, setStudyPersisted] = useState(initialStoredStudy.persisted)
+  const studyPersistedRef = useRef(studyPersisted)
+  const [studyStatus, setStudyStatus] = useState(initialStoredStudy.status)
+  const retainStudy = useCallback((data: AnatomyStudyData, persisted: boolean, status: string) => {
+    studyDataRef.current = data
+    studyPersistedRef.current = persisted
+    setStudyData(data)
+    setStudyPersisted(persisted)
+    setStudyStatus(status)
+    onRetainStudy({ data, persisted, status })
+  }, [onRetainStudy])
   const [confirmClearStudy, setConfirmClearStudy] = useState(false)
   const [pendingStudyImport, setPendingStudyImport] = useState<AnatomyStudyData | null>(null)
   const saved = studyData.saved[sex]
@@ -62,44 +81,41 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   const reducedMotion = useSettings(s => s.reducedMotion)
   const deferred = useDeferredValue(query)
   useEffect(() => { sessions[sex] = { state, chosen, query }; lastSex = sex }, [sex, state, chosen, query])
-  useEffect(() => { studyDataRef.current = studyData }, [studyData])
   useEffect(() => registerPwaUpdatePreparation(() => {
     const persisted = saveAnatomyStudy(studyDataRef.current)
-    setStudyPersisted(persisted)
-    if (!persisted) setStudyStatus('Update paused because Anatomy study data could not be saved. Copy or export your work before reloading.')
+    retainStudy(studyDataRef.current, persisted, persisted ? '' : 'Update paused because Anatomy study data could not be saved. Copy or export your work before reloading.')
     return persisted
-  }), [])
+  }), [retainStudy])
   useEffect(() => {
     const followStoredStudy = (event: StorageEvent) => {
       if (event.key !== PALDAWN_ANATOMY_STUDY_KEY) return
-      if (!studyPersisted) {
-        setStudyStatus('Another tab changed Anatomy study data. Your unsaved in-memory work remains here; export it before reloading.')
+      if (!studyPersistedRef.current) {
+        retainStudy(studyDataRef.current, false, 'Another tab changed Anatomy study data. Your unsaved in-memory work remains here; export it before reloading.')
         return
       }
       const loaded = loadAnatomyStudy()
-      studyDataRef.current = loaded.data
-      setStudyData(loaded.data)
-      setStudyPersisted(loaded.storageAvailable)
-      setStudyStatus(loaded.storageAvailable ? 'Anatomy study updated from another tab.' : 'Browser storage is unavailable. Anatomy study changes remain in this tab only.')
+      retainStudy(loaded.storageAvailable ? loaded.data : studyDataRef.current, loaded.storageAvailable,
+        loaded.storageAvailable ? 'Anatomy study updated from another tab.' : 'Browser storage is unavailable. Anatomy study changes remain in this tab only.')
     }
     window.addEventListener('storage', followStoredStudy)
     return () => window.removeEventListener('storage', followStoredStudy)
-  }, [studyPersisted])
+  }, [retainStudy])
   const updateStudy = useCallback((update: (current: AnatomyStudyData) => AnatomyStudyData, success: string) => {
-    setStudyData(current => {
-      const next = update(current)
-      studyDataRef.current = next
-      const persisted = saveAnatomyStudy(next)
-      setStudyPersisted(persisted)
-      setStudyStatus(persisted ? success : 'Anatomy study changed in this tab, but browser storage is unavailable. Export before reloading.')
-      return next
-    })
-  }, [])
+    const next = update(studyDataRef.current)
+    const capacityError = anatomyStudyCapacityError(next)
+    if (capacityError) {
+      setStudyStatus(capacityError + (studyPersistedRef.current ? '' : ' Your earlier changes remain unsaved in this tab.'))
+      return false
+    }
+    const persisted = saveAnatomyStudy(next)
+    retainStudy(next, persisted, persisted ? success : 'Anatomy study changed in this tab, but browser storage is unavailable. Export before reloading.')
+    return true
+  }, [retainStudy])
   const setSaved = useCallback((update: (current: string[]) => string[]) => {
-    updateStudy(current => ({ ...current, saved: { ...current.saved, [sex]: update(current.saved[sex]) } }), 'Anatomy study list saved in this browser.')
+    return updateStudy(current => ({ ...current, saved: { ...current.saved, [sex]: update(current.saved[sex]) } }), 'Anatomy study list saved in this browser.')
   }, [sex, updateStudy])
   const setQueue = useCallback((next: AnatomyReadingItem[]) => {
-    updateStudy(current => ({ ...current, queue: next }), 'Reading queue saved in this browser.')
+    return updateStudy(current => ({ ...current, queue: next }), 'Reading queue saved in this browser.')
   }, [updateStudy])
   useEffect(() => {
     const abort = new AbortController()
@@ -245,20 +261,14 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
               }).catch(() => setStudyStatus('PalDawn could not read that Anatomy study backup.')).finally(() => { input.value = '' })
             }}/></label>
             {pendingStudyImport ? <><button onClick={() => {
-              studyDataRef.current = pendingStudyImport
               const persisted = saveAnatomyStudy(pendingStudyImport)
-              setStudyData(pendingStudyImport)
-              setStudyPersisted(persisted)
+              retainStudy(pendingStudyImport, persisted, persisted ? 'Anatomy study backup restored in this browser.' : 'Backup loaded in this tab, but browser storage is unavailable. Export before reloading.')
               setPendingStudyImport(null)
-              setStudyStatus(persisted ? 'Anatomy study backup restored in this browser.' : 'Backup loaded in this tab, but browser storage is unavailable. Export before reloading.')
             }}>Confirm backup replacement</button><button onClick={() => { setPendingStudyImport(null); setStudyStatus('Backup replacement cancelled.') }}>Cancel backup replacement</button></> : null}
             {confirmClearStudy ? <><button onClick={() => {
               const cleared = clearAnatomyStudy()
               const empty = emptyAnatomyStudy()
-              studyDataRef.current = empty
-              setStudyData(empty)
-              setStudyPersisted(cleared)
-              setStudyStatus(cleared ? 'Local Anatomy study cleared.' : 'The in-memory Anatomy study was cleared, but browser storage could not be verified.')
+              retainStudy(empty, cleared, cleared ? 'Local Anatomy study cleared.' : 'The in-memory Anatomy study was cleared, but browser storage could not be verified.')
               setConfirmClearStudy(false)
             }}>Confirm clear Anatomy study</button><button onClick={() => setConfirmClearStudy(false)}>Cancel</button></> : <button disabled={!queue.length && !studyData.saved.male.length && !studyData.saved.female.length && !studyData.lastSelection.male && !studyData.lastSelection.female} onClick={() => setConfirmClearStudy(true)}>Clear local Anatomy study</button>}
           </div>

@@ -4,7 +4,7 @@ import { ALL_CONDITIONS, ALL_RESEARCH_TOPICS, RESEARCH_TRACKS, SOURCE_CHECKED, e
 import type { AnatomyReadingItem } from './studyStorage'
 import './research.css'
 
-type Props = { atlas: Atlas | null; chosen: Concept | null; onChoose: (concept: Concept) => void; queue: AnatomyReadingItem[]; onQueue: (queue: AnatomyReadingItem[]) => void }
+type Props = { atlas: Atlas | null; chosen: Concept | null; onChoose: (concept: Concept) => void; queue: AnatomyReadingItem[]; onQueue: (queue: AnatomyReadingItem[]) => boolean }
 export default function ResearchDesk({ atlas, chosen, onChoose, queue, onQueue }: Props) {
   const suggested = useMemo(() => atlas && chosen ? suggestedTracks(atlas, chosen) : null, [atlas, chosen])
   const [manual, setManual] = useState('')
@@ -36,7 +36,10 @@ export default function ResearchDesk({ atlas, chosen, onChoose, queue, onQueue }
   const topics = searchReading(allAreas ? ALL_CONDITIONS : track.conditions, query)
   const toggle = (topic: ReadingTopic) => {
     const exists = queue.some(item => item.id === topic.id)
-    onQueue(exists ? queue.filter(item => item.id !== topic.id) : [...queue, { id: topic.id, read: false }])
+    if (!onQueue(exists ? queue.filter(item => item.id !== topic.id) : [...queue, { id: topic.id, read: false }])) {
+      setNotice('Reading was not added. Remove a saved reading to make room.')
+      return
+    }
     setNotice(`${topic.title} ${exists ? 'removed from' : 'added to'} your reading queue.`)
   }
   const updateQueueItem = (id: string, update: (item: AnatomyReadingItem, index: number) => AnatomyReadingItem[] | AnatomyReadingItem) => {

@@ -87,3 +87,119 @@ test('Anatomy clear remains available for a resume-only record', async ({ page }
   await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), STUDY_KEY)).toBeNull()
   await expect(page.getByText('Local Anatomy study cleared.')).toBeVisible()
 })
+
+async function seedStudy(page, study) {
+  await page.addInitScript(({ key, study }) => {
+    if (sessionStorage.getItem('anatomy-regression-seeded')) return
+    localStorage.setItem(key, JSON.stringify(study))
+    sessionStorage.setItem('anatomy-regression-seeded', 'true')
+  }, { key: STUDY_KEY, study })
+}
+
+async function anatomyBackup(page) {
+  const summary = page.getByText('Saved Anatomy study & backup', { exact: true })
+  if (!await summary.evaluate(element => element.parentElement.open)) await summary.click()
+  const downloaded = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download Anatomy backup' }).click()
+  return JSON.parse(await readFile(await (await downloaded).path(), 'utf8')).study
+}
+
+test('a full structure list refuses additions without falsely saving or changing its backup', async ({ page }) => {
+  const atlas = JSON.parse(await readFile(new URL('../../output/anatomy/models/atlas.json', import.meta.url), 'utf8'))
+  const ids = atlas.concepts.filter(concept => concept.id !== 'FMA7088').slice(0, 750).map(concept => concept.id)
+  await seedStudy(page, { queue: [], saved: { male: ids, female: [] }, lastSelection: { male: 'FMA7088', female: null } })
+  await page.goto('./?study=anatomy&reference=male')
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'heart', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Add to study list', exact: true }).click()
+  await expect(page.getByRole('status').filter({ hasText: 'study list is full (750 structures)' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Add to study list', exact: true })).toHaveAttribute('aria-pressed', 'false')
+  expect((await anatomyBackup(page)).saved.male).toEqual(ids)
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)).saved.male, STUDY_KEY)).toEqual(ids)
+  await page.reload()
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Add to study list', exact: true })).toHaveAttribute('aria-pressed', 'false')
+})
+
+test('a restored full reading queue refuses additions and permits them after a removal', async ({ page }) => {
+  const queue = Array.from({ length: 150 }, (_, index) => ({ id: `retired-topic-${index}`, read: index % 2 === 0 }))
+  await seedStudy(page, { queue, saved: { male: [], female: [] }, lastSelection: { male: 'FMA7088', female: null } })
+  await page.goto('./?study=anatomy&reference=male')
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'heart', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Save this question', exact: true }).click()
+  await expect(page.getByRole('status').filter({ hasText: 'reading queue is full (150 readings)' })).toBeVisible()
+  await expect(page.getByText('Reading was not added. Remove a saved reading to make room.', { exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Save this question', exact: true })).toHaveAttribute('aria-pressed', 'false')
+  expect((await anatomyBackup(page)).queue).toEqual(queue)
+  await page.getByRole('button', { name: 'Queue (150)', exact: true }).click()
+  await page.getByRole('button', { name: 'Remove unavailable retired-topic-0', exact: true }).click()
+  await page.getByRole('button', { name: 'How it works', exact: true }).click()
+  await page.getByRole('button', { name: 'Save this question', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Remove question from queue', exact: true })).toBeVisible()
+  const expected = [...queue.slice(1), { id: 'function:heart', read: false }]
+  expect((await anatomyBackup(page)).queue).toEqual(expected)
+  await page.reload()
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Remove question from queue', exact: true })).toBeVisible()
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)).queue, STUDY_KEY)).toEqual(expected)
+})
+
+
+test('unsaved Anatomy work survives Back and a disease-pathway round trip', async ({ page }) => {
+  await seedStudy(page, { queue: [], saved: { male: [], female: [] }, lastSelection: { male: 'FMA7088', female: null } })
+  await page.goto('./?study=anatomy&reference=male')
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'heart', exact: true })).toBeVisible()
+  await page.evaluate(key => {
+    const setItem = Storage.prototype.setItem
+    Storage.prototype.setItem = function (name, value) {
+      if (name === key) throw new DOMException('blocked', 'QuotaExceededError')
+      return setItem.call(this, name, value)
+    }
+  }, STUDY_KEY)
+  await page.getByRole('button', { name: 'Add to study list', exact: true }).click()
+  await page.getByRole('button', { name: 'Save this question', exact: true }).click()
+  await page.getByRole('button', { name: 'Queue (1)', exact: true }).click()
+  await page.getByRole('button', { name: 'Mark read', exact: true }).click()
+  for (const exit of ['back', 'disease']) {
+    if (exit === 'back') await page.getByRole('button', { name: 'Back to PalDawn', exact: false }).click()
+    else {
+      await page.getByText(/Existing PalDawn disease pathways/).click()
+      await page.locator('.study-lesson button').first().click()
+    }
+    await page.goBack()
+    await page.getByRole('button', { name: 'Text study', exact: true }).click()
+    await expect(page.getByRole('button', { name: 'Remove from study list', exact: true })).toBeVisible()
+    await expect(page.locator('.study-storage-status')).toHaveAttribute('data-persisted', 'false')
+    await expect(page.locator('.study-storage-status')).toContainText(/could not be saved|browser storage is unavailable/)
+    await page.getByRole('button', { name: 'Queue (1)', exact: true }).click()
+    await expect(page.getByRole('button', { name: 'Read ✓', exact: true })).toBeVisible()
+    const backup = await anatomyBackup(page)
+    expect(backup.saved.male).toContain('FMA7088')
+    expect(backup.queue).toEqual([{ id: 'function:heart', read: true }])
+  }
+})
+
+test('Anatomy replacement and clear remain authoritative after view changes', async ({ page }) => {
+  await page.goto('./?study=anatomy&reference=male')
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await page.getByText('Saved Anatomy study & backup', { exact: true }).click()
+  const study = { queue: [{ id: 'function:heart', read: true }], saved: { male: ['FMA7088'], female: [] }, lastSelection: { male: 'FMA7088', female: null } }
+  await page.locator('#anatomy-study-import').setInputFiles({ name: 'study.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ schema_version: 2, local_only: true, anatomy_preview: true, study })) })
+  await page.getByRole('button', { name: 'Confirm backup replacement', exact: true }).click()
+  await expect(page.getByText('Anatomy study backup restored in this browser.', { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Back to PalDawn', exact: false }).click()
+  await page.goBack()
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'heart', exact: true })).toBeVisible()
+  expect(await anatomyBackup(page)).toEqual(study)
+  await page.getByRole('button', { name: 'Clear local Anatomy study', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirm clear Anatomy study', exact: true }).click()
+  await page.getByRole('button', { name: 'Back to PalDawn', exact: false }).click()
+  await page.goBack()
+  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Queue (0)', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Add to study list', exact: true })).toBeVisible()
+  expect(await page.evaluate(key => localStorage.getItem(key), STUDY_KEY)).toBeNull()
+})

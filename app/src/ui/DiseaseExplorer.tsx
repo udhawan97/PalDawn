@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
+import { createPortal } from 'react-dom'
 import { ATLAS_EVIDENCE_STATUS, buildAtlasEvidenceLedger } from '../data/atlasEvidence'
 import { searchAtlas, type AtlasSearchResult } from '../data/atlasSearch'
 import { BODY_PART_LABELS, DISEASES, diseaseById, type BodyPartId, type DiseaseDefinition } from '../data/diseases'
@@ -105,6 +106,7 @@ function AtlasReadingView({
   onIncludeNotes,
   onClose,
   onSelectStep,
+  returnFocusTo,
 }: {
   disease: DiseaseDefinition
   activeStepIndex: number
@@ -112,16 +114,47 @@ function AtlasReadingView({
   onIncludeNotes: (include: boolean) => void
   onClose: () => void
   onSelectStep: (index: number) => void
+  returnFocusTo: RefObject<HTMLButtonElement | null>
 }) {
   const study = useAtlasStudy()
+  const dialogRef = useRef<HTMLElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useLayoutEffect(() => {
+    const returnTarget = returnFocusTo.current
+    const background = [...document.body.children].filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && element !== dialogRef.current,
+    )
+    const priorInert = background.map((element) => element.inert)
+    background.forEach((element) => { element.inert = true })
     const frame = window.requestAnimationFrame(() => closeRef.current?.focus({ preventScroll: true }))
-    return () => window.cancelAnimationFrame(frame)
-  }, [])
+    return () => {
+      window.cancelAnimationFrame(frame)
+      background.forEach((element, index) => { element.inert = priorInert[index] })
+      window.requestAnimationFrame(() => returnTarget?.focus({ preventScroll: true }))
+    }
+  }, [returnFocusTo])
 
-  return <section className="atlas-reading-view" role="dialog" aria-modal="true" aria-labelledby="atlas-reading-title">
+  return createPortal(<section ref={dialogRef} className="atlas-reading-view" role="dialog" aria-modal="true" aria-labelledby="atlas-reading-title" onKeyDown={(event) => {
+    // Keep global Atlas and First Light shortcuts from acting behind the reader.
+    event.stopPropagation()
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      onClose()
+    } else if (event.key === 'Tab') {
+      const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), a[href]')]
+        .filter((element) => element.getClientRects().length > 0)
+      const first = controls[0]
+      const last = controls[controls.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last?.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first?.focus()
+      }
+    }
+  }}>
     <header>
       <div><p className="eyebrow">Focused reading · existing authored content</p><h2 id="atlas-reading-title">{disease.title}</h2></div>
       <button ref={closeRef} type="button" aria-label="Close focused reading" onClick={onClose}>×</button>
@@ -153,7 +186,7 @@ function AtlasReadingView({
         </li>
       })}
     </ol>
-  </section>
+  </section>, document.body)
 }
 
 function ExplorerGuide({ returnFocusTo }: { returnFocusTo: RefObject<HTMLButtonElement | null> }) {
@@ -386,6 +419,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
   const atlasStudy = useAtlasStudy()
   const guideTriggerRef = useRef<HTMLButtonElement>(null)
   const researchTriggerRef = useRef<HTMLButtonElement>(null)
+  const readingTriggerRef = useRef<HTMLButtonElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const disease = diseaseById(selectedDiseaseId)
   const step = disease.steps[stepIndex]
@@ -564,7 +598,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
         <div className="atlas-reading-switch" role="group" aria-label="Explanation depth">
           <button type="button" aria-pressed={narration === 'plain'} onClick={() => { setNarration('plain'); atlasStudy.setNarration('plain') }}>Plain English</button>
           <button type="button" aria-pressed={narration === 'clinical'} onClick={() => { setNarration('clinical'); atlasStudy.setNarration('clinical') }}>Clinical terms</button>
-          <button type="button" aria-pressed={readingOpen} onClick={() => setReadingOpen(true)}>Compare pathway</button>
+          <button ref={readingTriggerRef} type="button" aria-haspopup="dialog" aria-expanded={readingOpen} onClick={() => setReadingOpen(true)}>Compare pathway</button>
         </div>
 
         <section className="atlas-step-card" aria-labelledby="atlas-step-title">
@@ -667,7 +701,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
           }}
         />
       ) : null}
-      {readingOpen ? <AtlasReadingView disease={disease} activeStepIndex={stepIndex} includeNotes={includeNotes} onIncludeNotes={setIncludeNotes} onClose={() => setReadingOpen(false)} onSelectStep={setStep} /> : null}
+      {readingOpen ? <AtlasReadingView disease={disease} activeStepIndex={stepIndex} includeNotes={includeNotes} onIncludeNotes={setIncludeNotes} onClose={() => setReadingOpen(false)} onSelectStep={setStep} returnFocusTo={readingTriggerRef} /> : null}
     </main>
   )
 }

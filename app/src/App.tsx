@@ -3,6 +3,7 @@ import { FlightDeck } from './ui/FlightDeck'
 import { useExperience } from './state/experience'
 import { resolveTier, TIER_DPR, useSettings } from './state/settings'
 import { webgl2Available } from './webgl'
+import type { AnatomyStudySession } from './anatomy/studyStorage'
 
 const sceneRecoveryRequested = typeof window !== 'undefined' &&
   new URL(window.location.href).searchParams.has('scene-retry')
@@ -208,6 +209,7 @@ const AnatomyStudy = import.meta.env.VITE_ANATOMY_PREVIEW ? lazy(() => import('.
 const AnatomyLanding = import.meta.env.VITE_ANATOMY_PREVIEW ? lazy(() => import('./anatomy/AnatomyLanding')) : null
 function AnatomyCandidate() {
   const [view, setView] = useState(() => new URL(window.location.href).searchParams.get('study') ?? 'home')
+  const [anatomyStudy, setAnatomyStudy] = useState<AnatomyStudySession | null>(null)
   const navigate = (next: string, reference?: 'male' | 'female') => {
     useExperience.getState().pause()
     const url = new URL(window.location.href)
@@ -223,7 +225,7 @@ function AnatomyCandidate() {
   }, [])
   const closeStudy = () => navigate('journeys')
   return <Suspense fallback={<main className="fallback"><h1>Opening PalDawn…</h1><button onClick={() => navigate('journeys')}>Continue to disease pathways</button></main>}>
-    {view === 'anatomy' && AnatomyStudy ? <AnatomyStudy onClose={closeStudy}/> : view === 'home' && AnatomyLanding ? <AnatomyLanding onExplore={(sex) => navigate('anatomy', sex)} onJourneys={() => navigate('journeys')}/> : <JourneyApp/>}
+    {view === 'anatomy' && AnatomyStudy ? <AnatomyStudy onClose={closeStudy} retainedStudy={anatomyStudy} onRetainStudy={setAnatomyStudy}/> : view === 'home' && AnatomyLanding ? <AnatomyLanding onExplore={(sex) => navigate('anatomy', sex)} onJourneys={() => navigate('journeys')}/> : <JourneyApp/>}
   </Suspense>
 }
 export default function App() {

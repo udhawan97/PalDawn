@@ -6696,16 +6696,37 @@ html[data-contrast='high'] {
   html,
   body,
   #root,
-  .app-root {
+  .app-root,
+  .flight-ui {
     height: auto;
     overflow: visible;
     background: white;
     color: black;
   }
 
+  .app-root,
+  .flight-ui {
+    position: static;
+  }
+
+  .drawer,
+  .atlas-reading-view,
+  .atlas-desk {
+    --aqua: #214b52;
+    --dim: #444;
+    --muted: #333;
+    --signal: #702b2b;
+    --line: #aaa;
+  }
+
   canvas,
+  .app-root > *:not(.flight-ui),
+  .flight-ui::before,
   .flight-ui > *:not(.drawer),
-  .drawer-close,
+  .drawer-header,
+  .transcript-search,
+  .transcript-stage-actions,
+  .saved-stages,
   .panel-actions,
   .action-status {
     display: none !important;
@@ -6713,6 +6734,9 @@ html[data-contrast='high'] {
 
   .drawer {
     position: static !important;
+    display: block;
+    animation: none;
+    transform: none;
     width: auto;
     border: 0;
     color: black;
@@ -6731,9 +6755,10 @@ html[data-contrast='high'] {
     color: black;
   }
 
-  .atlas > *:not(.atlas-reading-view),
+  body:has(> .atlas-reading-view) > *:not(.atlas-reading-view),
   .atlas-reading-view > header > button,
-  .atlas-reading-actions {
+  .atlas-reading-actions,
+  .atlas-reading-step-heading button {
     display: none !important;
   }
 
@@ -6741,6 +6766,7 @@ html[data-contrast='high'] {
     position: static;
     display: block;
     width: auto;
+    margin: 0;
     padding: 0;
     overflow: visible;
     border: 0;
@@ -6765,12 +6791,14 @@ html[data-contrast='high'] {
 
   .atlas-reading-columns p,
   .atlas-reading-boundary,
+  .atlas-reading-view .atlas-caution,
   .atlas-exported-note p {
     color: black;
   }
 
-  body > *:not(.atlas-desk-backdrop),
+  body:has(> .atlas-desk-backdrop) > *:not(.atlas-desk-backdrop),
   .atlas-desk-header > button,
+  .atlas-desk-list > li > button,
   .atlas-desk-tabs,
   .atlas-desk-summary,
   .atlas-desk-tools,

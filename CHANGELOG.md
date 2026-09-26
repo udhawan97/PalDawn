@@ -2,6 +2,25 @@
 
 All notable changes to PalDawn are documented here.
 
+## [0.5.1] — 2026-09-26
+
+### Recovery Integrity
+
+- Preserve memory-only First Light notes and checkpoints when another tab
+  changes its saved workspace; the conflict stays visible and exportable.
+- Restore complete modal keyboard behavior for focused pathway reading,
+  including focus containment, topmost Escape handling and opener restoration.
+- Print actual First Light transcripts, focused pathway study sheets and Atlas
+  Study Desk results while keeping private notes opt-in.
+- Make Anatomy Lab capacity limits explicit instead of reporting silently
+  truncated structures or readings as saved.
+- Retain unsaved Anatomy study work across same-tab candidate navigation.
+- Require the real service-worker lifecycle gate to pass before the matching
+  GitHub Pages artifact can deploy.
+
+The release changes software behavior only. It adds no medical claims or
+review approval, and Anatomy Lab remains excluded from the public build.
+
 ## [0.5.0] — 2026-09-26
 
 ### Study Navigation
