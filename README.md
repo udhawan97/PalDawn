@@ -52,6 +52,9 @@ its authored steps. Select a highlighted structure for a closer view. Open
   of the same disease step.
 - **Keep your place:** First Light supports saved stages, private notes,
   checkpoints, transcript comparison, and study/backup exports.
+- **Continue an Atlas study:** share exact disease steps, save steps, keep private
+  notes and personal study marks, compare both explanation tracks, and export
+  selected source-linked study material.
 - **Set the pace:** choose reduced motion, text voyage, caption sizing, high
   contrast, and keyboard navigation.
 
@@ -97,7 +100,7 @@ visible in the viewer and [candidate guide](docs/ANATOMY-LAB.md).
 
 | Area | What to expect |
 |---|---|
-| Local work | No account or backend. Public-app preferences and learner work use browser storage. Anatomy study lists and reading queues use session memory only. Do not enter patient or personal health data. |
+| Local work | No account or backend. Public-app preferences, First Light work, and Atlas study records use browser storage. Anatomy study lists and reading queues use session memory only. Do not enter patient or personal health data. |
 | Network | Static app files load from the site. Opening an evidence or PubMed link contacts that external site. Anatomy preparation downloads public source packs and directories. No analytics SDK or runtime AI provider is used. |
 | Evidence | Citations help you inspect the source; they do not certify the synthesis. Named qualified-human review remains pending. |
 | Updates and backups | Export important work. Public-app updates check that open tabs can save before reloading. See the [update and recovery guide](docs/GETTING-STARTED.md#updates-and-local-work). |
@@ -137,6 +140,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 Code checks and browser acceptance do not replace qualified medical review.
 
 - [Vision and limits](docs/VISION.md) · [Project plan](docs/PLAN.md)
+- [Study Continuity](docs/STUDY-CONTINUITY.md)
 - [Curriculum 50](docs/CURRICULUM-50.md) · [Evidence navigation](docs/ATLAS-RESEARCH-LENS.md)
 - [Brand and editable assets](docs/BRAND-SYSTEM.md)
 - [Heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) ·

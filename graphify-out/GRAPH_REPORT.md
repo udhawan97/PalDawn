@@ -1,16 +1,16 @@
-# Graph Report - PalDawn  (2026-09-12)
+# Graph Report - PalDawn  (2026-09-25)
 
 ## Corpus Check
-- 196 files · ~320,655 words
+- 203 files · ~326,633 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1167 nodes · 1826 edges · 98 communities (87 shown, 11 thin omitted)
+- 1222 nodes · 1947 edges · 103 communities (90 shown, 13 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 54 edges (avg confidence: 0.83)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `398e58d5`
+- Built from commit: `62158f0c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - dependencies
 - license-inventory.mjs
 - compilerOptions
-- settings.ts
+- VoyageScene.tsx
 - gen-npm-records.mjs
 - Curriculum 50 and multiscale engine plan
 - pwa.ts
@@ -30,7 +30,7 @@
 - vite.config.ts
 - audit_z_anatomy_blend.py
 - PalDawn Engineering Scaffold
-- diseases.ts
+- DiseaseExplorer.tsx
 - test-release.mjs
 - PalDawn Overview
 - Credits and Prior Art
@@ -40,7 +40,7 @@
 - PalDawn living-instrument brand system
 - PalDawn backlog #3: heart/coronary per-object asset audit dossier
 - Changelog
-- verify-heart.mjs
+- test-pwa-browser-lifecycle.mjs
 - PalDawn Foundation+
 - test-foundation-plus.mjs
 - Foundation+2 acceptance evidence
@@ -58,9 +58,9 @@
 - PalDawn Foundation+3
 - Foundation+ acceptance evidence
 - brand.spec.mjs
-- SettingsPanel
+- useSettings
 - PalDawn v0.2.0 — Systems Atlas
-- route.ts
+- useExperience
 - PalDawn v0.3.0 — Mechanism Lens
 - manifest.json
 - MemoryStorage
@@ -72,17 +72,17 @@
 - CurriculumCatalog.tsx
 - devDependencies
 - Security policy
-- VoyageScene.tsx
+- verify-heart.mjs
 - tsconfig.json
 - test-curriculum-catalog.mjs
 - scripts
 - flow.spec.mjs
 - test-disease-pack.mjs
-- App.tsx
-- HumanSystemsScene.tsx
+- Next phase: Study Continuity
+- build-heart.mjs
 - package.json
 - PalDawn v0.4.0 — Study and Reliability
-- useSettings
+- test-foundation-runtime.mjs
 - tsconfig.graphics.json
 - AnatomyStudy.tsx
 - prepare-anatomy.mjs
@@ -91,15 +91,20 @@
 - workbench.spec.mjs
 - AnatomyLanding
 - experience.ts
-- FlightDeck
+- Study Continuity
+- mesh-builder.mjs
 - Main cleanup — 2026-09-10
 - Anatomy research desk
 - Q: How do PalDawn per-object anatomy provenance records enforce fail-closed adoption for this audit?
 - Q: what else can be implemented with high confidence
 - Q: Verify the refreshed PalDawn brand icon, app placements, PWA metadata, reduced-motion behavior, and release boundary.
 - Q: What is the documented next phase after Deep Lens, and can it merge?
-- SceneCanvas.tsx
-- useTelemetry
+- Q: Which next phase features can improve PalDawn with high implementation confidence?
+- value
+- test-study-continuity.mjs
+- settings.ts
+- Q: How is PalDawn Study Continuity wired across routes, local data, UI, and exports?
+- SceneBoundary
 
 ## God Nodes (most connected - your core abstractions)
 1. `useSettings` - 28 edges
@@ -110,8 +115,8 @@
 6. `SettingsPanel()` - 18 edges
 7. `PalDawn Project Plan` - 18 edges
 8. `validateRecord()` - 16 edges
-9. `executeLocalDataTransaction()` - 15 edges
-10. `compilerOptions` - 15 edges
+9. `DISEASES` - 15 edges
+10. `storage()` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Unpublished Medical Content` --semantically_similar_to--> `Medical Guardrails`  [INFERRED] [semantically similar]
@@ -133,7 +138,7 @@
 - **Provenance and Review Gate** — contributing_provenance_precedes_contribution, contributing_named_medical_review_gate, notice_per_object_anatomy_approval, docs_plan_provenance_precedes_adoption, pipeline_provenance_readme_fail_closed_validator_rules [INFERRED 0.85]
 - **Core Product Definition** — readme_evidence_linked_causal_voyage, docs_brief_for_codex_founder_vision, docs_plan_product_pillars, docs_research_github_recon_evidence_evidence_linked_causal_voyage_positioning [INFERRED 0.95]
 
-## Communities (98 total, 11 thin omitted)
+## Communities (103 total, 13 thin omitted)
 
 ### Community 0 - "PalDawn Project Plan"
 Cohesion: 0.15
@@ -144,8 +149,8 @@ Cohesion: 0.09
 Nodes (21): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution, noEmit, noFallthroughCasesInSwitch (+13 more)
 
 ### Community 3 - "localData.ts"
-Cohesion: 0.08
-Nodes (42): CAPTION_SCALES, emptyWorkspace(), executeLocalDataTransaction(), failedStorageKeys, ImportedSettings, JourneySession, LOCAL_DATA_KEY_LIST, LocalDataExportResult (+34 more)
+Cohesion: 0.06
+Nodes (66): AtlasStudyData, AtlasStudyPosition, AtlasStudyRecord, bindValueToGeneration(), CAPTION_SCALES, emptyAtlasStudy(), emptyWorkspace(), executeLocalDataTransaction() (+58 more)
 
 ### Community 4 - "validate.mjs"
 Cohesion: 0.16
@@ -163,9 +168,9 @@ Nodes (13): ALLOW, allowed, classifyExpression(), classifyId(), denied, entries,
 Cohesion: 0.12
 Nodes (15): compilerOptions, allowImportingTsExtensions, lib, module, moduleResolution, noEmit, skipLibCheck, strict (+7 more)
 
-### Community 9 - "settings.ts"
-Cohesion: 0.16
-Nodes (14): DiagnosticInput, diagnosticReport(), CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier (+6 more)
+### Community 9 - "VoyageScene.tsx"
+Cohesion: 0.10
+Nodes (23): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, ROUTE_LOOKUP, RouteFrame, routeFrameAt(), RouteSlice (+15 more)
 
 ### Community 10 - "gen-npm-records.mjs"
 Cohesion: 0.22
@@ -176,8 +181,8 @@ Cohesion: 0.06
 Nodes (30): Build order, C50.0 — Curriculum registry and discovery (this slice), C50.1 — Disease-pack schema and hypertension dossier, C50.2 — Shared cardiovascular scene family, C50.3 — Cellular visual grammar, C50.4 — Adaptive learning loop, C50.5 — WebGPU/TSL evidence branch, Curriculum 50 and multiscale engine plan (+22 more)
 
 ### Community 12 - "pwa.ts"
-Cohesion: 0.14
-Nodes (27): serviceWorker, rootEl, abandonedUpdateRequests, activatePwaUpdate(), BeforeInstallPromptEvent, beginUpdateHandoff(), blockUpdateHandoffKeyboardInput(), clearActivationWatchdog() (+19 more)
+Cohesion: 0.16
+Nodes (24): serviceWorker, rootEl, abandonedUpdateRequests, activatePwaUpdate(), BeforeInstallPromptEvent, beginUpdateHandoff(), blockUpdateHandoffKeyboardInput(), clearActivationWatchdog() (+16 more)
 
 ### Community 15 - "audit_z_anatomy_blend.py"
 Cohesion: 0.29
@@ -187,9 +192,9 @@ Nodes (12): Namespace, Path, collection_audit(), curve_audit(), id_name(), layer
 Cohesion: 0.19
 Nodes (13): GitHub Pages Deploy Workflow, Static Pages Deployment, PalDawn HTML Shell, WebGL2 Browser Requirement, PalDawn Engineering Scaffold, GitHub Pages Base Path, Non-Anatomical Calibration Object, Direct Dependency License Bundle (+5 more)
 
-### Community 17 - "diseases.ts"
-Cohesion: 0.06
-Nodes (51): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+43 more)
+### Community 17 - "DiseaseExplorer.tsx"
+Cohesion: 0.05
+Nodes (62): ATLAS_EVIDENCE_STATUS, AtlasEvidenceLedger, AtlasSourceCoverage, buildAtlasEvidenceLedger(), AtlasSearchResult, AtlasSearchResultKind, normalizeSearchText(), scoreMatch() (+54 more)
 
 ### Community 18 - "test-release.mjs"
 Cohesion: 0.17
@@ -224,12 +229,12 @@ Cohesion: 0.04
 Nodes (43): Geometry conventions, Original heart form study, Reproduce, Review and adoption, A single playback frame, Acceptance: what “top notch” must demonstrate, Asset production: the critical path, Evidence: why the current scene cannot meet this target (+35 more)
 
 ### Community 26 - "Changelog"
-Cohesion: 0.20
-Nodes (9): [0.1.0] — 2026-08-20, [0.2.0] — 2026-08-22, [0.3.0] — 2026-08-24, [0.4.0] — 2026-09-10, Changelog, First Light, Mechanism Lens, Systems Atlas (+1 more)
+Cohesion: 0.18
+Nodes (10): [0.1.0] — 2026-08-20, [0.2.0] — 2026-08-22, [0.3.0] — 2026-08-24, [0.4.0] — 2026-09-10, Changelog, First Light, Mechanism Lens, Systems Atlas (+2 more)
 
-### Community 27 - "verify-heart.mjs"
-Cohesion: 0.06
-Nodes (41): manifest, meshes, output, root, source, spec, buildMeshes(), encodeGLB() (+33 more)
+### Community 27 - "test-pwa-browser-lifecycle.mjs"
+Cohesion: 0.18
+Nodes (17): APP_ROOT, archiveRevision(), buildInto(), cleanup(), closeServer(), contentTypes, createStaticServer(), delayActivationCacheCleanup() (+9 more)
 
 ### Community 28 - "PalDawn Foundation+"
 Cohesion: 0.33
@@ -295,17 +300,17 @@ Nodes (4): Boundary, PalDawn Foundation+3, Six high-confidence features, Verific
 Cohesion: 0.40
 Nodes (4): Automated gates, Browser acceptance, Foundation+ acceptance evidence, Known limitations
 
-### Community 50 - "SettingsPanel"
-Cohesion: 0.27
-Nodes (13): exportLocalData(), exportRawLocalDataRecoveryBackup(), getLocalDataRecoveryState(), loadJourneySession(), loadLearnerWorkspace(), loadStageBookmarks(), readJson(), readString() (+5 more)
+### Community 50 - "useSettings"
+Cohesion: 0.13
+Nodes (15): JourneyApp(), JourneyPlaybackDriver(), SceneBoundaryState, SceneCanvas, Organ(), PhaseSignal(), SceneCanvasProps, PortalGate() (+7 more)
 
 ### Community 52 - "PalDawn v0.2.0 — Systems Atlas"
 Cohesion: 0.40
 Nodes (4): Evidence and safety boundary, PalDawn v0.2.0 — Systems Atlas, Verification, What is included
 
-### Community 53 - "route.ts"
-Cohesion: 0.15
-Nodes (10): AUTHOR_POINTS, authoredCurve, frames, NormalizedLookupCurve, RouteFrame, routeFrameAt(), RouteSlice, voyageRoute (+2 more)
+### Community 53 - "useExperience"
+Cohesion: 0.24
+Nodes (16): progressForStageId(), stageAt(), stageUrl(), copyText(), downloadText(), shareOrCopy(), SharePayload, useExperience (+8 more)
 
 ### Community 54 - "PalDawn v0.3.0 — Mechanism Lens"
 Cohesion: 0.40
@@ -316,16 +321,16 @@ Cohesion: 0.08
 Nodes (25): absent, asset, assetSha256, bytes, creator, generatorSha256, id, license (+17 more)
 
 ### Community 56 - "MemoryStorage"
-Cohesion: 0.18
-Nodes (5): APP_ROOT, FailingStorage, installBrowserStubs(), MemoryStorage, withModules()
+Cohesion: 0.22
+Nodes (3): encodeGLB(), MemoryStorage, applyDesiredValues()
 
 ### Community 57 - "verify-flow.mjs"
 Cohesion: 0.09
 Nodes (34): directions, fitStudyCamera(), StudyView, cellFrame(), cellGeometry(), cellSeeds(), createRadiusTable(), FLOW (+26 more)
 
 ### Community 58 - "FlightDeck.tsx"
-Cohesion: 0.11
-Nodes (32): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, progressForStageId(), stageAt() (+24 more)
+Cohesion: 0.10
+Nodes (26): diagnosticReport(), exportLocalData(), exportRawLocalDataRecoveryBackup(), getLocalDataRecoveryState(), LearnerWorkspace, saveLearnerWorkspace(), saveStageBookmarks(), checkForPwaUpdate() (+18 more)
 
 ### Community 60 - "Community conduct"
 Cohesion: 0.50
@@ -343,9 +348,9 @@ Nodes (15): devDependencies, @playwright/test, @types/node, @types/react, @types
 Cohesion: 0.50
 Nodes (3): Report a vulnerability, Security policy, Supported version
 
-### Community 65 - "VoyageScene.tsx"
-Cohesion: 0.21
-Nodes (10): ROUTE_LOOKUP, smoothRange(), FlowField(), INSTANCE_COUNTS, seededRandom(), CORRIDOR_INK, DawnRoute(), DEEP_INK (+2 more)
+### Community 65 - "verify-heart.mjs"
+Cohesion: 0.15
+Nodes (10): allBounds, heartBounds, manifest, meshes, output, publicFiles, root, source (+2 more)
 
 ### Community 69 - "scripts"
 Cohesion: 0.11
@@ -355,13 +360,13 @@ Nodes (18): scripts, anatomy:build, anatomy:dev, anatomy:prepare, anatomy:previe
 Cohesion: 0.80
 Nodes (4): ready(), scene(), seek(), settled()
 
-### Community 73 - "App.tsx"
-Cohesion: 0.16
-Nodes (6): JourneyApp(), SceneBoundary, SceneBoundaryState, SceneCanvas, TIER_DPR, webgl2Available()
+### Community 73 - "Next phase: Study Continuity"
+Cohesion: 0.17
+Nodes (11): Copy-paste prompt, Defer from this phase, Execution and verification for Sol, Follow-on — Persist Anatomy Lab study work, Next phase: Study Continuity, Recommendation, Slice 1 — Exact step links, Slice 2 — Saved study and resume (+3 more)
 
-### Community 74 - "HumanSystemsScene.tsx"
-Cohesion: 0.20
-Nodes (4): BODY_DETAIL_POINTS, Organ(), PhaseSignal(), resolveTier()
+### Community 74 - "build-heart.mjs"
+Cohesion: 0.25
+Nodes (6): manifest, meshes, output, root, source, spec
 
 ### Community 75 - "package.json"
 Cohesion: 0.20
@@ -371,9 +376,9 @@ Nodes (9): author, description, keywords, license, main, name, private, type (+1
 Cohesion: 0.40
 Nodes (4): In the public app, Included as development candidates, PalDawn v0.4.0 — Study and Reliability, Verification and distribution
 
-### Community 77 - "useSettings"
-Cohesion: 0.29
-Nodes (11): JourneyPlaybackDriver(), CameraDirector(), PortalGate(), VoyageScene(), useExperience, useSettings, Drawer(), drawerFocusables() (+3 more)
+### Community 77 - "test-foundation-runtime.mjs"
+Cohesion: 0.40
+Nodes (4): APP_ROOT, FailingStorage, installBrowserStubs(), withModules()
 
 ### Community 78 - "tsconfig.graphics.json"
 Cohesion: 0.33
@@ -381,7 +386,7 @@ Nodes (5): extends, include, graphics/**/*.ts, graphics/**/*.tsx, ./tsconfig.app
 
 ### Community 79 - "AnatomyStudy.tsx"
 Cohesion: 0.06
-Nodes (53): allConceptIds, base, compressed, context, female, ligament, ligamentContext, male (+45 more)
+Nodes (52): allConceptIds, base, compressed, context, female, ligament, ligamentContext, male (+44 more)
 
 ### Community 80 - "prepare-anatomy.mjs"
 Cohesion: 0.20
@@ -396,12 +401,16 @@ Cohesion: 1.00
 Nodes (3): ready(), settled(), specimen()
 
 ### Community 85 - "experience.ts"
-Cohesion: 0.40
-Nodes (4): NarrationMode, ExperienceState, initialSession, OpenPanel
+Cohesion: 0.17
+Nodes (15): clampProgress(), formatDuration(), formatJourneyTime(), JOURNEY, JourneyDefinition, JourneyStage, NarrationMode, stageIdFromHash() (+7 more)
 
-### Community 86 - "FlightDeck"
-Cohesion: 0.27
-Nodes (11): bindValueToGeneration(), LOCAL_DATA_KEYS, pendingFenceIsActive(), readLocalStorageValue(), saveJourneySession(), saveLearnerWorkspace(), saveStageBookmarks(), writeLocalStorageValue() (+3 more)
+### Community 86 - "Study Continuity"
+Cohesion: 0.33
+Nodes (5): Local data and recovery, Routes and history, Study Continuity, Verification, What learners can do
+
+### Community 87 - "mesh-builder.mjs"
+Cohesion: 0.80
+Nodes (4): buildMeshes(), gridGeometry(), shellPoint(), tubeGeometry()
 
 ### Community 91 - "Main cleanup — 2026-09-10"
 Cohesion: 0.40
@@ -427,35 +436,43 @@ Nodes (4): Answer, Outcome, Q: Verify the refreshed PalDawn brand icon, app plac
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: What is the documented next phase after Deep Lens, and can it merge?, Source Nodes
 
-### Community 98 - "useTelemetry"
-Cohesion: 0.67
-Nodes (3): RuntimeProbe(), useTelemetry, Telemetry()
+### Community 97 - "Q: Which next phase features can improve PalDawn with high implementation confidence?"
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: Which next phase features can improve PalDawn with high implementation confidence?, Source Nodes
+
+### Community 100 - "settings.ts"
+Cohesion: 0.17
+Nodes (13): DiagnosticInput, CaptionScale, captionScales, PersistedSettings, PlaybackRate, playbackRates, QualityTier, qualityTiers (+5 more)
+
+### Community 101 - "Q: How is PalDawn Study Continuity wired across routes, local data, UI, and exports?"
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: How is PalDawn Study Continuity wired across routes, local data, UI, and exports?, Source Nodes
 
 ## Knowledge Gaps
-- **496 isolated node(s):** `VIEWS`, `totalTriangles`, `MaterialMode`, `root`, `source` (+491 more)
+- **520 isolated node(s):** `VIEWS`, `totalTriangles`, `MaterialMode`, `root`, `source` (+515 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `P0 to P3 Phase Roadmap` (2× useful, score=1.756918327) _(code changed — re-verify)_
-- `Per-Object Anatomy Approval` (2× useful, score=1.739702541) _(code changed — re-verify)_
+- `P0 to P3 Phase Roadmap` (2× useful, score=0.944343546) _(code changed — re-verify)_
+- `Per-Object Anatomy Approval` (2× useful, score=0.935090061)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `exportLocalData()` connect `SettingsPanel` to `verify-heart.mjs`, `FlightDeck.tsx`, `localData.ts`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
-- **Why does `value()` connect `verify-heart.mjs` to `AnatomyStudy.tsx`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `exportLocalData()` connect `FlightDeck.tsx` to `MemoryStorage`, `localData.ts`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `encodeGLB()` connect `MemoryStorage` to `verify-heart.mjs`, `build-heart.mjs`, `mesh-builder.mjs`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `fitStudyCamera()` connect `verify-flow.mjs` to `verify-heart.mjs`?**
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **What connects `VIEWS`, `totalTriangles`, `MaterialMode` to the rest of the system?**
-  _496 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _520 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `localData.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.0753045404208195 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0639386189258312 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
-- **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.125 - nodes in this community are weakly interconnected._

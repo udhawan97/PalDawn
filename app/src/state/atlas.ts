@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { diseaseById, type BodyPartId } from '../data/diseases'
+import { atlasHash, parseAtlasHash } from '../journey/atlasRoute'
 
 export type AtlasNarration = 'plain' | 'clinical'
 
@@ -42,6 +43,7 @@ interface AtlasHistorySnapshot {
   diseaseId: string
   stepIndex: number
   bodyPartId: string | null
+  owned: boolean
 }
 
 const ATLAS_HISTORY_KEY = 'paldawnAtlas'
@@ -56,7 +58,7 @@ const historySnapshot = (value: unknown): AtlasHistorySnapshot | null => {
   const bodyPartId = (snapshot as Record<string, unknown>).bodyPartId
   if (typeof diseaseId !== 'string' || typeof stepIndex !== 'number' || !Number.isFinite(stepIndex)) return null
   if (bodyPartId !== undefined && bodyPartId !== null && typeof bodyPartId !== 'string') return null
-  return { diseaseId, stepIndex, bodyPartId: typeof bodyPartId === 'string' ? bodyPartId : null }
+  return { diseaseId, stepIndex, bodyPartId: typeof bodyPartId === 'string' ? bodyPartId : null, owned: (snapshot as Record<string, unknown>).owned === true }
 }
 
 const boundedStep = (diseaseId: string, stepIndex: number): number => {
@@ -64,16 +66,20 @@ const boundedStep = (diseaseId: string, stepIndex: number): number => {
   return Math.min(disease.steps.length - 1, Math.max(0, Math.trunc(stepIndex)))
 }
 
-const atlasHistoryState = (diseaseId: string, stepIndex: number, bodyPartId: string | null): Record<string, unknown> => ({
+const atlasHistoryState = (diseaseId: string, stepIndex: number, bodyPartId: string | null, owned: boolean): Record<string, unknown> => ({
   ...(window.history.state && typeof window.history.state === 'object' ? window.history.state : {}),
-  [ATLAS_HISTORY_KEY]: { diseaseId, stepIndex: boundedStep(diseaseId, stepIndex), bodyPartId },
+  [ATLAS_HISTORY_KEY]: { diseaseId, stepIndex: boundedStep(diseaseId, stepIndex), bodyPartId, owned },
 })
 
 const updateAtlasHistory = (mode: 'push' | 'replace', diseaseId: string, stepIndex: number, bodyPartId: string | null = null): void => {
   if (typeof window === 'undefined') return
-  const nextState = atlasHistoryState(diseaseId, stepIndex, bodyPartId)
-  if (mode === 'push') window.history.pushState(nextState, '', window.location.href)
-  else window.history.replaceState(nextState, '', window.location.href)
+  const current = historySnapshot(window.history.state)
+  const owned = mode === 'push' ? true : current?.owned === true
+  const nextState = atlasHistoryState(diseaseId, stepIndex, bodyPartId, owned)
+  const url = new URL(window.location.href)
+  url.hash = atlasHash(diseaseId, stepIndex, boundedBodyPart(diseaseId, stepIndex, bodyPartId)).slice(1)
+  if (mode === 'push') window.history.pushState(nextState, '', url)
+  else window.history.replaceState(nextState, '', url)
 }
 
 const captureFocusReturn = (selector?: string): AtlasFocusReturn | null => {
@@ -134,12 +140,22 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
   },
   close: (options = {}) => {
     const current = get()
-    const ownsHistoryEntry = typeof window !== 'undefined' && historySnapshot(window.history.state) !== null
+    const snapshot = typeof window !== 'undefined' ? historySnapshot(window.history.state) : null
+    const ownsHistoryEntry = snapshot?.owned === true
     if (options.navigateHistory !== false && ownsHistoryEntry) {
       if (atlasHistoryClosePending) return
       atlasHistoryClosePending = true
       window.history.back()
       return
+    }
+    if (typeof window !== 'undefined' && parseAtlasHash(window.location.hash).kind !== 'none') {
+      const url = new URL(window.location.href)
+      url.hash = ''
+      const state = window.history.state && typeof window.history.state === 'object'
+        ? { ...window.history.state } as Record<string, unknown>
+        : {}
+      delete state[ATLAS_HISTORY_KEY]
+      window.history.replaceState(state, '', url)
     }
     set({ open: false, guideOpen: false, researchOpen: false, selectedBodyPart: null })
     if (current.open && options.restoreFocus !== false) restoreFocus(current.focusReturn)
@@ -181,13 +197,31 @@ export const useAtlas = create<AtlasState>()((set, get) => ({
   },
 }))
 
-export const syncAtlasFromHistory = (value: unknown): void => {
+export const syncAtlasFromHistory = (value: unknown): 'opened' | 'closed' | 'invalid' => {
   atlasHistoryClosePending = false
-  const snapshot = historySnapshot(value)
+  let snapshot = historySnapshot(value)
+  const route = typeof window === 'undefined' ? { kind: 'none' as const } : parseAtlasHash(window.location.hash)
+  if (!snapshot && route.kind === 'invalid') {
+    useAtlas.setState({ open: false, guideOpen: false, researchOpen: false, selectedBodyPart: null })
+    return 'invalid'
+  }
+  if (!snapshot && route.kind === 'valid') {
+    snapshot = {
+      diseaseId: route.route.diseaseId,
+      stepIndex: route.route.stepIndex,
+      bodyPartId: route.route.bodyPartId,
+      owned: false,
+    }
+    window.history.replaceState(
+      atlasHistoryState(snapshot.diseaseId, snapshot.stepIndex, snapshot.bodyPartId, false),
+      '',
+      window.location.href,
+    )
+  }
   if (!snapshot) {
     if (useAtlas.getState().open) useAtlas.getState().close({ navigateHistory: false })
     else useAtlas.setState({ guideOpen: false, researchOpen: false, selectedBodyPart: null })
-    return
+    return 'closed'
   }
   const disease = diseaseById(snapshot.diseaseId)
   const stepIndex = boundedStep(disease.id, snapshot.stepIndex)
@@ -199,4 +233,5 @@ export const syncAtlasFromHistory = (value: unknown): void => {
     researchOpen: false,
     selectedBodyPart: boundedBodyPart(disease.id, stepIndex, snapshot.bodyPartId),
   })
+  return 'opened'
 }

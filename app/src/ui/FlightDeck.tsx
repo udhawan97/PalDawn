@@ -30,6 +30,7 @@ import {
   PALDAWN_STORAGE_FAILURE_EVENT,
   PALDAWN_STORAGE_SUCCESS_EVENT,
   PALDAWN_WORKSPACE_KEY,
+  PALDAWN_ATLAS_STUDY_KEY,
   MAX_STAGE_NOTE_LENGTH,
   exportLocalData,
   exportRawLocalDataRecoveryBackup,
@@ -60,6 +61,7 @@ import {
 import { shareOrCopy, type ShareOutcome } from '../platform/share'
 import { studyWorkspaceMarkdown } from '../platform/study'
 import { syncAtlasFromHistory, useAtlas } from '../state/atlas'
+import { useAtlasStudy } from '../state/atlasStudy'
 import { DiseaseExplorer, TopDiseasesRail } from './DiseaseExplorer'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
@@ -932,7 +934,8 @@ function SettingsPanel({
                 <p>
                   {blockedRecoveryImport.preview.progressPercent}% route progress · {blockedRecoveryImport.preview.bookmarkCount} saved stages ·{' '}
                   {blockedRecoveryImport.preview.noteCount} private notes · {blockedRecoveryImport.preview.checkpointCount} personal checkpoints ·{' '}
-                  {blockedRecoveryImport.preview.hasSettings ? 'preferences included' : 'no preferences'}. Confirming will replace every preserved opaque record with this validated backup.
+                  {blockedRecoveryImport.preview.atlasSavedCount} saved Atlas steps · {blockedRecoveryImport.preview.atlasNoteCount} Atlas notes ·{' '}
+                  {blockedRecoveryImport.preview.atlasStudiedCount} Atlas study marks · {blockedRecoveryImport.preview.hasSettings ? 'preferences included' : 'no preferences'}. Confirming will replace every preserved opaque record with this validated backup.
                 </p>
                 <div className="panel-actions">
                   <button className="danger-action" type="button" onClick={() => {
@@ -1039,7 +1042,7 @@ function SettingsPanel({
       </section>
       <section className="settings-subsection" aria-labelledby="local-data-title">
         <h3 id="local-data-title">Local data</h3>
-        <p>Only display preferences, one First Light resume position, saved stage IDs, private notes, and personal checkpoints are stored.</p>
+        <p>Display preferences, First Light work, and your saved Atlas steps, notes, study marks, and last Atlas position are stored only in this browser.</p>
         <div className="panel-actions">
           <button type="button" onClick={() => {
             const outcome = exportLocalData()
@@ -1095,7 +1098,8 @@ function SettingsPanel({
               <p>
                 {pendingImport.preview.progressPercent}% route progress · {pendingImport.preview.bookmarkCount} saved stages ·{' '}
                 {pendingImport.preview.noteCount} private notes · {pendingImport.preview.checkpointCount} personal checkpoints ·{' '}
-                {pendingImport.preview.hasSettings ? 'preferences included' : 'no preferences'}
+                {pendingImport.preview.atlasSavedCount} saved Atlas steps · {pendingImport.preview.atlasNoteCount} Atlas notes ·{' '}
+                {pendingImport.preview.atlasStudiedCount} Atlas study marks · {pendingImport.preview.hasSettings ? 'preferences included' : 'no preferences'}
               </p>
               <div className="panel-actions">
                 <button className="danger-action" type="button" onClick={() => {
@@ -1420,6 +1424,7 @@ export function FlightDeck({
   const [workspacePersisted, setWorkspacePersisted] = useState(true)
   const [failedStorageKeys, setFailedStorageKeys] = useState<string[]>([])
   const [bookmarkStatus, setBookmarkStatus] = useState('')
+  const [atlasRouteNotice, setAtlasRouteNotice] = useState('')
   const flightUiRef = useRef<HTMLDivElement>(null)
   const safetyLineRef = useRef<HTMLParagraphElement>(null)
   const systemNoticeSummaryRef = useRef<HTMLButtonElement>(null)
@@ -1475,6 +1480,7 @@ export function FlightDeck({
     })
     const bookmarksSaved = saveStageBookmarks(bookmarksRef.current)
     const workspaceSaved = saveLearnerWorkspace(workspaceRef.current)
+    const atlasStudySaved = useAtlasStudy.getState().persist()
     const settingsSaved = writeLocalStorageValue(PALDAWN_SETTINGS_KEY, JSON.stringify({
       state: {
         qualityTier: settings.qualityTier,
@@ -1489,7 +1495,7 @@ export function FlightDeck({
       version: 1,
     }))
     setWorkspacePersisted(workspaceSaved)
-    return journeySaved && bookmarksSaved && workspaceSaved && settingsSaved
+    return journeySaved && bookmarksSaved && workspaceSaved && atlasStudySaved && settingsSaved
   }, [])
 
   const openWorkspace = useCallback((focusNote: boolean) => {
@@ -1549,7 +1555,8 @@ export function FlightDeck({
 
   useEffect(() => {
     const followAtlasHistory = (event?: PopStateEvent) => {
-      syncAtlasFromHistory(event ? event.state : window.history.state)
+      const result = syncAtlasFromHistory(event ? event.state : window.history.state)
+      setAtlasRouteNotice(result === 'invalid' ? 'That Atlas study link is unavailable. Choose a current condition below.' : '')
     }
     followAtlasHistory()
     window.addEventListener('popstate', followAtlasHistory)
@@ -1559,7 +1566,13 @@ export function FlightDeck({
   useEffect(() => {
     const followHash = () => {
       const id = stageIdFromHash(window.location.hash)
-      if (!id) return
+      if (!id) {
+        if (window.location.hash.startsWith('#atlas/')) {
+          const result = syncAtlasFromHistory(window.history.state)
+          setAtlasRouteNotice(result === 'invalid' ? 'That Atlas study link is unavailable. Choose a current condition below.' : '')
+        }
+        return
+      }
       const next = progressForStageId(id)
       if (next !== null) useExperience.getState().setProgress(next)
     }
@@ -1582,6 +1595,10 @@ export function FlightDeck({
         workspaceRef.current = next
         setWorkspace(next)
         setWorkspacePersisted(true)
+        return
+      }
+      if (event.key === PALDAWN_ATLAS_STUDY_KEY) {
+        useAtlasStudy.getState().replaceFromStorage()
         return
       }
       if (event.key !== PALDAWN_RESET_KEY || event.newValue === null) return
@@ -1878,6 +1895,7 @@ export function FlightDeck({
       </div>
       {atlasOpen ? <DiseaseExplorer rendererAvailable={!textVoyage} /> : null}
       {!atlasOpen && !entered ? <><Intro /><TopDiseasesRail /></> : null}
+      {!atlasOpen && atlasRouteNotice ? <p className="atlas-route-notice" role="alert">{atlasRouteNotice}</p> : null}
       {!atlasOpen && completed ? (
         <CompletionSummary />
       ) : !atlasOpen && entered ? (

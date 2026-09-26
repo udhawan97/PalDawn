@@ -215,7 +215,7 @@ await withModules(new MemoryStorage(), async (load) => {
   const localData = await load('/src/platform/localData.ts?import')
   const exported = localData.exportLocalData()
   assert.equal(exported.ok, true)
-  assert.equal(JSON.parse(exported.text).schema_version, 2)
+  assert.equal(JSON.parse(exported.text).schema_version, 3)
   assert.equal(localData.parseLocalDataImport('{broken').ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 99, local_only: true })).ok, false)
   assert.equal(localData.parseLocalDataImport(JSON.stringify({ schema_version: 2, local_only: true })).ok, false)

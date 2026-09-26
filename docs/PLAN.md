@@ -228,6 +228,15 @@ mechanism step. The local ledger adds no source, claim, inference, asset,
 dependency, analytics, persistence, or review assertion. See
 `docs/ATLAS-RESEARCH-LENS.md` for the feature and verification contract.
 
+### Study Continuity slice
+
+The next public-app study slice adds stable links to exact disease steps,
+bounded local saved steps and private notes, explicit personal study marks,
+last-position resume, side-by-side pathway reading, source-linked Markdown
+export, print styling, and schema-v3 backup portability. It reuses the existing
+authored explanations and sources and adds no medical content or assessment.
+See `docs/STUDY-CONTINUITY.md` for the behavior and recovery contract.
+
 ### Curriculum 50 discovery slice
 
 The next planning slice defines a 50-condition global-burden curriculum across

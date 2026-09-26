@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1789084292.0033553,
-    "ast_hash": "fd47d7ccd9674f72146c18f2e015b514",
+    "mtime": 1790393036.1530044,
+    "ast_hash": "41f1df73f45e5205798bfbb0a9841715",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789248895.6205132,
-    "ast_hash": "a2037ab175deb35b91273739b644e92b",
+    "mtime": 1790393626.1140559,
+    "ast_hash": "ebdd46ab0c2cc681126311ed1957d9b9",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1789084292.0057638,
-    "ast_hash": "51935fe4a05371f86d94f0f3b7486bc9",
+    "mtime": 1790393626.1150079,
+    "ast_hash": "714e79027a61f447391712aee55ec821",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -420,13 +420,13 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1789248006.7689748,
-    "ast_hash": "6b91945bd8595442851bd0f10daeafa2",
+    "mtime": 1790393003.991852,
+    "ast_hash": "ebe94779a7d985019bbe8de6f95957bf",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789104155.823959,
-    "ast_hash": "a7a2b24d63a46dfa9818acdcca93eab8",
+    "mtime": 1790393642.310223,
+    "ast_hash": "266e7bd349a673a8a6175d130999363a",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/localData.ts": {
-    "mtime": 1788239784.9660053,
-    "ast_hash": "e26ab1b4af1350f24940ab63a8b5b743",
+    "mtime": 1790392740.3829079,
+    "ast_hash": "5f59370c9ea1d591247977d5137c515a",
     "semantic_hash": ""
   },
   "app/src/platform/pwa.ts": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-runtime.mjs": {
-    "mtime": 1788239784.963978,
-    "ast_hash": "e6003d8817c62a86138a7ba2a2b6f5cc",
+    "mtime": 1790393133.4588416,
+    "ast_hash": "95ad463b718fa20fd845ae1eca98b433",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-QA.md": {
@@ -540,13 +540,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-foundation-plus-3.mjs": {
-    "mtime": 1787351059.3988044,
-    "ast_hash": "715320b555cf7cbca7ffb9cf98b3f5f7",
+    "mtime": 1790393082.156349,
+    "ast_hash": "5a72f24f4fc564d1b8e197ea02e09686",
     "semantic_hash": ""
   },
   "app/src/platform/study.ts": {
-    "mtime": 1787351059.3993857,
-    "ast_hash": "8605534dc3818093d5ac61a374f0cf3f",
+    "mtime": 1790394240.4103227,
+    "ast_hash": "909fbe70eade8d75b9f81faec2aa9bcc",
     "semantic_hash": ""
   },
   "app/tests/foundation-plus-3.spec.mjs": {
@@ -640,18 +640,18 @@
     "semantic_hash": ""
   },
   "app/src/state/atlas.ts": {
-    "mtime": 1788239784.9673982,
-    "ast_hash": "4b220163efff6300af0a14ce3abe2b3d",
+    "mtime": 1790392982.8134384,
+    "ast_hash": "ac702f4ed0f91ff1bbd8b84109c33e5e",
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1789082733.2182343,
-    "ast_hash": "d4ec0949f680bce5f7ebe2f83a3e9f6a",
+    "mtime": 1790394240.4108684,
+    "ast_hash": "074b09c14534789085c5e1db88816f3b",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1788239784.9713974,
-    "ast_hash": "0bbd17ef2f8a6cb5bf0e4293264e05a1",
+    "mtime": 1790394240.4126923,
+    "ast_hash": "402021e813a18b1a9acc50fb495aa1cf",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-4.md": {
@@ -1097,6 +1097,41 @@
   "docs/assets/paldawn-web-introduction.png": {
     "mtime": 1789248807.8646529,
     "ast_hash": "732cfc9dbcd9629016aa6ce760ec0fd2",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-study-continuity.mjs": {
+    "mtime": 1790394240.4122102,
+    "ast_hash": "a498be5a2def623cc55ff793b77d6b2d",
+    "semantic_hash": ""
+  },
+  "app/src/journey/atlasRoute.ts": {
+    "mtime": 1790392706.0533211,
+    "ast_hash": "7b718c7a635331b5efeb9315736afd20",
+    "semantic_hash": ""
+  },
+  "app/src/state/atlasStudy.ts": {
+    "mtime": 1790394240.4094775,
+    "ast_hash": "e1cc2f99998773fc16287219a5d28223",
+    "semantic_hash": ""
+  },
+  "docs/NEXT-PHASE-STUDY-CONTINUITY.md": {
+    "mtime": 1790393630.9610138,
+    "ast_hash": "990f97f0dee288144aad22385ee0ab18",
+    "semantic_hash": ""
+  },
+  "docs/STUDY-CONTINUITY.md": {
+    "mtime": 1790394240.4129052,
+    "ast_hash": "35c8aa72a31ced7d94691715f4ca54b3",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260926_031637_which_next_phase_features_can_improve_paldawn_with.md": {
+    "mtime": 1790392597.1526334,
+    "ast_hash": "4fca7e3c2b87ad08dc30ce14ef92a957",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260926_033813_how_is_paldawn_study_continuity_wired_across_route.md": {
+    "mtime": 1790393893.735943,
+    "ast_hash": "362aca106251f0a7abc5ecf3ffaa0c54",
     "semantic_hash": ""
   }
 }

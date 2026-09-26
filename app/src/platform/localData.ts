@@ -1,14 +1,17 @@
 import { JOURNEY } from '../journey/journey'
+import { DISEASES } from '../data/diseases'
 
 export const PALDAWN_SETTINGS_KEY = 'paldawn:settings:v1'
 export const PALDAWN_JOURNEY_KEY = 'paldawn:journey:v1'
 export const PALDAWN_BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 export const PALDAWN_WORKSPACE_KEY = 'paldawn:workspace:v1'
+export const PALDAWN_ATLAS_STUDY_KEY = 'paldawn:atlas-study:v1'
 export const PALDAWN_RESET_KEY = 'paldawn:reset:v1'
 export const PALDAWN_RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
 export const PALDAWN_STORAGE_FAILURE_EVENT = 'paldawn:storage-failure'
 export const PALDAWN_STORAGE_SUCCESS_EVENT = 'paldawn:storage-success'
 export const MAX_STAGE_NOTE_LENGTH = 1200
+export const MAX_ATLAS_STUDY_RECORDS = 150
 
 export interface StorageFailureDetail {
   key: string
@@ -41,6 +44,27 @@ interface PersistedLearnerWorkspace {
   resetToken?: string | null
 }
 
+export interface AtlasStudyRecord {
+  saved: boolean
+  studied: boolean
+  note: string
+}
+
+export interface AtlasStudyPosition {
+  diseaseId: string
+  stepId: string
+}
+
+export interface AtlasStudyData {
+  narration: 'plain' | 'clinical'
+  lastPosition: AtlasStudyPosition | null
+  records: Record<string, AtlasStudyRecord>
+}
+
+interface PersistedAtlasStudyData extends Partial<AtlasStudyData> {
+  resetToken?: string | null
+}
+
 interface ImportedSettings {
   qualityTier: 'auto' | 'high' | 'balanced' | 'low'
   reducedMotion: boolean
@@ -57,6 +81,7 @@ export interface LocalDataImport {
   journey: JourneySession | null
   bookmarks: string[]
   workspace: LearnerWorkspace
+  atlasStudy: AtlasStudyData
 }
 
 export interface LocalDataImportPreview {
@@ -65,6 +90,9 @@ export interface LocalDataImportPreview {
   noteCount: number
   checkpointCount: number
   hasSettings: boolean
+  atlasSavedCount: number
+  atlasNoteCount: number
+  atlasStudiedCount: number
 }
 
 export type LocalDataImportResult =
@@ -107,6 +135,7 @@ const LOCAL_DATA_KEY_LIST = [
   PALDAWN_JOURNEY_KEY,
   PALDAWN_BOOKMARKS_KEY,
   PALDAWN_WORKSPACE_KEY,
+  PALDAWN_ATLAS_STUDY_KEY,
 ] as const
 type LocalDataKey = typeof LOCAL_DATA_KEY_LIST[number]
 type LocalDataValues = Record<LocalDataKey, string | null>
@@ -127,6 +156,43 @@ const CAPTION_SCALES = new Set(['standard', 'large', 'largest'])
 const PLAYBACK_RATES = new Set([0.5, 1, 1.5])
 
 const emptyWorkspace = (): LearnerWorkspace => ({ notes: {}, checkpoints: [] })
+export const emptyAtlasStudy = (): AtlasStudyData => ({ narration: 'plain', lastPosition: null, records: {} })
+
+export const atlasStudyRecordId = (diseaseId: string, stepId: string): string => `${diseaseId}:${stepId}`
+
+const knownAtlasPosition = (value: unknown): AtlasStudyPosition | null => {
+  if (!value || typeof value !== 'object') return null
+  const candidate = value as Partial<AtlasStudyPosition>
+  if (typeof candidate.diseaseId !== 'string' || typeof candidate.stepId !== 'string') return null
+  const disease = DISEASES.find((item) => item.id === candidate.diseaseId)
+  return disease?.steps.some((step) => step.id === candidate.stepId)
+    ? { diseaseId: candidate.diseaseId, stepId: candidate.stepId }
+    : null
+}
+
+export const normalizeAtlasStudy = (value: unknown): AtlasStudyData => {
+  if (!value || typeof value !== 'object') return emptyAtlasStudy()
+  const candidate = value as PersistedAtlasStudyData
+  const records = candidate.records && typeof candidate.records === 'object'
+    ? Object.fromEntries(Object.entries(candidate.records as Record<string, unknown>)
+      .filter(([id, record]) => id.length <= 160 && /^[a-z0-9-]+:[a-z0-9-]+$/i.test(id) && record && typeof record === 'object')
+      .slice(0, MAX_ATLAS_STUDY_RECORDS)
+      .map(([id, record]) => {
+        const item = record as Partial<AtlasStudyRecord>
+        return [id, {
+          saved: item.saved === true,
+          studied: item.studied === true,
+          note: typeof item.note === 'string' ? item.note.replaceAll('\0', '').slice(0, MAX_STAGE_NOTE_LENGTH) : '',
+        } satisfies AtlasStudyRecord] as const
+      })
+      .filter(([, record]) => record.saved || record.studied || record.note.trim().length > 0))
+    : {}
+  return {
+    narration: candidate.narration === 'clinical' ? 'clinical' : 'plain',
+    lastPosition: knownAtlasPosition(candidate.lastPosition),
+    records,
+  }
+}
 
 const normalizeWorkspace = (value: unknown): LearnerWorkspace => {
   if (!value || typeof value !== 'object') return emptyWorkspace()
@@ -192,6 +258,7 @@ const resetDesiredValues = (): LocalDataValues => ({
   [PALDAWN_JOURNEY_KEY]: null,
   [PALDAWN_BOOKMARKS_KEY]: null,
   [PALDAWN_WORKSPACE_KEY]: null,
+  [PALDAWN_ATLAS_STUDY_KEY]: null,
 })
 
 const serializePendingTransaction = (transaction: PendingLocalDataTransaction): string =>
@@ -205,7 +272,9 @@ const parsePendingTransaction = (raw: string | null): PendingLocalDataTransactio
     const value = JSON.parse(raw) as Partial<PendingLocalDataTransaction>
     if (value.schemaVersion !== 1 || typeof value.token !== 'string' || !value.token ||
       !['reset', 'import'].includes(value.kind ?? '') || !value.desired || typeof value.desired !== 'object') return null
-    const desired = Object.fromEntries(LOCAL_DATA_KEY_LIST.map((key) => [key, value.desired?.[key]])) as LocalDataValues
+    // Receipts written before Atlas Study existed omit its key. Treat omission as
+    // an empty scope so an interrupted legacy reset/import remains recoverable.
+    const desired = Object.fromEntries(LOCAL_DATA_KEY_LIST.map((key) => [key, value.desired?.[key] ?? null])) as LocalDataValues
     if (LOCAL_DATA_KEY_LIST.some((key) => desired[key] !== null && typeof desired[key] !== 'string')) return null
     if (LOCAL_DATA_KEY_LIST.some((key) => desired[key] !== null && valueGeneration(desired[key]) !== value.token)) return null
     return { schemaVersion: 1, token: value.token, kind: value.kind as 'reset' | 'import', desired }
@@ -494,6 +563,29 @@ export function saveLearnerWorkspace(workspace: LearnerWorkspace): boolean {
   }))
 }
 
+export function loadAtlasStudy(): AtlasStudyData {
+  const value = readJson(PALDAWN_ATLAS_STUDY_KEY)
+  if (!value || typeof value !== 'object') return emptyAtlasStudy()
+  const candidate = value as PersistedAtlasStudyData
+  const currentResetToken = readString(PALDAWN_RESET_KEY)
+  if (currentResetToken !== null && candidate.resetToken !== currentResetToken) {
+    try {
+      storage()?.removeItem(PALDAWN_ATLAS_STUDY_KEY)
+    } catch {
+      // The stale record is still ignored when storage cannot be changed.
+    }
+    return emptyAtlasStudy()
+  }
+  return normalizeAtlasStudy(candidate)
+}
+
+export function saveAtlasStudy(data: AtlasStudyData): boolean {
+  return writeLocalStorageValue(PALDAWN_ATLAS_STUDY_KEY, JSON.stringify({
+    ...normalizeAtlasStudy(data),
+    resetToken: resetTokenAtLoad,
+  }))
+}
+
 const normalizeImportedSettings = (value: unknown): ImportedSettings | null => {
   if (!value || typeof value !== 'object') return null
   const wrapper = value as { state?: unknown }
@@ -540,10 +632,10 @@ export function parseLocalDataImport(text: string): LocalDataImportResult {
     return { ok: false, error: 'That file is not a PalDawn local-data backup.' }
   }
   const candidate = value as Record<string, unknown>
-  if (candidate.local_only !== true || ![1, 2].includes(candidate.schema_version as number)) {
+  if (candidate.local_only !== true || ![1, 2, 3].includes(candidate.schema_version as number)) {
     return { ok: false, error: 'That file does not use a supported PalDawn local-data schema.' }
   }
-  if (!['settings', 'journey', 'bookmarks', 'workspace'].some((key) => Object.hasOwn(candidate, key))) {
+  if (!['settings', 'journey', 'bookmarks', 'workspace', 'atlasStudy'].some((key) => Object.hasOwn(candidate, key))) {
     return { ok: false, error: 'That backup does not contain any recognized PalDawn local data.' }
   }
   const workspace = normalizeWorkspace(candidate.workspace)
@@ -556,6 +648,7 @@ export function parseLocalDataImport(text: string): LocalDataImportResult {
       ))]
       : [],
     workspace,
+    atlasStudy: normalizeAtlasStudy(candidate.atlasStudy),
   }
   return {
     ok: true,
@@ -566,6 +659,9 @@ export function parseLocalDataImport(text: string): LocalDataImportResult {
       noteCount: Object.keys(workspace.notes).length,
       checkpointCount: workspace.checkpoints.length,
       hasSettings: data.settings !== null,
+      atlasSavedCount: Object.values(data.atlasStudy.records).filter((record) => record.saved).length,
+      atlasNoteCount: Object.values(data.atlasStudy.records).filter((record) => record.note.trim()).length,
+      atlasStudiedCount: Object.values(data.atlasStudy.records).filter((record) => record.studied).length,
     },
   }
 }
@@ -666,6 +762,7 @@ export function replaceLocalDataFromImport(data: LocalDataImport): ReplaceLocalD
       : null,
     [PALDAWN_BOOKMARKS_KEY]: JSON.stringify({ stageIds: data.bookmarks, resetToken }),
     [PALDAWN_WORKSPACE_KEY]: JSON.stringify({ ...normalizeWorkspace(data.workspace), resetToken }),
+    [PALDAWN_ATLAS_STUDY_KEY]: JSON.stringify({ ...normalizeAtlasStudy(data.atlasStudy), resetToken }),
   }))
   return outcome.resetToken
     ? { ok: true, resetToken: outcome.resetToken }
@@ -715,12 +812,13 @@ export function exportLocalData(): LocalDataExportResult {
     return {
       ok: true,
       text: JSON.stringify({
-        schema_version: 2,
+        schema_version: 3,
         local_only: true,
         settings: parsed[PALDAWN_SETTINGS_KEY],
         journey: parsed[PALDAWN_JOURNEY_KEY],
         bookmarks: parsed[PALDAWN_BOOKMARKS_KEY],
         workspace: parsed[PALDAWN_WORKSPACE_KEY],
+        atlasStudy: parsed[PALDAWN_ATLAS_STUDY_KEY],
       }, null, 2),
     }
   } catch {

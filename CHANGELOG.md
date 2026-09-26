@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — Study Continuity
+
+- Added validated links to exact disease steps, including optional structure focus.
+- Added bounded local saved steps, private notes, personal study marks, and Atlas resume.
+- Added a focused pathway reader with Plain English and Clinical terms together.
+- Added source-linked Markdown export, optional private-note inclusion, and print styling.
+- Extended transactional reset, recovery, cross-tab updates, PWA update preparation,
+  and local backup/restore with schema-v3 Atlas study data while retaining v1/v2 imports.
+
 ## Unreleased — Anatomy Lab local candidate
 
 - Added a body-part research desk with 20 function introductions, 113 distinct

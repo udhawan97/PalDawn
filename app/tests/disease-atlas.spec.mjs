@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { readFile } from 'node:fs/promises'
 
 test.describe.configure({ timeout: 60_000 })
 
@@ -14,6 +15,73 @@ test('landing offers ten English-only disease journeys and opens diabetes', asyn
   await expect(page.getByRole('heading', { name: 'Diabetes mellitus', level: 1 })).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Diabetes mellitus mechanism steps' }).getByRole('button')).toHaveCount(11)
   await expect(page.getByRole('link', { name: /Your digestive system and how it works/ })).toHaveAttribute('href', /niddk\.nih\.gov/)
+})
+
+test('exact Atlas links restore the authored step and close safely', async ({ page }) => {
+  await page.goto('./#atlas/diabetes/pancreas-senses?part=pancreas')
+  await expect(page.getByRole('heading', { name: 'The pancreas releases insulin' })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'Interactive 3D systems map' })).toHaveAttribute('data-focus-part', 'pancreas')
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'The pancreas releases insulin' })).toBeVisible()
+  await page.getByRole('button', { name: /Back to overview/ }).click()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  expect(new URL(page.url()).hash).toBe('')
+
+  await page.goto('./#atlas/not-a-disease/not-a-step')
+  await expect(page.getByRole('alert')).toContainText('Atlas study link is unavailable')
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+})
+
+test('Atlas study records persist and join the local backup', async ({ page }) => {
+  await page.goto('./#atlas/diabetes/pancreas-senses')
+  await page.getByRole('button', { name: 'Save step' }).click()
+  await page.getByRole('button', { name: 'Mark studied' }).click()
+  await page.getByRole('button', { name: 'Private note' }).click()
+  await page.getByLabel(/Private note · stored only in this browser/).fill('Compare the control signal with the tissue response.')
+  await expect(page.getByRole('status').filter({ hasText: 'Study saved' })).toBeVisible()
+
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Saved step' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: 'Studied ✓' })).toHaveAttribute('aria-pressed', 'true')
+  await page.getByRole('button', { name: 'Private note' }).click()
+  await expect(page.getByLabel(/Private note · stored only in this browser/)).toHaveValue('Compare the control signal with the tissue response.')
+
+  await page.getByRole('button', { name: 'Settings' }).click()
+  const downloadEvent = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download local data' }).click()
+  const download = await downloadEvent
+  const path = await download.path()
+  const backup = JSON.parse(await readFile(path, 'utf8'))
+  expect(backup.schema_version).toBe(3)
+  expect(backup.atlasStudy.records['diabetes:pancreas-senses'].saved).toBe(true)
+  expect(backup.atlasStudy.records['diabetes:pancreas-senses'].studied).toBe(true)
+})
+
+test('focused reading compares both tracks and exports notes only when requested', async ({ page }) => {
+  await page.goto('./#atlas/diabetes/pancreas-senses')
+  await page.getByRole('button', { name: 'Save step' }).click()
+  await page.getByRole('button', { name: 'Private note' }).click()
+  await page.getByLabel(/Private note · stored only in this browser/).fill('Private comparison note')
+  await page.getByRole('button', { name: 'Compare pathway' }).click()
+
+  const reading = page.getByRole('dialog', { name: 'Diabetes mellitus' })
+  await expect(reading).toBeVisible()
+  await expect(reading.locator('.atlas-reading-steps > li')).toHaveCount(11)
+  await expect(reading.getByRole('heading', { name: 'Plain English' }).first()).toBeVisible()
+  await expect(reading.getByRole('heading', { name: 'Clinical terms' }).first()).toBeVisible()
+
+  const firstDownload = page.waitForEvent('download')
+  await reading.getByRole('button', { name: 'Download selected study' }).click()
+  const withoutNotes = await readFile(await (await firstDownload).path(), 'utf8')
+  expect(withoutNotes).not.toContain('Private comparison note')
+
+  await reading.getByRole('checkbox', { name: 'Show private notes and include in export' }).check()
+  const secondDownload = page.waitForEvent('download')
+  await reading.getByRole('button', { name: 'Download selected study' }).click()
+  const withNotes = await readFile(await (await secondDownload).path(), 'utf8')
+  expect(withNotes).toContain('Private comparison note')
+  expect(withNotes).toContain('Clinical terms')
+  expect(withNotes).toContain('niddk.nih.gov')
 })
 
 test('diabetes controls connect the explanation depth, mechanism, and 3D state', async ({ page }) => {
@@ -319,7 +387,7 @@ test('atlas history keeps Back inside PalDawn and restores the current mechanism
   await page.goto('./')
   await page.getByRole('button', { name: 'Explore diabetes' }).click()
   await page.getByRole('button', { name: 'Step 5: Diabetes changes the control loop' }).click()
-  await expect(page).not.toHaveURL(/diabetes/i)
+  await expect(page).toHaveURL(/#atlas\/diabetes\/types-diverge$/)
 
   await page.goBack()
   await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
