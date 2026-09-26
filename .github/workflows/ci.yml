@@ -48,6 +48,8 @@ jobs:
         working-directory: app
       - run: npm run anatomy:prepare
         working-directory: app
+      - run: npm run build
+        working-directory: app
       - run: npm run anatomy:test
         working-directory: app
       - run: npm run anatomy:build
