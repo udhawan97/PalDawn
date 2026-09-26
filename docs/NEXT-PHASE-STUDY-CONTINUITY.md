@@ -1,6 +1,6 @@
 # Next phase: Study Continuity
 
-Status: public-app slices 1–4 implemented on `stay-calm-its-codex/study-continuity`; Anatomy Lab persistence remains a follow-on. This document does not authorize a release.
+Status: public-app slices 1–4 and the bounded Anatomy Lab persistence follow-on are implemented on `stay-calm-its-codex/study-continuity`. This document does not authorize a release.
 
 ## Recommendation
 

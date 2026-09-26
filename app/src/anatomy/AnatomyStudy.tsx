@@ -4,13 +4,25 @@ import { relatedLessons, searchStructures, SYSTEM_READING } from './studyLinks'
 import { registerAtlasTools } from './agent-tools'
 import { useAtlas } from '../state/atlas'
 import { useSettings } from '../state/settings'
+import { downloadText } from '../platform/downloads'
+import { registerPwaUpdatePreparation } from '../platform/pwa'
 import './study.css'
 import ResearchDesk from './ResearchDesk'
+import {
+  PALDAWN_ANATOMY_STUDY_KEY,
+  clearAnatomyStudy,
+  emptyAnatomyStudy,
+  exportAnatomyStudy,
+  loadAnatomyStudy,
+  parseAnatomyStudyImport,
+  saveAnatomyStudy,
+  type AnatomyReadingItem,
+  type AnatomyStudyData,
+} from './studyStorage'
 const AnatomyScene = lazy(() => import('./scene'))
 const initial = (): SceneState => ({ explode: 0, visible: [...DEFAULT_VISIBLE], selected: [], isolate: false, view: 'three-quarter', rotate: false, reset: 0 })
-type StudySession = { state: SceneState; chosen: Concept | null; query: string; saved: string[] }
-const sessions: Record<'male' | 'female', StudySession> = { male: { state: initial(), chosen: null, query: '', saved: [] }, female: { state: { ...initial(), visible: [...DEFAULT_VISIBLE, 'integumentary'] }, chosen: null, query: '', saved: [] } }
-let readingQueue: string[] = []
+type StudySession = { state: SceneState; chosen: Concept | null; query: string }
+const sessions: Record<'male' | 'female', StudySession> = { male: { state: initial(), chosen: null, query: '' }, female: { state: { ...initial(), visible: [...DEFAULT_VISIBLE, 'integumentary'] }, chosen: null, query: '' } }
 let lastSex: 'male' | 'female' = 'male'
 type Context = { systems: Record<string, string>; structures: Record<string, string>; femaleSystems?: Record<string, string>; femaleStructures?: Record<string, string>; femaleReading?: Context['reading']; reading?: Record<string, { source: string; checked: string; topics: { title: string; url: string }[] }> }
 export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
@@ -33,16 +45,62 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<'structures' | 'systems' | 'study'>(session.chosen ? 'study' : 'structures')
   const [quiz, setQuiz] = useState(false)
   const [revealed, setRevealed] = useState(false)
-  const [saved, setSaved] = useState<string[]>(session.saved)
+  const [initialStoredStudy] = useState(loadAnatomyStudy)
+  const [studyData, setStudyData] = useState<AnatomyStudyData>(initialStoredStudy.data)
+  const studyDataRef = useRef(studyData)
+  const [studyPersisted, setStudyPersisted] = useState(initialStoredStudy.storageAvailable)
+  const [studyStatus, setStudyStatus] = useState(initialStoredStudy.storageAvailable ? '' : 'Browser storage is unavailable. Anatomy study changes will remain in this tab only.')
+  const [confirmClearStudy, setConfirmClearStudy] = useState(false)
+  const [pendingStudyImport, setPendingStudyImport] = useState<AnatomyStudyData | null>(null)
+  const saved = studyData.saved[sex]
   const [savedOnly, setSavedOnly] = useState(false)
   const [textOnly, setTextOnly] = useState(false)
   const [conditionQuery, setConditionQuery] = useState('')
-  const [queue, setQueue] = useState<string[]>(readingQueue)
+  const queue = studyData.queue
   const [researchFocus, setResearchFocus] = useState(false)
   const title = useRef<HTMLHeadingElement>(null)
   const reducedMotion = useSettings(s => s.reducedMotion)
   const deferred = useDeferredValue(query)
-  useEffect(() => { sessions[sex] = { state, chosen, query, saved }; lastSex = sex }, [sex, state, chosen, query, saved])
+  useEffect(() => { sessions[sex] = { state, chosen, query }; lastSex = sex }, [sex, state, chosen, query])
+  useEffect(() => { studyDataRef.current = studyData }, [studyData])
+  useEffect(() => registerPwaUpdatePreparation(() => {
+    const persisted = saveAnatomyStudy(studyDataRef.current)
+    setStudyPersisted(persisted)
+    if (!persisted) setStudyStatus('Update paused because Anatomy study data could not be saved. Copy or export your work before reloading.')
+    return persisted
+  }), [])
+  useEffect(() => {
+    const followStoredStudy = (event: StorageEvent) => {
+      if (event.key !== PALDAWN_ANATOMY_STUDY_KEY) return
+      if (!studyPersisted) {
+        setStudyStatus('Another tab changed Anatomy study data. Your unsaved in-memory work remains here; export it before reloading.')
+        return
+      }
+      const loaded = loadAnatomyStudy()
+      studyDataRef.current = loaded.data
+      setStudyData(loaded.data)
+      setStudyPersisted(loaded.storageAvailable)
+      setStudyStatus(loaded.storageAvailable ? 'Anatomy study updated from another tab.' : 'Browser storage is unavailable. Anatomy study changes remain in this tab only.')
+    }
+    window.addEventListener('storage', followStoredStudy)
+    return () => window.removeEventListener('storage', followStoredStudy)
+  }, [studyPersisted])
+  const updateStudy = useCallback((update: (current: AnatomyStudyData) => AnatomyStudyData, success: string) => {
+    setStudyData(current => {
+      const next = update(current)
+      studyDataRef.current = next
+      const persisted = saveAnatomyStudy(next)
+      setStudyPersisted(persisted)
+      setStudyStatus(persisted ? success : 'Anatomy study changed in this tab, but browser storage is unavailable. Export before reloading.')
+      return next
+    })
+  }, [])
+  const setSaved = useCallback((update: (current: string[]) => string[]) => {
+    updateStudy(current => ({ ...current, saved: { ...current.saved, [sex]: update(current.saved[sex]) } }), 'Anatomy study list saved in this browser.')
+  }, [sex, updateStudy])
+  const setQueue = useCallback((next: AnatomyReadingItem[]) => {
+    updateStudy(current => ({ ...current, queue: next }), 'Reading queue saved in this browser.')
+  }, [updateStudy])
   useEffect(() => {
     const abort = new AbortController()
     setError('')
@@ -66,6 +124,8 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
     if (p) choose({ id: p.conceptId, name: p.name, elements: [p.id] })
   }, [parts, choose])
   const results = useMemo(() => atlas ? searchStructures(atlas, deferred, filter, parts).filter(c => !savedOnly || saved.includes(c.id)) : [], [atlas, deferred, filter, parts, savedOnly, saved])
+  const atlasConceptIds = useMemo(() => new Set(atlas?.concepts.map(concept => concept.id) ?? []), [atlas])
+  const unavailableSaved = useMemo(() => atlas ? saved.filter(id => !atlasConceptIds.has(id)) : [], [atlas, atlasConceptIds, saved])
   const selectedParts = chosen?.elements.flatMap(id => { const part = parts.get(id); return part ? [part] : [] }) ?? []
   const selectedSystems = [...new Set(selectedParts.map(p => p.system))]
   const availableSystems = SYSTEMS.filter(system => atlas?.parts.some(p => p.system === system.id))
@@ -78,7 +138,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
     const remembered = sessions[next]
     setTour(false); setTourStep(0); setQuiz(false); setSceneError(''); setProgress(0); setAtlas(null); setSex(next)
     const url = new URL(window.location.href); url.searchParams.set('reference', next); window.history.replaceState(window.history.state, '', url)
-    setState({ ...remembered.state, rotate: false }); setChosen(remembered.chosen); setQuery(remembered.query); setSaved(remembered.saved); setFilter('all'); setPage(0); setConditionQuery(''); setTab('structures')
+    setState({ ...remembered.state, rotate: false }); setChosen(remembered.chosen); setQuery(remembered.query); setFilter('all'); setPage(0); setConditionQuery(''); setTab('structures')
   }
   useEffect(() => {
     if (!tour || reducedMotion || !tourSystems.length) return
@@ -106,6 +166,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   return <main className="anatomy-study">
     <header className="study-header"><div><p className="study-kicker">PALDAWN / ANATOMY LAB</p><h1>Know the body.<br className="mobile-break"/> Follow the connections.</h1></div><div className="study-header-controls"><div className="study-reference-switch" role="group" aria-label="Reference anatomy"><button aria-pressed={sex === 'male'} onClick={() => changeSex('male')}>Male reference</button><button aria-pressed={sex === 'female'} onClick={() => changeSex('female')}>Female reference</button></div><button className="study-layout-toggle" aria-pressed={researchFocus} onClick={() => setResearchFocus(v => !v)}>{researchFocus ? 'Show library' : 'Focus on research'}</button><button onClick={onClose}>Back to PalDawn ↗</button></div></header>
     <div className="study-scope">Local study candidate · Qualified anatomy and clinical review pending · {sex === 'male' ? 'BodyParts3D adult male reference · Anatomical variations are not fully represented.' : 'HRA female reference assembly · Skeleton and muscle coverage are partial; pregnancy structures are optional.'}</div>
+    {studyStatus ? <p className="study-storage-status" role="status" data-persisted={studyPersisted}>{studyStatus}</p> : null}
     <div className={`study-workspace ${researchFocus ? 'research-focus' : ''}`}>
       <aside className={`study-library ${tab === 'study' ? 'mobile-hidden' : ''}`} aria-label="Anatomy library">
         <nav className="study-tabs" aria-label="Library view"><button aria-pressed={tab !== 'systems'} onClick={() => setTab('structures')}>Structures</button><button aria-pressed={tab === 'systems'} onClick={() => setTab('systems')}>System layers</button></nav>
@@ -114,7 +175,8 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
           {availableSystems.map(sys => <label className="study-system" key={sys.id}><input type="checkbox" checked={state.visible.includes(sys.id)} onChange={() => { setTour(false); setState(s => ({ ...s, rotate: false, isolate: false, selected: [], visible: s.visible.includes(sys.id) ? s.visible.filter(id => id !== sys.id) : [...s.visible, sys.id] })) }}/><i style={{ background: sys.color }}/><span>{sys.name}</span><small>{atlas?.parts.filter(p => p.system === sys.id).length ?? '—'}</small></label>)}</> : <>
           <label className="study-label" htmlFor="structure-search">Find a structure</label><input id="structure-search" type="search" placeholder="Try femur, heart, FMA7088…" value={query} onChange={e => { setQuery(e.target.value); setPage(0) }}/>
           <label className="study-label" htmlFor="structure-system">Browse system</label><select id="structure-system" value={filter} onChange={e => { setFilter(e.target.value as SystemId | 'all'); setPage(0) }}><option value="all">All available systems</option>{availableSystems.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}</select>
-          <label className="study-check"><input type="checkbox" checked={savedOnly} onChange={e => { setSavedOnly(e.target.checked); setPage(0) }}/> This session’s study list ({saved.length})</label>
+          <label className="study-check"><input type="checkbox" checked={savedOnly} onChange={e => { setSavedOnly(e.target.checked); setPage(0) }}/> Saved study list ({saved.length})</label>
+          {atlas === null && saved.length ? <p className="study-note">Saved structure IDs are waiting for this reference inventory to load.</p> : unavailableSaved.length ? <details className="study-unavailable"><summary>{unavailableSaved.length} unavailable saved {unavailableSaved.length === 1 ? 'structure' : 'structures'}</summary>{unavailableSaved.map(id => <div key={id}><code>{id}</code><button onClick={() => setSaved(current => current.filter(candidate => candidate !== id))}>Remove</button></div>)}<p className="study-note">Preserved for backup recovery; no structure was substituted by name.</p></details> : null}
           <p role="status" className="study-count">{results.length.toLocaleString()} concepts · {atlas?.parts.length.toLocaleString() ?? '…'} source meshes</p>
           <div className="study-results">{results.slice(page * 40, (page + 1) * 40).map(c => <button key={c.id} aria-pressed={chosen?.id === c.id} onClick={() => choose(c)}><strong>{c.name}</strong><span>{c.id} · {c.elements.length} {c.elements.length === 1 ? 'piece' : 'pieces'} <b>↗</b></span></button>)}{atlas && results.length === 0 ? <p>No structures match. Try another name, source ID, or system.</p> : null}</div>
           <div className="study-pagination"><button disabled={page === 0} onClick={() => setPage(p => p - 1)}>Previous</button><span>{results.length ? page + 1 : 0} / {Math.ceil(results.length / 40)}</span><button disabled={(page + 1) * 40 >= results.length} onClick={() => setPage(p => p + 1)}>Next</button></div>
@@ -140,7 +202,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
             <div className="study-actions"><button aria-pressed={state.isolate} onClick={() => setState(s => ({ ...s, isolate: !s.isolate, selected: chosen.elements, explode: 0 }))}>{state.isolate ? 'Show surroundings' : 'Isolate structure'}</button><button aria-pressed={saved.includes(chosen.id)} onClick={() => setSaved(s => s.includes(chosen.id) ? s.filter(id => id !== chosen.id) : [...s, chosen.id])}>{saved.includes(chosen.id) ? 'Remove from study list' : 'Add to study list'}</button><button onClick={() => { setChosen(null); setQuiz(false); setState(s => ({ ...s, selected: [], isolate: false })) }}>Clear selection</button></div>
             <details><summary>Structure overview & system context</summary><h3>{activeStructures?.[chosen.name.toLowerCase()] ? 'Structure overview' : 'System context'}</h3>
             <p>{activeStructures?.[chosen.name.toLowerCase()] ?? selectedSystems.map(id => activeContext?.[id]).filter(Boolean).join(' ')}</p><p className="study-note">Adapted Human Atlas context · Unreviewed. A system overview does not describe every individual structure.</p>
-            </details><ResearchDesk atlas={atlas} chosen={chosen} onChoose={choose} queue={queue} onQueue={next => { readingQueue = next; setQueue(next) }}/>
+            </details><ResearchDesk atlas={atlas} chosen={chosen} onChoose={choose} queue={queue} onQueue={setQueue}/>
             <details><summary>Existing PalDawn disease pathways ({lessons.length})</summary><h3>Linked ailment pathways</h3><p className="study-note">Organ-level learning connections from existing PalDawn lessons. They do not establish disease involvement of this exact mesh.</p>
             {lessons.length ? lessons.map(({ disease, stepIndex, bodyPart, sources }) => <article className="study-lesson" key={disease.id}><button onClick={() => { useAtlas.getState().openDisease(disease.id); useAtlas.getState().setTarget(disease.id, stepIndex, bodyPart); onClose() }}>{disease.title} ↗<small>{disease.steps[stepIndex].label}</small></button>{sources.map(source => <a key={source.id} href={source.url} target="_blank" rel="noreferrer">{source.organization} · {source.title} ↗</a>)}</article>) : <p>No organ-level PalDawn pathway is mapped here yet. Explore the system reading below.</p>}
             </details><details><summary>Full system reading directory</summary><h3>Conditions & further reading</h3><p className="study-note">System-level reading directories, not a complete list of ailments for this structure.</p>
@@ -152,9 +214,45 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
           </>}
           {quiz && revealed ? <button onClick={recall}>Next recall card</button> : null}
         </> : <p>Select any part of the model or search the full inventory. Then move from its source identity to organ-level pathways and further reading.</p>}
-        {!chosen ? <ResearchDesk atlas={atlas} chosen={null} onChoose={choose} queue={queue} onQueue={next => { readingQueue = next; setQueue(next) }}/> : null}
+        {!chosen ? <ResearchDesk atlas={atlas} chosen={null} onChoose={choose} queue={queue} onQueue={setQueue}/> : null}
+        <details className="study-persistence">
+          <summary>Saved Anatomy study & backup</summary>
+          <p className="study-note">The reading queue, read marks, and per-reference structure IDs stay in this browser. JSON backup is separate from the Markdown reading plan.</p>
+          <p className="study-note">{queue.length} readings · {studyData.saved.male.length} male-reference structures · {studyData.saved.female.length} female-reference structures</p>
+          <div className="study-persistence-actions">
+            <button onClick={() => { downloadText('paldawn-anatomy-study.json', exportAnatomyStudy(studyDataRef.current), 'application/json'); setStudyStatus('Anatomy study backup downloaded.') }}>Download Anatomy backup</button>
+            <label className="file-action" htmlFor="anatomy-study-import">Check Anatomy backup<input id="anatomy-study-import" type="file" accept="application/json,.json" onChange={event => {
+              const input = event.currentTarget
+              const file = input.files?.[0]
+              if (!file) return
+              void file.text().then(text => {
+                const result = parseAnatomyStudyImport(text)
+                if (!result.ok) { setStudyStatus(result.error); return }
+                setPendingStudyImport(result.data)
+                setStudyStatus(`Backup checked: ${result.data.queue.length} readings, ${result.data.saved.male.length} male-reference structures, and ${result.data.saved.female.length} female-reference structures. Confirm to replace the current Anatomy study.`)
+              }).catch(() => setStudyStatus('PalDawn could not read that Anatomy study backup.')).finally(() => { input.value = '' })
+            }}/></label>
+            {pendingStudyImport ? <><button onClick={() => {
+              studyDataRef.current = pendingStudyImport
+              const persisted = saveAnatomyStudy(pendingStudyImport)
+              setStudyData(pendingStudyImport)
+              setStudyPersisted(persisted)
+              setPendingStudyImport(null)
+              setStudyStatus(persisted ? 'Anatomy study backup restored in this browser.' : 'Backup loaded in this tab, but browser storage is unavailable. Export before reloading.')
+            }}>Confirm backup replacement</button><button onClick={() => { setPendingStudyImport(null); setStudyStatus('Backup replacement cancelled.') }}>Cancel backup replacement</button></> : null}
+            {confirmClearStudy ? <><button onClick={() => {
+              const cleared = clearAnatomyStudy()
+              const empty = emptyAnatomyStudy()
+              studyDataRef.current = empty
+              setStudyData(empty)
+              setStudyPersisted(cleared)
+              setStudyStatus(cleared ? 'Local Anatomy study cleared.' : 'The in-memory Anatomy study was cleared, but browser storage could not be verified.')
+              setConfirmClearStudy(false)
+            }}>Confirm clear Anatomy study</button><button onClick={() => setConfirmClearStudy(false)}>Cancel</button></> : <button disabled={!queue.length && !studyData.saved.male.length && !studyData.saved.female.length} onClick={() => setConfirmClearStudy(true)}>Clear local Anatomy study</button>}
+          </div>
+        </details>
         <div className="study-recall"><h3>Practice recall</h3><p>Identify one visible structure, then reveal its source name. This is self-study, not an assessed exam.</p><button disabled={!atlas || !state.visible.length || textOnly || Boolean(sceneError) || progress < 100} onClick={recall}>Identify a structure</button></div>
-        <details className="study-credits"><summary>Coverage, sources & credits</summary><p>{atlas?.concepts.length.toLocaleString() ?? '…'} named concepts can group multiple meshes. {sex === 'male' ? 'The adult male reference does not cover female-specific anatomy.' : 'The female reference assembly has partial skeleton and muscle coverage. Eight pregnancy reference meshes are hidden by default.'} Developmental stages and many variations remain outside these datasets. Ailment coverage is incomplete.</p><p>Viewer adapted from <a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noreferrer">Human Atlas by ashemag</a> (MIT). BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Female reference: Kristen Browne and Heidi Schlehlein, Human Reference Atlas / HuBMAP, 3D Reference Organ Set for Female v1.5 (2023), CC BY 4.0.</p><a href={`${import.meta.env.BASE_URL}anatomy/ATTRIBUTION.md`} target="_blank" rel="noreferrer">Full anatomy attribution and adaptations</a><p>PalDawn adds its own study interface, recall practice, session list and disease-pathway navigation. Education only; not diagnosis or clinical guidance.</p></details>
+        <details className="study-credits"><summary>Coverage, sources & credits</summary><p>{atlas?.concepts.length.toLocaleString() ?? '…'} named concepts can group multiple meshes. {sex === 'male' ? 'The adult male reference does not cover female-specific anatomy.' : 'The female reference assembly has partial skeleton and muscle coverage. Eight pregnancy reference meshes are hidden by default.'} Developmental stages and many variations remain outside these datasets. Ailment coverage is incomplete.</p><p>Viewer adapted from <a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noreferrer">Human Atlas by ashemag</a> (MIT). BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Female reference: Kristen Browne and Heidi Schlehlein, Human Reference Atlas / HuBMAP, 3D Reference Organ Set for Female v1.5 (2023), CC BY 4.0.</p><a href={`${import.meta.env.BASE_URL}anatomy/ATTRIBUTION.md`} target="_blank" rel="noreferrer">Full anatomy attribution and adaptations</a><p>PalDawn adds its own study interface, recall practice, local study lists and disease-pathway navigation. Education only; not diagnosis or clinical guidance.</p></details>
       </aside>
     </div>
     <nav className="study-mobile-nav" aria-label="Study panels"><button aria-pressed={tab === 'structures'} onClick={() => setTab('structures')}>Search</button><button aria-pressed={tab === 'systems'} onClick={() => setTab('systems')}>Systems</button><button aria-pressed={tab === 'study'} onClick={() => setTab('study')}>Study</button></nav>

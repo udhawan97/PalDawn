@@ -76,7 +76,7 @@ for (const [payload, gzip] of [[original, false], [original, true], [compressed,
 await assert.rejects(decodeModelResponse(new Response('bad'), 999, false))
 await assert.rejects(decodeModelResponse(new Response('', { status: 404 }), 0, false))
 assert.ok(!existsSync(resolve('dist/anatomy')), 'Normal build must exclude pending anatomy pack')
-assert.ok(!readdirSync('dist/assets').some(f => f.startsWith('AnatomyStudy') || f.startsWith('AnatomyLanding')), 'Normal build must exclude candidate study chunks')
+assert.ok(!readdirSync('dist/assets').some(f => f.startsWith('AnatomyStudy') || f.startsWith('AnatomyLanding') || f.startsWith('studyStorage')), 'Normal build must exclude candidate study chunks')
 console.log('Anatomy checks passed: all meshes/buffers/concepts, all available-system browse coverage, explicit lesson mappings and source resolution, packing, picking, WebMCP, gzip handling, normal-build exclusion.')
 
 // Research navigation uses source membership, preserves unknowns and exports only selected reading.
@@ -123,3 +123,22 @@ const ligamentContext = researchContext(suggestedTracks(male, { id: ligament.con
 assert.equal(ligamentContext.track.id, 'bones')
 assert.equal(ligamentContext.scope, 'Broader system reading · no exact organ mapping')
 console.log('Unmapped research context and actual connective-tissue fallback checks passed.')
+
+// Preview-only study persistence keeps ordered reading state and per-reference IDs bounded and portable.
+const storageBuild = await build({ configFile: false, logLevel: 'silent', build: { write: false, minify: false, lib: { entry: resolve('src/anatomy/studyStorage.ts'), formats: ['es'], fileName: 'study-storage' } } })
+const storageCode = (Array.isArray(storageBuild) ? storageBuild[0] : storageBuild).output.find(o => o.type === 'chunk').code
+const { MAX_ANATOMY_READING_ITEMS, MAX_ANATOMY_SAVED_STRUCTURES, exportAnatomyStudy, normalizeAnatomyStudy, parseAnatomyStudyImport } = await import('data:text/javascript;base64,' + Buffer.from(storageCode).toString('base64'))
+const storedStudy = normalizeAnatomyStudy({
+  queue: [{ id: 'function:heart', read: true }, { id: 'retired-topic', read: false }, { id: 'function:heart', read: false }, { id: '', read: true }, { id: 'unsafe topic', read: true }],
+  saved: { male: ['FMA7088', 'retired-concept', 'FMA7088'], female: ['HRA:VH_F_heart'] },
+})
+assert.deepEqual(storedStudy.queue, [{ id: 'function:heart', read: true }, { id: 'retired-topic', read: false }])
+assert.deepEqual(storedStudy.saved.male, ['FMA7088', 'retired-concept'])
+assert.deepEqual(storedStudy.saved.female, ['HRA:VH_F_heart'])
+const restoredStudy = parseAnatomyStudyImport(exportAnatomyStudy(storedStudy))
+assert.equal(restoredStudy.ok, true)
+assert.deepEqual(restoredStudy.data, storedStudy)
+assert.equal(parseAnatomyStudyImport('{}').ok, false)
+assert.equal(normalizeAnatomyStudy({ queue: Array.from({ length: MAX_ANATOMY_READING_ITEMS + 10 }, (_, i) => ({ id: `topic-${i}` })) }).queue.length, MAX_ANATOMY_READING_ITEMS)
+assert.equal(normalizeAnatomyStudy({ saved: { male: Array.from({ length: MAX_ANATOMY_SAVED_STRUCTURES + 10 }, (_, i) => `concept-${i}`) } }).saved.male.length, MAX_ANATOMY_SAVED_STRUCTURES)
+console.log('Anatomy study persistence checks passed: ordered read state, reference-scoped IDs, unknown preservation, bounds and backup round-trip.')

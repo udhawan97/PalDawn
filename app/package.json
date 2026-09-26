@@ -20,7 +20,8 @@
     "anatomy:dev": "PALDAWN_ANATOMY_PREVIEW=1 vite",
     "anatomy:build": "PALDAWN_ANATOMY_PREVIEW=1 vite build",
     "anatomy:preview": "PALDAWN_ANATOMY_PREVIEW=1 vite preview",
-    "anatomy:test": "node --experimental-strip-types scripts/test-anatomy.mjs"
+    "anatomy:test": "node --experimental-strip-types scripts/test-anatomy.mjs",
+    "anatomy:test:browser": "playwright test tests/anatomy-study.spec.mjs"
   },
   "keywords": [],
   "author": "",

@@ -8,11 +8,15 @@
 - Added source-linked Markdown export, optional private-note inclusion, and print styling.
 - Extended transactional reset, recovery, cross-tab updates, PWA update preparation,
   and local backup/restore with schema-v3 Atlas study data while retaining v1/v2 imports.
+- Added preview-scoped Anatomy study persistence for the ordered reading queue, personal
+  read marks, and separate male/female source-structure IDs.
+- Added Anatomy JSON backup/restore, clear controls, unavailable-ID recovery, cross-tab
+  refresh, and PWA update preparation without changing the public-build exclusion.
 
 ## Unreleased — Anatomy Lab local candidate
 
 - Added a body-part research desk with 20 function introductions, 113 distinct
-  condition-reading topics, inquiry prompts, PubMed searches and a session queue
+  condition-reading topics, inquiry prompts, PubMed searches and a reading queue
   that exports selected reading as Markdown. These are not 113 new lessons.
 - Added independent area selection, source-ID locators, cross-area search, compact
   cards and a wider research layout.

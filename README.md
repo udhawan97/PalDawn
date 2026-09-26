@@ -84,8 +84,8 @@ introductions, condition topics, inquiry prompts, and authoritative source links
 
 *An actual local study view. The 113 topics are reading links, not newly authored
 lessons or disease animations. PubMed links are searches, not appraised papers.
-The reading queue survives navigation between references but resets on reload;
-export it before closing.*
+The reading queue, personal read marks, and per-reference source-structure IDs
+stay locally in the browser with separate backup and clear controls.*
 
 The male reference contains 2,234 meshes; the female assembly contains 888,
 with **partial skeleton and muscle coverage**. They are not a matched pair and
@@ -100,7 +100,7 @@ visible in the viewer and [candidate guide](docs/ANATOMY-LAB.md).
 
 | Area | What to expect |
 |---|---|
-| Local work | No account or backend. Public-app preferences, First Light work, and Atlas study records use browser storage. Anatomy study lists and reading queues use session memory only. Do not enter patient or personal health data. |
+| Local work | No account or backend. Public-app preferences, First Light work, and Atlas study records use browser storage. The separate Anatomy preview stores reading and source-structure IDs locally with its own backup and clear controls. Do not enter patient or personal health data. |
 | Network | Static app files load from the site. Opening an evidence or PubMed link contacts that external site. Anatomy preparation downloads public source packs and directories. No analytics SDK or runtime AI provider is used. |
 | Evidence | Citations help you inspect the source; they do not certify the synthesis. Named qualified-human review remains pending. |
 | Updates and backups | Export important work. Public-app updates check that open tabs can save before reloading. See the [update and recovery guide](docs/GETTING-STARTED.md#updates-and-local-work). |

@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1790393036.1530044,
-    "ast_hash": "41f1df73f45e5205798bfbb0a9841715",
+    "mtime": 1790398176.4179525,
+    "ast_hash": "266f39c5be03248fee03d129f5ed562a",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790393626.1140559,
-    "ast_hash": "ebdd46ab0c2cc681126311ed1957d9b9",
+    "mtime": 1790398609.1911793,
+    "ast_hash": "6c6df452b28b8a24daf0327130a6081d",
     "semantic_hash": ""
   },
   "app/README.md": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790393642.310223,
-    "ast_hash": "266e7bd349a673a8a6175d130999363a",
+    "mtime": 1790398609.191655,
+    "ast_hash": "0125a0622b13d9a8fd186f6db94224eb",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -950,13 +950,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-anatomy.mjs": {
-    "mtime": 1789101869.5413842,
-    "ast_hash": "b1d372fd21e019f42970f15a770328c2",
+    "mtime": 1790398379.4585717,
+    "ast_hash": "7c6993565d3000487254b6cdab2b11db",
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyStudy.tsx": {
-    "mtime": 1789101869.5417395,
-    "ast_hash": "664556257f23f415c4fcb4f320b5ef42",
+    "mtime": 1790398486.5100365,
+    "ast_hash": "0cc1f5d1637ed5c85e8bfa6527df745a",
     "semantic_hash": ""
   },
   "app/src/anatomy/agent-tools.ts": {
@@ -1005,8 +1005,8 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyLanding.tsx": {
-    "mtime": 1789104155.8592248,
-    "ast_hash": "c91c06c7faabeff250e75ab2b29da3dd",
+    "mtime": 1790398142.2326698,
+    "ast_hash": "5e2655e69fc808a8b8d2f4586fad41bf",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/human-atlas--female-reference--d72b4f6.json": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "docs/ANATOMY-LAB.md": {
-    "mtime": 1789104155.8796406,
-    "ast_hash": "c714862aa0163e766082fa4710411ee7",
+    "mtime": 1790398142.233886,
+    "ast_hash": "bc227a16b44931c556a3902066f65012",
     "semantic_hash": ""
   },
   "docs/MAIN-CLEANUP-2026-09-10.md": {
@@ -1040,8 +1040,8 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/ResearchDesk.tsx": {
-    "mtime": 1789101869.541865,
-    "ast_hash": "e2ad037509e607123def082780e8973f",
+    "mtime": 1790398657.243464,
+    "ast_hash": "564aa5c7d988e6a255dea5bf9d5ea700",
     "semantic_hash": ""
   },
   "app/src/anatomy/research.ts": {
@@ -1115,8 +1115,8 @@
     "semantic_hash": ""
   },
   "docs/NEXT-PHASE-STUDY-CONTINUITY.md": {
-    "mtime": 1790393630.9610138,
-    "ast_hash": "990f97f0dee288144aad22385ee0ab18",
+    "mtime": 1790398142.2352338,
+    "ast_hash": "9dd2478195d0a1319b77f9b4ac602ce6",
     "semantic_hash": ""
   },
   "docs/STUDY-CONTINUITY.md": {
@@ -1132,6 +1132,21 @@
   "graphify-out/memory/query_20260926_033813_how_is_paldawn_study_continuity_wired_across_route.md": {
     "mtime": 1790393893.735943,
     "ast_hash": "362aca106251f0a7abc5ecf3ffaa0c54",
+    "semantic_hash": ""
+  },
+  "app/src/anatomy/studyStorage.ts": {
+    "mtime": 1790398379.4564476,
+    "ast_hash": "55c464d634f5a2a0f5ef9e364ccb1781",
+    "semantic_hash": ""
+  },
+  "app/tests/anatomy-study.spec.mjs": {
+    "mtime": 1790398673.2292268,
+    "ast_hash": "4e6911456005cb9270ebdd94643d7dd8",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260926_045557_how_does_the_anatomy_lab_preserve_study_work_witho.md": {
+    "mtime": 1790398557.0957277,
+    "ast_hash": "ec3715cda8ce14b37bee48b617176f5c",
     "semantic_hash": ""
   }
 }
