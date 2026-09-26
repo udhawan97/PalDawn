@@ -1,7 +1,7 @@
 {
   "app/package.json": {
-    "mtime": 1790398176.4179525,
-    "ast_hash": "266f39c5be03248fee03d129f5ed562a",
+    "mtime": 1790402901.4720824,
+    "ast_hash": "341185b07b34cbac43e9ca42353346a9",
     "semantic_hash": ""
   },
   "app/scripts/license-inventory.mjs": {
@@ -35,7 +35,7 @@
     "semantic_hash": "320c821fd038cc4496453e90afeb01ce"
   },
   "app/third-party-license-inventory.json": {
-    "mtime": 1789101767.2105353,
+    "mtime": 1790401013.4627528,
     "ast_hash": "ee4a9290a5360af3ba03b4907995e66f",
     "semantic_hash": ""
   },
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1788848608.2969637,
-    "ast_hash": "4bd74d9934083473a15a96c6ae16ca19",
+    "mtime": 1790405562.6799357,
+    "ast_hash": "8b6197d25e25ae9743faa5869a67d7e7",
     "semantic_hash": ""
   },
   ".github/workflows/deploy.yml": {
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790398609.1911793,
-    "ast_hash": "6c6df452b28b8a24daf0327130a6081d",
+    "mtime": 1790402926.8179193,
+    "ast_hash": "615f44e03bc510ecba2ce95ed18ed108",
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1789104155.8446348,
-    "ast_hash": "096143d53efa0864e027a96ed1380592",
+    "mtime": 1790400718.2245762,
+    "ast_hash": "e55f2cc426f72012bf9a13fc98e7eb14",
     "semantic_hash": ""
   },
   "app/THIRD_PARTY_LICENSES.md": {
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1790393626.1150079,
-    "ast_hash": "714e79027a61f447391712aee55ec821",
+    "mtime": 1790402926.8188725,
+    "ast_hash": "a8e968e72b21c312b174f660bfe34265",
     "semantic_hash": ""
   },
   "docs/PROMPT-FOR-CODEX.md": {
@@ -380,13 +380,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
-    "mtime": 1789084292.0039802,
-    "ast_hash": "3b5544b828bcee17347b9412d9eb085b",
+    "mtime": 1790400666.7348332,
+    "ast_hash": "161442eea10aea84f4db4a98e223b183",
     "semantic_hash": ""
   },
   "app/src/data/p0-journey.json": {
-    "mtime": 1789084292.0046713,
-    "ast_hash": "baa3bcd492eb4d88e3ee8f285540bb62",
+    "mtime": 1790400427.294363,
+    "ast_hash": "d18b329c8f3020e475e2413b22822af1",
     "semantic_hash": ""
   },
   "app/src/journey/journey.ts": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790398609.191655,
-    "ast_hash": "0125a0622b13d9a8fd186f6db94224eb",
+    "mtime": 1790400435.4272194,
+    "ast_hash": "85cbb82ce9a10b35e80255accda428f8",
     "semantic_hash": ""
   },
   "CODE_OF_CONDUCT.md": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
-    "mtime": 1789084292.005148,
-    "ast_hash": "32d2353df7508a8a5919b9dee7b50fea",
+    "mtime": 1790400427.2942276,
+    "ast_hash": "c3fca8eb8637fe5aecd4feb04eb0b8a6",
     "semantic_hash": ""
   },
   "app/src/platform/downloads.ts": {
@@ -500,13 +500,13 @@
     "semantic_hash": ""
   },
   "app/playwright.config.mjs": {
-    "mtime": 1787740048.4027224,
-    "ast_hash": "7ac58611d80416f9630a95672632d0af",
+    "mtime": 1790400718.223621,
+    "ast_hash": "8f4b3dbc29dfebc1b1ca418375bddd5c",
     "semantic_hash": ""
   },
   "app/tests/foundation-plus.spec.mjs": {
-    "mtime": 1788239784.9719355,
-    "ast_hash": "37d831fa52302cd41eaa349863555612",
+    "mtime": 1790401763.3847454,
+    "ast_hash": "27bebfdab1f955b9e73762b05520f56d",
     "semantic_hash": ""
   },
   "pipeline/provenance/records/npm--playwright-test--1.62.1.json": {
@@ -545,13 +545,13 @@
     "semantic_hash": ""
   },
   "app/src/platform/study.ts": {
-    "mtime": 1790394240.4103227,
-    "ast_hash": "909fbe70eade8d75b9f81faec2aa9bcc",
+    "mtime": 1790405562.6804461,
+    "ast_hash": "bcd17f9736f37236e93f5e20786763c8",
     "semantic_hash": ""
   },
   "app/tests/foundation-plus-3.spec.mjs": {
-    "mtime": 1789083285.8882844,
-    "ast_hash": "95de062d9ed292197c4e67cbaee662b1",
+    "mtime": 1790403896.2236145,
+    "ast_hash": "d2dfd7d85c176d0f01bd6659263a1354",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-3-QA.md": {
@@ -645,13 +645,13 @@
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1790394240.4108684,
-    "ast_hash": "074b09c14534789085c5e1db88816f3b",
+    "mtime": 1790402901.469697,
+    "ast_hash": "a20925e95b0355a93d52f9ec41ca721e",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1790394240.4126923,
-    "ast_hash": "402021e813a18b1a9acc50fb495aa1cf",
+    "mtime": 1790403341.4751756,
+    "ast_hash": "e80618e9af6855909534d3dddfefdc20",
     "semantic_hash": ""
   },
   "docs/FOUNDATION-PLUS-4.md": {
@@ -720,8 +720,8 @@
     "semantic_hash": ""
   },
   "app/src/data/atlasEvidence.ts": {
-    "mtime": 1788069472.4651306,
-    "ast_hash": "a0454ab03f4b8ba95e9b86401deb4e70",
+    "mtime": 1790399266.7579393,
+    "ast_hash": "6ac0d51779418733689269f4d058a981",
     "semantic_hash": ""
   },
   "docs/ATLAS-RESEARCH-LENS.md": {
@@ -795,8 +795,8 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1788239784.9644358,
-    "ast_hash": "bda62f736bd0d4df18c7139b6eede67d",
+    "mtime": 1790403119.5721974,
+    "ast_hash": "bd8480098616479a9352ec236f0658a0",
     "semantic_hash": ""
   },
   "app/graphics/HeartWorkbench.tsx": {
@@ -950,13 +950,13 @@
     "semantic_hash": ""
   },
   "app/scripts/test-anatomy.mjs": {
-    "mtime": 1790398379.4585717,
-    "ast_hash": "7c6993565d3000487254b6cdab2b11db",
+    "mtime": 1790399595.0698004,
+    "ast_hash": "1f743ad7aa910db44a18b2eb08b92353",
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyStudy.tsx": {
-    "mtime": 1790398486.5100365,
-    "ast_hash": "0cc1f5d1637ed5c85e8bfa6527df745a",
+    "mtime": 1790402901.4708383,
+    "ast_hash": "cc4f596f5666985b03060ac1cdd320dc",
     "semantic_hash": ""
   },
   "app/src/anatomy/agent-tools.ts": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "docs/ANATOMY-LAB.md": {
-    "mtime": 1790398142.233886,
-    "ast_hash": "bc227a16b44931c556a3902066f65012",
+    "mtime": 1790400718.224881,
+    "ast_hash": "d6f371101c8cc3c8432cfc0491e4ff4e",
     "semantic_hash": ""
   },
   "docs/MAIN-CLEANUP-2026-09-10.md": {
@@ -1040,8 +1040,8 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/ResearchDesk.tsx": {
-    "mtime": 1790398657.243464,
-    "ast_hash": "564aa5c7d988e6a255dea5bf9d5ea700",
+    "mtime": 1790399550.9750485,
+    "ast_hash": "28d459b3229e470bc2454ac1af0b0aab",
     "semantic_hash": ""
   },
   "app/src/anatomy/research.ts": {
@@ -1080,13 +1080,13 @@
     "semantic_hash": ""
   },
   "docs/GETTING-STARTED.md": {
-    "mtime": 1789104155.8873,
-    "ast_hash": "df791c38d0d270dad70a4f67ea811bd2",
+    "mtime": 1790402926.8182929,
+    "ast_hash": "29af084aa6b9b2b47bbd6ab84661dd57",
     "semantic_hash": ""
   },
   "docs/PUBLIC-SURFACE-EVIDENCE.md": {
-    "mtime": 1789248631.18512,
-    "ast_hash": "a825aa327844fa059b91d2c269d96594",
+    "mtime": 1790405570.0754347,
+    "ast_hash": "58c4a3a5f68a24f766c16c2f15cd5b5a",
     "semantic_hash": ""
   },
   "docs/assets/paldawn-research-desk.png": {
@@ -1095,13 +1095,13 @@
     "semantic_hash": ""
   },
   "docs/assets/paldawn-web-introduction.png": {
-    "mtime": 1789248807.8646529,
-    "ast_hash": "732cfc9dbcd9629016aa6ce760ec0fd2",
+    "mtime": 1790404704.6328044,
+    "ast_hash": "6b5455d76480d2dc68108a891fd72a84",
     "semantic_hash": ""
   },
   "app/scripts/test-study-continuity.mjs": {
-    "mtime": 1790394240.4122102,
-    "ast_hash": "a498be5a2def623cc55ff793b77d6b2d",
+    "mtime": 1790405562.6806235,
+    "ast_hash": "ac118f231bccef306dd4809d250498ae",
     "semantic_hash": ""
   },
   "app/src/journey/atlasRoute.ts": {
@@ -1115,13 +1115,13 @@
     "semantic_hash": ""
   },
   "docs/NEXT-PHASE-STUDY-CONTINUITY.md": {
-    "mtime": 1790398142.2352338,
-    "ast_hash": "9dd2478195d0a1319b77f9b4ac602ce6",
+    "mtime": 1790405562.6807942,
+    "ast_hash": "31de6aa5be5905ca18a4830ae5177294",
     "semantic_hash": ""
   },
   "docs/STUDY-CONTINUITY.md": {
-    "mtime": 1790394240.4129052,
-    "ast_hash": "35c8aa72a31ced7d94691715f4ca54b3",
+    "mtime": 1790404635.5965579,
+    "ast_hash": "3a10af2fbcba1deac1e4c6112a7c680a",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260926_031637_which_next_phase_features_can_improve_paldawn_with.md": {
@@ -1135,18 +1135,58 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/studyStorage.ts": {
-    "mtime": 1790398379.4564476,
-    "ast_hash": "55c464d634f5a2a0f5ef9e364ccb1781",
+    "mtime": 1790399517.4165711,
+    "ast_hash": "bdf7f5b65385b81433941f05502b68c3",
     "semantic_hash": ""
   },
   "app/tests/anatomy-study.spec.mjs": {
-    "mtime": 1790398673.2292268,
-    "ast_hash": "4e6911456005cb9270ebdd94643d7dd8",
+    "mtime": 1790404879.1177113,
+    "ast_hash": "b4ffbd587ee7bdbe7413b675205bc5f0",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260926_045557_how_does_the_anatomy_lab_preserve_study_work_witho.md": {
     "mtime": 1790398557.0957277,
     "ast_hash": "ec3715cda8ce14b37bee48b617176f5c",
+    "semantic_hash": ""
+  },
+  "app/playwright.anatomy.config.mjs": {
+    "mtime": 1790400718.2240136,
+    "ast_hash": "8cc00ea2686f91ad50eeea2f4bf6acab",
+    "semantic_hash": ""
+  },
+  "app/scripts/test-atlas-study-desk.mjs": {
+    "mtime": 1790399647.4893596,
+    "ast_hash": "a6c4f782afae1564fba373df6ef65025",
+    "semantic_hash": ""
+  },
+  "app/src/data/atlasDiscovery.ts": {
+    "mtime": 1790399266.7561402,
+    "ast_hash": "be4fa960eff0db14cedc5f534c5d32de",
+    "semantic_hash": ""
+  },
+  "app/src/data/atlasStudyIndex.ts": {
+    "mtime": 1790399266.7563045,
+    "ast_hash": "bb265684dd1b5de66490d2c8fbaa8e76",
+    "semantic_hash": ""
+  },
+  "app/src/ui/AtlasStudyDesk.tsx": {
+    "mtime": 1790402901.4691155,
+    "ast_hash": "92d93766f0b8cf304953fdec73ab2104",
+    "semantic_hash": ""
+  },
+  "docs/ATLAS-STUDY-DESK.md": {
+    "mtime": 1790402901.4727926,
+    "ast_hash": "722a0953716705155e8ff46b2a77a8c7",
+    "semantic_hash": ""
+  },
+  "docs/releases/v0.5.0.md": {
+    "mtime": 1790404635.5979722,
+    "ast_hash": "a5bf0f9f869b462f91548730f1a705c2",
+    "semantic_hash": ""
+  },
+  "docs/assets/paldawn-atlas-study-desk.png": {
+    "mtime": 1790404718.8570788,
+    "ast_hash": "7a177a7b807dd371ab3f33193e666cc0",
     "semantic_hash": ""
   }
 }

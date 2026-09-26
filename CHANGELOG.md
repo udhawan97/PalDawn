@@ -1,20 +1,30 @@
 # Changelog
 
-## Unreleased — Study Continuity
+All notable changes to PalDawn are documented here.
+
+## [0.5.0] — 2026-09-26
+
+### Study Navigation
 
 - Added validated links to exact disease steps, including optional structure focus.
 - Added bounded local saved steps, private notes, personal study marks, and Atlas resume.
 - Added a focused pathway reader with Plain English and Clinical terms together.
 - Added source-linked Markdown export, optional private-note inclusion, and print styling.
+- Added an Atlas Study Desk with progress counts, local note search, saved/open/studied
+  filters, next-open continuation, complete study export, and printable filtered results.
+- Added system-first pathway discovery generated only from structures explicitly named
+  by existing authored steps.
+- Added a searchable cross-condition evidence library with exact source-to-step return
+  links and separate labels for ranking context.
 - Extended transactional reset, recovery, cross-tab updates, PWA update preparation,
   and local backup/restore with schema-v3 Atlas study data while retaining v1/v2 imports.
+
+### Anatomy Lab local candidate
+
 - Added preview-scoped Anatomy study persistence for the ordered reading queue, personal
   read marks, and separate male/female source-structure IDs.
 - Added Anatomy JSON backup/restore, clear controls, unavailable-ID recovery, cross-tab
   refresh, and PWA update preparation without changing the public-build exclusion.
-
-## Unreleased — Anatomy Lab local candidate
-
 - Added a body-part research desk with 20 function introductions, 113 distinct
   condition-reading topics, inquiry prompts, PubMed searches and a reading queue
   that exports selected reading as Markdown. These are not 113 new lessons.
@@ -31,9 +41,8 @@
 - Redesigned the candidate website with live references and explicit coverage.
 - Anatomy/clinical approval remains pending. Public anatomy remains disabled;
   reference packs and candidate pages are excluded from the normal build.
-
-
-All notable changes to PalDawn are documented here.
+- Added read/unread queue filters, completion counts, next-unread continuation, and
+  validated per-reference last-structure resume. Anatomy backup schema v2 retains v1 imports.
 
 ## [0.4.0] — 2026-09-10
 

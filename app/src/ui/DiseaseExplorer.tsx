@@ -11,10 +11,13 @@ import { downloadText } from '../platform/downloads'
 import { shareOrCopy } from '../platform/share'
 import { atlasStudyMarkdown } from '../platform/study'
 import { CurriculumCatalog } from './CurriculumCatalog'
+import { AtlasStudyDesk } from './AtlasStudyDesk'
 
 export function TopDiseasesRail() {
   const [catalogOpen, setCatalogOpen] = useState(false)
+  const [studyDeskOpen, setStudyDeskOpen] = useState(false)
   const catalogButtonRef = useRef<HTMLButtonElement>(null)
+  const studyDeskButtonRef = useRef<HTMLButtonElement>(null)
   const openDisease = useAtlas((state) => state.openDisease)
   const lastPosition = useAtlasStudy((state) => state.lastPosition)
   const studyRecords = useAtlasStudy((state) => state.records)
@@ -32,14 +35,25 @@ export function TopDiseasesRail() {
             <p className="eyebrow">WHO global rank · 2021</p>
             <h2 id="top-diseases-title">Ten starting journeys</h2>
           </div>
-          <button
-            ref={catalogButtonRef}
-            type="button"
-            className="curriculum-launch"
-            aria-haspopup="dialog"
-            aria-expanded={catalogOpen}
-            onClick={() => setCatalogOpen(true)}
-          >View 50</button>
+          <div className="top-diseases-tools">
+            <button
+              ref={studyDeskButtonRef}
+              type="button"
+              className="curriculum-launch"
+              data-atlas-opener="study-desk"
+              aria-haspopup="dialog"
+              aria-expanded={studyDeskOpen}
+              onClick={() => setStudyDeskOpen(true)}
+            >Atlas desk</button>
+            <button
+              ref={catalogButtonRef}
+              type="button"
+              className="curriculum-launch"
+              aria-haspopup="dialog"
+              aria-expanded={catalogOpen}
+              onClick={() => setCatalogOpen(true)}
+            >View 50</button>
+          </div>
         </div>
         <ol>
           {DISEASES.map((disease) => (
@@ -79,6 +93,7 @@ export function TopDiseasesRail() {
         </details> : null}
       </aside>
       {catalogOpen ? <CurriculumCatalog onClose={() => setCatalogOpen(false)} returnFocusTo={catalogButtonRef} /> : null}
+      {studyDeskOpen ? <AtlasStudyDesk onClose={() => setStudyDeskOpen(false)} returnFocusTo={studyDeskButtonRef} /> : null}
     </>
   )
 }

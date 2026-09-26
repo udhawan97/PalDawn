@@ -108,7 +108,18 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
       const response = await fetch(`${import.meta.env.BASE_URL}anatomy/${path}`, { signal: abort.signal })
       if (!response.ok) throw new Error('The local anatomy pack is unavailable. Retry after preparing the preview pack.')
       return response.json()
-    })).then(([data, explanations]) => { if (!abort.signal.aborted) { setAtlas(data); setContext(explanations) } })
+    })).then(([data, explanations]) => {
+      if (abort.signal.aborted) return
+      setAtlas(data)
+      setContext(explanations)
+      const rememberedId = studyDataRef.current.lastSelection[sex]
+      const remembered = rememberedId ? (data as Atlas).concepts.find((concept) => concept.id === rememberedId) : null
+      if (remembered && !sessions[sex].chosen) {
+        setChosen(remembered)
+        setTab('study')
+        setState(current => ({ ...current, selected: remembered.elements, explode: 0, rotate: false }))
+      }
+    })
       .catch(e => { if (!abort.signal.aborted) setError(e instanceof Error ? e.message : 'Could not load anatomy.') })
     return () => abort.abort()
   }, [attempt, sex])
@@ -116,8 +127,9 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
   const choose = useCallback((concept: Concept) => {
     setTour(false); setConditionQuery(''); setChosen(concept); setQuiz(false); setRevealed(false); setTab('study')
     setState(s => ({ ...s, selected: concept.elements, explode: 0, rotate: false }))
+    updateStudy(current => ({ ...current, lastSelection: { ...current.lastSelection, [sex]: concept.id } }), 'Last selected structure saved in this browser.')
     requestAnimationFrame(() => title.current?.focus())
-  }, [])
+  }, [sex, updateStudy])
   useEffect(() => { if (atlas) return registerAtlasTools(atlas, choose) }, [atlas, choose])
   const choosePart = useCallback((id: string) => {
     const p = parts.get(id)
@@ -199,7 +211,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
         {chosen ? <>
           {concealed ? <><p>Use its shape and position to recall its name.</p><button onClick={() => setRevealed(true)}>Reveal answer</button></> : <>
             <p className="study-meta">{chosen.id} · {selectedParts.length} source {selectedParts.length === 1 ? 'mesh' : 'meshes'}</p>
-            <div className="study-actions"><button aria-pressed={state.isolate} onClick={() => setState(s => ({ ...s, isolate: !s.isolate, selected: chosen.elements, explode: 0 }))}>{state.isolate ? 'Show surroundings' : 'Isolate structure'}</button><button aria-pressed={saved.includes(chosen.id)} onClick={() => setSaved(s => s.includes(chosen.id) ? s.filter(id => id !== chosen.id) : [...s, chosen.id])}>{saved.includes(chosen.id) ? 'Remove from study list' : 'Add to study list'}</button><button onClick={() => { setChosen(null); setQuiz(false); setState(s => ({ ...s, selected: [], isolate: false })) }}>Clear selection</button></div>
+            <div className="study-actions"><button aria-pressed={state.isolate} onClick={() => setState(s => ({ ...s, isolate: !s.isolate, selected: chosen.elements, explode: 0 }))}>{state.isolate ? 'Show surroundings' : 'Isolate structure'}</button><button aria-pressed={saved.includes(chosen.id)} onClick={() => setSaved(s => s.includes(chosen.id) ? s.filter(id => id !== chosen.id) : [...s, chosen.id])}>{saved.includes(chosen.id) ? 'Remove from study list' : 'Add to study list'}</button><button onClick={() => { setChosen(null); setQuiz(false); setState(s => ({ ...s, selected: [], isolate: false })); updateStudy(current => ({ ...current, lastSelection: { ...current.lastSelection, [sex]: null } }), 'Last selected structure cleared.') }}>Clear selection</button></div>
             <details><summary>Structure overview & system context</summary><h3>{activeStructures?.[chosen.name.toLowerCase()] ? 'Structure overview' : 'System context'}</h3>
             <p>{activeStructures?.[chosen.name.toLowerCase()] ?? selectedSystems.map(id => activeContext?.[id]).filter(Boolean).join(' ')}</p><p className="study-note">Adapted Human Atlas context · Unreviewed. A system overview does not describe every individual structure.</p>
             </details><ResearchDesk atlas={atlas} chosen={chosen} onChoose={choose} queue={queue} onQueue={setQueue}/>
@@ -217,7 +229,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
         {!chosen ? <ResearchDesk atlas={atlas} chosen={null} onChoose={choose} queue={queue} onQueue={setQueue}/> : null}
         <details className="study-persistence">
           <summary>Saved Anatomy study & backup</summary>
-          <p className="study-note">The reading queue, read marks, and per-reference structure IDs stay in this browser. JSON backup is separate from the Markdown reading plan.</p>
+          <p className="study-note">The reading queue, read marks, per-reference structure IDs, and last selected structure stay in this browser. JSON backup is separate from the Markdown reading plan.</p>
           <p className="study-note">{queue.length} readings · {studyData.saved.male.length} male-reference structures · {studyData.saved.female.length} female-reference structures</p>
           <div className="study-persistence-actions">
             <button onClick={() => { downloadText('paldawn-anatomy-study.json', exportAnatomyStudy(studyDataRef.current), 'application/json'); setStudyStatus('Anatomy study backup downloaded.') }}>Download Anatomy backup</button>
@@ -248,7 +260,7 @@ export default function AnatomyStudy({ onClose }: { onClose: () => void }) {
               setStudyPersisted(cleared)
               setStudyStatus(cleared ? 'Local Anatomy study cleared.' : 'The in-memory Anatomy study was cleared, but browser storage could not be verified.')
               setConfirmClearStudy(false)
-            }}>Confirm clear Anatomy study</button><button onClick={() => setConfirmClearStudy(false)}>Cancel</button></> : <button disabled={!queue.length && !studyData.saved.male.length && !studyData.saved.female.length} onClick={() => setConfirmClearStudy(true)}>Clear local Anatomy study</button>}
+            }}>Confirm clear Anatomy study</button><button onClick={() => setConfirmClearStudy(false)}>Cancel</button></> : <button disabled={!queue.length && !studyData.saved.male.length && !studyData.saved.female.length && !studyData.lastSelection.male && !studyData.lastSelection.female} onClick={() => setConfirmClearStudy(true)}>Clear local Anatomy study</button>}
           </div>
         </details>
         <div className="study-recall"><h3>Practice recall</h3><p>Identify one visible structure, then reveal its source name. This is self-study, not an assessed exam.</p><button disabled={!atlas || !state.visible.length || textOnly || Boolean(sceneError) || progress < 100} onClick={recall}>Identify a structure</button></div>

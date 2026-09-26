@@ -21,6 +21,7 @@ The direct study URL is `http://127.0.0.1:4318/PalDawn/?study=anatomy`.
 VITE_BASE_PATH=/PalDawn/ npm test
 npm run anatomy:test
 VITE_BASE_PATH=/PalDawn/ npm run anatomy:build
+VITE_BASE_PATH=/PalDawn/ npm run anatomy:test:browser
 VITE_BASE_PATH=/PalDawn/ npm run anatomy:preview -- --host 127.0.0.1 --port 4319
 ```
 
@@ -46,9 +47,10 @@ No deploy, tag, release or medical approval is implied by a local build.
 | PalDawn learning | Explicit organ-level links into existing disease steps with their source links |
 | Further reading | Full MedlinePlus system directories plus 20 body-area research tracks and 113 curated condition topics |
 | Research desk | Source-linked function explanations, comparative research questions, PubMed searches and source-ID organ locators |
-| Personal reading | Persistent cross-reference queue, personal read marks, ordering, condition search, compact cards, Markdown export, JSON backup and scoped clear controls |
+| Personal reading | Persistent cross-reference queue, read/unread filters and counts, next-unread continuation, personal read marks, ordering, condition search, compact cards, Markdown export, JSON backup and scoped clear controls |
 | Recall | Identify a visible mesh, reveal its name, next card; unscored self-study |
 | Study list | Local ID lists per reference, validated after that inventory loads; unavailable IDs remain recoverable and are never matched by name |
+| Structure resume | The last source concept ID for each reference is restored only after it validates against the loaded inventory; camera and full viewer state are not restored |
 | Graphics | Physical tissue materials, soft shadows, rim selection, high/standard detail, smooth camera framing |
 | Animation | Pauseable guided system tour, optional rotation, scrubbed explosion; reduced motion snaps framing and advances tour manually |
 | Dissection | Visual clipping and body-surface opacity; exposed cuts are uncapped, not histology |
@@ -85,7 +87,7 @@ Named qualified anatomy/clinical review remains pending under `docs/PLAN.md`
 public asset adoption. Pending provenance records are not approval receipts.
 The assistant cannot invent signoffs or certify anatomical correctness.
 
-Runtime searches stay in memory. The reading queue, personal read marks and per-reference saved structure IDs use the preview-scoped `paldawn:anatomy-study:v1` browser record and survive reloads. The queue is shared across references; structure IDs remain reference-specific. JSON backup/restore and scoped clear controls are separate from the Markdown reading-plan export. Removed topic or structure IDs remain labeled and recoverable instead of being remapped by name. A failed write keeps the current in-memory study with an honest unsaved warning, and the preview joins the existing PWA update save gate. The candidate serves its
+Runtime searches stay in memory. The reading queue, personal read marks, per-reference saved structure IDs, and last validated source concept use the preview-scoped `paldawn:anatomy-study:v1` browser record and survive reloads. The queue is shared across references; structure IDs and resume targets remain reference-specific. JSON backup schema v2 restores those scopes and continues to accept v1 backups. Scoped clear controls are separate from the Markdown reading-plan export. Removed topic, structure, or resume IDs remain recoverable or fail closed instead of being remapped by name. A failed write keeps the current in-memory study with an honest unsaved warning, and the preview joins the existing PWA update save gate. The candidate serves its
 reference data locally. Opening a source link contacts that external site.
 Preparation downloads public GitHub snapshots and MedlinePlus pages. The
 candidate does not add telemetry, accounts, patient data or persisted notes.

@@ -11,6 +11,7 @@ export interface AnatomyReadingItem {
 export interface AnatomyStudyData {
   queue: AnatomyReadingItem[]
   saved: Record<'male' | 'female', string[]>
+  lastSelection: Record<'male' | 'female', string | null>
 }
 
 export type AnatomyStudyImportResult =
@@ -20,6 +21,7 @@ export type AnatomyStudyImportResult =
 export const emptyAnatomyStudy = (): AnatomyStudyData => ({
   queue: [],
   saved: { male: [], female: [] },
+  lastSelection: { male: null, female: null },
 })
 
 const safeId = (value: unknown): value is string =>
@@ -32,7 +34,7 @@ const uniqueIds = (value: unknown): string[] => {
 
 export function normalizeAnatomyStudy(value: unknown): AnatomyStudyData {
   if (!value || typeof value !== 'object') return emptyAnatomyStudy()
-  const candidate = value as { queue?: unknown; saved?: unknown }
+  const candidate = value as { queue?: unknown; saved?: unknown; lastSelection?: unknown }
   const seenQueue = new Set<string>()
   const queue = Array.isArray(candidate.queue)
     ? candidate.queue.flatMap((entry) => {
@@ -47,11 +49,18 @@ export function normalizeAnatomyStudy(value: unknown): AnatomyStudyData {
   const saved = candidate.saved && typeof candidate.saved === 'object'
     ? candidate.saved as { male?: unknown; female?: unknown }
     : {}
+  const lastSelection = candidate.lastSelection && typeof candidate.lastSelection === 'object'
+    ? candidate.lastSelection as { male?: unknown; female?: unknown }
+    : {}
   return {
     queue,
     saved: {
       male: uniqueIds(saved.male),
       female: uniqueIds(saved.female),
+    },
+    lastSelection: {
+      male: safeId(lastSelection.male) ? lastSelection.male : null,
+      female: safeId(lastSelection.female) ? lastSelection.female : null,
     },
   }
 }
@@ -87,7 +96,7 @@ export function clearAnatomyStudy(): boolean {
 
 export function exportAnatomyStudy(data: AnatomyStudyData): string {
   return JSON.stringify({
-    schema_version: 1,
+    schema_version: 2,
     local_only: true,
     anatomy_preview: true,
     study: normalizeAnatomyStudy(data),
@@ -100,7 +109,7 @@ export function parseAnatomyStudyImport(text: string): AnatomyStudyImportResult 
   }
   try {
     const value = JSON.parse(text) as Record<string, unknown>
-    if (value.schema_version !== 1 || value.local_only !== true || value.anatomy_preview !== true || !Object.hasOwn(value, 'study')) {
+    if (![1, 2].includes(value.schema_version as number) || value.local_only !== true || value.anatomy_preview !== true || !Object.hasOwn(value, 'study')) {
       return { ok: false, error: 'That file is not a supported PalDawn Anatomy study backup.' }
     }
     return { ok: true, data: normalizeAnatomyStudy(value.study) }

@@ -131,14 +131,18 @@ const { MAX_ANATOMY_READING_ITEMS, MAX_ANATOMY_SAVED_STRUCTURES, exportAnatomySt
 const storedStudy = normalizeAnatomyStudy({
   queue: [{ id: 'function:heart', read: true }, { id: 'retired-topic', read: false }, { id: 'function:heart', read: false }, { id: '', read: true }, { id: 'unsafe topic', read: true }],
   saved: { male: ['FMA7088', 'retired-concept', 'FMA7088'], female: ['HRA:VH_F_heart'] },
+  lastSelection: { male: 'FMA7088', female: 'unsafe selection' },
 })
 assert.deepEqual(storedStudy.queue, [{ id: 'function:heart', read: true }, { id: 'retired-topic', read: false }])
 assert.deepEqual(storedStudy.saved.male, ['FMA7088', 'retired-concept'])
 assert.deepEqual(storedStudy.saved.female, ['HRA:VH_F_heart'])
+assert.deepEqual(storedStudy.lastSelection, { male: 'FMA7088', female: null })
 const restoredStudy = parseAnatomyStudyImport(exportAnatomyStudy(storedStudy))
 assert.equal(restoredStudy.ok, true)
 assert.deepEqual(restoredStudy.data, storedStudy)
 assert.equal(parseAnatomyStudyImport('{}').ok, false)
 assert.equal(normalizeAnatomyStudy({ queue: Array.from({ length: MAX_ANATOMY_READING_ITEMS + 10 }, (_, i) => ({ id: `topic-${i}` })) }).queue.length, MAX_ANATOMY_READING_ITEMS)
 assert.equal(normalizeAnatomyStudy({ saved: { male: Array.from({ length: MAX_ANATOMY_SAVED_STRUCTURES + 10 }, (_, i) => `concept-${i}`) } }).saved.male.length, MAX_ANATOMY_SAVED_STRUCTURES)
-console.log('Anatomy study persistence checks passed: ordered read state, reference-scoped IDs, unknown preservation, bounds and backup round-trip.')
+assert.equal(JSON.parse(exportAnatomyStudy(storedStudy)).schema_version, 2)
+assert.equal(parseAnatomyStudyImport(JSON.stringify({ schema_version: 1, local_only: true, anatomy_preview: true, study: { queue: [], saved: {} } })).ok, true)
+console.log('Anatomy study persistence checks passed: ordered read state, reference-scoped IDs, validated resume, unknown preservation, bounds and backup migration.')

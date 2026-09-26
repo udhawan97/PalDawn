@@ -17,7 +17,7 @@ Scope of the uniqueness claim: a bounded GitHub reconnaissance (2026-08-16, `doc
 
 - **License:** code MIT · PalDawn-authored and compatible derived content/asset packs CC BY-SA 4.0; upstream material additionally retains its exact source license and lineage record
 - **Hosting:** 100% free tier — static GitHub Pages; immutable versioned GLB packs later streamed from GitHub Releases; no backend, no paid services
-- **Status:** v0.4.0 Study and Reliability release, retaining Mechanism Lens: the ten source-linked disease
+- **Status:** v0.5.0 Study Navigation release, retaining Mechanism Lens: the ten source-linked disease
   previews and eleven-step diabetes mechanism now drive high-detail procedural
   body layers, phase signals, and organ close focus alongside the preserved
   First Light voyage. No reviewed anatomy, patient data, diagnosis, or
@@ -236,6 +236,16 @@ last-position resume, side-by-side pathway reading, source-linked Markdown
 export, print styling, and schema-v3 backup portability. It reuses the existing
 authored explanations and sources and adds no medical content or assessment.
 See `docs/STUDY-CONTINUITY.md` for the behavior and recovery contract.
+
+### Atlas Study Navigation slice — implemented in v0.5.0
+
+The current code-owned study-navigation slice adds a local Atlas Study Desk,
+system-first discovery derived only from explicit step structure IDs, and a
+cross-condition evidence library derived from the existing source ledgers.
+It also adds read/unread triage and validated last-structure resume to the
+separately prepared Anatomy Lab candidate. The public slice adds no medical
+claims, inferred anatomy relationship, storage schema, dependency, account,
+analytics, or assessment. See `docs/ATLAS-STUDY-DESK.md`.
 
 ### Curriculum 50 discovery slice
 

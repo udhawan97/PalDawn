@@ -26,7 +26,7 @@ try {
     narration: 'clinical',
     lastPosition: { diseaseId: 'diabetes', stepId: 'pancreas-senses' },
     records: {
-      [id]: { saved: true, studied: true, note: `Private\0 note ${'x'.repeat(1300)}` },
+      [id]: { saved: true, studied: true, note: `# Private\0 note\n- [link](https://example.com)\n${'x'.repeat(1300)}` },
       'unsafe key': { saved: true },
     },
   })
@@ -44,6 +44,9 @@ try {
   assert.doesNotMatch(withoutNotes, /Private note/)
   const withNotes = atlasStudyMarkdown(study, { includeNotes: true, diseaseId: 'diabetes' })
   assert.match(withNotes, /Private note/)
+  assert.match(withNotes, /    # Private note/)
+  assert.match(withNotes, /    - \[link\]\(https:\/\/example\.com\)/)
+  assert.doesNotMatch(withNotes, /^# Private note$/m)
 
   const unavailableId = 'retired-condition:retired-step'
   const preserved = normalizeAtlasStudy({

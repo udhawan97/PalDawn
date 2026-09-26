@@ -13,6 +13,11 @@ and **Clinical terms**, select a highlighted structure for close focus, and open
 routes. The 50-condition curriculum includes ten previews and forty planned
 entries; unavailable entries cannot open a lesson.
 
+Open **Atlas desk** from the starting-journeys rail to search local Atlas work,
+filter saved/open/studied steps, continue the next open saved step, browse exact
+authored pathways by body structure, or search the bundled evidence library.
+Complete-study export excludes private notes until you opt in.
+
 The public 3D map is conceptual and not to scale. Its content and geometry have
 not received named qualified clinical review. Use it for exploration, not
 clinical decisions or a substitute for your course materials.
@@ -30,9 +35,10 @@ selected structure, and are labeled accordingly.
 
 Save the questions or topics you want to investigate. Turn on search across all
 areas to search all 113 condition topics. Use compact cards or **Focus on
-research** for more reading space. Export the queue as Markdown before reloading
-or closing: it lives in memory, even though it survives switching references.
-Source links and PubMed searches open external websites.
+research** for more reading space. The queue, read marks, saved source IDs, and
+last validated selection persist locally across reloads and reference switches.
+Use the separate JSON backup for restoration; Markdown is a readable plan, not
+an import file. Source links and PubMed searches open external websites.
 
 ## Install as a web app
 
@@ -42,9 +48,9 @@ whether to offer **Install App** or **Add to Home Screen**. Installation is
 optional; the browser version remains available. The app cannot guarantee
 installation support on every browser or device.
 
-The [v0.4.0 release](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0)
-provides source ZIP/tar archives. Reference-model packs are prepared separately;
-the newer research desk is on `main` after that tag. There is no native signing,
+The [v0.5.0 release notes](releases/v0.5.0.md) describe the release scope. After
+the exact-commit gate publishes v0.5.0, its GitHub Release page provides source
+ZIP/tar archives. Reference-model packs are prepared separately. There is no native signing,
 notarization, or installer checksum to verify for this source-only release.
 
 ## Updates and local work
@@ -73,7 +79,7 @@ browser actions; export first and consult your browser's controls.
 | Motion feels uncomfortable | Open Settings and enable reduced motion; choose text voyage or stage controls. |
 | Anatomy reference preview unavailable | Confirm `npm run anatomy:prepare` completed, then restart `anatomy:dev`. Reference files are not in a normal source checkout or default build. |
 | A structure has no lesson/locator | Coverage is incomplete. Browse an independent research area or source directory; the viewer does not invent a mapping. |
-| Reading queue disappeared | Candidate queues reset on reload. Rebuild it from your exported Markdown plan; the candidate does not import that export. |
+| Anatomy study work is missing | Restore a JSON Anatomy backup from **Saved Anatomy study & backup**. Markdown reading plans cannot be imported. If storage was blocked, export before reloading. |
 | Local build fails | Use Node.js 22+, run `npm ci` in `app/`, then the documented test command. Keep the first error when reporting a problem. |
 
 [Report a reproducible problem](https://github.com/udhawan97/PalDawn/issues).

@@ -52,6 +52,157 @@
   background: rgba(117, 217, 210, 0.12);
 }
 
+.top-diseases-tools {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 5px;
+}
+
+.atlas-desk-backdrop {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2.5vw, 34px);
+  background: rgba(2, 5, 9, 0.86);
+  backdrop-filter: blur(15px);
+  pointer-events: auto;
+}
+
+.atlas-desk {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  width: min(1120px, 100%);
+  max-height: min(900px, 95vh);
+  overflow: hidden;
+  border: 1px solid rgba(203, 165, 115, 0.42);
+  color: var(--bone);
+  background: radial-gradient(circle at 12% 4%, rgba(203, 165, 115, 0.11), transparent 31%), radial-gradient(circle at 88% 92%, rgba(117, 217, 210, 0.07), transparent 32%), #070d14;
+  box-shadow: 0 34px 110px rgba(0, 0, 0, 0.76);
+}
+
+.atlas-desk-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 22px 24px 17px;
+  border-bottom: 1px solid rgba(235, 230, 219, 0.1);
+}
+
+.atlas-desk-header h2,
+.atlas-system-results h3 {
+  margin: 5px 0 0;
+  font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif;
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.atlas-desk-close {
+  display: grid;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.atlas-desk-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+
+.atlas-desk-tabs button {
+  min-height: 48px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  color: var(--dim);
+  background: rgba(255, 255, 255, 0.015);
+  cursor: pointer;
+  font: inherit;
+}
+
+.atlas-desk-tabs button:last-child { border-right: 0; }
+.atlas-desk-tabs button[aria-pressed='true'] { color: var(--dawn-bright); background: rgba(203, 165, 115, 0.09); box-shadow: inset 0 -2px var(--dawn); }
+.atlas-desk-body { min-height: 0; padding: 20px 24px 28px; overflow-y: auto; }
+
+.atlas-desk-summary { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.atlas-desk-summary button { display: grid; gap: 3px; min-height: 72px; place-content: center; border: 1px solid var(--line); color: var(--muted); background: rgba(255, 255, 255, 0.018); cursor: pointer; }
+.atlas-desk-summary button[aria-pressed='true'] { border-color: rgba(203, 165, 115, 0.62); color: var(--dawn-bright); background: rgba(203, 165, 115, 0.08); }
+.atlas-desk-summary strong { font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif; font-size: 1.55rem; font-weight: 400; }
+.atlas-desk-summary span { font-family: 'SFMono-Regular', Menlo, monospace; font-size: 0.55rem; letter-spacing: 0.09em; text-transform: uppercase; }
+
+.atlas-desk-tools { display: grid; grid-template-columns: minmax(230px, 1fr) auto; gap: 14px; align-items: end; margin-top: 16px; }
+.atlas-desk-tools > label { display: grid; gap: 7px; color: var(--muted); font-size: 0.7rem; }
+.atlas-desk-tools input[type='search'] { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); color: var(--bone); background: var(--ink-1); font: inherit; }
+.atlas-desk-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.atlas-desk-actions button,
+.atlas-desk-empty button,
+.atlas-desk-list > li > button,
+.atlas-system-results li button,
+.atlas-evidence-library button { min-height: 42px; padding: 8px 11px; border: 1px solid var(--line); color: var(--bone); background: rgba(255, 255, 255, 0.025); cursor: pointer; font: inherit; }
+.atlas-desk-actions button:disabled { opacity: 0.45; cursor: default; }
+.atlas-desk-actions label { display: flex; align-items: center; gap: 7px; min-height: 42px; color: var(--muted); font-size: 0.65rem; }
+.atlas-desk-boundary { margin: 16px 0 8px; color: var(--dim); font-size: 0.68rem; line-height: 1.55; }
+.atlas-desk-result { margin: 10px 0; color: var(--aqua); font-family: 'SFMono-Regular', Menlo, monospace; font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+.atlas-desk-list,
+.atlas-evidence-library,
+.atlas-system-results ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.atlas-desk-list > li,
+.atlas-evidence-library > li,
+.atlas-system-results ol > li { display: grid; align-content: start; gap: 10px; padding: 16px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.018); }
+.atlas-desk-list > li[data-unavailable='true'] { border-style: dashed; }
+.atlas-desk-list span,
+.atlas-evidence-library > li > span,
+.atlas-system-results li > span { color: var(--aqua); font-family: 'SFMono-Regular', Menlo, monospace; font-size: 0.56rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.atlas-desk-list h3,
+.atlas-evidence-library h3,
+.atlas-system-results h4 { margin: 5px 0 0; font-family: 'Iowan Old Style', 'Baskerville', Georgia, serif; font-size: 1.15rem; font-weight: 400; line-height: 1.18; }
+.atlas-desk-list ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.atlas-desk-list ul li { padding: 4px 7px; border: 1px solid rgba(117, 217, 210, 0.2); border-radius: 10px; color: var(--muted); font-size: 0.57rem; }
+.atlas-desk-list p,
+.atlas-evidence-library p,
+.atlas-system-results p { margin: 0; color: var(--muted); font-size: 0.72rem; line-height: 1.55; white-space: pre-wrap; }
+.atlas-desk-recovery { color: var(--dim) !important; font-size: 0.64rem !important; }
+.atlas-desk-empty { display: grid; min-height: 190px; place-content: center; justify-items: center; gap: 12px; color: var(--muted); text-align: center; }
+
+.atlas-system-picker { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+.atlas-system-picker button { display: grid; gap: 5px; min-height: 58px; padding: 8px; border: 1px solid var(--line); color: var(--muted); background: rgba(255, 255, 255, 0.018); cursor: pointer; font: inherit; }
+.atlas-system-picker button[aria-pressed='true'] { border-color: var(--aqua); color: var(--bone); background: rgba(117, 217, 210, 0.07); }
+.atlas-system-picker span { overflow: hidden; font-size: 0.62rem; text-overflow: ellipsis; white-space: nowrap; }
+.atlas-system-picker strong { color: var(--aqua); font-family: 'SFMono-Regular', Menlo, monospace; font-size: 0.6rem; }
+.atlas-system-results { margin-top: 18px; }
+.atlas-system-results > header { margin-bottom: 14px; }
+.atlas-system-results > header > p:last-child { margin-top: 7px; }
+.atlas-evidence-library > li > a { width: fit-content; color: var(--dawn-bright); font-size: 0.7rem; }
+.atlas-evidence-library > li > div { display: grid; gap: 6px; }
+.atlas-evidence-library > li > div > strong { color: var(--aqua); font-family: 'SFMono-Regular', Menlo, monospace; font-size: 0.56rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.atlas-evidence-library button { text-align: left; }
+.atlas-context-source { padding-top: 8px; border-top: 1px dashed var(--line); color: var(--dim) !important; }
+
+@media (max-width: 760px) {
+  .atlas-desk-backdrop { padding: 0; }
+  .atlas-desk { width: 100vw; max-height: 100dvh; min-height: 100dvh; border: 0; }
+  .atlas-desk-header { padding: 16px; }
+  .atlas-desk-body { padding: 16px; }
+  .atlas-desk-summary { grid-template-columns: repeat(6, minmax(58px, 1fr)); overflow-x: auto; }
+  .atlas-desk-tools { grid-template-columns: 1fr; }
+  .atlas-desk-actions { justify-content: flex-start; }
+  .atlas-desk-list,
+  .atlas-evidence-library,
+  .atlas-system-results ol { grid-template-columns: 1fr; }
+  .atlas-system-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 .curriculum-backdrop {
   position: fixed;
   z-index: 80;
@@ -6175,6 +6326,16 @@ html[data-contrast='high'] {
     display: none;
   }
 
+  .top-diseases-tools {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 4px;
+  }
+
+  .top-diseases-heading > div:first-child {
+    min-width: 0;
+  }
+
   .top-diseases h2 {
     overflow: hidden;
     font-size: 14px;
@@ -6607,6 +6768,36 @@ html[data-contrast='high'] {
   .atlas-exported-note p {
     color: black;
   }
+
+  body > *:not(.atlas-desk-backdrop),
+  .atlas-desk-header > button,
+  .atlas-desk-tabs,
+  .atlas-desk-summary,
+  .atlas-desk-tools,
+  .atlas-desk-boundary,
+  .atlas-desk-result {
+    display: none !important;
+  }
+
+  .atlas-desk-backdrop,
+  .atlas-desk {
+    position: static;
+    display: block;
+    max-height: none;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    color: black;
+    background: white;
+    box-shadow: none;
+  }
+
+  .atlas-desk-header { padding: 0 0 16px; }
+  .atlas-desk-body { padding: 0; overflow: visible; }
+  .atlas-desk-list { display: block; }
+  .atlas-desk-list > li { break-inside: avoid; margin-bottom: 12px; color: black; background: white; }
+  .atlas-desk-list p { color: black; }
+  .atlas-desk:not([data-include-notes]) .atlas-desk-list > li > p:not(.atlas-desk-recovery) { display: none; }
 }
 
 .anatomy-return { display:block; width:100%; padding:10px 12px; margin:8px 0; border:1px solid #c6ddb766; border-radius:6px; color:#c6ddb7; background:#14232e; text-align:left; cursor:pointer; font:inherit; }

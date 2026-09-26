@@ -1,4 +1,4 @@
-# PalDawn app — v0.4.0 — Study and Reliability
+# PalDawn app — v0.5.0 — Study Navigation
 
 The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +
@@ -49,6 +49,7 @@ derivatives; do not hand-edit them.
 | `npm run anatomy:test` | Validate reference mappings, research content contracts, and public-build exclusion |
 | `npm run anatomy:build` | Build the local review artifact in `dist-anatomy/` |
 | `npm run anatomy:preview` | Serve that review artifact locally |
+| `npm run anatomy:test:browser` | Run the Anatomy candidate browser suite against `dist-anatomy/` |
 | `npm run licenses` | Rebuild the transitive dependency license inventory |
 
 Use `npm ci`, not `npm install`, for a clean verification run.
@@ -67,6 +68,8 @@ Use `npm ci`, not `npm install`, for a clean verification run.
 - `src/ui/DiseaseExplorer.tsx` provides the condition rail, explanation-depth
   control, organ labels, evidence links, timeline, keyboard navigation, and
   in-app how-to guide.
+- `src/ui/AtlasStudyDesk.tsx` provides local study filtering, note search,
+  system-first navigation, complete export, and cross-condition evidence lookup.
 - `src/state/atlas.ts` keeps disease navigation separate from First Light's
   persisted learner state.
 - `src/data/p0-journey.json` defines the bounded five-stage voyage and its

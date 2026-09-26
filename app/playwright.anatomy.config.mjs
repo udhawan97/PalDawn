@@ -1,17 +1,17 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const basePath = process.env.VITE_BASE_PATH ?? '/'
-const previewPort = process.env.PLAYWRIGHT_PORT ?? '4173'
+const previewPort = process.env.PLAYWRIGHT_PORT ?? '4319'
 if (!/^\d+$/.test(previewPort)) throw new Error('PLAYWRIGHT_PORT must be numeric')
 const baseURL = new URL(basePath.endsWith('/') ? basePath : `${basePath}/`, `http://127.0.0.1:${previewPort}`).href
 
 export default defineConfig({
   testDir: './tests',
-  testIgnore: '**/anatomy-study.spec.mjs',
+  testMatch: 'anatomy-study.spec.mjs',
   fullyParallel: false,
   workers: 1,
   reporter: process.env.CI ? 'github' : 'line',
-  outputDir: 'test-results',
+  outputDir: 'test-results-anatomy',
   use: {
     baseURL,
     serviceWorkers: 'block',
@@ -23,7 +23,7 @@ export default defineConfig({
     { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
   webServer: {
-    command: `npm run preview -- --host 127.0.0.1 --port ${previewPort} --strictPort`,
+    command: `npm run anatomy:preview -- --host 127.0.0.1 --port ${previewPort} --strictPort`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
   },

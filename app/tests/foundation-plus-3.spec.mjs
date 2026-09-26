@@ -66,7 +66,7 @@ test('compare view and N shortcut open the current private note', async ({ page 
   await expect(page.locator('.track-columns article')).toHaveCount(2)
   await expect(page.locator('.track-columns article').first()).toContainText('Guide')
   await expect(page.locator('.track-columns article').last()).toContainText('Engineering')
-  await page.getByRole('button', { name: 'Close panel' }).click()
+  await page.keyboard.press('Escape')
 
   await page.keyboard.press('n')
   await expect(page.getByLabel('Private note for Approach')).toBeFocused()

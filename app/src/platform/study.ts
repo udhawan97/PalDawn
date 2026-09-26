@@ -3,6 +3,10 @@ import type { LearnerWorkspace } from './localData'
 import { DISEASES } from '../data/diseases'
 import { atlasStudyRecordId, type AtlasStudyData } from './localData'
 
+const privateNoteMarkdown = (value: string): string => value.trim()
+  ? value.trim().split('\n').map((line) => `    ${line}`).join('\n')
+  : '    _No private note._'
+
 export function studyWorkspaceMarkdown(workspace: LearnerWorkspace): string {
   const sections = JOURNEY.stages.map((stage, index) => {
     const checkpoint = workspace.checkpoints.includes(stage.id) ? 'Complete' : 'Open'
@@ -66,14 +70,12 @@ export function atlasStudyMarkdown(
       '### Clinical terms', '', step.clinical, '',
       ...(step.caution ? ['### Care boundary', '', step.caution, ''] : []),
       '### Sources', '', ...sources, '',
-      ...(options.includeNotes ? ['### Private note', '', record.note.trim() || '_No private note._', ''] : []),
+      ...(options.includeNotes ? ['### Private note', '', privateNoteMarkdown(record.note), ''] : []),
     ].join('\n')]
   }))
   const unavailableSections = options.diseaseId ? [] : Object.entries(study.records).flatMap(([id, record]) => {
     if (knownRecordIds.has(id) || (!record.saved && !record.studied && !record.note.trim())) return []
-    const privateNote = record.note.trim()
-      ? record.note.split('\n').map((line) => `    ${line}`).join('\n')
-      : '    _No private note._'
+    const privateNote = privateNoteMarkdown(record.note)
     return [[
       `## Unavailable Atlas record · ${id}`,
       '',

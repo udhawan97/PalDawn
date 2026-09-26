@@ -25,3 +25,4 @@ app/dist-graphics/
 app/node_modules
 app/public/anatomy/
 app/dist-anatomy/
+app/test-results-anatomy/

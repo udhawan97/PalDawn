@@ -18,7 +18,7 @@ treatment guide.
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
   · <a href="docs/GETTING-STARTED.md">Getting started</a>
-  · <a href="https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0">v0.4.0 source release</a>
+  · <a href="docs/releases/v0.5.0.md">v0.5.0 release notes</a>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@ treatment guide.
 |---|---|---|
 | [Web app](https://udhawan97.github.io/PalDawn/) | Ten disease previews, source navigation, a conceptual body map, and a private learner workspace | JavaScript; WebGL2 for 3D. A text voyage is available. |
 | [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
-| [v0.4.0 source](https://github.com/udhawan97/PalDawn/releases/tag/v0.4.0) | The immutable Study and Reliability snapshot | Source archives, not a native installer. New research-desk work is on `main`, after this tag. |
+| [v0.5.0 release notes](docs/releases/v0.5.0.md) | The Study Navigation release scope | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
 
 Both paths share PalDawn's source-first study language, but they do not share a
 distribution boundary. The public app is deployed from `main` through GitHub
@@ -55,6 +55,9 @@ its authored steps. Select a highlighted structure for a closer view. Open
 - **Continue an Atlas study:** share exact disease steps, save steps, keep private
   notes and personal study marks, compare both explanation tracks, and export
   selected source-linked study material.
+- **Use the Study Desk:** search local study records and private notes, continue
+  the next open saved step, browse pathways by explicitly authored body structure,
+  and trace bundled evidence across all ten previews.
 - **Set the pace:** choose reduced motion, text voyage, caption sizing, high
   contrast, and keyboard navigation.
 
@@ -64,6 +67,12 @@ its authored steps. Select a highlighted structure for a closer view. Open
 illustrative, not to scale, and not reviewed anatomy. The ten previews are
 unreviewed educational synthesis. Curriculum 50 is a plan: forty entries remain
 gated, not forty additional lessons.*
+
+![Atlas Study Desk with local progress counts, an open-study queue, private-note markers, and exact-step actions](docs/assets/paldawn-atlas-study-desk.png)
+
+*Actual public Study Desk rendered with fictional local sample records. The
+dashed unavailable record demonstrates recovery behavior; it is not a current
+medical lesson. Private notes remain on the device and are optional in export.*
 
 ## Anatomy Lab: turn a body part into a research question
 
@@ -77,15 +86,16 @@ introductions, condition topics, inquiry prompts, and authoritative source links
    nerves, eyes, immunity, hormones, and reproductive anatomy.
 3. **Broaden the reading.** Search 113 distinct condition topics, open MedlinePlus
    sources, and follow PubMed searches into the literature.
-4. **Make your own plan.** Save questions or conditions, choose compact cards or
-   a wider research layout, then export your selected reading as Markdown.
+4. **Make your own plan.** Save questions or conditions, filter read and unread
+   work, continue the next unread source, then export your selected reading as Markdown.
 
 ![Anatomy Lab local preview with the research desk beside a selected reference structure and a source-linked function question](docs/assets/paldawn-research-desk.png)
 
 *An actual local study view. The 113 topics are reading links, not newly authored
 lessons or disease animations. PubMed links are searches, not appraised papers.
 The reading queue, personal read marks, and per-reference source-structure IDs
-stay locally in the browser with separate backup and clear controls.*
+stay locally in the browser with the last validated structure, separate backup,
+and clear controls.*
 
 The male reference contains 2,234 meshes; the female assembly contains 888,
 with **partial skeleton and muscle coverage**. They are not a matched pair and
@@ -141,6 +151,7 @@ Code checks and browser acceptance do not replace qualified medical review.
 
 - [Vision and limits](docs/VISION.md) · [Project plan](docs/PLAN.md)
 - [Study Continuity](docs/STUDY-CONTINUITY.md)
+- [Atlas Study Desk](docs/ATLAS-STUDY-DESK.md)
 - [Curriculum 50](docs/CURRICULUM-50.md) · [Evidence navigation](docs/ATLAS-RESEARCH-LENS.md)
 - [Brand and editable assets](docs/BRAND-SYSTEM.md)
 - [Heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) ·

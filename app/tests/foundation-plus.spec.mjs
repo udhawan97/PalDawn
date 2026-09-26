@@ -5,6 +5,7 @@ const JOURNEY_KEY = 'paldawn:journey:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
+const ATLAS_STUDY_KEY = 'paldawn:atlas-study:v1'
 const RESET_KEY = 'paldawn:reset:v1'
 const RESET_PENDING_KEY = 'paldawn:reset-pending:v1'
 
@@ -551,6 +552,7 @@ test('a corrupt transaction fence preserves records until explicit recovery', as
     [JOURNEY_KEY]: before.journey,
     [BOOKMARKS_KEY]: before.bookmarks,
     [WORKSPACE_KEY]: before.workspace,
+    [ATLAS_STUDY_KEY]: null,
   })
   expect(rawBackup.metadata).toEqual({
     [RESET_KEY]: 'generation-before-corrupt-fence',

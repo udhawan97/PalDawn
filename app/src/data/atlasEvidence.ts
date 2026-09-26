@@ -19,6 +19,13 @@ export interface AtlasEvidenceLedger {
   danglingSourceIds: string[]
 }
 
+export interface AtlasEvidenceLibraryEntry extends AtlasSourceCoverage {
+  diseaseId: string
+  diseaseTitle: string
+  diseaseShortTitle: string
+  diseaseRank: number
+}
+
 export const buildAtlasEvidenceLedger = (disease: DiseaseDefinition): AtlasEvidenceLedger => {
   const knownSourceIds = new Set(disease.sources.map((source) => source.id))
   const danglingSourceIds = new Set<string>()
@@ -50,3 +57,14 @@ export const buildAtlasEvidenceLedger = (disease: DiseaseDefinition): AtlasEvide
     danglingSourceIds: [...danglingSourceIds].sort(),
   }
 }
+
+export const buildAtlasEvidenceLibrary = (
+  diseases: readonly DiseaseDefinition[],
+): AtlasEvidenceLibraryEntry[] => diseases.flatMap((disease) =>
+  buildAtlasEvidenceLedger(disease).sourceCoverage.map((coverage) => ({
+    ...coverage,
+    diseaseId: disease.id,
+    diseaseTitle: disease.title,
+    diseaseShortTitle: disease.shortTitle,
+    diseaseRank: disease.rank,
+  })))

@@ -9,6 +9,8 @@ Study Continuity turns the existing disease previews into repeatable local study
 - Continue from the last Atlas step from the landing page. Explicit links always take priority over the saved position.
 - Compare the existing Plain English and Clinical terms for a complete pathway in a focused reading view.
 - Export selected study records as Markdown. Private notes are excluded unless the learner explicitly opts in. Removed catalog targets remain labeled and recoverable in the overview, local-data backup, and full Atlas study export. The focused reading view also supplies print styling for the browser's print command.
+- Open the Atlas Study Desk to review activity counts, filter saved/open/studied/noted records, search authored labels and local private notes, continue the next open saved step, export the complete study, or print the filtered view.
+- Browse pathways by body structure using only the structure IDs explicitly authored on existing steps, and search one evidence library that preserves each exact source-to-step edge while separating ranking context.
 
 Personal notes and study marks remain local browser data. They are not evidence, medical review, certification, or proof of mastery. The focused reader reuses the existing authored text, cautions, and exact bundled source links.
 
@@ -28,4 +30,7 @@ The record is bounded to 150 step entries and 1,200 characters per note. Backup 
 
 The deterministic suite checks route validation, malformed encoding, record bounds, note sanitization, unavailable-record recovery, source-linked export, prior storage behavior, production builds, and graphics boundaries. Browser checks cover direct links, reload/close behavior, persistence, backup inclusion, comparison reading, optional-note export, and narrow interaction in Chromium and WebKit. The dedicated service-worker lifecycle harness verifies that updates remain gated by successful local persistence.
 
-Native Safari print-preview acceptance and physical-mobile acceptance remain separate manual checks.
+Native Safari print preview opens a single-page US Letter study sheet with app
+navigation removed. Populated private-note inclusion and exclusion are covered
+in the Chromium/WebKit print-media checks. Physical-mobile acceptance remains a
+separate manual check.

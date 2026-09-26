@@ -23,6 +23,7 @@ const JOURNEY_KEY = 'paldawn:journey:v1'
 const BOOKMARKS_KEY = 'paldawn:bookmarks:v1'
 const SETTINGS_KEY = 'paldawn:settings:v1'
 const WORKSPACE_KEY = 'paldawn:workspace:v1'
+const ATLAS_STUDY_KEY = 'paldawn:atlas-study:v1'
 
 const contentTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -398,11 +399,20 @@ const runAcceptance = async () => {
       return false
     }
   }, JOURNEY_KEY, { timeout: 5_000 })
-  const storedBefore = await firstBaseTab.evaluate(({ bookmarksKey, journeyKey, settingsKey }) => ({
+  const storedBefore = await firstBaseTab.evaluate(({ atlasStudyKey, bookmarksKey, journeyKey, settingsKey }) => {
+    localStorage.setItem(atlasStudyKey, JSON.stringify({
+      narration: 'plain',
+      lastPosition: { diseaseId: 'diabetes', stepId: 'pancreas-senses' },
+      records: { 'diabetes:pancreas-senses': { saved: true, studied: false, note: 'Survive an update.' } },
+    }))
+    return ({
+    atlasStudy: localStorage.getItem(atlasStudyKey),
     bookmarks: localStorage.getItem(bookmarksKey),
     journey: localStorage.getItem(journeyKey),
     settings: localStorage.getItem(settingsKey),
-  }), { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  })
+  }, { atlasStudyKey: ATLAS_STUDY_KEY, bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  assert.ok(storedBefore.atlasStudy, 'Atlas study state must be durable before activation')
   assert.ok(storedBefore.bookmarks, 'saved-stage state must be durable before activation')
   assert.ok(storedBefore.journey, 'journey state must be durable before activation')
   assert.ok(storedBefore.settings, 'settings state must be durable before activation')
@@ -452,11 +462,12 @@ const runAcceptance = async () => {
   assert.equal(firstState.capturedRequestId, firstState.updateMarker, 'requesting tab must reload for its captured activation')
   assert.equal(secondState.capturedRequestId, firstState.updateMarker, 'sibling tab must reload for the same captured activation')
 
-  const storedAfter = await firstCandidateTab.evaluate(({ bookmarksKey, journeyKey, settingsKey }) => ({
+  const storedAfter = await firstCandidateTab.evaluate(({ atlasStudyKey, bookmarksKey, journeyKey, settingsKey }) => ({
+    atlasStudy: localStorage.getItem(atlasStudyKey),
     bookmarks: localStorage.getItem(bookmarksKey),
     journey: localStorage.getItem(journeyKey),
     settings: localStorage.getItem(settingsKey),
-  }), { bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
+  }), { atlasStudyKey: ATLAS_STUDY_KEY, bookmarksKey: BOOKMARKS_KEY, journeyKey: JOURNEY_KEY, settingsKey: SETTINGS_KEY })
   const beforeBookmarks = JSON.parse(storedBefore.bookmarks)
   const afterBookmarks = JSON.parse(storedAfter.bookmarks)
   const beforeJourney = JSON.parse(storedBefore.journey)
@@ -470,6 +481,13 @@ const runAcceptance = async () => {
   )
   assert.deepEqual(afterSettings.state, beforeSettings.state, 'local settings state must survive activation')
   assert.deepEqual(afterBookmarks.stageIds, beforeBookmarks.stageIds, 'saved-stage state must survive activation')
+  const beforeAtlasStudy = JSON.parse(storedBefore.atlasStudy)
+  const afterAtlasStudy = JSON.parse(storedAfter.atlasStudy)
+  assert.deepEqual(
+    { narration: afterAtlasStudy.narration, lastPosition: afterAtlasStudy.lastPosition, records: afterAtlasStudy.records },
+    beforeAtlasStudy,
+    'Atlas study state must survive activation',
+  )
   await firstCandidateTab.getByRole('button', { name: 'Settings', exact: true }).click()
   assert.equal(await firstCandidateTab.getByLabel('Quality tier').inputValue(), 'low', 'persisted settings must restore in the updated UI')
   await firstCandidateTab.getByRole('button', { name: 'Close panel' }).click()
@@ -659,7 +677,7 @@ const runAcceptance = async () => {
   console.log(`pwa browser lifecycle: PASS · Chromium ${browserVersion}`)
   console.log(`builds: base ${BASE_REVISION.slice(0, 8)} / ${baseBuildId} -> candidate ${candidateBuildId}`)
   console.log(`legacy: 2 base tabs vetoed/preserved -> 2 manually reopened candidate tabs reloaded once · request ${firstState.updateMarker}`)
-  console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage preserved`)
+  console.log(`cache: ${cacheNames.join(', ')} · local journey/settings/saved stage/Atlas study preserved`)
   console.log(`watchdog: missing and late activation outcomes restored the client without reload`)
   console.log(`veto/retry: ${nextCandidateBuildId} waited without reload, then stayed inert through delayed committed cleanup and activated after the sibling saved · note/checkpoint restored`)
   console.log(`post-commit tab close: ${terminalCandidateBuildId} preserved both caches and focused a manual close/reopen instruction in the remaining frozen tab`)
