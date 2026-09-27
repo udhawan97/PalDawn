@@ -13,6 +13,7 @@ import { shareOrCopy } from '../platform/share'
 import { atlasStudyMarkdown } from '../platform/study'
 import { CurriculumCatalog } from './CurriculumCatalog'
 import { AtlasStudyDesk } from './AtlasStudyDesk'
+import { hasAnatomyAnchor } from '../anatomy/studyLinks'
 
 export function TopDiseasesRail() {
   const [catalogOpen, setCatalogOpen] = useState(false)
@@ -27,6 +28,34 @@ export function TopDiseasesRail() {
     studyRecords[atlasStudyRecordId(disease.id, step.id)]?.saved ? [{ disease, step, stepIndex }] : []))
   const unavailableRecords = Object.entries(studyRecords).filter(([id, record]) =>
     !knownRecordIds.has(id) && (record.saved || record.studied || Boolean(record.note.trim())))
+
+  useEffect(() => {
+    const openCatalog = () => setCatalogOpen(true)
+    const closeCatalog = () => setCatalogOpen(false)
+    const followLocation = () => setCatalogOpen(window.location.hash === '#conditions')
+    const openStudy = () => setStudyDeskOpen(true)
+    window.addEventListener('paldawn:open-conditions', openCatalog)
+    window.addEventListener('paldawn:close-conditions', closeCatalog)
+    window.addEventListener('paldawn:open-condition-study', openStudy)
+    window.addEventListener('popstate', followLocation)
+    window.addEventListener('hashchange', followLocation)
+    return () => {
+      window.removeEventListener('paldawn:open-conditions', openCatalog)
+      window.removeEventListener('paldawn:close-conditions', closeCatalog)
+      window.removeEventListener('paldawn:open-condition-study', openStudy)
+      window.removeEventListener('popstate', followLocation)
+      window.removeEventListener('hashchange', followLocation)
+    }
+  }, [])
+
+  const closeCatalog = () => {
+    setCatalogOpen(false)
+    if (window.location.hash === '#conditions') {
+      const url = new URL(window.location.href)
+      url.hash = 'home'
+      window.history.replaceState(window.history.state, '', url)
+    }
+  }
 
   return (
     <>
@@ -45,7 +74,7 @@ export function TopDiseasesRail() {
               aria-haspopup="dialog"
               aria-expanded={studyDeskOpen}
               onClick={() => setStudyDeskOpen(true)}
-            >Atlas desk</button>
+            >My condition study</button>
             <button
               ref={catalogButtonRef}
               type="button"
@@ -53,7 +82,7 @@ export function TopDiseasesRail() {
               aria-haspopup="dialog"
               aria-expanded={catalogOpen}
               onClick={() => setCatalogOpen(true)}
-            >View 50</button>
+            >Browse 50</button>
           </div>
         </div>
         <ol>
@@ -93,7 +122,7 @@ export function TopDiseasesRail() {
           <ol>{unavailableRecords.map(([id]) => <li key={id}><div className="atlas-unavailable-record"><strong>Unavailable Atlas step</strong><span>{id}</span></div></li>)}</ol>
         </details> : null}
       </aside>
-      {catalogOpen ? <CurriculumCatalog onClose={() => setCatalogOpen(false)} returnFocusTo={catalogButtonRef} /> : null}
+      {catalogOpen ? <CurriculumCatalog onClose={closeCatalog} returnFocusTo={catalogButtonRef} /> : null}
       {studyDeskOpen ? <AtlasStudyDesk onClose={() => setStudyDeskOpen(false)} returnFocusTo={studyDeskButtonRef} /> : null}
     </>
   )
@@ -536,7 +565,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
         <div className="atlas-stage-heading">
           <div>
             <p className="eyebrow">
-              {rendererAvailable ? '3D systems map · visibly synthetic' : 'Scene-free mechanism guide'}
+              {rendererAvailable ? 'Conceptual 3D diagram · visibly synthetic' : 'Scene-free mechanism guide'}
             </p>
             <p>{disease.pathwayLabel}</p>
           </div>
@@ -587,7 +616,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
             <button type="button" onClick={() => close()}>Back to overview <span aria-hidden="true">×</span></button>
           </div>
         </div>
-        {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="anatomy-return" type="button" onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>← Return to Anatomy Lab</button> : null}
+        {import.meta.env.VITE_ANATOMY_PREVIEW && hasAnatomyAnchor(focusPart) ? <button className="anatomy-return" type="button" onClick={() => window.dispatchEvent(new CustomEvent('paldawn:open-anatomy', { detail: { bodyPart: focusPart } }))}>Explore {focusLabel.toLowerCase()} in Anatomy Lab ↗</button> : null}
         <p className="atlas-category">{disease.category} · source-backed preview</p>
         <h1 id="atlas-title">{disease.title}</h1>
         <p className="atlas-summary">{disease.summary}</p>

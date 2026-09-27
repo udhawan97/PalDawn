@@ -3,9 +3,12 @@
 ## Open the web app
 
 [Open PalDawn](https://udhawan97.github.io/PalDawn/) in a browser with JavaScript.
-Choose **Explore diabetes** for an authored disease pathway, or **Begin the
-voyage** for the five-stage First Light introduction. With reduced motion,
-the voyage action is **Enter step mode**.
+Home offers two explicit routes. Choose **Explore the body** to understand the
+public conceptual systems map and the separately prepared local male/female
+candidate. Choose **Open lung infection** or **Browse conditions** for an
+authored disease pathway. **My study** opens saved First Light and condition
+work. The five-stage First Light route remains available below the two primary
+choices; with reduced motion its action is **Enter step mode**.
 
 In the disease explorer, move through steps, switch between **Plain English**
 and **Clinical terms**, select a highlighted structure for close focus, and open
@@ -13,7 +16,7 @@ and **Clinical terms**, select a highlighted structure for close focus, and open
 routes. The 50-condition curriculum includes ten previews and forty planned
 entries; unavailable entries cannot open a lesson.
 
-Open **Atlas desk** from the starting-journeys rail to search local Atlas work,
+Open **My condition study** from the starting-journeys rail or **My study** to search local condition work,
 filter saved/open/studied steps, continue the next open saved step, browse exact
 authored pathways by body structure, or search the bundled evidence library.
 Complete-study export excludes private notes until you opt in.
@@ -48,8 +51,8 @@ whether to offer **Install App** or **Add to Home Screen**. Installation is
 optional; the browser version remains available. The app cannot guarantee
 installation support on every browser or device.
 
-The [v0.5.1 release notes](releases/v0.5.1.md) describe the release scope. After
-the exact-commit gate publishes v0.5.1, its GitHub Release page provides source
+The [v0.6.0 release notes](releases/v0.6.0.md) describe the release scope. After
+the exact-commit gate publishes v0.6.0, its GitHub Release page provides source
 ZIP/tar archives. Reference-model packs are prepared separately. There is no native signing,
 notarization, or installer checksum to verify for this source-only release.
 
@@ -75,6 +78,7 @@ browser actions; export first and consult your browser's controls.
 
 | What you see | Next step |
 |---|---|
+| 3D is preparing for more than ten seconds | Choose **Continue without 3D**. Your local study data is unchanged. |
 | 3D unavailable or WebGL recovery | Choose **Use text voyage**. The disease guides also remain available without the scene. |
 | Motion feels uncomfortable | Open Settings and enable reduced motion; choose text voyage or stage controls. |
 | Anatomy reference preview unavailable | Confirm `npm run anatomy:prepare` completed, then restart `anatomy:dev`. Reference files are not in a normal source checkout or default build. |

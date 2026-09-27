@@ -174,7 +174,7 @@ test('local backup import validates, previews, cancels, and explicitly replaces'
   await page.getByRole('button', { name: 'Settings' }).click()
   await expect(page.getByLabel('Quality tier')).toHaveValue('low')
   await page.getByRole('button', { name: 'Close panel' }).click()
-  await page.getByRole('button', { name: 'Study' }).click()
+  await page.getByRole('button', { name: 'My study' }).click()
   await expect(page.getByLabel('Private note for Approach')).toHaveValue('Imported private note')
   await expect(page.getByRole('button', { name: 'Personal checkpoint complete' })).toBeVisible()
 })
@@ -182,7 +182,7 @@ test('local backup import validates, previews, cancels, and explicitly replaces'
 test('workspace remains readable without horizontal overflow at 320 pixels', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 568 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'Study' }).click()
+  await page.getByRole('button', { name: 'My study' }).click()
   await expect(page.locator('.track-columns article')).toHaveCount(2)
   const geometry = await page.evaluate(() => {
     const elements = Array.from(document.body.querySelectorAll('*'))

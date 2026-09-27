@@ -45,6 +45,7 @@ No deploy, tag, release or medical approval is implied by a local build.
 | Mobile | Stacked model and library/inspector, persistent panel navigation |
 | Optional WebMCP | Upstream search and inspect tools with registration lifecycle cleanup |
 | PalDawn learning | Explicit organ-level links into existing disease steps with their source links |
+| Condition return | A candidate condition step can open its explicitly mapped male/female source concept and return to the exact pathway; no label-based ID substitution |
 | Further reading | Full MedlinePlus system directories plus 20 body-area research tracks and 113 curated condition topics |
 | Research desk | Source-linked function explanations, comparative research questions, PubMed searches and source-ID organ locators |
 | Personal reading | Persistent cross-reference queue, read/unread filters and counts, next-unread continuation, personal read marks, ordering, condition search, compact cards, Markdown export, JSON backup and scoped clear controls |
@@ -68,6 +69,11 @@ explicit upstream concept membership, never FMA/TA2 equivalence by label.
 Structures without authored lesson links have a clear empty state and source
 reading. Further-reading topics include conditions and other health topics;
 they are **not hundreds of newly authored lessons or disease animations**.
+
+In the candidate build, an open condition can also choose **Explore [structure]
+in Anatomy Lab**. PalDawn selects only a recorded source anchor for the current
+reference, opens that structure, and keeps the disease-step hash as the return
+destination. Switching references resolves that reference's own source ID.
 
 ## Provenance and publication boundary
 

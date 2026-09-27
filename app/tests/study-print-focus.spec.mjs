@@ -94,7 +94,7 @@ test('Study Desk prints selected records with an explicit note opt-in', async ({
   await page.getByRole('button', { name: 'Private note', exact: true }).click()
   await page.getByLabel(/Private note · stored only in this browser/).fill('Fictional desk privacy check')
   await page.getByRole('button', { name: /Back to overview/ }).click()
-  await page.getByRole('button', { name: 'Atlas desk', exact: true }).click()
+  await page.getByRole('button', { name: 'My condition study', exact: true }).click()
   const desk = page.getByRole('dialog', { name: 'Your Atlas study desk' })
   await page.emulateMedia({ media: 'print' })
   await expect(desk.getByRole('heading', { name: 'The pancreas releases insulin', exact: true })).toBeVisible()

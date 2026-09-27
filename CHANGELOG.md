@@ -2,6 +2,28 @@
 
 All notable changes to PalDawn are documented here.
 
+## [0.6.0] — 2026-09-27
+
+### Clear Routes
+
+- Rebuilt Home around two explicit starting choices: explore the body or
+  understand a condition, with direct Home, body, conditions and study routes.
+- Fixed the Home overlay that covered the 3D diagram when a condition opened
+  before First Light had started; lung infection now opens with its whole-body
+  diagram, highlighted lungs, explanation and timeline visible together.
+- Added stable `#home`, `#body`, `#conditions` and `#study` destinations and kept
+  disease-step links compatible with reload, Back and Forward navigation.
+- Added a public body-availability view that clearly separates the conceptual
+  systems model from the local male/female Anatomy Lab candidate.
+- Added an explicit condition-to-reference bridge in the local candidate with
+  source-ID mapping and return to the original pathway.
+- Improved whole-body camera fit, long-load status, scene-free continuation and
+  reference-viewer retry actions.
+- Refreshed learner guidance, release evidence and current Home imagery.
+
+The release adds no medical or anatomical claims or qualified review. Anatomy
+Lab remains excluded from the public GitHub Pages artifact.
+
 ## [0.5.1] — 2026-09-26
 
 ### Recovery Integrity

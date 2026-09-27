@@ -91,7 +91,7 @@ test('Atlas Study Desk filters local work, discovers authored systems, and expos
   await page.getByLabel(/Private note · stored only in this browser/).fill('Review the insulin control signal.')
   await page.getByRole('button', { name: /Back to overview/ }).click()
 
-  await page.getByRole('button', { name: 'Atlas desk' }).click()
+  await page.getByRole('button', { name: 'My condition study' }).click()
   let desk = page.getByRole('dialog', { name: 'Your Atlas study desk' })
   await expect(desk).toBeVisible()
   await expect(desk.getByRole('button', { name: '1 Saved' })).toBeVisible()
@@ -118,8 +118,8 @@ test('Atlas Study Desk filters local work, discovers authored systems, and expos
   await expect(page.getByRole('heading', { name: 'The pancreas releases insulin' })).toBeVisible()
 
   await page.getByRole('button', { name: /Back to overview/ }).click()
-  await expect(page.getByRole('button', { name: 'Atlas desk' })).toBeFocused()
-  await page.getByRole('button', { name: 'Atlas desk' }).click()
+  await expect(page.getByRole('button', { name: 'My condition study' })).toBeFocused()
+  await page.getByRole('button', { name: 'My condition study' }).click()
   desk = page.getByRole('dialog', { name: 'Your Atlas study desk' })
   await desk.getByRole('button', { name: 'Evidence library' }).click()
   await desk.getByLabel('Find a source, organization, or condition').fill('NIDDK digestive')
@@ -130,7 +130,7 @@ test('Atlas Study Desk filters local work, discovers authored systems, and expos
 test('Atlas Study Desk stays bounded on a narrow screen and restores focus', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
-  const trigger = page.getByRole('button', { name: 'Atlas desk' })
+  const trigger = page.getByRole('button', { name: 'My condition study' })
   await trigger.click()
   const desk = page.getByRole('dialog', { name: 'Your Atlas study desk' })
   await expect(desk).toBeVisible()

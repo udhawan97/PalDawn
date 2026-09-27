@@ -62,6 +62,7 @@ import { shareOrCopy, type ShareOutcome } from '../platform/share'
 import { studyWorkspaceMarkdown } from '../platform/study'
 import { syncAtlasFromHistory, useAtlas } from '../state/atlas'
 import { useAtlasStudy } from '../state/atlasStudy'
+import { DISEASES } from '../data/diseases'
 import { DiseaseExplorer, TopDiseasesRail } from './DiseaseExplorer'
 
 const TIERS: QualityTier[] = ['auto', 'high', 'balanced', 'low']
@@ -71,11 +72,31 @@ const STAGE_IDS = new Set(JOURNEY.stages.map((stage) => stage.id))
 const FULL_WIDTH_DRAWER_QUERY = '(max-width: 470px)'
 const DRAWER_FOCUSABLE_SELECTOR = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 const PANEL_LABELS: Record<Exclude<OpenPanel, null>, string> = {
+  body: 'Explore body',
   mission: 'Mission',
   transcript: 'Transcript',
   workspace: 'Study',
   settings: 'Settings',
   help: 'Help',
+}
+
+const primaryDestinationHash = (destination: 'home' | 'body' | 'conditions' | 'study'): void => {
+  const url = new URL(window.location.href)
+  if (url.hash === `#${destination}`) return
+  url.hash = destination
+  window.history.pushState(window.history.state, '', url)
+}
+
+const normalizeClosedPanelRoute = (panel: OpenPanel): void => {
+  const route = panel === 'body' ? 'body' : panel === 'workspace' ? 'study' : null
+  if (!route || window.location.hash !== `#${route}`) return
+  const url = new URL(window.location.href)
+  url.hash = 'home'
+  window.history.replaceState(window.history.state, '', url)
+}
+
+const openAnatomyCandidate = (bodyPart?: string): void => {
+  window.dispatchEvent(new CustomEvent('paldawn:open-anatomy', { detail: bodyPart ? { bodyPart } : undefined }))
 }
 
 const orderedBookmarks = (ids: string[]): string[] =>
@@ -142,7 +163,19 @@ function Intro() {
   const progress = useExperience((state) => state.progress)
   const reducedMotion = useSettings((state) => state.reducedMotion)
   const openDisease = useAtlas((state) => state.openDisease)
+  const setOpenPanel = useExperience((state) => state.setOpenPanel)
   const resumeAvailable = progress > 0.01 && progress < 0.999
+  const openBody = () => {
+    if (import.meta.env.VITE_ANATOMY_PREVIEW) openAnatomyCandidate()
+    else {
+      primaryDestinationHash('body')
+      setOpenPanel('body', { resumePlayback: false })
+    }
+  }
+  const browseConditions = () => {
+    primaryDestinationHash('conditions')
+    window.dispatchEvent(new Event('paldawn:open-conditions'))
+  }
 
   return (
     <section className="intro" aria-labelledby="intro-title">
@@ -159,7 +192,7 @@ function Intro() {
         <span>Follow what happens next.</span>
       </h1>
       <p className="intro-copy">
-        Follow a disease mechanism from structure to system and inspect each source. The 3D body is a conceptual learning map, not reviewed anatomy.
+        The 3D body is a conceptual learning map, not reviewed anatomy. Choose a body structure, follow a condition mechanism, or return to saved learning.
       </p>
       <p className="intro-study-map" aria-label="Study from structure to system to mechanism to source">
         <span>Structure</span><i aria-hidden="true" />
@@ -167,17 +200,25 @@ function Intro() {
         <span>Mechanism</span><i aria-hidden="true" />
         <span>Source</span>
       </p>
+      <div className="intro-destinations" aria-label="Choose where to start">
+        <article>
+          <span>Structure first</span>
+          <h2>Explore the body</h2>
+          <p>{import.meta.env.VITE_ANATOMY_PREVIEW ? 'Choose a male or female reference, then select any available structure.' : 'See how the conceptual body and the local male/female Anatomy Lab differ.'}</p>
+          <button className="primary-action" type="button" data-panel="body" onClick={openBody}>Explore the body <span aria-hidden="true">↗</span></button>
+        </article>
+        <article>
+          <span>Condition first</span>
+          <h2>Understand a condition</h2>
+          <p>Open a source-linked pathway with its diagram, explanation, steps, and study controls.</p>
+          <div>
+            <button className="primary-action" type="button" data-atlas-opener="intro-lung" onClick={() => openDisease('lower-respiratory-infection', '[data-atlas-opener="intro-lung"]')}>Open lung infection <span aria-hidden="true">↗</span></button>
+            <button className="secondary-action" type="button" onClick={browseConditions}>Browse conditions</button>
+          </div>
+        </article>
+      </div>
       <div className="intro-actions" data-resume-available={resumeAvailable}>
-        {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="secondary-action" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Explore Anatomy Lab ↗</button> : null}
-        <button
-          className="primary-action"
-          type="button"
-          data-atlas-opener="intro-diabetes"
-          onClick={() => openDisease('diabetes', '[data-atlas-opener="intro-diabetes"]')}
-        >
-          Explore diabetes
-          <span aria-hidden="true">↗</span>
-        </button>
+        <button className="secondary-action" type="button" data-atlas-opener="intro-diabetes" onClick={() => openDisease('diabetes', '[data-atlas-opener="intro-diabetes"]')}>Explore diabetes</button>
         <button className="secondary-action begin-action" type="button" onClick={() => start(reducedMotion)}>
           {reducedMotion ? 'Enter step mode' : 'Begin the voyage'}
         </button>
@@ -381,6 +422,38 @@ function ControlDeck() {
   )
 }
 
+function BodyPanel() {
+  const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const openDisease = useAtlas((state) => state.openDisease)
+  return (
+    <div className="body-access-panel">
+      <p className="panel-kicker">Explore body</p>
+      <h2>Two body views, with different jobs.</h2>
+      <p>
+        The public condition map uses project-authored conceptual geometry to explain mechanisms. The detailed male and female reference assemblies remain a separately prepared local Anatomy Lab candidate while qualified anatomy and clinical review is pending.
+      </p>
+      <div className="body-access-options">
+        <article>
+          <span>Available here</span>
+          <h3>Conceptual systems body</h3>
+          <p>Follow ten source-linked condition pathways, focus a named structure, and return to the whole body at any step.</p>
+          <button type="button" onClick={() => {
+            setOpenPanel(null, { resumePlayback: false })
+            openDisease('lower-respiratory-infection', '[data-panel="body"]')
+          }}>Open the whole-body systems map</button>
+        </article>
+        <article>
+          <span>Local review candidate</span>
+          <h3>Male and female reference anatomy</h3>
+          <p>Browse 2,234 male-reference meshes or 888 female-reference meshes, system layers, structures, reading tracks, and explicit pathway links.</p>
+          <a href="https://github.com/udhawan97/PalDawn/blob/main/docs/ANATOMY-LAB.md" target="_blank" rel="noreferrer">Run Anatomy Lab locally ↗</a>
+        </article>
+      </div>
+      <p className="body-access-boundary" role="note">The two reference assemblies are not a matched pair, complete human anatomy, or clinically reviewed course.</p>
+    </div>
+  )
+}
+
 function MissionPanel() {
   return (
     <>
@@ -517,6 +590,9 @@ function WorkspacePanel({
   const progress = useExperience((state) => state.progress)
   const setProgress = useExperience((state) => state.setProgress)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const showHome = useExperience((state) => state.showHome)
+  const conditionStudy = useAtlasStudy()
+  const openDisease = useAtlas((state) => state.openDisease)
   const [selectedStageId, setSelectedStageId] = useState(stageAt(progress).id)
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('')
@@ -534,6 +610,7 @@ function WorkspacePanel({
   const note = workspace.notes[selectedStage.id] ?? ''
   const checkpointed = workspace.checkpoints.includes(selectedStage.id)
   const markdown = () => studyWorkspaceMarkdown(workspace)
+  const conditionRecordCount = Object.values(conditionStudy.records).filter((record) => record.saved || record.studied || record.note.trim()).length
 
   useEffect(() => {
     setSelectedStageId(stageAt(progress).id)
@@ -566,6 +643,28 @@ function WorkspacePanel({
         Stored only in this browser. Do not enter patient or personal health information.
         Personal checkpoints are not evidence, approval, or medical review.
       </p>
+      <section className="study-front-door" aria-labelledby="condition-study-heading">
+        <div>
+          <span>Condition pathways</span>
+          <h3 id="condition-study-heading">Your condition study</h3>
+          <p>{conditionRecordCount} active {conditionRecordCount === 1 ? 'record' : 'records'} · saved steps, study marks, and private notes stay in this browser.</p>
+        </div>
+        <div>
+          {conditionStudy.lastPosition ? <button type="button" onClick={() => {
+            const disease = DISEASES.find((candidate) => candidate.id === conditionStudy.lastPosition?.diseaseId)
+            const stepIndex = disease?.steps.findIndex((step) => step.id === conditionStudy.lastPosition?.stepId) ?? -1
+            if (!disease || stepIndex < 0) return
+            setOpenPanel(null, { resumePlayback: false })
+            openDisease(disease.id)
+            useAtlas.getState().setStep(stepIndex)
+          }}>Continue last condition</button> : null}
+          <button type="button" onClick={() => {
+            setOpenPanel(null, { resumePlayback: false })
+            showHome()
+            window.requestAnimationFrame(() => window.dispatchEvent(new Event('paldawn:open-condition-study')))
+          }}>Open condition study</button>
+        </div>
+      </section>
       {!workspacePersisted ? (
         <aside className="persistence-warning" role="alert">
           <strong>{workspaceConflict ? 'Another tab changed your workspace.' : 'Browser storage is unavailable.'}</strong>
@@ -1297,6 +1396,7 @@ function Drawer({
           <span className="drawer-header-label" aria-hidden="true">{PANEL_LABELS[openPanel]}</span>
           <button className="drawer-close" type="button" aria-label="Close panel" onClick={() => {
             setSettingsStatus('')
+            normalizeClosedPanelRoute(openPanel)
             setOpenPanel(null, { resumePlayback: !reducedMotion })
           }}>×</button>
         </div>
@@ -1305,6 +1405,7 @@ function Drawer({
         ) : null}
       </div>
       <div className="drawer-scroll">
+        {openPanel === 'body' && <BodyPanel />}
         {openPanel === 'mission' && <MissionPanel />}
         {openPanel === 'transcript' && <TranscriptPanel bookmarks={bookmarks} onToggleBookmark={onToggleBookmark} />}
         {openPanel === 'workspace' && (
@@ -1408,8 +1509,8 @@ export function FlightDeck({
   const playing = useExperience((state) => state.playing)
   const openPanel = useExperience((state) => state.openPanel)
   const setOpenPanel = useExperience((state) => state.setOpenPanel)
+  const showHome = useExperience((state) => state.showHome)
   const atlasOpen = useAtlas((state) => state.open)
-  const openDisease = useAtlas((state) => state.openDisease)
   const closeAtlas = useAtlas((state) => state.close)
   const guideOpen = useAtlas((state) => state.guideOpen)
   const researchOpen = useAtlas((state) => state.researchOpen)
@@ -1452,6 +1553,44 @@ export function FlightDeck({
   const systemNoticeSummary = systemNoticeCount > 1
     ? `${systemNoticeCount} notices`
     : systemNoticeLabels[0] ?? ''
+
+  const openHome = useCallback((pushHistory = true) => {
+    window.dispatchEvent(new Event('paldawn:close-conditions'))
+    closeAtlas({ navigateHistory: false, restoreFocus: false })
+    setGuideOpen(false)
+    setResearchOpen(false)
+    setOpenPanel(null, { resumePlayback: false })
+    showHome()
+    if (pushHistory) primaryDestinationHash('home')
+    window.requestAnimationFrame(() => document.getElementById('intro-title')?.focus({ preventScroll: true }))
+  }, [closeAtlas, setGuideOpen, setOpenPanel, setResearchOpen, showHome])
+
+  const openBody = useCallback((pushHistory = true) => {
+    window.dispatchEvent(new Event('paldawn:close-conditions'))
+    closeAtlas({ navigateHistory: false, restoreFocus: false })
+    showHome()
+    if (import.meta.env.VITE_ANATOMY_PREVIEW) openAnatomyCandidate()
+    else {
+      if (pushHistory) primaryDestinationHash('body')
+      setOpenPanel('body', { resumePlayback: false })
+    }
+  }, [closeAtlas, setOpenPanel, showHome])
+
+  const openConditions = useCallback((pushHistory = true) => {
+    closeAtlas({ navigateHistory: false, restoreFocus: false })
+    setOpenPanel(null, { resumePlayback: false })
+    showHome()
+    if (pushHistory) primaryDestinationHash('conditions')
+    window.requestAnimationFrame(() => window.dispatchEvent(new Event('paldawn:open-conditions')))
+  }, [closeAtlas, setOpenPanel, showHome])
+
+  const openStudy = useCallback((pushHistory = true) => {
+    window.dispatchEvent(new Event('paldawn:close-conditions'))
+    closeAtlas({ navigateHistory: false, restoreFocus: false })
+    showHome()
+    if (pushHistory) primaryDestinationHash('study')
+    setOpenPanel('workspace', { resumePlayback: false })
+  }, [closeAtlas, setOpenPanel, showHome])
 
   const toggleStageBookmark = useCallback((id: string) => {
     if (!STAGE_IDS.has(id)) return false
@@ -1541,6 +1680,19 @@ export function FlightDeck({
   }, [])
 
   useEffect(() => registerPwaUpdatePreparation(preparePwaUpdate), [preparePwaUpdate])
+
+  useEffect(() => {
+    const followPrimaryDestination = () => {
+      const destination = window.location.hash.slice(1)
+      if (!destination || destination === 'home') openHome(false)
+      else if (destination === 'body') openBody(false)
+      else if (destination === 'conditions') openConditions(false)
+      else if (destination === 'study') openStudy(false)
+    }
+    followPrimaryDestination()
+    window.addEventListener('popstate', followPrimaryDestination)
+    return () => window.removeEventListener('popstate', followPrimaryDestination)
+  }, [openBody, openConditions, openHome, openStudy])
 
   useLayoutEffect(() => {
     const shell = flightUiRef.current
@@ -1719,7 +1871,10 @@ export function FlightDeck({
   useLayoutEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        if (openPanel) setOpenPanel(null, { resumePlayback: !reducedMotion })
+        if (openPanel) {
+          normalizeClosedPanelRoute(openPanel)
+          setOpenPanel(null, { resumePlayback: !reducedMotion })
+        }
         else if (researchOpen) setResearchOpen(false)
         else if (guideOpen) setGuideOpen(false)
         else if (systemNoticesOpen) {
@@ -1827,7 +1982,7 @@ export function FlightDeck({
         Skip to {skipTargetLabel}
       </a>
       <header className="masthead">
-        <a className="wordmark" href="./" aria-label="PalDawn home">
+        <a className="wordmark" href="#home" aria-label="PalDawn home" onClick={(event) => { event.preventDefault(); openHome() }}>
           <img
             className="brand-icon"
             src={`${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`}
@@ -1837,14 +1992,12 @@ export function FlightDeck({
           <span className="wordmark-name">PalDawn</span>
         </a>
         <p className="build-mark">PAL · DAWN / MECHANISM LENS</p>
-        <nav className="utility-nav" aria-label="Release information">
-          {import.meta.env.VITE_ANATOMY_PREVIEW ? <button className="text-button" type="button" data-anatomy-opener onClick={() => window.dispatchEvent(new Event('paldawn:open-anatomy'))}>Anatomy Lab</button> : null}
-          <button className="text-button" type="button" data-atlas-opener="utility-atlas" aria-expanded={atlasOpen} onClick={() => {
-            setOpenPanel(null, { resumePlayback: false })
-            openDisease('diabetes', '[data-atlas-opener="utility-atlas"]')
-          }}>Atlas</button>
+        <nav className="utility-nav" aria-label="Primary navigation">
+          <button className="text-button" type="button" onClick={() => openHome()}>Home</button>
+          <button className="text-button" type="button" data-panel="body" aria-expanded={openPanel === 'body'} onClick={() => openBody()}>Explore body</button>
+          <button className="text-button" type="button" onClick={() => openConditions()}>Conditions</button>
+          <button className="text-button" type="button" data-panel="workspace" aria-expanded={openPanel === 'workspace'} onClick={() => openStudy()}>My study</button>
           <PanelButton panel="transcript">Transcript</PanelButton>
-          <PanelButton panel="workspace">Study</PanelButton>
           <PanelButton panel="settings">Settings</PanelButton>
           <PanelButton panel="help">Help</PanelButton>
         </nav>

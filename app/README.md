@@ -1,4 +1,4 @@
-# PalDawn app — v0.5.1 — Recovery Integrity
+# PalDawn app — v0.6.0 — Clear Routes
 
 The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +

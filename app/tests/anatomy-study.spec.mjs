@@ -3,6 +3,13 @@ import { readFile } from 'node:fs/promises'
 
 const STUDY_KEY = 'paldawn:anatomy-study:v1'
 
+const openTextStudy = async (page) => {
+  const trigger = page.getByRole('button', { name: 'Text study', exact: true })
+  const active = page.getByRole('button', { name: 'Enable 3D', exact: true })
+  await expect(trigger.or(active)).toBeVisible()
+  if (await trigger.isVisible()) await trigger.click()
+}
+
 test.describe.configure({ timeout: 60_000 })
 
 test('Anatomy study IDs, read marks and unavailable records survive reload and export', async ({ page }) => {
@@ -169,7 +176,7 @@ test('unsaved Anatomy work survives Back and a disease-pathway round trip', asyn
       await page.locator('.study-lesson button').first().click()
     }
     await page.goBack()
-    await page.getByRole('button', { name: 'Text study', exact: true }).click()
+    await openTextStudy(page)
     await expect(page.getByRole('button', { name: 'Remove from study list', exact: true })).toBeVisible()
     await expect(page.locator('.study-storage-status')).toHaveAttribute('data-persisted', 'false')
     await expect(page.locator('.study-storage-status')).toContainText(/could not be saved|browser storage is unavailable/)
@@ -183,7 +190,7 @@ test('unsaved Anatomy work survives Back and a disease-pathway round trip', asyn
 
 test('Anatomy replacement and clear remain authoritative after view changes', async ({ page }) => {
   await page.goto('./?study=anatomy&reference=male')
-  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await openTextStudy(page)
   await page.getByText('Saved Anatomy study & backup', { exact: true }).click()
   const study = { queue: [{ id: 'function:heart', read: true }], saved: { male: ['FMA7088'], female: [] }, lastSelection: { male: 'FMA7088', female: null } }
   await page.locator('#anatomy-study-import').setInputFiles({ name: 'study.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ schema_version: 2, local_only: true, anatomy_preview: true, study })) })
@@ -191,15 +198,69 @@ test('Anatomy replacement and clear remain authoritative after view changes', as
   await expect(page.getByText('Anatomy study backup restored in this browser.', { exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'Back to PalDawn', exact: false }).click()
   await page.goBack()
-  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await openTextStudy(page)
   await expect(page.getByRole('heading', { name: 'heart', exact: true })).toBeVisible()
   expect(await anatomyBackup(page)).toEqual(study)
   await page.getByRole('button', { name: 'Clear local Anatomy study', exact: true }).click()
   await page.getByRole('button', { name: 'Confirm clear Anatomy study', exact: true }).click()
   await page.getByRole('button', { name: 'Back to PalDawn', exact: false }).click()
   await page.goBack()
-  await page.getByRole('button', { name: 'Text study', exact: true }).click()
+  await openTextStudy(page)
   await expect(page.getByRole('button', { name: 'Queue (0)', exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Add to study list', exact: true })).toBeVisible()
   expect(await page.evaluate(key => localStorage.getItem(key), STUDY_KEY)).toBeNull()
+})
+
+test('a condition structure opens the matching Anatomy reference and returns to the pathway', async ({ page }) => {
+  await page.goto('./?study=journeys#atlas/lower-respiratory-infection/arrival?part=lungs')
+  await expect(page.getByRole('heading', { name: 'Lower respiratory infection' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Explore lungs in Anatomy Lab ↗' }).click()
+  await expect(page.getByRole('heading', { name: 'right lung', exact: true })).toBeVisible()
+  await expect(page.getByText(/FMA7309/)).toBeVisible()
+
+  await page.getByRole('button', { name: 'Female reference', exact: true }).click()
+  await expect(page.getByText(/HRA:VH_F_lungs/)).toBeVisible()
+  await page.getByRole('button', { name: 'Male reference', exact: true }).click()
+  await expect(page.getByText(/FMA7309/)).toBeVisible()
+
+  await page.getByRole('button', { name: /Back to PalDawn/ }).click()
+  await expect(page.getByRole('heading', { name: 'Lower respiratory infection' })).toBeVisible()
+  await expect(page).toHaveURL(/#atlas\/lower-respiratory-infection\/arrival\?part=lungs$/)
+
+  await page.getByRole('button', { name: 'Immune system', exact: true }).click()
+  await expect(page.getByRole('button', { name: /Explore immune system in Anatomy Lab/ })).toHaveCount(0)
+})
+
+test('candidate Explore body has one history entry and Back returns to pathways', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: /Follow a disease pathway/ }).click()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await page.getByRole('button', { name: 'Explore body' }).click()
+  await expect(page.getByRole('heading', { name: /Know the body/ })).toBeVisible()
+  await page.goBack()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await expect(page).toHaveURL(/\?study=journeys$/)
+})
+
+test('candidate primary hashes override legacy study queries', async ({ page }) => {
+  await page.goto('./?study=anatomy#home')
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Enter the body. Follow what happens next.' })).toBeVisible()
+
+  await page.goto('./?study=anatomy#conditions')
+  await expect(page.getByRole('dialog', { name: /Fifty conditions/i })).toBeVisible()
+  await expect(page).toHaveURL(/#conditions$/)
+
+  await page.goto('./#study')
+  await expect(page.getByRole('heading', { name: 'Compare, note, and continue.' })).toBeVisible()
+
+  await page.goto('./#body')
+  await expect(page.getByRole('heading', { name: /Know the body/ })).toBeVisible()
+  await page.getByRole('button', { name: /Back to PalDawn/ }).click()
+  await expect(page.getByRole('heading', { name: 'A body is more than its parts' })).toBeVisible()
+  await expect(page).not.toHaveURL(/#body$/)
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'A body is more than its parts' })).toBeVisible()
 })

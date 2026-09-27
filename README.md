@@ -18,7 +18,7 @@ treatment guide.
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
   · <a href="docs/GETTING-STARTED.md">Getting started</a>
-  · <a href="docs/releases/v0.5.1.md">v0.5.1 release notes</a>
+  · <a href="docs/releases/v0.6.0.md">v0.6.0 release notes</a>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@ treatment guide.
 |---|---|---|
 | [Web app](https://udhawan97.github.io/PalDawn/) | Ten disease previews, source navigation, a conceptual body map, and a private learner workspace | JavaScript; WebGL2 for 3D. A text voyage is available. |
 | [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
-| [v0.5.1 release notes](docs/releases/v0.5.1.md) | Recovery and accessibility fixes for Study Navigation | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
+| [v0.6.0 release notes](docs/releases/v0.6.0.md) | Clear Home/body/condition/study routes and the repaired 3D condition view | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
 
 Both paths share PalDawn's source-first study language, but they do not share a
 distribution boundary. The public app is deployed from `main` through GitHub
@@ -42,8 +42,9 @@ installation. See [installation, updates, and help](docs/GETTING-STARTED.md).
 
 ## Follow a mechanism from system to source
 
-Start with **Explore diabetes**, choose an explanation depth, and move through
-its authored steps. Select a highlighted structure for a closer view. Open
+Start with **Open lung infection** or **Browse conditions**, choose an explanation
+depth, and move through the authored steps. Select a highlighted structure for
+a closer view, then choose **Whole body** to restore context. Open
 **Research Lens** to see which bundled source records link to the current step.
 
 - **Find a route:** Atlas Wayfinder searches existing conditions, phases, and
@@ -55,16 +56,17 @@ its authored steps. Select a highlighted structure for a closer view. Open
 - **Continue an Atlas study:** share exact disease steps, save steps, keep private
   notes and personal study marks, compare both explanation tracks, and export
   selected source-linked study material.
-- **Use the Study Desk:** search local study records and private notes, continue
+- **Use My condition study:** search local study records and private notes, continue
   the next open saved step, browse pathways by explicitly authored body structure,
   and trace bundled evidence across all ten previews.
 - **Set the pace:** choose reduced motion, text voyage, caption sizing, high
   contrast, and keyboard navigation.
 
-![PalDawn web introduction with its navy study surface, porcelain-and-copper listening mark, disease and voyage actions, and conceptual body map](docs/assets/paldawn-web-introduction.png)
+![PalDawn Home with two clear starting routes for body exploration and condition pathways beside the ten starting journeys](docs/assets/paldawn-web-introduction.png)
 
-*Public-build introduction captured from current source. The procedural body is
-illustrative, not to scale, and not reviewed anatomy. The ten previews are
+*Public Home captured from current source. Explore body explains the public
+conceptual map and the separately prepared local reference candidate; Understand
+a condition opens the visible 3D mechanism diagram. The ten previews are
 unreviewed educational synthesis. Curriculum 50 is a plan: forty entries remain
 gated, not forty additional lessons.*
 

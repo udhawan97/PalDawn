@@ -15,6 +15,9 @@ export const ORGAN_ANCHORS: { id: string; part: BodyPartId }[] = [
   { id: 'HRA:VH_F_pancreas', part: 'pancreas' }, { id: 'HRA:VH_F_kidney', part: 'kidneys' },
   { id: 'HRA:VH_F_urinary_bladder', part: 'bladder' }, { id: 'HRA:VH_F_small_intestine', part: 'intestines' },
 ]
+export const hasAnatomyAnchor = (part: BodyPartId): boolean =>
+  ORGAN_ANCHORS.some((anchor) => anchor.part === part)
+
 export function relatedLessons(atlas: Atlas, selected: Concept) {
   const selectedIds = new Set(selected.elements)
   const organs = ORGAN_ANCHORS.filter(anchor => atlas.concepts.find(c => c.id === anchor.id)?.elements.some(id => selectedIds.has(id)))

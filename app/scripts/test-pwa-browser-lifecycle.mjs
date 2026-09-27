@@ -527,7 +527,7 @@ const runAcceptance = async () => {
   assert.equal(await firstCandidateTab.locator('#root').evaluate((element) => element.inert), false, 'a late abandoned outcome must not re-enter handoff mode')
 
   await secondCandidateTab.bringToFront()
-  await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
+  await secondCandidateTab.getByRole('button', { name: 'My study', exact: true }).click()
   const durableWorkspaceBefore = await secondCandidateTab.evaluate((workspaceKey) => {
     const originalSetItem = Storage.prototype.setItem
     Object.defineProperty(window, '__paldawnRestoreStorage', {
@@ -610,7 +610,7 @@ const runAcceptance = async () => {
   assert.equal(secondRecovered.loadCount, 3, 'recovered sibling must reload once after storage recovery')
   assert.notEqual(firstRecovered.updateMarker, markerBeforeVeto, 'successful retry must use a fresh activation request')
   assert.equal(firstRecovered.updateMarker, secondRecovered.updateMarker, 'successful retry must remain coherent across tabs')
-  await secondCandidateTab.getByRole('button', { name: 'Study', exact: true }).click()
+  await secondCandidateTab.getByRole('button', { name: 'My study', exact: true }).click()
   assert.equal(await secondCandidateTab.getByLabel(/^Private note for /).inputValue(), privateNote, 'recovered note must restore after activation')
   assert.equal(await secondCandidateTab.getByRole('button', { name: 'Personal checkpoint complete' }).getAttribute('aria-pressed'), 'true')
   const recoveredCacheNames = await firstCandidateTab.evaluate(() => caches.keys())

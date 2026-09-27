@@ -486,7 +486,7 @@ export function HumanSystemsScene() {
   const focusPart = (selectedBodyPart ?? activeParts[0] ?? 'heart') as BodyPartId
 
   useEffect(() => {
-    camera.position.set(0, 0.1, 11.8)
+    camera.position.set(0, 0.1, 13.6)
     camera.up.set(0, 1, 0)
     camera.lookAt(0, 0, 0)
     scene.fog = null
@@ -510,7 +510,7 @@ export function HumanSystemsScene() {
       cameraDestination.current.set(point[0] + stageCompensation, point[1] + 0.08, point[2] + 5.8)
     } else {
       cameraTarget.current.set(0, 0.05, 0)
-      cameraDestination.current.set(0, 0.1, 11.8)
+      cameraDestination.current.set(0, 0.1, 13.6)
     }
     camera.position.lerp(cameraDestination.current, damping)
     camera.lookAt(cameraTarget.current)

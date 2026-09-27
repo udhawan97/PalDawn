@@ -183,7 +183,7 @@ test('blocked browser storage never claims local notes or bookmarks were saved',
   })
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'Study' }).click()
+  await page.getByRole('button', { name: 'My study' }).click()
 
   const note = 'Review how the signal changes before the next phase.'
   await page.getByLabel('Private note for Approach').fill(note)
@@ -201,7 +201,7 @@ test('blocked browser storage never claims local notes or bookmarks were saved',
   expect(await readFile(downloadPath, 'utf8')).toContain(note)
 
   await page.getByRole('button', { name: 'Close panel' }).click()
-  await expect(page.getByRole('button', { name: 'Study' })).toBeFocused()
+  await expect(page.getByRole('button', { name: 'My study' })).toBeFocused()
   await page.keyboard.press('t')
   await page.getByRole('button', { name: 'Save stage' }).first().click()
   await expect(page.getByText(/Stage changed for this tab, but browser storage is unavailable/i)).toBeAttached()
@@ -220,14 +220,15 @@ test('blocked browser storage never claims local notes or bookmarks were saved',
   await page.keyboard.press('t')
   await page.getByRole('button', { name: 'Remove saved stage' }).click()
   await page.getByRole('button', { name: 'Close panel' }).click()
-  await page.getByRole('button', { name: 'Study' }).click()
+  await page.getByRole('button', { name: 'My study' }).click()
   await page.getByRole('button', { name: 'Retry saving' }).click()
   await expect(page.locator('.action-status')).toHaveText('Private workspace saved in this browser.')
   await expect(page.getByRole('button', { name: /Local storage unavailable/i })).toHaveCount(0)
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('paldawn:workspace:v1')).notes.approach)).toBe(note)
 
   await page.reload()
-  await page.getByRole('button', { name: 'Study' }).click()
+  // The explicit #study route restores the study drawer on reload.
+  await expect(page.getByRole('button', { name: 'My study' })).toHaveAttribute('aria-expanded', 'true')
   await expect(page.getByLabel('Private note for Approach')).toHaveValue(note)
 
   await page.getByRole('button', { name: 'Close panel' }).click()
@@ -244,7 +245,7 @@ test('full-width drawers are modal, contain keyboard focus, and restore the trig
   await page.goto('./')
   const drawer = page.locator('.drawer')
 
-  const studyTrigger = page.getByRole('button', { name: 'Study', exact: true })
+  const studyTrigger = page.getByRole('button', { name: 'My study', exact: true })
   await studyTrigger.focus()
   await page.locator('[data-panel="mission"]').evaluate((element) => element.click())
   await expect(page.getByRole('heading', { name: 'An engine demonstration, honestly labeled.' })).toBeVisible()
@@ -264,7 +265,7 @@ test('full-width drawers are modal, contain keyboard focus, and restore the trig
   await expect(drawer).toHaveCount(0)
   await expect(settingsTrigger).toBeFocused()
 
-  for (const panelName of ['Study', 'Settings', 'Help']) {
+  for (const panelName of ['My study', 'Settings', 'Help']) {
     const trigger = page.getByRole('button', { name: panelName, exact: true })
     await trigger.focus()
     await trigger.press('Enter')

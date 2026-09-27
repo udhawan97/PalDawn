@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { DEFAULT_VISIBLE, SYSTEMS, type Atlas, type Concept, type SceneState, type SystemId, type View } from './anatomy'
-import { relatedLessons, searchStructures, SYSTEM_READING } from './studyLinks'
+import { ORGAN_ANCHORS, relatedLessons, searchStructures, SYSTEM_READING } from './studyLinks'
+import { BODY_PART_LABELS, type BodyPartId } from '../data/diseases'
 import { registerAtlasTools } from './agent-tools'
 import { useAtlas } from '../state/atlas'
 import { useSettings } from '../state/settings'
@@ -27,10 +28,11 @@ type StudySession = { state: SceneState; chosen: Concept | null; query: string }
 const sessions: Record<'male' | 'female', StudySession> = { male: { state: initial(), chosen: null, query: '' }, female: { state: { ...initial(), visible: [...DEFAULT_VISIBLE, 'integumentary'] }, chosen: null, query: '' } }
 let lastSex: 'male' | 'female' = 'male'
 type Context = { systems: Record<string, string>; structures: Record<string, string>; femaleSystems?: Record<string, string>; femaleStructures?: Record<string, string>; femaleReading?: Context['reading']; reading?: Record<string, { source: string; checked: string; topics: { title: string; url: string }[] }> }
-export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: {
+export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy, requestedBodyPart }: {
   onClose: () => void
   retainedStudy: AnatomyStudySession | null
   onRetainStudy: (session: AnatomyStudySession) => void
+  requestedBodyPart?: BodyPartId | null
 }) {
   const [sex, setSex] = useState<'male' | 'female'>(() => { const ref = new URL(window.location.href).searchParams.get('reference'); return ref === 'male' || ref === 'female' ? ref : lastSex })
   const session = sessions[sex]
@@ -61,6 +63,7 @@ export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: 
   const [studyPersisted, setStudyPersisted] = useState(initialStoredStudy.persisted)
   const studyPersistedRef = useRef(studyPersisted)
   const [studyStatus, setStudyStatus] = useState(initialStoredStudy.status)
+  const [bridgeStatus, setBridgeStatus] = useState('')
   const retainStudy = useCallback((data: AnatomyStudyData, persisted: boolean, status: string) => {
     studyDataRef.current = data
     studyPersistedRef.current = persisted
@@ -128,8 +131,27 @@ export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: 
       if (abort.signal.aborted) return
       setAtlas(data)
       setContext(explanations)
+      if (requestedBodyPart) {
+        const anchor = ORGAN_ANCHORS.find((candidate) => candidate.part === requestedBodyPart &&
+          (sex === 'female' ? candidate.id.startsWith('HRA:') : candidate.id.startsWith('FMA')))
+        const requested = anchor ? (data as Atlas).concepts.find((concept) => concept.id === anchor.id) : null
+        if (requested) {
+          setBridgeStatus('')
+          sessions[sex].chosen = requested
+          setChosen(requested)
+          setTab('study')
+          setState(current => ({ ...current, selected: requested.elements, explode: 0, isolate: false, rotate: false }))
+        } else {
+          const label = BODY_PART_LABELS[requestedBodyPart]
+          sessions[sex].chosen = null
+          setChosen(null)
+          setTab('structures')
+          setState(current => ({ ...current, selected: [], isolate: false, rotate: false }))
+          setBridgeStatus(`${label} is not available in this ${sex} reference. Choose another structure or switch references.`)
+        }
+      }
       const rememberedId = studyDataRef.current.lastSelection[sex]
-      const remembered = rememberedId ? (data as Atlas).concepts.find((concept) => concept.id === rememberedId) : null
+      const remembered = !requestedBodyPart && rememberedId ? (data as Atlas).concepts.find((concept) => concept.id === rememberedId) : null
       if (remembered && !sessions[sex].chosen) {
         setChosen(remembered)
         setTab('study')
@@ -138,10 +160,10 @@ export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: 
     })
       .catch(e => { if (!abort.signal.aborted) setError(e instanceof Error ? e.message : 'Could not load anatomy.') })
     return () => abort.abort()
-  }, [attempt, sex])
+  }, [attempt, requestedBodyPart, sex])
   const parts = useMemo(() => new Map(atlas?.parts.map(p => [p.id, p])), [atlas])
   const choose = useCallback((concept: Concept) => {
-    setTour(false); setConditionQuery(''); setChosen(concept); setQuiz(false); setRevealed(false); setTab('study')
+    setTour(false); setConditionQuery(''); setBridgeStatus(''); setChosen(concept); setQuiz(false); setRevealed(false); setTab('study')
     setState(s => ({ ...s, selected: concept.elements, explode: 0, rotate: false }))
     updateStudy(current => ({ ...current, lastSelection: { ...current.lastSelection, [sex]: concept.id } }), 'Last selected structure saved in this browser.')
     requestAnimationFrame(() => title.current?.focus())
@@ -195,6 +217,7 @@ export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: 
     <header className="study-header"><div><p className="study-kicker">PALDAWN / ANATOMY LAB</p><h1>Know the body.<br className="mobile-break"/> Follow the connections.</h1></div><div className="study-header-controls"><div className="study-reference-switch" role="group" aria-label="Reference anatomy"><button aria-pressed={sex === 'male'} onClick={() => changeSex('male')}>Male reference</button><button aria-pressed={sex === 'female'} onClick={() => changeSex('female')}>Female reference</button></div><button className="study-layout-toggle" aria-pressed={researchFocus} onClick={() => setResearchFocus(v => !v)}>{researchFocus ? 'Show library' : 'Focus on research'}</button><button onClick={onClose}>Back to PalDawn ↗</button></div></header>
     <div className="study-scope">Local study candidate · Qualified anatomy and clinical review pending · {sex === 'male' ? 'BodyParts3D adult male reference · Anatomical variations are not fully represented.' : 'HRA female reference assembly · Skeleton and muscle coverage are partial; pregnancy structures are optional.'}</div>
     {studyStatus ? <p className="study-storage-status" role="status" data-persisted={studyPersisted}>{studyStatus}</p> : null}
+    {bridgeStatus ? <p className="study-storage-status" role="status">{bridgeStatus}</p> : null}
     <div className={`study-workspace ${researchFocus ? 'research-focus' : ''}`}>
       <aside className={`study-library ${tab === 'study' ? 'mobile-hidden' : ''}`} aria-label="Anatomy library">
         <nav className="study-tabs" aria-label="Library view"><button aria-pressed={tab !== 'systems'} onClick={() => setTab('structures')}>Structures</button><button aria-pressed={tab === 'systems'} onClick={() => setTab('systems')}>System layers</button></nav>
@@ -263,6 +286,14 @@ export default function AnatomyStudy({ onClose, retainedStudy, onRetainStudy }: 
             {pendingStudyImport ? <><button onClick={() => {
               const persisted = saveAnatomyStudy(pendingStudyImport)
               retainStudy(pendingStudyImport, persisted, persisted ? 'Anatomy study backup restored in this browser.' : 'Backup loaded in this tab, but browser storage is unavailable. Export before reloading.')
+              const restoredId = pendingStudyImport.lastSelection[sex]
+              const restored = restoredId ? atlas?.concepts.find(concept => concept.id === restoredId) : null
+              if (restored) {
+                sessions[sex].chosen = restored
+                setChosen(restored)
+                setTab('study')
+                setState(current => ({ ...current, selected: restored.elements, explode: 0, rotate: false }))
+              }
               setPendingStudyImport(null)
             }}>Confirm backup replacement</button><button onClick={() => { setPendingStudyImport(null); setStudyStatus('Backup replacement cancelled.') }}>Cancel backup replacement</button></> : null}
             {confirmClearStudy ? <><button onClick={() => {

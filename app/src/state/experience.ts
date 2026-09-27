@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { JOURNEY, clampProgress, stageIndexAt, type NarrationMode } from '../journey/journey'
 import { loadJourneySession, saveJourneySession } from '../platform/localData'
 
-export type OpenPanel = 'mission' | 'transcript' | 'workspace' | 'settings' | 'help' | null
+export type OpenPanel = 'body' | 'mission' | 'transcript' | 'workspace' | 'settings' | 'help' | null
 
 interface ExperienceState {
   entered: boolean
@@ -13,6 +13,7 @@ interface ExperienceState {
   resumeAfterSettings: boolean
   start: (reducedMotion: boolean) => void
   resume: () => void
+  showHome: () => void
   pause: () => void
   togglePlayback: (reducedMotion: boolean) => void
   replay: (reducedMotion: boolean) => void
@@ -44,6 +45,7 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
     set({ entered: true, playing: !reducedMotion, progress, resumeAfterSettings: false })
   },
   resume: () => set({ entered: true, playing: false, openPanel: null, resumeAfterSettings: false }),
+  showHome: () => set({ entered: false, playing: false, openPanel: null, resumeAfterSettings: false }),
   pause: () => set({ playing: false }),
   togglePlayback: (reducedMotion) => {
     if (reducedMotion) {

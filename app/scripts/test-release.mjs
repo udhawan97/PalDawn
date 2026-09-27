@@ -9,7 +9,7 @@ const read = (path) => readFileSync(new URL(path, ROOT), 'utf8')
 const packageJson = JSON.parse(read('package.json'))
 const journey = JSON.parse(read('src/data/p0-journey.json'))
 
-assert.equal(packageJson.version, '0.5.1', 'package version must match the release')
+assert.equal(packageJson.version, '0.6.0', 'package version must match the release')
 assert.match(packageJson.description, /Mechanism Lens/, 'package description must match the release identity')
 assert.equal(journey.release, packageJson.version, 'journey and package versions must match')
 assert.equal(journey.content_status, 'synthetic_engineering_only')

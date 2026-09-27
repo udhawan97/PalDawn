@@ -5,7 +5,7 @@ test.describe.configure({ timeout: 60_000 })
 test('the 50-condition curriculum separates explorable previews from the build queue', async ({ page }) => {
   await page.goto('./')
 
-  const launch = page.getByRole('button', { name: 'View 50' })
+  const launch = page.getByRole('button', { name: 'Browse 50' })
   await launch.click()
 
   const catalog = page.getByRole('dialog', { name: 'Fifty conditions. One body. Six scales.' })
@@ -34,7 +34,7 @@ test('the 50-condition curriculum separates explorable previews from the build q
 test('the curriculum remains bounded on a narrow phone and can launch an existing journey', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'View 50' }).click()
+  await page.getByRole('button', { name: 'Browse 50' }).click()
 
   const catalog = page.getByRole('dialog', { name: 'Fifty conditions. One body. Six scales.' })
   const geometry = await catalog.evaluate((element) => {
@@ -76,7 +76,7 @@ test('the six-scale legend becomes a keyboard-scrollable local region only when 
   for (const width of [320, 375, 414]) {
     await page.setViewportSize({ width, height: 844 })
     await page.goto('./')
-    await page.getByRole('button', { name: 'View 50' }).click()
+    await page.getByRole('button', { name: 'Browse 50' }).click()
     const legend = page.getByRole('list', { name: 'Planned semantic scale coverage' })
     await expect(legend).toHaveAttribute('data-scrollable', 'true')
     await expect(legend).toHaveAttribute('tabindex', '0')
@@ -101,7 +101,7 @@ test('the six-scale legend becomes a keyboard-scrollable local region only when 
 
   await page.setViewportSize({ width: 1024, height: 844 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'View 50' }).click()
+  await page.getByRole('button', { name: 'Browse 50' }).click()
   const desktopLegend = page.getByRole('list', { name: 'Planned semantic scale coverage' })
   await expect(desktopLegend).not.toHaveAttribute('data-scrollable', 'true')
   await expect(desktopLegend).not.toHaveAttribute('tabindex', '0')

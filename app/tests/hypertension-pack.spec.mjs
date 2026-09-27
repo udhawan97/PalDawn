@@ -4,7 +4,7 @@ test.describe.configure({ timeout: 60_000 })
 
 test('hypertension opens a fail-closed six-scale planning dossier', async ({ page }) => {
   await page.goto('./')
-  await page.getByRole('button', { name: 'View 50' }).click()
+  await page.getByRole('button', { name: 'Browse 50' }).click()
 
   const catalog = page.getByRole('dialog', { name: 'Fifty conditions. One body. Six scales.' })
   const search = catalog.getByRole('searchbox', { name: 'Find a condition or system' })
@@ -41,13 +41,13 @@ test('hypertension opens a fail-closed six-scale planning dossier', async ({ pag
   await expect(inspector).toHaveCount(0)
   await page.keyboard.press('Escape')
   await expect(catalog).toHaveCount(0)
-  await expect(page.getByRole('button', { name: 'View 50' })).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Browse 50' })).toBeFocused()
 })
 
 test('the hypertension dossier stays bounded on a narrow phone', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'View 50' }).click()
+  await page.getByRole('button', { name: 'Browse 50' }).click()
 
   const catalog = page.getByRole('dialog', { name: 'Fifty conditions. One body. Six scales.' })
   await catalog.getByRole('searchbox', { name: 'Find a condition or system' }).fill('CV-03')
