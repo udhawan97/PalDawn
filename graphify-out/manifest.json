@@ -1,6 +1,6 @@
 {
   "app/package.json": {
-    "mtime": 1790482110.3540318,
+    "mtime": 1790485361.3420827,
     "ast_hash": "83d97ba8db817f84da73e6fd0a354d3d",
     "semantic_hash": ""
   },
@@ -10,7 +10,7 @@
     "semantic_hash": "fb59e5a90b869a1ac49fba4787759918"
   },
   "app/src/App.tsx": {
-    "mtime": 1790485167.2631977,
+    "mtime": 1790485361.3426359,
     "ast_hash": "4f9854f5f65d84758bdcda31696d17b4",
     "semantic_hash": ""
   },
@@ -235,12 +235,12 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790482110.3564005,
+    "mtime": 1790485361.341465,
     "ast_hash": "e40375471fd3357d2c0869191a1f57ab",
     "semantic_hash": ""
   },
   "app/README.md": {
-    "mtime": 1790482110.357835,
+    "mtime": 1790485361.3416374,
     "ast_hash": "6e6d20433314d1bca135153aee8663a8",
     "semantic_hash": ""
   },
@@ -260,7 +260,7 @@
     "semantic_hash": ""
   },
   "docs/PLAN.md": {
-    "mtime": 1790482110.3585622,
+    "mtime": 1790485361.3468523,
     "ast_hash": "afd37d4c86a2050dda19c0c7813c34ab",
     "semantic_hash": ""
   },
@@ -380,12 +380,12 @@
     "semantic_hash": ""
   },
   "app/scripts/test-release.mjs": {
-    "mtime": 1790482202.5200608,
+    "mtime": 1790485361.3424697,
     "ast_hash": "f4e2842d6df7ad9ddb219cb8920bab7a",
     "semantic_hash": ""
   },
   "app/src/data/p0-journey.json": {
-    "mtime": 1790482202.519433,
+    "mtime": 1790485361.3434665,
     "ast_hash": "aa9602f3cedb7e3dde5c27cc1d276f37",
     "semantic_hash": ""
   },
@@ -410,7 +410,7 @@
     "semantic_hash": ""
   },
   "app/src/state/experience.ts": {
-    "mtime": 1790480597.0735638,
+    "mtime": 1790485361.3439777,
     "ast_hash": "7f6eebff8f5486397f07e8d341a83de8",
     "semantic_hash": ""
   },
@@ -420,12 +420,12 @@
     "semantic_hash": ""
   },
   "app/src/ui/FlightDeck.tsx": {
-    "mtime": 1790484995.880651,
-    "ast_hash": "ce6a755f1ea38d661fec6b28aa1c45bd",
+    "mtime": 1790486695.7355344,
+    "ast_hash": "479be1091d0ff2ff6363824b1bfeb8a8",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790482131.496103,
+    "mtime": 1790485361.3412623,
     "ast_hash": "084f9aefa1eba2721a1dca4c0370030d",
     "semantic_hash": ""
   },
@@ -465,7 +465,7 @@
     "semantic_hash": ""
   },
   "app/src/platform/diagnostics.ts": {
-    "mtime": 1790482202.519794,
+    "mtime": 1790485361.3436422,
     "ast_hash": "854a16f137f8c2e4e30f2b5663a4943f",
     "semantic_hash": ""
   },
@@ -550,7 +550,7 @@
     "semantic_hash": ""
   },
   "app/tests/foundation-plus-3.spec.mjs": {
-    "mtime": 1790481361.721688,
+    "mtime": 1790485361.3457644,
     "ast_hash": "3f0e117975c9ce42d1c8583a201901b5",
     "semantic_hash": ""
   },
@@ -565,7 +565,7 @@
     "semantic_hash": ""
   },
   "app/tests/brand.spec.mjs": {
-    "mtime": 1790482499.71993,
+    "mtime": 1790485361.345233,
     "ast_hash": "a606c789600900c578e7793411667d7e",
     "semantic_hash": ""
   },
@@ -625,7 +625,7 @@
     "semantic_hash": ""
   },
   "app/tests/userflow-design.spec.mjs": {
-    "mtime": 1790483681.9073462,
+    "mtime": 1790485361.3463461,
     "ast_hash": "f87962bb511a1c45d6acb27dcae8499d",
     "semantic_hash": ""
   },
@@ -635,7 +635,7 @@
     "semantic_hash": ""
   },
   "app/src/scene/HumanSystemsScene.tsx": {
-    "mtime": 1790480909.557691,
+    "mtime": 1790485361.3438294,
     "ast_hash": "1fe3cd0a9a499ff617fb05a2d4b2960c",
     "semantic_hash": ""
   },
@@ -645,12 +645,12 @@
     "semantic_hash": ""
   },
   "app/src/ui/DiseaseExplorer.tsx": {
-    "mtime": 1790485051.3210537,
+    "mtime": 1790485361.3444726,
     "ast_hash": "04926cb36c52e5e49abcee7e6ae99775",
     "semantic_hash": ""
   },
   "app/tests/disease-atlas.spec.mjs": {
-    "mtime": 1790481361.7210968,
+    "mtime": 1790485361.3455486,
     "ast_hash": "0520a579ec48673eb37512885088d1c8",
     "semantic_hash": ""
   },
@@ -745,7 +745,7 @@
     "semantic_hash": ""
   },
   "app/tests/curriculum-catalog.spec.mjs": {
-    "mtime": 1790481361.7201982,
+    "mtime": 1790485361.345387,
     "ast_hash": "37d3f4291c0cc056589306610e55d514",
     "semantic_hash": ""
   },
@@ -780,7 +780,7 @@
     "semantic_hash": ""
   },
   "app/tests/hypertension-pack.spec.mjs": {
-    "mtime": 1790481361.7195528,
+    "mtime": 1790485361.3460028,
     "ast_hash": "7a6da548ac2c00ca2eed93dff2630204",
     "semantic_hash": ""
   },
@@ -795,7 +795,7 @@
     "semantic_hash": ""
   },
   "app/scripts/test-pwa-browser-lifecycle.mjs": {
-    "mtime": 1790484748.7305284,
+    "mtime": 1790485361.3423102,
     "ast_hash": "21924af424cedbc0665270edb91a9946",
     "semantic_hash": ""
   },
@@ -955,7 +955,7 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyStudy.tsx": {
-    "mtime": 1790484995.8810022,
+    "mtime": 1790485361.3429935,
     "ast_hash": "fb16660a106125299cc65b1097d1d20c",
     "semantic_hash": ""
   },
@@ -990,7 +990,7 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/studyLinks.ts": {
-    "mtime": 1790484328.4577186,
+    "mtime": 1790485361.3433132,
     "ast_hash": "2e048b9c87224088451f443aef0b74f2",
     "semantic_hash": ""
   },
@@ -1005,7 +1005,7 @@
     "semantic_hash": ""
   },
   "app/src/anatomy/AnatomyLanding.tsx": {
-    "mtime": 1790480909.5568137,
+    "mtime": 1790485361.3428082,
     "ast_hash": "b232e9217fa9f461fd8b15aac14dac18",
     "semantic_hash": ""
   },
@@ -1020,7 +1020,7 @@
     "semantic_hash": ""
   },
   "docs/ANATOMY-LAB.md": {
-    "mtime": 1790482210.027994,
+    "mtime": 1790485361.346495,
     "ast_hash": "b38f6a4f3d3c180f350665fe8d840a6d",
     "semantic_hash": ""
   },
@@ -1060,12 +1060,12 @@
     "semantic_hash": ""
   },
   "docs/GETTING-STARTED.md": {
-    "mtime": 1790482110.3569615,
+    "mtime": 1790485361.346639,
     "ast_hash": "c9d1874364c8027f489e04a2a971496e",
     "semantic_hash": ""
   },
   "docs/PUBLIC-SURFACE-EVIDENCE.md": {
-    "mtime": 1790484574.1151822,
+    "mtime": 1790485361.3470151,
     "ast_hash": "8f7a0f003e7de05eff8b124f95b3e53e",
     "semantic_hash": ""
   },
@@ -1075,7 +1075,7 @@
     "semantic_hash": ""
   },
   "docs/assets/paldawn-web-introduction.png": {
-    "mtime": 1790484737.854929,
+    "mtime": 1790485361.349052,
     "ast_hash": "87cefb39c7db0aab0c314efa58956a36",
     "semantic_hash": ""
   },
@@ -1110,7 +1110,7 @@
     "semantic_hash": ""
   },
   "app/tests/anatomy-study.spec.mjs": {
-    "mtime": 1790485167.2637649,
+    "mtime": 1790485361.3450341,
     "ast_hash": "286ac541580010a0c948b9e56d4b93b3",
     "semantic_hash": ""
   },
@@ -1160,7 +1160,7 @@
     "semantic_hash": ""
   },
   "app/tests/study-print-focus.spec.mjs": {
-    "mtime": 1790481361.7207026,
+    "mtime": 1790485361.346156,
     "ast_hash": "d905118ef8d6e4de3a0f8c10a2253d48",
     "semantic_hash": ""
   },
@@ -1170,17 +1170,17 @@
     "semantic_hash": ""
   },
   "app/tests/home-navigation.spec.mjs": {
-    "mtime": 1790485009.448905,
-    "ast_hash": "1c6c63b6931c20ab15023f56decf447e",
+    "mtime": 1790486661.676258,
+    "ast_hash": "5d5d871916bfa0510c1d56f17145a908",
     "semantic_hash": ""
   },
   "docs/plans/2026-09-27-home-navigation-and-3d-recovery.md": {
-    "mtime": 1790484574.1143045,
+    "mtime": 1790485361.3493419,
     "ast_hash": "1a2a76f621d9ffe2033ba879f9df3056",
     "semantic_hash": ""
   },
   "docs/releases/v0.6.0.md": {
-    "mtime": 1790482131.4965367,
+    "mtime": 1790485361.3494601,
     "ast_hash": "7f6c0575d27589d908e3a09dd4f826aa",
     "semantic_hash": ""
   },

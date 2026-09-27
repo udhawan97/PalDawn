@@ -1581,7 +1581,11 @@ export function FlightDeck({
     setOpenPanel(null, { resumePlayback: false })
     showHome()
     if (pushHistory) primaryDestinationHash('conditions')
-    window.requestAnimationFrame(() => window.dispatchEvent(new Event('paldawn:open-conditions')))
+    window.setTimeout(() => {
+      if (window.location.hash === '#conditions') {
+        window.dispatchEvent(new Event('paldawn:open-conditions'))
+      }
+    }, 0)
   }, [closeAtlas, setOpenPanel, showHome])
 
   const openStudy = useCallback((pushHistory = true) => {
@@ -1682,9 +1686,10 @@ export function FlightDeck({
   useEffect(() => registerPwaUpdatePreparation(preparePwaUpdate), [preparePwaUpdate])
 
   useEffect(() => {
-    const followPrimaryDestination = () => {
+    const followPrimaryDestination = (event?: PopStateEvent) => {
       const destination = window.location.hash.slice(1)
-      if (!destination || destination === 'home') openHome(false)
+      if (!destination && event && !useAtlas.getState().open) openHome(false)
+      else if (destination === 'home') openHome(false)
       else if (destination === 'body') openBody(false)
       else if (destination === 'conditions') openConditions(false)
       else if (destination === 'study') openStudy(false)

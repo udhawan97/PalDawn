@@ -1,7 +1,7 @@
 # Graph Report - PalDawn  (2026-09-27)
 
 ## Corpus Check
-- 219 files · ~351,485 words
+- 219 files · ~351,497 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b415294b`
+- Built from commit: `c87e2f0d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

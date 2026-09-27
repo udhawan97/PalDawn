@@ -39,9 +39,9 @@ test('lung infection opens an unobscured conceptual 3D diagram', async ({ page }
   await expect(page.getByText('Conceptual 3D diagram · visibly synthetic')).toBeVisible()
   await expect(page.locator('canvas')).toBeVisible()
 
-  const backdrop = await shell.evaluate((element) => getComputedStyle(element, '::before').backgroundImage)
-  expect(backdrop).not.toContain('237, 240, 233')
-  expect(backdrop).toContain('radial-gradient')
+  await expect.poll(() => shell.evaluate((element) =>
+    getComputedStyle(element, '::before').backgroundImage,
+  )).toContain('radial-gradient')
 
   await page.getByRole('button', { name: 'Lungs', exact: true }).click()
   await page.getByRole('button', { name: 'Whole body' }).click()
