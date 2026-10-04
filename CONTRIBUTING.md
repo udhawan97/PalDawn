@@ -5,8 +5,9 @@ Three tracks — pick yours. First run `npm test` in `app/` and
 
 ## 🧑‍💻 Code (app/, pipeline/)
 React + TypeScript + React Three Fiber. Look for `good first issue`. PRs need
-passing CI (typecheck, build, release-contract checks, dependency-license
-inventory, provenance fixtures, and bundle-size budget) and one review.
+passing CI (provenance checks, the app test suite, Chromium/WebKit browser and
+PWA checks, graphics build/tests, dependency-license inventory, and the anatomy
+candidate build/browser checks) and one review.
 
 ## 🎨 Art & shaders
 Blender modelers and shader artists are the heart of this project — LOD work
