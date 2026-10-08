@@ -377,6 +377,25 @@ self.addEventListener('message', (event) => {
   }
 })
 
+// Runtime caching is optional: storage failures must not discard a usable fetch.
+const matchRuntimeCache = async (request) => {
+  try {
+    return await caches.match(request)
+  } catch {
+    return undefined
+  }
+}
+
+const storeRuntimeResponse = async (request, response) => {
+  if (!response.ok) return
+  try {
+    const cache = await caches.open(CACHE_NAME)
+    await cache.put(request, response.clone())
+  } catch {
+    // Keep the network response available when storage is disabled or full.
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const request = event.request
   if (request.method !== 'GET') return
@@ -388,26 +407,20 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
       try {
         const response = await fetch(request)
-        if (response.ok) {
-          const cache = await caches.open(CACHE_NAME)
-          await cache.put('./', response.clone())
-        }
+        await storeRuntimeResponse('./', response)
         return response
       } catch {
-        return (await caches.match(request)) ?? (await caches.match('./')) ?? Response.error()
+        return (await matchRuntimeCache(request)) ?? (await matchRuntimeCache('./')) ?? Response.error()
       }
     })())
     return
   }
 
   event.respondWith((async () => {
-    const cached = await caches.match(request)
+    const cached = await matchRuntimeCache(request)
     if (cached) return cached
     const response = await fetch(request)
-    if (response.ok) {
-      const cache = await caches.open(CACHE_NAME)
-      await cache.put(request, response.clone())
-    }
+    await storeRuntimeResponse(request, response)
     return response
   })())
 })

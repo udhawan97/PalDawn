@@ -6,7 +6,75 @@ const serviceWorkerSource = readFileSync(new URL('../public/sw.js', import.meta.
 
 const cacheKey = (request) => typeof request === 'string' ? request : request.url
 
+async function runFetchCacheFailureTests() {
+  const dispatchFetch = ({ mode = 'cors', failure, offline = false, cached, status = 200, method = 'GET', origin = 'https://example.test' } = {}) => {
+    const listeners = new Map()
+    const writes = []
+    let fetchCount = 0
+    vm.runInNewContext(serviceWorkerSource, {
+      URL, Request, Response,
+      self: {
+        addEventListener: (name, listener) => listeners.set(name, listener),
+        location: { origin: 'https://example.test' },
+        registration: { scope: 'https://example.test/PalDawn/' },
+      },
+      caches: {
+        match: async (request) => {
+          if (failure === 'match') throw new Error('Cache storage unavailable')
+          return cacheKey(request) === cached ? new Response('cached body') : undefined
+        },
+        open: async () => {
+          if (failure === 'open') throw new Error('Cache storage unavailable')
+          return { put: async (request, response) => {
+            if (failure === 'put') throw new Error('Cache quota exceeded')
+            writes.push([cacheKey(request), await response.text()])
+          } }
+        },
+      },
+      fetch: async () => {
+        fetchCount += 1
+        if (offline) throw new Error('Network unavailable')
+        return new Response('network body', { status })
+      },
+    }, { filename: 'sw.js' })
+    let response
+    listeners.get('fetch')({
+      request: { url: `${origin}/PalDawn/asset.js`, method, mode },
+      respondWith: (promise) => { response = promise },
+    })
+    return { response, writes, fetchCount: () => fetchCount }
+  }
+
+  for (const mode of ['navigate', 'cors']) {
+    for (const failure of ['open', 'put', 'match', undefined]) {
+      const result = dispatchFetch({ mode, failure })
+      const response = await result.response
+      assert.equal(response.status, 200, `${mode}: ${failure ?? 'healthy'} cache must retain a successful response`)
+      assert.equal(await response.text(), 'network body', `${mode}: cache failures must not consume or replace the network body`)
+      if (!failure) assert.deepEqual(result.writes, [[mode === 'navigate' ? './' : 'https://example.test/PalDawn/asset.js', 'network body']])
+    }
+    const notFound = dispatchFetch({ mode, status: 404 })
+    assert.equal((await notFound.response).status, 404, 'HTTP errors must remain visible')
+    assert.equal(notFound.writes.length, 0, 'HTTP errors must not be cached')
+  }
+
+  for (const cached of ['https://example.test/PalDawn/asset.js', './']) {
+    const result = dispatchFetch({ mode: 'navigate', offline: true, cached })
+    assert.equal(await (await result.response).text(), 'cached body', 'offline navigation must retain request and shell fallback')
+  }
+  const cachedAsset = dispatchFetch({ cached: 'https://example.test/PalDawn/asset.js', offline: true })
+  assert.equal(await (await cachedAsset.response).text(), 'cached body')
+  assert.equal(cachedAsset.fetchCount(), 0, 'assets must remain cache first')
+  for (const failure of [undefined, 'match']) {
+    assert.equal((await dispatchFetch({ mode: 'navigate', offline: true, failure }).response).type, 'error', 'unavailable offline navigation must produce a network error')
+    await assert.rejects(dispatchFetch({ offline: true, failure }).response, /Network unavailable/, 'asset network failures must remain failures')
+  }
+  assert.equal(dispatchFetch({ method: 'POST' }).response, undefined, 'non-GET requests must remain untouched')
+  assert.equal(dispatchFetch({ origin: 'https://other.test' }).response, undefined, 'cross-origin requests must remain untouched')
+}
+
 export async function runPwaLifecycleTests() {
+  await runFetchCacheFailureTests()
   const listeners = new Map()
   const cacheBuckets = new Map()
   const clientMessages = [[], []]

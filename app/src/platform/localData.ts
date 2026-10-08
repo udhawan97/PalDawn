@@ -12,6 +12,9 @@ export const PALDAWN_STORAGE_FAILURE_EVENT = 'paldawn:storage-failure'
 export const PALDAWN_STORAGE_SUCCESS_EVENT = 'paldawn:storage-success'
 export const MAX_STAGE_NOTE_LENGTH = 1200
 export const MAX_ATLAS_STUDY_RECORDS = 150
+// Room for every bounded note, including JSON's six-byte control-character escapes,
+// record IDs, First Light workspace, and metadata; still reject oversized files before reading.
+export const MAX_LOCAL_DATA_BACKUP_BYTES = 2 * 1024 * 1024
 
 export interface StorageFailureDetail {
   key: string
@@ -622,6 +625,9 @@ const normalizeImportedJourney = (value: unknown): JourneySession | null => {
 }
 
 export function parseLocalDataImport(text: string): LocalDataImportResult {
+  if (new TextEncoder().encode(text).byteLength > MAX_LOCAL_DATA_BACKUP_BYTES) {
+    return { ok: false, error: 'That backup is larger than the 2 MiB local-data limit.' }
+  }
   let value: unknown
   try {
     value = JSON.parse(text)

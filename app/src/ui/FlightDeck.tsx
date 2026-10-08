@@ -32,6 +32,7 @@ import {
   PALDAWN_WORKSPACE_KEY,
   PALDAWN_ATLAS_STUDY_KEY,
   MAX_STAGE_NOTE_LENGTH,
+  MAX_LOCAL_DATA_BACKUP_BYTES,
   exportLocalData,
   exportRawLocalDataRecoveryBackup,
   getLocalDataRecoveryState,
@@ -428,7 +429,7 @@ function BodyPanel() {
   return (
     <div className="body-access-panel">
       <p className="panel-kicker">Explore body</p>
-      <h2>Two body views, with different jobs.</h2>
+      <h2 id="panel-title">Two body views, with different jobs.</h2>
       <p>
         The public condition map uses project-authored conceptual geometry to explain mechanisms. The detailed male and female reference assemblies remain a separately prepared local Anatomy Lab candidate while qualified anatomy and clinical review is pending.
       </p>
@@ -932,9 +933,9 @@ function SettingsPanel({
     setResult: (result: Extract<LocalDataImportResult, { ok: true }> | null) => void,
     readyMessage: string,
   ) => {
-    if (file.size > 256 * 1024) {
+    if (file.size > MAX_LOCAL_DATA_BACKUP_BYTES) {
       setResult(null)
-      reportStatus('That backup is larger than the 256 KiB local-data limit.')
+      reportStatus('That backup is larger than the 2 MiB local-data limit.')
       return
     }
     void file.text().then((text) => {

@@ -13,9 +13,9 @@ test('oversized backups are rejected before reading or replacing local data', as
   await page.getByRole('button', { name: 'Settings' }).click()
   const before = await page.evaluate(() => JSON.stringify(localStorage))
   await page.locator('#local-data-import').setInputFiles({
-    name: 'oversized.json', mimeType: 'application/json', buffer: Buffer.alloc(256 * 1024 + 1, ' '),
+    name: 'oversized.json', mimeType: 'application/json', buffer: Buffer.alloc(2 * 1024 * 1024 + 1, ' '),
   })
-  await expect(page.getByText('That backup is larger than the 256 KiB local-data limit.')).toBeVisible()
+  await expect(page.getByText('That backup is larger than the 2 MiB local-data limit.')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Replacement preview' })).toHaveCount(0)
   expect(await page.evaluate(() => JSON.stringify(localStorage))).toBe(before)
 })

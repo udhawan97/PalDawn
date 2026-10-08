@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type RefObject } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
 import {
   CURRICULUM_SYSTEMS,
@@ -70,36 +70,47 @@ export function CurriculumCatalog({
     }
   }, [])
 
+  useLayoutEffect(() => {
+    const background = [...document.body.children].filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && !element.contains(dialogRef.current),
+    )
+    const priorInert = background.map((element) => element.inert)
+    background.forEach((element) => { element.inert = true })
+    return () => background.forEach((element, index) => { element.inert = priorInert[index] })
+  }, [])
+
   useEffect(() => {
     const returnTarget = returnFocusTo.current
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        event.stopPropagation()
-        onClose()
-        return
-      }
-      if (event.key !== 'Tab' || !dialogRef.current) return
-      const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), select:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-      )]
-      if (focusable.length === 0) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault()
-        last.focus()
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault()
-        first.focus()
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown)
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      window.requestAnimationFrame(() => returnTarget?.focus())
+      window.requestAnimationFrame(() => returnTarget?.focus({ preventScroll: true }))
     }
-  }, [onClose, returnFocusTo])
+  }, [returnFocusTo])
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
+    // The active modal owns keyboard events; native input behavior still works.
+    event.stopPropagation()
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      onClose()
+      return
+    }
+    if (event.key !== 'Tab' || !dialogRef.current) return
+    const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+    )].filter((element) => element.getClientRects().length > 0 && !element.closest('[inert]'))
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (!first || !last) {
+      event.preventDefault()
+      dialogRef.current.focus()
+    } else if (event.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
 
   const chooseJourney = (journeyId: string) => {
     onClose()
@@ -117,7 +128,7 @@ export function CurriculumCatalog({
       }}
     >
       <section
-        ref={dialogRef}
+        ref={dialogRef} tabIndex={-1} onKeyDown={handleKeyDown}
         className="curriculum-catalog"
         data-inspector-open={selectedProposal ? 'true' : undefined}
         role="dialog"
