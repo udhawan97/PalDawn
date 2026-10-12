@@ -4,13 +4,13 @@ import { DISEASES } from '../data/diseases'
 import { atlasStudyRecordId, type AtlasStudyData } from './localData'
 
 const privateNoteMarkdown = (value: string): string => value.trim()
-  ? value.trim().split('\n').map((line) => `    ${line}`).join('\n')
+  ? value.trim().split(/\r\n?|\n/).map((line) => `    ${line}`).join('\n')
   : '    _No private note._'
 
 export function studyWorkspaceMarkdown(workspace: LearnerWorkspace): string {
   const sections = JOURNEY.stages.map((stage, index) => {
     const checkpoint = workspace.checkpoints.includes(stage.id) ? 'Complete' : 'Open'
-    const note = workspace.notes[stage.id]?.trim() || '_No private note._'
+    const note = privateNoteMarkdown(workspace.notes[stage.id] ?? '')
     return [
       `## ${index + 1}. ${stage.label}`,
       '',

@@ -6,11 +6,12 @@
  * Policy (docs/PLAN.md — provenance-before-adoption):
  *   deny  : GPL, AGPL, CC BY-NC(-SA/ND), UNLICENSED, missing/unknown license
  *   review: LGPL, MPL, EPL, CDDL, anything not on the allowlist
- *   allow : permissive set below (plus OR-expressions satisfiable by it)
+ *   allow : permissive set in license-policy.mjs (plus complete OR alternatives)
  * Exit code 1 if any denied entry exists; 0 otherwise.
  */
 import { readdirSync, readFileSync, existsSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { classifyLicenseExpression as classifyExpression } from './license-policy.mjs'
 
 const ROOT = new URL('..', import.meta.url).pathname
 const NM = join(ROOT, 'node_modules')
@@ -26,43 +27,6 @@ const RESOLUTIONS = new Map([
     evidence: 'Published npm tarball ships a verbatim MIT LICENSE file (Copyright (c) 2019 Tim van Scherpenzeel); sha256 0969fa65680b694452c2c65981df14af5c192da24f2b1f87bdd51d8ed24efcfa. Only the package.json license field is absent. Transitive via @react-three/drei -> detect-gpu.',
   }],
 ])
-
-const ALLOW = new Set([
-  'MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'ISC', '0BSD',
-  'Zlib', 'CC0-1.0', 'Unlicense', 'BlueOak-1.0.0', 'Python-2.0',
-  'CC-BY-4.0', 'MIT-0', 'WTFPL',
-])
-
-function classifyId(id) {
-  const u = id.toUpperCase()
-  if (u.includes('AGPL')) return 'deny'
-  if (u.includes('LGPL')) return 'review'
-  if (u.includes('GPL')) return 'deny'
-  if (/BY[- ]?NC/.test(u)) return 'deny'
-  if (u === 'UNLICENSED' || u === 'NONE' || u === 'UNKNOWN') return 'deny'
-  if (ALLOW.has(id)) return 'allow'
-  return 'review'
-}
-
-function classifyExpression(expr) {
-  if (!expr || typeof expr !== 'string' || expr.trim() === '') return 'deny'
-  const cleaned = expr.replace(/[()]/g, ' ').trim()
-  if (/\sOR\s/i.test(cleaned)) {
-    const parts = cleaned.split(/\sOR\s/i).map((p) => p.trim())
-    const results = parts.map(classifyId)
-    if (results.includes('allow')) return 'allow'
-    if (results.includes('review')) return 'review'
-    return 'deny'
-  }
-  if (/\sAND\s/i.test(cleaned)) {
-    const parts = cleaned.split(/\sAND\s/i).map((p) => p.trim())
-    const results = parts.map(classifyId)
-    if (results.every((r) => r === 'allow')) return 'allow'
-    if (results.includes('deny')) return 'deny'
-    return 'review'
-  }
-  return classifyId(cleaned)
-}
 
 function licenseOf(pkg) {
   if (typeof pkg.license === 'string') return pkg.license

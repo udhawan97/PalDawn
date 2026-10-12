@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useEffect, useState, type ErrorInfo, type ReactNode } from 'react'
+import { Component, lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from 'react'
 import { FlightDeck } from './ui/FlightDeck'
 import { useExperience } from './state/experience'
 import { useAtlas } from './state/atlas'
@@ -101,6 +101,7 @@ function RenderFallback({
   freshRequestAvailable,
   onRetry,
   onTextVoyage,
+  returnFocus,
 }: {
   reason: string
   reducedMotion: boolean
@@ -108,9 +109,33 @@ function RenderFallback({
   freshRequestAvailable: boolean
   onRetry: () => void
   onTextVoyage: () => void
+  returnFocus: HTMLElement | null
 }) {
+  const recoveryRef = useRef<HTMLElement>(null)
+  useLayoutEffect(() => {
+    const controls = () => [...(recoveryRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? [])]
+    controls()[0]?.focus()
+    const containKeyboard = (event: KeyboardEvent) => {
+      // The learner interface remains mounted, but none of its global shortcuts
+      // may consume input while the recovery controls own the interaction.
+      event.stopImmediatePropagation()
+      if (event.key !== 'Tab') return
+      event.preventDefault()
+      const buttons = controls()
+      const index = buttons.indexOf(document.activeElement as HTMLButtonElement)
+      buttons[(index + (event.shiftKey ? -1 : 1) + buttons.length) % buttons.length]?.focus()
+    }
+    window.addEventListener('keydown', containKeyboard, true)
+    return () => {
+      window.removeEventListener('keydown', containKeyboard, true)
+      window.requestAnimationFrame(() => {
+        const targets = [returnFocus, ...document.querySelectorAll<HTMLElement>('.flight-ui .drawer, #intro-title, #flight-controls')]
+        targets.find((target) => target && target !== document.body && target.isConnected && target.getClientRects().length && !target.closest('[inert]'))?.focus({ preventScroll: true })
+      })
+    }
+  }, [returnFocus])
   return (
-    <main className="fallback" role="alert">
+    <main ref={recoveryRef} className="fallback" role="alertdialog" aria-modal="true" aria-labelledby="scene-recovery-title">
       <img
         className="fallback-brand-icon"
         src={`${import.meta.env.BASE_URL}${reducedMotion ? 'icon-static.svg' : 'icon.svg'}`}
@@ -118,8 +143,9 @@ function RenderFallback({
         aria-hidden="true"
       />
       <p className="eyebrow">PalDawn · Mechanism Lens</p>
-      <h1>The 3D map could not start.</h1>
+      <h1 id="scene-recovery-title">The 3D map could not start.</h1>
       <p>{reason} The disease guides and First Light text voyage remain available, and your saved position and settings stay on this device.</p>
+      <p>Unsaved work stays in this tab. Continue without 3D to copy or export it before reloading.</p>
       <div className="fallback-actions">
         <button className="primary-action" type="button" onClick={onRetry}>
           {reloadRequired ? freshRequestAvailable ? 'Reload the scene' : 'Reload the app' : 'Retry the scene'} <span aria-hidden="true">↻</span>
@@ -145,7 +171,26 @@ function JourneyApp() {
   const textVoyagePreferred = useSettings((s) => s.textVoyagePreferred)
   const setTextVoyagePreferred = useSettings((s) => s.setTextVoyagePreferred)
   const textVoyage = textVoyagePreferred || recoveryTextVoyage
+  const recoveryActive = !textVoyage && (!webgl2 || sceneIssue !== null)
+  const recoveryReturnFocus = useRef<HTMLElement | null>(null)
+  const sceneOwner = useMemo(() => ({ active: true }), [textVoyage, recoveryActive, sceneAttempt])
   const tier = resolveTier(qualityTier)
+
+  useLayoutEffect(() => {
+    sceneOwner.active = true
+    // Disposing a canvas can report context loss after a newer scene mounts.
+    return () => { sceneOwner.active = false }
+  }, [sceneOwner])
+
+  const reportSceneIssue = (reason: string) => {
+    recoveryReturnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    useExperience.getState().pause()
+    setSceneIssue(reason)
+  }
+
+  useLayoutEffect(() => {
+    if (recoveryActive) useExperience.getState().pause()
+  }, [recoveryActive])
 
   useEffect(() => {
     const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
@@ -164,7 +209,8 @@ function JourneyApp() {
   const retryScene = () => {
     const available = webgl2Available()
     setWebgl2(available)
-    setSceneIssue(available ? null : 'This browser or device still does not provide the WebGL2 context required by this release.')
+    if (available) setSceneIssue(null)
+    else reportSceneIssue('This browser or device still does not provide the WebGL2 context required by this release.')
     setSceneReloadRequired(false)
     if (available) {
       setRecoveryTextVoyage(false)
@@ -185,35 +231,13 @@ function JourneyApp() {
     if (!enabled) setRecoveryTextVoyage(false)
   }
 
-  if (textVoyage) {
-    return (
-      <div className="app-root app-root--text">
-        <JourneyPlaybackDriver />
-        <div className="text-voyage-backdrop" aria-hidden="true" />
-        <FlightDeck textVoyage onTextVoyageChange={changeTextVoyagePreference} />
-      </div>
-    )
-  }
-
-  if (!webgl2 || sceneIssue) {
-    return (
-      <RenderFallback
-        reason={sceneIssue ?? 'This browser or device did not provide the WebGL2 context required by this release.'}
-        reducedMotion={reducedMotion}
-        reloadRequired={sceneReloadRequired}
-        freshRequestAvailable={!sceneRecoveryRequested}
-        onRetry={sceneReloadRequired ? sceneRecoveryRequested ? reloadApp : reloadScene : retryScene}
-        onTextVoyage={() => setRecoveryTextVoyage(true)}
-      />
-    )
-  }
-
   return (
-    <div className="app-root">
-      <JourneyPlaybackDriver />
-      <SceneBoundary key={sceneAttempt} onFailure={() => {
+    <div className={`app-root${textVoyage ? ' app-root--text' : ''}`}>
+      {!recoveryActive && <JourneyPlaybackDriver />}
+      {textVoyage ? <div className="text-voyage-backdrop" aria-hidden="true" /> : recoveryActive ? null : <SceneBoundary key={sceneAttempt} onFailure={() => {
+        if (!sceneOwner.active) return
         setSceneReloadRequired(true)
-        setSceneIssue(sceneRecoveryRequested
+        reportSceneIssue(sceneRecoveryRequested
           ? 'The 3D scene did not load after a fresh request.'
           : 'The 3D scene stopped unexpectedly. Reloading will make a fresh scene request while keeping saved local data.')
       }}>
@@ -223,13 +247,23 @@ function JourneyApp() {
             reducedMotion={reducedMotion}
             antialias={tier !== 'low'}
             onContextLost={() => {
+              if (!sceneOwner.active) return
               setSceneReloadRequired(false)
-              setSceneIssue('The device reported a lost WebGL context.')
+              reportSceneIssue('The device reported a lost WebGL context.')
             }}
           />
         </Suspense>
-      </SceneBoundary>
-      <FlightDeck textVoyage={false} onTextVoyageChange={changeTextVoyagePreference} />
+      </SceneBoundary>}
+      <FlightDeck textVoyage={textVoyage} recoveryActive={recoveryActive} onTextVoyageChange={changeTextVoyagePreference} />
+      {recoveryActive && <RenderFallback
+        reason={sceneIssue ?? 'This browser or device did not provide the WebGL2 context required by this release.'}
+        reducedMotion={reducedMotion}
+        reloadRequired={sceneReloadRequired}
+        freshRequestAvailable={!sceneRecoveryRequested}
+        onRetry={sceneReloadRequired ? sceneRecoveryRequested ? reloadApp : reloadScene : retryScene}
+        onTextVoyage={() => setRecoveryTextVoyage(true)}
+        returnFocus={recoveryReturnFocus.current}
+      />}
     </div>
   )
 }

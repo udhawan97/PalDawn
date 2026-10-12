@@ -18,7 +18,7 @@ treatment guide.
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
   · <a href="docs/GETTING-STARTED.md">Getting started</a>
-  · <a href="docs/releases/v0.6.0.md">v0.6.0 release notes</a>
+  · <a href="docs/releases/v0.6.1.md">v0.6.1 release notes</a>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@ treatment guide.
 |---|---|---|
 | [Web app](https://udhawan97.github.io/PalDawn/) | Ten disease previews, source navigation, a conceptual body map, and a private learner workspace | JavaScript; WebGL2 for 3D. A text voyage is available. |
 | [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
-| [v0.6.0 release notes](docs/releases/v0.6.0.md) | Clear Home/body/condition/study routes and the repaired 3D condition view | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
+| [v0.6.1 release notes](docs/releases/v0.6.1.md) | Safer local study recovery, backups, keyboard routes and private-note exports | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
 
 Both paths share PalDawn's source-first study language, but they do not share a
 distribution boundary. The public app is deployed from `main` through GitHub

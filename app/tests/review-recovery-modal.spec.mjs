@@ -115,7 +115,12 @@ for (const width of [375, 1440]) {
       await page.setViewportSize({ width, height: 900 })
       await page.goto(direct ? './#body' : './')
       const opener = page.getByRole('button', { name: 'Explore the body', exact: true }).first()
-      if (!direct) await opener.click()
+      if (!direct) {
+        // macOS WebKit pointer clicks do not establish button focus. Exercise
+        // the keyboard-origin return contract with an explicitly focused opener.
+        await opener.focus()
+        await page.keyboard.press('Enter')
+      }
       const dialog = page.getByRole('dialog', { name: bodyName })
       await expect(dialog).toBeVisible()
       await expect(dialog).toHaveAttribute('aria-modal', width <= 470 ? 'true' : 'false')

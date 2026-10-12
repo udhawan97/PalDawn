@@ -1,3 +1,4 @@
+import { JOURNEY } from '../journey/journey'
 import type { RuntimeTelemetry } from '../state/telemetry'
 import type { PlaybackRate, QualityTier, ResolvedTier } from '../state/settings'
 
@@ -17,7 +18,7 @@ interface DiagnosticInput {
 export function diagnosticReport(input: DiagnosticInput): string {
   return JSON.stringify({
     report: 'PalDawn local diagnostics',
-    base_release: '0.6.0',
+    base_release: JOURNEY.release,
     build: 'mechanism-lens',
     local_only: true,
     viewport: `${window.innerWidth}x${window.innerHeight}`,

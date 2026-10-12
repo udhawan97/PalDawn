@@ -866,6 +866,8 @@ function SettingsPanel({
   const [installState, setInstallState] = useState<PwaInstallState>(getPwaInstallState)
   const fullscreenAvailable = document.fullscreenEnabled
   const mounted = useRef(true)
+  const importRequests = useRef({ normal: 0, recovery: 0 })
+  const normalImportRef = useRef<HTMLInputElement>(null)
   const recoveryActionRef = useRef<HTMLButtonElement>(null)
   const blockedResetTriggerRef = useRef<HTMLButtonElement>(null)
   const blockedResetConfirmRef = useRef<HTMLButtonElement>(null)
@@ -873,7 +875,11 @@ function SettingsPanel({
 
   useEffect(() => {
     mounted.current = true
-    return () => { mounted.current = false }
+    return () => {
+      mounted.current = false
+      importRequests.current.normal += 1
+      importRequests.current.recovery += 1
+    }
   }, [])
 
   useLayoutEffect(() => {
@@ -930,15 +936,20 @@ function SettingsPanel({
 
   const inspectBackup = (
     file: File,
-    setResult: (result: Extract<LocalDataImportResult, { ok: true }> | null) => void,
+    scope: 'normal' | 'recovery',
     readyMessage: string,
   ) => {
+    const request = ++importRequests.current[scope]
+    const setResult = scope === 'normal' ? setPendingImport : setBlockedRecoveryImport
+    const currentRequest = () => mounted.current && importRequests.current[scope] === request
+    setResult(null)
+    reportStatus('Checking the selected backup…')
     if (file.size > MAX_LOCAL_DATA_BACKUP_BYTES) {
-      setResult(null)
       reportStatus('That backup is larger than the 2 MiB local-data limit.')
       return
     }
     void file.text().then((text) => {
+      if (!currentRequest()) return
       const result = parseLocalDataImport(text)
       if (!result.ok) {
         setResult(null)
@@ -948,6 +959,7 @@ function SettingsPanel({
       setResult(result)
       reportStatus(readyMessage)
     }).catch(() => {
+      if (!currentRequest()) return
       setResult(null)
       reportStatus('That backup could not be read.')
     })
@@ -1027,7 +1039,7 @@ function SettingsPanel({
                 onChange={(event) => {
                   const file = event.target.files?.[0]
                   event.target.value = ''
-                  if (file) inspectBackup(file, setBlockedRecoveryImport, 'Backup validated for deliberate recovery. Review the destructive replacement preview.')
+                  if (file) inspectBackup(file, 'recovery', 'Backup validated for deliberate recovery. Review the destructive replacement preview.')
                 }}
               />
             </label>
@@ -1051,6 +1063,7 @@ function SettingsPanel({
                     finishLocalDataRecovery()
                   }}>Confirm replace preserved local data</button>
                   <button type="button" onClick={() => {
+                    importRequests.current.recovery += 1
                     setBlockedRecoveryImport(null)
                     reportStatus('Destructive replacement cancelled. Preserved raw records remain unchanged.')
                     window.requestAnimationFrame(() => blockedRecoveryImportRef.current?.focus({ preventScroll: false }))
@@ -1185,6 +1198,7 @@ function SettingsPanel({
           <label className="file-action" htmlFor="local-data-import">
             Check a local-data backup
             <input
+              ref={normalImportRef}
               id="local-data-import"
               type="file"
               accept="application/json,.json"
@@ -1192,7 +1206,7 @@ function SettingsPanel({
                 const file = event.target.files?.[0]
                 event.target.value = ''
                 if (!file) return
-                inspectBackup(file, setPendingImport, 'Backup validated. Review the preview before replacing local data.')
+                inspectBackup(file, 'normal', 'Backup validated. Review the preview before replacing local data.')
               }}
             />
           </label>
@@ -1223,8 +1237,10 @@ function SettingsPanel({
                   window.location.reload()
                 }}>Confirm replace local data</button>
                 <button type="button" onClick={() => {
+                  importRequests.current.normal += 1
                   setPendingImport(null)
                   reportStatus('Backup import cancelled. Nothing changed.')
+                  window.requestAnimationFrame(() => normalImportRef.current?.focus({ preventScroll: false }))
                 }}>Cancel import</button>
               </div>
             </section>
@@ -1500,9 +1516,11 @@ function CompletionSummary() {
 
 export function FlightDeck({
   textVoyage,
+  recoveryActive = false,
   onTextVoyageChange,
 }: {
   textVoyage: boolean
+  recoveryActive?: boolean
   onTextVoyageChange: (enabled: boolean) => void
 }) {
   const entered = useExperience((state) => state.entered)
@@ -1876,6 +1894,7 @@ export function FlightDeck({
 
   useLayoutEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (recoveryActive) return
       if (event.key === 'Escape') {
         if (openPanel) {
           normalizeClosedPanelRoute(openPanel)
@@ -1952,7 +1971,7 @@ export function FlightDeck({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [atlasOpen, closeAtlas, guideOpen, openPanel, openWorkspace, reducedMotion, researchOpen, setGuideOpen, setOpenPanel, setResearchOpen, systemNoticesOpen, toggleStageBookmark])
+  }, [atlasOpen, closeAtlas, guideOpen, openPanel, openWorkspace, recoveryActive, reducedMotion, researchOpen, setGuideOpen, setOpenPanel, setResearchOpen, systemNoticesOpen, toggleStageBookmark])
 
   const portalVeil = reducedMotion
     ? 0
@@ -1966,6 +1985,9 @@ export function FlightDeck({
     <div
       ref={flightUiRef}
       className="flight-ui"
+      inert={recoveryActive}
+      aria-hidden={recoveryActive || undefined}
+      style={recoveryActive ? { display: 'none' } : undefined}
       data-entered={entered}
       data-text-voyage={textVoyage}
       data-atlas={atlasOpen}
@@ -1979,10 +2001,8 @@ export function FlightDeck({
           const target = document.getElementById(skipTargetId)
           if (!target) return
           event.preventDefault()
-          const skipUrl = new URL(window.location.href)
-          skipUrl.hash = skipTargetId
-          window.history.replaceState(window.history.state, '', skipUrl)
-          target.focus()
+          target.focus({ preventScroll: true })
+          target.scrollIntoView({ block: 'start', behavior: 'instant' })
         }}
       >
         Skip to {skipTargetLabel}

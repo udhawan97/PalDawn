@@ -618,7 +618,7 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
         </div>
         {import.meta.env.VITE_ANATOMY_PREVIEW && hasAnatomyAnchor(focusPart) ? <button className="anatomy-return" type="button" onClick={() => window.dispatchEvent(new CustomEvent('paldawn:open-anatomy', { detail: { bodyPart: focusPart } }))}>Explore {focusLabel.toLowerCase()} in Anatomy Lab ↗</button> : null}
         <p className="atlas-category">{disease.category} · source-backed preview</p>
-        <h1 id="atlas-title">{disease.title}</h1>
+        <h1 id="atlas-title" tabIndex={-1}>{disease.title}</h1>
         <p className="atlas-summary">{disease.summary}</p>
         <ul className="atlas-system-list" aria-label="Affected systems">
           {disease.affectedSystems.map((system) => <li key={system}>{system}</li>)}
@@ -672,7 +672,8 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
               }}>Share step</button>
             </div>
             {studyOpen ? <label className="atlas-note" htmlFor="atlas-private-note">Private note · stored only in this browser<textarea id="atlas-private-note" maxLength={MAX_STAGE_NOTE_LENGTH} value={studyRecord.note} placeholder="What do you want to remember? Do not enter patient information." onChange={(event) => atlasStudy.updateRecord(disease.id, step.id, { note: event.target.value })} /><small>{studyRecord.note.length} / {MAX_STAGE_NOTE_LENGTH}</small></label> : null}
-            <p className="atlas-study-status" role="status">{actionStatus || atlasStudy.status || (atlasStudy.persisted ? '' : 'This change has not been saved to browser storage.')}</p>
+            <p className="atlas-study-status" role="status">{atlasStudy.status || (atlasStudy.persisted ? '' : 'This change has not been saved to browser storage.')}</p>
+            {actionStatus ? <p className="action-status atlas-share-status" role="status" aria-label="Step sharing">{actionStatus}</p> : null}
           </section>
         </section>
 
