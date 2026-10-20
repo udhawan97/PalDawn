@@ -1,5 +1,10 @@
 # 🌅 PalDawn — The Companion Voyage
 
+For the next scheduled implementation work, use the
+[October 2026 phase queue](plans/2026-10-19-scheduled-phases.md). It orders
+bounded packets, acceptance gates and council reviews against the current
+source; the product and architecture contracts below remain applicable.
+
 **Enter the body. Follow what happens next.** PalDawn (formerly Antaryaan,
 renamed 2026-08-20) is not another general 3D anatomy atlas — organ explorers
 with hotspots, layers, and quizzes already exist in the open. Its narrow launch
