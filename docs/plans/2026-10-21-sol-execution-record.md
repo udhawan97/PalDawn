@@ -180,3 +180,58 @@ Logs: p1-build.log, p1-verify.log, p1-junction-check.log, p1-browser.log under t
 local evidence directory. All completed checks passed; no native/clinical or
 performance gate is inferred. Frozen implementation candidates and council
 verdicts are recorded below on acceptance.
+
+## P1.2/P1.3 implementation council receipt
+
+Frozen confirmation candidate: `d23a90556003246131be935ac00c8be667909056`.
+Four actual independent roles reviewed each packet in both rounds:
+
+| Role | P1.2 round 1 / 2 | P1.3 round 1 / 2 |
+|---|---|---|
+| Evidence | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE |
+| Coverage | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE |
+| Risk | APPROVE / APPROVE | APPROVE / APPROVE |
+| Outcome | APPROVE / APPROVE | BLOCK / APPROVE |
+
+All valid blockers resolved before confirmation. Revised mesh sweeps: 554,
+minimum 0.5910 units. Revised analytic GPU tests: 10 passed, plus 2 focused
+keyboard tests after deterministic timing amendment (`p1-keyboard.log`, exit 0).
+P1 engineering accepted. Native, clinical, performance and integration gates
+retain their separately recorded status. P2 is now active.
+
+## P2.1/P2.2/P2.3 — Shared scene candidate (council pending)
+
+Implemented a versioned three-shot scene, pure complete-frame resolution and a
+single playback state machine with request tokens. Pause/seek/restart/inspect,
+return, hidden documents, reduced motion, failed/retried/superseded readiness
+all preserve one narrative time. Readiness network requests occur only in the
+explicit synthetic deferred fixture; no runtime scene-pack loader was added.
+
+Camera composition uses actual emitted world bounds, with a bounded junction
+region and a declared interior forward target. Native inspection is bounded;
+Return to journey restores the resolved pose before explicit resume. Captions
+and notes occupy layout space outside the canvas. Invalid bounds/viewports/view
+vectors fail safely. The interior camera clears actual wall triangles by more
+than its near-plane/clearance margin.
+
+`npm test` passed, including the new `graphics:verify` scene checks (exit 0;
+`candidate-npm-test.log`). Pure checks cover exact shot boundaries and complete
+frame equality via direct/forward/backward/restart paths, stale request lifecycle,
+15 padded camera fits, transformed bounds and actual-mesh interior clearance.
+Full graphics browser suite: 44 passed (1.8m), Chromium/WebKit, exit 0
+(`p2-browser.log`). This includes all previous workbench tests plus DPR1/2 at
+320×568, 844×390 and 1440×900, notes open, enlarged text, text fallback, readiness
+failure/retry and boundary blocking. The multi-viewport case has a bounded
+90-second timeout to accommodate six independent contexts on hosted runners.
+The 320px WebKit/DPR2/enlarged-text image was visually inspected.
+
+Native Safari 26.5.2 checks on the task-owned loopback graphics tab verified
+Inside shot selection/caption, inspect disabling play, return, exact seek to4,
+low detail and text fallback. The plugin's checkbox `.check()` changed its DOM
+value without React rendering; normal click events correctly activated text mode.
+No app repair was inferred from that tool behavior. Background-tab animation,
+native pixels, VoiceOver, physical touch, native downloads and installed-PWA
+restart remain unverified. The task tab was closed and Safari control released.
+
+Next: freeze the P2 candidate, complete its two-round implementation council,
+then run exact-candidate integration checks, hosted CI and merge/push verification.

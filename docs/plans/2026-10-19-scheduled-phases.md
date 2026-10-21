@@ -1,12 +1,12 @@
 # PalDawn: next phases for scheduled implementation
 
 Planning date: October 19, 2026, America/Chicago.
-Status: implementation in progress; P0 engineering accepted, P1 active.
+Status: implementation in progress; P0/P1 engineering accepted, P2 active.
 Canonical checkout: `/Users/umang/developer/github/PalDawn`.
 
 Execution preparation: [October 21 Sol handoff for P0–P2](2026-10-21-sol-next-phases.md)
 contains the bounded packets, command matrix and copy-paste prompt. P0 baseline
-execution passed; P1 is active and P2 retains its dependency on accepted P1.
+execution passed; P1 engineering passed and P2 implementation is active.
 See its [preparation review receipt](2026-10-21-sol-next-phases-review.md).
 Current implementation evidence and ownership:
 [October 21 execution record](2026-10-21-sol-execution-record.md).
@@ -416,8 +416,8 @@ or people as part of the handoff without explicit authorization.
 | Phase | Initial state | Next action |
 |---|---|---|
 | P0 | Engineering accepted; native holds recorded | Resume P1 from the execution record |
-| P1 | Packet prepared; waiting on P0 engineering baseline | Revalidate the bounded synthetic Y contract, then P1.1 |
-| P2 | Packet prepared; waiting on P1 | Revalidate the three-shot frame contract, then P2.1 |
+| P1 | Engineering accepted; native/performance holds remain | See P1 council receipt in execution record |
+| P2 | Implementation active; acceptance in progress | Validate shared frames, readiness lifecycle and framing |
 | P3 | Asset inventory ready; runtime waits on P2 | Audit missing coverage; preserve proposal schema |
 | P4 | Waiting on P2/P3 | Compose candidate only after prerequisites |
 | P5 | Waiting on P4; human/device gates open | Measure and verify before publication |
