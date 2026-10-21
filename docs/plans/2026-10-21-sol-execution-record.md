@@ -1,0 +1,103 @@
+# P0–P2 execution record
+
+Started October 21, 2026 (America/Chicago). Owner: this user-started Codex run.
+Branch: `stay-calm-its-codex/next-phases-20261021`; isolated checkout:
+`/Users/umang/developer/worktrees/PalDawn-next-phases`.
+Baseline and exact tested application candidate: `588cfb64b2af16e1dd2a57528ad9f52b3a0157dc`,
+matching origin/main. Only this documentation record was added during the P0
+run; no tested application bytes were modified.
+Latest user instruction authorizes execution, push and merge, including the
+known automatic Pages effect of app-path integration. No release tag is requested.
+
+Plan: [P0–P2 handoff](2026-10-21-sol-next-phases.md), reviewed digest
+`a6e0855be890c69835adb2d885480ddaf89c9d64384e1237fe703fd960fa1031`.
+Preparation receipt: [two-round review](2026-10-21-sol-next-phases-review.md).
+No competing current packet record or open PR was found at start.
+
+## P0.1 — Baseline reproduction (checks passed; council pending)
+
+Environment: macOS 26.5.2 (25F84), arm64; Node 26.4.0, npm 11.17.0;
+Playwright 1.62.1; Chromium 151.0.7922.34 (revision 1234), WebKit 26.5
+(revision 2336), from the pinned Playwright browser manifest. CI uses Node 22 and will verify runtime compatibility.
+Lockfile SHA-256: `fdad7b5c0290dd5417cdea99bc29ffd20ef97df88665430127d53a05884416e6`.
+PWA historical commit `38294634d9f35778b2519bc9a33f95e9bbcfbc20` exists.
+
+Inventory: main was clean. Three older review worktrees have uncommitted work;
+clinical-atlas and foundation-plus-4 each have four commits absent from main.
+Their changes concern earlier clinical/public-app work, not this synthetic Y
+junction/playback batch. Old temporary review attachments are missing. All are
+preserved. Two unmerged automation branches change CONTRIBUTING or public CSS;
+they are outside this batch. No cleanup or unrelated integration was performed.
+
+Raw logs/traces stay outside public docs. Local evidence directory:
+`/tmp/paldawn-next-phases-20261021` (ephemeral; sanitized outcomes below are durable).
+
+| Gate | Outcome | Evidence file |
+|---|---|---|
+| Pinned install | Passed | npm-ci.log |
+| Provenance | Passed | baseline-provenance.log |
+| Public source/build/contracts | Passed | baseline-npm-test.log |
+| Public Chromium/WebKit | 330 passed (9.8m) | baseline-browser.log |
+| PWA lifecycle | Passed | baseline-pwa.log |
+| Graphics build | Passed | baseline-graphics-build.log |
+| Graphics Chromium/WebKit | 28 passed (44.7s) | baseline-graphics-browser.log |
+| Licenses | Passed | baseline-licenses.log |
+
+Initial browser launch failed because matching Playwright binaries were absent.
+Stopped that attempt, installed the pinned Chromium/WebKit binaries and reran.
+No assertions or harness source changed. Node-version difference remains recorded.
+Install audit reports pre-existing advisories in Vite/source-map-js; the pinned
+stack is preserved and no audit gate is claimed passed by this execution.
+
+Native Safari 26.5.2: seek, profile selection, play/pause and detail controls
+responded on the task-owned graphics preview. Background-tab motion/pixels were
+not established. VoiceOver, physical touch, native downloads and installed-PWA
+restart: unverified. They remain target-surface holds, separately from automated
+engineering acceptance. No clinical, asset or whole-journey performance approval.
+
+## P0.2 — Resumable record (prepared; council pending)
+
+This file records ownership, baseline, gates and next action. No runner repair
+has been required. Every passed command in the table exited 0. Rollback: scoped revert of record/queue updates only.
+Next: run the implementation council for
+P0.1/P0.2 before marking the baseline engineering ready and entering P1.
+Next packet: P1.1. Exact first focused validation command from `app/`:
+`node --experimental-strip-types graphics/verify-branch.mjs` (after adding the
+branch contract/check script).
+
+## P1/P2 — Pending
+
+Await P0 engineering acceptance. Source integration, candidate CI, main CI,
+deployment and release: not started for this execution.
+
+### Frozen construction detail for P1.2 (before implementation)
+
+Use the existing Three.js stack to polygonize one continuous implicit wall
+volume on a regular grid, using a consistent six-tetrahedra split per cell and
+welded positional vertices. Inner/outer Y fields are unions of three circular
+ray corridors, clipped only by their external port planes and the upper
+inspection plane. The wall volume is outer-minus-inner. This creates an open
+lumen with annular external rims and connected inspection-cut edges, rather
+than three intersecting closed meshes. A small smooth union is confined to the
+junction's overlapping corridors; external radii stay 0.9/0.6 units.
+
+Root starts at Z=-6. Daughter external ports are at Z=6, on rays ±35 degrees
+from +Z; each has more than four straight units outside the junction domain.
+Grid step is 0.12 units; wall thickness is 0.18 units. Route tangents blend
+only within Z=[-1,1], inside the declared Z=[-2,2] junction domain. Cells use
+a deliberately narrow central lane, with 0.18-unit bounding radius and
+0.08-unit clearance. No radius/angle tuning beyond the fixed contract.
+
+Acceptance supplements field checks with triangle-distance sweeps, welded-edge
+incidence, component/Euler checks, degenerate-face checks and port/interior ray
+probes. Sweeps bound between-sample motion using the maximum path displacement;
+the clearance check uses actual emitted triangles. If these independent probes
+cannot establish clearance/topology, P1.2 stays blocked and no flow is wired.
+
+P0 commands: `npm ci`; root `node pipeline/provenance/run-checks.mjs`; app
+`npm test`, `CI=1 PLAYWRIGHT_PORT=44173 npm run test:browser`,
+`npm run pwa:test:browser`, `npm run graphics:build`, `npm run graphics:test`,
+`npm run licenses`. All completed with exit 0 after browser provisioning.
+Served public manifest digest: `51c93297f7be5e06cee581d6f8aa5d22ae5254d94ffc5b08df9fb27eeeb012da`;
+graphics flow HTML digest: `1c89c7082752996049b58bb1e2984233854b9683eaa804653e41b412c43f53ee`.
+Both served bytes matched their isolated build outputs.

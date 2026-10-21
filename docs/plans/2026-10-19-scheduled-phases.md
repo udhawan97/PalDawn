@@ -8,6 +8,8 @@ Execution preparation: [October 21 Sol handoff for P0–P2](2026-10-21-sol-next-
 contains the bounded packets, command matrix and copy-paste prompt. P0 baseline
 execution is still pending; P1/P2 remain dependent on accepted earlier packets.
 See its [preparation review receipt](2026-10-21-sol-next-phases-review.md).
+Current implementation evidence and ownership:
+[October 21 execution record](2026-10-21-sol-execution-record.md).
 
 ## Purpose and verified starting point
 
@@ -413,7 +415,7 @@ or people as part of the handoff without explicit authorization.
 
 | Phase | Initial state | Next action |
 |---|---|---|
-| P0 | Execution packet prepared; baseline run pending | Execute P0.1 from the October 21 Sol handoff |
+| P0 | Automated baseline passed; record council pending | Close P0 receipt, then execute P1.1 |
 | P1 | Packet prepared; waiting on P0 engineering baseline | Revalidate the bounded synthetic Y contract, then P1.1 |
 | P2 | Packet prepared; waiting on P1 | Revalidate the three-shot frame contract, then P2.1 |
 | P3 | Asset inventory ready; runtime waits on P2 | Audit missing coverage; preserve proposal schema |
