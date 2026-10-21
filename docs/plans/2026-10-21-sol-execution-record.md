@@ -119,3 +119,39 @@ Record linkage, exact browser versions, candidate identity and next command were
 corrected before confirmation. Stale queue wording is corrected with this receipt.
 No valid P0 blocker remains; native and clinical holds are unchanged.
 P1.1 focused branch validation/build is active in this isolated branch.
+
+## P1.1 — Branch contract engineering accepted
+
+Frozen confirmation candidate: `828097aeb6e10b5dc9c9b6b5abc4e17524fccc22`.
+Four independent Evidence/Coverage/Risk/Outcome executions in each of two rounds:
+round 1 all BLOCK on sparse-array validation; round 2 APPROVE, APPROVE_WITH_NITS,
+APPROVE, APPROVE respectively. Fixed dense-index validation, radius samples and
+port ownership; bounded route progress to prevent coordinate overflow. The
+coverage nit added tangent probes at the actual piecewise joins, 5/12 and 7/12.
+`node --experimental-strip-types graphics/verify-branch.mjs` and graphics build
+passed (exit 0). This accepts the fixed synthetic contract only.
+
+## P1.2/P1.3 — Candidate geometry and flow (council pending)
+
+`graphics:verify` includes the new independent junction verifier. Mesh: 253,702
+triangles, one connected component, Euler 2, every edge has two opposite-wound
+faces, no degenerate emitted faces, finite attributes and outward wall volume.
+506 actual-triangle clearance sweeps found minimum distance 0.5910 units.
+Required extent/clearance/lane/inter-sample bound totals under 0.325 units.
+The between-sample displacement bound is 0.02442 units. Port ray probes pass;
+all seeded passage samples retain identity, plane clearance and handoff visibility.
+
+A 0.12-unit grid failed topology; refinement to 0.06 units plus deterministic
+near-zero snapping removed aliasing/sliver defects. Assertions remain strict.
+Winding uses adjacent-edge orientation, signed volume and independent straight
+inner/outer normal checks; exact analytic-field gradients are not an oracle for
+faces of the discretized junction. No clinical geometry claim is made.
+
+Focused browser suite: 6 passed across Chromium/WebKit (20.6s), covering rendered
+motion/pause/backward seek, tier restoration, four-side views/wireframe, reduced
+motion, hidden document, keyboard slider, text fallback, empty storage and WebGL
+retry. Graphics build and pure contract checks pass. The above/below clay views
+were visually inspected; the lumen is open and the external wall is continuous.
+Raw images/logs remain in local output/evidence directories.
+
+Next: two-round P1.2/P1.3 implementation council, then P2 pure scene-frame work.

@@ -15,7 +15,7 @@
     "graphics:generate": "node graphics/build-heart.mjs",
     "graphics:dev": "vite --config vite.graphics.config.ts --open /heart-study.html",
     "graphics:build": "tsc --noEmit -p tsconfig.graphics.json && vite build --config vite.graphics.config.ts",
-    "graphics:verify": "node --experimental-strip-types graphics/verify-heart.mjs && node --experimental-strip-types graphics/verify-flow.mjs && node --experimental-strip-types graphics/verify-branch.mjs",
+    "graphics:verify": "node --experimental-strip-types graphics/verify-heart.mjs && node --experimental-strip-types graphics/verify-flow.mjs && node --experimental-strip-types graphics/verify-branch.mjs && node --experimental-strip-types graphics/verify-junction.mjs",
     "graphics:test": "playwright test --config playwright.graphics.config.mjs",
     "anatomy:prepare": "node scripts/prepare-anatomy.mjs",
     "anatomy:dev": "PALDAWN_ANATOMY_PREVIEW=1 vite",

@@ -27,7 +27,7 @@ for (let id = 0; id < 240; id++) {
   assert.equal(branchCellFrame(id, 0).scale, 0)
   assert.equal(branchCellFrame(id, 12).scale, 0)
 }
-for (const branch of ['left', 'right']) for (const progress of [1 / 3, .5, 2 / 3]) {
+for (const branch of ['left', 'right']) for (const progress of [1 / 3, 5 / 12, .5, 7 / 12, 2 / 3]) {
   const before = branchRoute(progress - 1e-7, branch), after = branchRoute(progress + 1e-7, branch)
   assert.ok(before.center.distanceTo(after.center) < 1e-5)
   assert.ok(before.tangent.distanceTo(after.tangent) < 1e-5)

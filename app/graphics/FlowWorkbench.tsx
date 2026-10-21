@@ -106,7 +106,7 @@ export function FlowWorkbench() {
         <p className="lede">Inspect three-dimensional cell-shaped forms moving through a curved, open wall. One clock determines every position.</p>
         <div className="study-number" aria-hidden="true">02<span> / FLOW</span></div>
         <p className="boundary">Synthetic engineering fixture, not blood physiology or an anatomical vessel. Arbitrary units, density, shape and speed. The upper half is intentionally removed for inspection.</p>
-        <p className="boundary"><a href="./heart-study.html">Return to the heart study</a></p>
+        <p className="boundary"><a href="./heart-study.html">Return to the heart study</a> · <a href="./junction-study.html">Connected junction study</a></p>
       </section>
       <section className="specimen" aria-label="Interactive flow study" data-renderer={failed ? 'unavailable' : presented === frameKey ? 'ready' : 'loading'} data-time={time.toFixed(3)} data-quality={quality} data-profile={profile}>
         <div className="specimen-topline"><span>{FLOW_PROFILES[profile].label.toUpperCase()} CUTAWAY</span><span>ARBITRARY STUDY UNITS</span></div>
