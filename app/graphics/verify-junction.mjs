@@ -54,7 +54,7 @@ let minimumDistance = Infinity, probes = 0
 // Route speed <= 12/cos(35). A 1/300 step moves <= .04884, so any
 // unsampled point is at most .02442 from a sample (distance is 1-Lipschitz).
 const betweenSampleBound = 12 / Math.cos(BRANCH.angle) / 300 / 2
-for (const branch of ['left', 'right']) for (let tick = 24; tick <= 276; tick++) {
+for (const branch of ['left', 'right']) for (let tick = 12; tick <= 288; tick++) {
   const frame = branchRoute(tick / 300, branch)
   const distance = wallDistance(frame.center)
   minimumDistance = Math.min(minimumDistance, distance); probes++

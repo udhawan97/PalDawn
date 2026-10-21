@@ -63,6 +63,28 @@ export function branchRadius(progress: number) {
 }
 
 const seeds = cellSeeds(240)
+export function branchSeed(id: number) {
+  const branch = branchForId(id)
+  if (id >= seeds.length) throw new Error('Invalid branch identity')
+  const seed = seeds[id]!
+  return [seed[0] * .25, seed[1] * BRANCH.lane * Math.cos(seed[2]), seed[1] * BRANCH.lane * Math.sin(seed[2]), branch === 'left' ? -1 : 1]
+}
+
+// Shared by the instanced renderer and independent WebGL transform-feedback probes.
+export const branchShader = `
+attribute vec4 branchSeed;
+uniform float studyTime;
+float branchProgress() { return -.3 + clamp(studyTime, 0.0, 12.0) / 12.0 * 1.6 + branchSeed.x; }
+float branchScale() { float s = branchProgress(); return max(0.0, min(1.0, min((s-.04)/.04, (.96-s)/.04))); }
+vec3 branchCenter() {
+  float z = -6.0 + 12.0 * branchProgress();
+  float bend = z <= -1.0 ? 0.0 : z >= 1.0 ? z : (z+1.0)*(z+1.0)/4.0;
+  float slope = z <= -1.0 ? 0.0 : z >= 1.0 ? 1.0 : (z+1.0)/2.0;
+  vec3 tangent = normalize(vec3(branchSeed.w * ${Math.tan(BRANCH.angle)}, 0.0, 1.0) * vec3(slope, 1.0, 1.0));
+  vec3 normal = vec3(tangent.z, 0.0, -tangent.x);
+  return vec3(branchSeed.w * ${Math.tan(BRANCH.angle)} * bend, branchSeed.z, z) + normal * branchSeed.y;
+}
+`
 export function branchCellFrame(id: number, time: number) {
   const branch = branchForId(id)
   if (!Number.isFinite(time) || id >= seeds.length) throw new Error('Invalid branch frame')

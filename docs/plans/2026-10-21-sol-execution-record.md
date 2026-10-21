@@ -65,10 +65,10 @@ Next packet: P1.1. Exact first focused validation command from `app/`:
 `node --experimental-strip-types graphics/verify-branch.mjs` (after adding the
 branch contract/check script).
 
-## P1/P2 — Pending
+## P1/P2 — Active
 
-Await P0 engineering acceptance. Source integration, candidate CI, main CI,
-deployment and release: not started for this execution.
+P0 engineering accepted; P1 geometry/flow candidate under review. Source
+integration, candidate CI, main CI, deployment and release remain pending.
 
 ### Frozen construction detail for P1.2 (before implementation)
 
@@ -155,3 +155,28 @@ were visually inspected; the lumen is open and the external wall is continuous.
 Raw images/logs remain in local output/evidence directories.
 
 Next: two-round P1.2/P1.3 implementation council, then P2 pure scene-frame work.
+
+### P1.2/P1.3 round-1 corrections
+
+Initial review accepted mesh engineering with documentation nits and blocked
+flow acceptance: CPU-uploaded matrices did not satisfy the frozen analytic GPU
+contract, and whole-frame equality did not establish CPU/GPU positional parity.
+Replaced matrix uploads with an instanced analytic GPU branch shader sharing
+explicit seeded inputs. Actual WebGL transform-feedback checks compare that
+shader against CPU frames to 1e-4 units, including both branches and precise
+handoff boundaries. Isolated diagnostic rendering compares actual colored GPU
+pixels against projected CPU centers before/at/after handoff, in both tiers;
+raster centroid tolerance is 3 device pixels, separately from numeric tolerance.
+Restart/seek and WebGL retry now require pixel-identical paused reconstruction.
+Keyboard slider time is asserted explicitly.
+
+Revised focused browser suite: 10 passed (34.9s), Chromium and WebKit, exit 0.
+Triangle sweeps now cover the complete visible progress interval [.04,.96],
+including entry/exit fades, with unchanged strict full-extent margin.
+Commands: `npm run graphics:build`; `npm run graphics:verify`;
+`node --experimental-strip-types graphics/verify-junction.mjs`;
+`npx playwright test --config playwright.graphics.config.mjs graphics/tests/junction.spec.mjs`.
+Logs: p1-build.log, p1-verify.log, p1-junction-check.log, p1-browser.log under the
+local evidence directory. All completed checks passed; no native/clinical or
+performance gate is inferred. Frozen implementation candidates and council
+verdicts are recorded below on acceptance.
