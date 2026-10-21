@@ -4,6 +4,11 @@ Planning date: October 19, 2026, America/Chicago.
 Status: proposed execution queue; implementation has not started.
 Canonical checkout: `/Users/umang/developer/github/PalDawn`.
 
+Execution preparation: [October 21 Sol handoff for P0–P2](2026-10-21-sol-next-phases.md)
+contains the bounded packets, command matrix and copy-paste prompt. P0 baseline
+execution is still pending; P1/P2 remain dependent on accepted earlier packets.
+See its [preparation review receipt](2026-10-21-sol-next-phases-review.md).
+
 ## Purpose and verified starting point
 
 Move from the current conceptual learning app toward one coherent body → heart
@@ -408,9 +413,9 @@ or people as part of the handoff without explicit authorization.
 
 | Phase | Initial state | Next action |
 |---|---|---|
-| P0 | Ready for packet planning | Reconcile current work and reproduce baseline |
-| P1 | Waiting on P0 engineering baseline | Specify one synthetic Y junction |
-| P2 | Waiting on P1 | Specify pure frame contract |
+| P0 | Execution packet prepared; baseline run pending | Execute P0.1 from the October 21 Sol handoff |
+| P1 | Packet prepared; waiting on P0 engineering baseline | Revalidate the bounded synthetic Y contract, then P1.1 |
+| P2 | Packet prepared; waiting on P1 | Revalidate the three-shot frame contract, then P2.1 |
 | P3 | Asset inventory ready; runtime waits on P2 | Audit missing coverage; preserve proposal schema |
 | P4 | Waiting on P2/P3 | Compose candidate only after prerequisites |
 | P5 | Waiting on P4; human/device gates open | Measure and verify before publication |
