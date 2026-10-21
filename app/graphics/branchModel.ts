@@ -1,7 +1,7 @@
 import { Vector3 } from 'three'
 import { FLOW, cellSeeds } from './flowModel.ts'
 
-export const BRANCH = Object.freeze({ version: 1, angle: 35 * Math.PI / 180, radius: .9, childRadius: .6, wall: .18, grid: .12, extent: 6, lane: .04 })
+export const BRANCH = Object.freeze({ version: 1, angle: 35 * Math.PI / 180, radius: .9, childRadius: .6, wall: .18, grid: .06, extent: 6, lane: .04 })
 export type BranchId = 'root' | 'left' | 'right'
 export type BranchSpec = { version: number; junction: readonly number[]; transform: readonly number[]; ownershipBoundary: number; radiusSamples: readonly (readonly number[])[]; ports: readonly { id: string; branch: string; kind: string; progress: number }[]; branches: readonly { id: string; parent: string | null; attachment: number; start: readonly number[]; end: readonly number[]; radius: number }[] }
 const spread = BRANCH.extent * Math.tan(BRANCH.angle)

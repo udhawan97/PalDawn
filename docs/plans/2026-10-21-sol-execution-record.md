@@ -14,7 +14,7 @@ Plan: [P0–P2 handoff](2026-10-21-sol-next-phases.md), reviewed digest
 Preparation receipt: [two-round review](2026-10-21-sol-next-phases-review.md).
 No competing current packet record or open PR was found at start.
 
-## P0.1 — Baseline reproduction (checks passed; council pending)
+## P0.1 — Baseline reproduction (engineering accepted)
 
 Environment: macOS 26.5.2 (25F84), arm64; Node 26.4.0, npm 11.17.0;
 Playwright 1.62.1; Chromium 151.0.7922.34 (revision 1234), WebKit 26.5
@@ -55,7 +55,7 @@ not established. VoiceOver, physical touch, native downloads and installed-PWA
 restart: unverified. They remain target-surface holds, separately from automated
 engineering acceptance. No clinical, asset or whole-journey performance approval.
 
-## P0.2 — Resumable record (prepared; council pending)
+## P0.2 — Resumable record (accepted)
 
 This file records ownership, baseline, gates and next action. No runner repair
 has been required. Every passed command in the table exited 0. Rollback: scoped revert of record/queue updates only.
@@ -83,7 +83,7 @@ junction's overlapping corridors; external radii stay 0.9/0.6 units.
 
 Root starts at Z=-6. Daughter external ports are at Z=6, on rays ±35 degrees
 from +Z; each has more than four straight units outside the junction domain.
-Grid step is 0.12 units; wall thickness is 0.18 units. Route tangents blend
+Grid step is 0.06 units; wall thickness is 0.18 units. Route tangents blend
 only within Z=[-1,1], inside the declared Z=[-2,2] junction domain. Cells use
 a deliberately narrow central lane, with 0.18-unit bounding radius and
 0.08-unit clearance. No radius/angle tuning beyond the fixed contract.
@@ -101,3 +101,21 @@ P0 commands: `npm ci`; root `node pipeline/provenance/run-checks.mjs`; app
 Served public manifest digest: `51c93297f7be5e06cee581d6f8aa5d22ae5254d94ffc5b08df9fb27eeeb012da`;
 graphics flow HTML digest: `1c89c7082752996049b58bb1e2984233854b9683eaa804653e41b412c43f53ee`.
 Both served bytes matched their isolated build outputs.
+
+## P0 implementation council receipt
+
+Frozen reviewed docs candidate: `99fbb2701f91869ffa77d9e7e13df7e0fe39ad2e`;
+record snapshot SHA-256: `4ffe3676fcaf3a81993751fc1ab6a0627c0f870ca51029551fae2a0964f87edb`.
+Four independent roles reviewed both P0 packets in each of two rounds.
+
+| Role | P0.1 round 1 / 2 | P0.2 round 1 / 2 |
+|---|---|---|
+| Evidence | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE_WITH_NITS |
+| Coverage | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE_WITH_NITS |
+| Risk | APPROVE / APPROVE | APPROVE_WITH_NITS / APPROVE |
+| Outcome | APPROVE / APPROVE | APPROVE_WITH_NITS / APPROVE_WITH_NITS |
+
+Record linkage, exact browser versions, candidate identity and next command were
+corrected before confirmation. Stale queue wording is corrected with this receipt.
+No valid P0 blocker remains; native and clinical holds are unchanged.
+P1.1 focused branch validation/build is active in this isolated branch.
