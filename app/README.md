@@ -1,4 +1,4 @@
-# PalDawn app — v0.6.1 — Study Recovery
+# PalDawn app — v0.6.2 — Connected Scene Engineering
 
 The app is a static WebGL2 learning experience built with the locked
 Vite + React + TypeScript + Three.js + React Three Fiber + drei + Zustand +
@@ -51,8 +51,18 @@ derivatives; do not hand-edit them.
 | `npm run anatomy:preview` | Serve that review artifact locally |
 | `npm run anatomy:test:browser` | Run the Anatomy candidate browser suite against `dist-anatomy/` |
 | `npm run licenses` | Rebuild the transitive dependency license inventory |
+| `npm run graphics:dev` | Open the separate local heart, flow, connected-junction and scene-pack studies |
+| `npm run graphics:verify` | Check generated geometry, deterministic frames, playback and public-build exclusion |
+| `npm run graphics:build` | Build the four development workbenches in `dist-graphics/` |
+| `npm run graphics:test` | Run the Chromium/WebKit workbench suite |
 
 Use `npm ci`, not `npm install`, for a clean verification run.
+
+The [connected-scene guide](../docs/JUNCTION-SCENE-WORKBENCH.md) covers the
+synthetic Y fixture, shared teaching clock, inspection return and delayed-scene
+recovery. The [scene-pack guide](../docs/SCENE-PACK-WORKBENCH.md) covers P3
+integrity, bounded loading and the pending asset-review dossier. These workbenches use no learner storage and remain excluded from
+the public build.
 
 ## Release architecture
 

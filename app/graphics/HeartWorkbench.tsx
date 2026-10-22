@@ -182,7 +182,7 @@ export function HeartWorkbench() {
           <div><dt>Review</dt><dd>Not anatomically validated</dd></div>
         </dl>
         <p className="boundary">This is a visual development study, not an anatomical reference. Interiors, valves, and blood flow are not included.</p>
-        <p className="boundary"><a href="./flow-study.html">Open the separate synthetic flow study</a></p>
+        <p className="boundary"><a href="./flow-study.html">Open the separate synthetic flow study</a> · <a href="./pack-study.html">Scene pack lab</a></p>
       </section>
 
       <section className="specimen" aria-label="Interactive heart form study" data-renderer={error ? 'unavailable' : model && presented === frameKey ? 'ready' : 'loading'} data-view={inspecting || rotate ? 'free' : view} data-material={mode} data-context={context ? 'chest' : 'heart'}>

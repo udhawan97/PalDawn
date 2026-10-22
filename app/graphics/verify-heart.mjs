@@ -61,12 +61,13 @@ for (const bounds of [heartBounds, allBounds]) for (const aspect of [.45, .7, 1,
 // The public app must not acquire the workbench, asset, or authored-source data.
 const publicFiles = readdirSync(new URL('../dist/', import.meta.url), { recursive: true })
 for (const filename of publicFiles) {
-  assert.doesNotMatch(filename, /heart-study|flow-study|junction-study|\.glb$/i, 'workbench file leaked into public build')
+  assert.doesNotMatch(filename, /heart-study|flow-study|junction-study|pack-study|\.mesh$|\.glb$/i, 'workbench file leaked into public build')
   if (/\.(js|html|json)$/.test(filename)) {
     const contents = readFileSync(new URL(`../dist/${filename}`, import.meta.url), 'utf8')
     assert.ok(!contents.includes(manifest.id) && !contents.includes(manifest.assetSha256) && !contents.includes('graphics/HeartWorkbench'), 'workbench data leaked into public build')
     assert.ok(!contents.includes('flowSeed') && !contents.includes('Synthetic flow fixture'), 'flow workbench leaked into public build')
     assert.ok(!contents.includes('Branch journey fixture') && !contents.includes('branchWallGeometry'), 'junction workbench leaked into public build')
+    assert.ok(!contents.includes('paldawn-synthetic-primitives') && !contents.includes('PDMSH001') && !contents.includes('Synthetic scene-pack lab'), 'runtime scene pack leaked into public build')
   }
 }
 for (const { geometry } of meshes) geometry.dispose()

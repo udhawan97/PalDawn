@@ -52,8 +52,9 @@ not prove containment in arbitrary vessel networks or moving walls.
 
 From `app/`, run `npm run graphics:dev` and follow the synthetic-flow link, or
 open `/flow-study.html` on that local server. `npm run graphics:build` creates
-both workbenches in ignored `dist-graphics/`; the regular app and Pages build
-exclude both entries and their data.
+the heart, single-vessel, connected-junction and scene-pack workbenches in ignored
+`dist-graphics/`; the regular app and Pages build exclude all four entries and
+their data.
 
 `npm test` includes `graphics:verify`: deterministic heart generation,
 public-build exclusion, and the new flow verifier. The flow verifier checks
@@ -72,24 +73,26 @@ selected profile, narrow layouts, and absent storage/GLB loads.
 The visibility test exercises the event handler; it is not an OS backgrounding
 measurement. Captures are in ignored `output/playwright/heart-study/`.
 
-Native Safari was also visually inspected locally. The initial slice covered
+Historical September evidence: native Safari was also visually inspected locally. The initial slice covered
 rendering, completion, and low detail; the variable-radius continuation checked
 tapered and narrowed geometry and playback in the narrowed profile. Obscura's
 server blocks private IP addresses, so native Safari is the local visual
 fallback. Safari inspection is separate from Chromium/WebKit regression results.
 
-## Remaining R3 acceptance
+## Connected-junction continuation and remaining acceptance
 
-Exterior-to-lumen continuity, reviewed cell shape and relative scale, branch
-splitting, deforming radii, physiological motion, and measured target
-performance remain outstanding. The fixture is not a literal LAD route or a
-validated blood simulation. The public app still uses its existing conceptual
-scenes. R1/R2 review ownership and anatomy corrections remain prerequisites
-for public anatomical adoption; this code-only fixture does not satisfy them.
+The [connected-scene workbench](JUNCTION-SCENE-WORKBENCH.md) now implements one
+synthetic open Y junction with a connected cutaway wall, deterministic branch
+ownership, fixed arbitrary-unit routing and full-extent emitted-triangle probes.
+It also supplies three directed shots with one teaching clock, exact inspection
+return, explicit readiness failure/retry and reduced-motion still frames.
+The branch work is no longer a future prerequisite for this bounded fixture.
 
-Next: define the branch contract and author connected junction geometry before
-introducing divergent trajectories. Overlapping closed tubes do not establish
-an open junction or safe branch handoff. Extend full-extent containment checks
-at that junction before integrating exterior continuity. Anatomical route
-identity and physiology still require qualified review. The full R4 storyboard
-remains separate from this bounded playback control.
+Reviewed exterior-to-lumen continuity, reviewed cell shape and relative scale,
+deforming radii, physiological motion, arbitrary vessel networks and measured
+target performance remain outstanding. The fixtures are not a literal LAD route
+or a validated blood simulation. The public app still uses its conceptual
+scenes. R1/R2 review ownership and anatomy corrections remain prerequisites for
+public anatomical adoption. P3 pack loading is implemented in the separate
+[mathematical scene-pack lab](SCENE-PACK-WORKBENCH.md); broader R4 storyboarding
+remains future work. The junction readiness endpoint remains a test fixture.

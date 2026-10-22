@@ -1,21 +1,21 @@
 # PalDawn graphics rebuild
 
 **Planning baseline:** 2026-09-07, local `main` at `dad34b7`.
-**Status:** implementation plan. The [first graphics workbench](HEART-GRAPHICS-WORKBENCH.md)
-now supplies original editable exterior artwork and an isolated static viewer.
-Anatomical acceptance, public-app adoption, blood flow, and cinematic playback
-remain outstanding; no clinical approvals have been delivered.
+**Status:** roadmap with bounded development engineering delivered. The
+[first graphics workbench](HEART-GRAPHICS-WORKBENCH.md) supplies original editable
+exterior artwork and an isolated static viewer. The [single-vessel study](VESSEL-FLOW-WORKBENCH.md)
+adds uniform, tapered and narrowed curved cutaways with deterministic GPU flow.
+The [connected-scene study](JUNCTION-SCENE-WORKBENCH.md) now adds one open synthetic
+Y junction, stable branch ownership, emitted-mesh containment checks, and a
+shared 12-second frame/playback contract for three directed shots.
 
-The [R3 engineering slice](VESSEL-FLOW-WORKBENCH.md) now adds an isolated
-synthetic curved cutaway and deterministic cell-shaped flow fixtures. It
-exercises containment and playback without claiming R3 anatomical acceptance,
-physiological validity, exterior continuity, or measured performance.
-
-Its variable-radius continuation adds uniform, tapered, and narrowed fixtures
-using one radius lookup for walls and GPU cell lanes. Full-extent containment,
-profile switching, and recovery are checked before the remaining branch and
-exterior-continuity work. Static radius variation is implemented; deforming
-walls and branch-junction acceptance remain outstanding.
+These are arbitrary-unit engineering fixtures. Static radius variation and the
+bounded P0–P2 scene are implemented; anatomical acceptance, deforming walls,
+physiological validity, reviewed exterior-to-lumen continuity, public adoption,
+and measured target performance remain outstanding. No clinical approval has
+been delivered. The historical R1–R6 plan below remains the broader destination;
+see the [current phase ledger](plans/2026-10-19-scheduled-phases.md) for delivery
+state and retained native/medical acceptance holds.
 
 ## Outcome
 
@@ -284,6 +284,11 @@ publication, check exact revision and all required content/asset approvals.
 - Web documentation was checked on 2026-09-07. Recheck candidate tool versions
   and capabilities against the installed/pinned versions at implementation.
 
-**Immediate next implementation package:** R1's heart/chest coverage ledger,
+**P3 preparation:** the [seven-shot dossier](review/heart-seven-shot.md) now
+records current objects and missing views/geometry; no review approval is implied.
+The [scene-pack lab](SCENE-PACK-WORKBENCH.md) implements integrity/loading with
+mathematical fixtures, separately from the anatomical art.
+
+**Next asset implementation package:** R1's heart/chest corrections,
 source decision, and clay turntables, followed by R2's static viewer. Passing
 that form-and-placement milestone is the prerequisite for the visual overhaul.

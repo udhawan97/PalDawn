@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "packId": "paldawn-synthetic-primitives@1.0.0",
+  "version": "1.0.0",
+  "kind": "synthetic-mathematical-fixture",
+  "app": {
+    "min": "0.6.2",
+    "maxExclusive": "0.7.0"
+  },
+  "units": "arbitrary",
+  "coordinateFrame": "right-handed-y-up",
+  "bounds": [
+    [
+      -1,
+      -1,
+      -1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "anchors": [
+    {
+      "id": "centre",
+      "position": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "block-low",
+      "byteLength": 256,
+      "sha256": "102c5c721c24dcab986186beace38994d16fb9f79cea14853c1e75482e13cd3a",
+      "geometryBytes": 336,
+      "vertices": 8,
+      "triangles": 12,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    },
+    {
+      "id": "block-high",
+      "byteLength": 688,
+      "sha256": "855bbf6ae071e029ba2e324e9ae92bb0d02cff4546474a7d70b4cfd7c5cf3cf1",
+      "geometryBytes": 912,
+      "vertices": 20,
+      "triangles": 36,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    },
+    {
+      "id": "wedge-low",
+      "byteLength": 148,
+      "sha256": "36fb4a6bf007911f4e494530a62556dacf1194dae21c3961df802b86ff3812b8",
+      "geometryBytes": 192,
+      "vertices": 5,
+      "triangles": 6,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    },
+    {
+      "id": "wedge-high",
+      "byteLength": 364,
+      "sha256": "c896334373a0b73dfd1f41989ec705bbbd8b8e99519dbeaf4b464f7975bf3a49",
+      "geometryBytes": 480,
+      "vertices": 11,
+      "triangles": 18,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    },
+    {
+      "id": "octahedron-low",
+      "byteLength": 184,
+      "sha256": "02d56bd7335bf32b6f2e861076c1aff19aadd5bb8e0c7a9d0e0ada95fa45d679",
+      "geometryBytes": 240,
+      "vertices": 6,
+      "triangles": 8,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    },
+    {
+      "id": "octahedron-high",
+      "byteLength": 472,
+      "sha256": "047c0f89365926577977496282680af11089ab18317bcbc66f7f4eca2a2695f3",
+      "geometryBytes": 624,
+      "vertices": 14,
+      "triangles": 24,
+      "bounds": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "sourceIds": [
+        "original-mathematical-fixtures"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "block",
+      "title": "Block",
+      "lods": {
+        "low": "block-low",
+        "high": "block-high"
+      },
+      "neighbors": [
+        "wedge"
+      ],
+      "anchorId": "centre",
+      "caption": "Eight corners form a mathematical block. This is a loading fixture, not anatomy.",
+      "textAlternative": "Eight corners form a mathematical block. This is a loading fixture, not anatomy. No 3D view is needed to follow this resource check.",
+      "reducedMotionAlternative": "Static inspection only; switching loads one declared mathematical scene."
+    },
+    {
+      "id": "wedge",
+      "title": "Wedge",
+      "lods": {
+        "low": "wedge-low",
+        "high": "wedge-high"
+      },
+      "neighbors": [
+        "block",
+        "octahedron"
+      ],
+      "anchorId": "centre",
+      "caption": "Four base corners meet an upper point. Scene bytes determine this mathematical shape.",
+      "textAlternative": "Four base corners meet an upper point. Scene bytes determine this mathematical shape. No 3D view is needed to follow this resource check.",
+      "reducedMotionAlternative": "Static inspection only; switching loads one declared mathematical scene."
+    },
+    {
+      "id": "octahedron",
+      "title": "Octahedron",
+      "lods": {
+        "low": "octahedron-low",
+        "high": "octahedron-high"
+      },
+      "neighbors": [
+        "wedge"
+      ],
+      "anchorId": "centre",
+      "caption": "Eight triangular faces form an octahedron. Its identity is preserved across detail tiers.",
+      "textAlternative": "Eight triangular faces form an octahedron. Its identity is preserved across detail tiers. No 3D view is needed to follow this resource check.",
+      "reducedMotionAlternative": "Static inspection only; switching loads one declared mathematical scene."
+    }
+  ],
+  "budgets": {
+    "residentBytes": 524288,
+    "textureBytes": 0
+  },
+  "sources": [
+    {
+      "id": "original-mathematical-fixtures",
+      "creator": "PalDawn contributors",
+      "license": "MIT",
+      "editableSource": "app/graphics/pack-fixtures.mjs",
+      "sha256": "cf36340147d332337f27122eb31bd8f4ebcf7f19377f15d896c0a448db2c0a6b",
+      "lineage": "Original integer-coordinate mathematical code fixtures; no anatomical asset or third-party source.",
+      "changes": "High detail subdivides each original triangle at its centroid; silhouette and scene identity remain unchanged."
+    }
+  ],
+  "attribution": "Original mathematical fixtures and generator: PalDawn contributors, MIT. No anatomical or clinical approval.",
+  "review": {
+    "status": "not_applicable",
+    "scope": "synthetic-engineering-only",
+    "reviewer": null
+  }
+}

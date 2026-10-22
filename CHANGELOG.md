@@ -2,6 +2,25 @@
 
 All notable changes to PalDawn are documented here.
 
+## [0.6.2] — Proposed
+
+### Connected Scene Engineering
+
+- Package the integrated P0–P2 synthetic Y-junction geometry, stable GPU branch
+  flow and shared scene-frame/playback controls as a source-only release.
+- Preserve explicit readiness retry, supersession, inspection return,
+  reduced-motion still frames and text fallback in the local workbench.
+- Add a digest-checked immutable scene-pack contract, bounded loader and
+  mathematical-fixture lab with cancellation, disposal and text recovery.
+- Prepare the seven-shot heart/chest asset dossier; all anatomical and
+  clinical review assignments remain pending with no named reviewer.
+- Update developer guidance and the contribution CI checklist; synchronize
+  version metadata without changing public content, dependencies or schemas.
+
+Graphics workbenches and Anatomy Lab remain excluded from the public app.
+Qualified review, public adoption and native/device acceptance remain separate
+holds. See [the proposed release notes](docs/releases/v0.6.2.md).
+
 ## [0.6.0] — 2026-09-27
 
 ### Clear Routes

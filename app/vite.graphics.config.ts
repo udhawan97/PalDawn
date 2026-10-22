@@ -11,7 +11,8 @@ export default defineConfig({
   preview: { host: '127.0.0.1' },
   build: {
     outDir: 'dist-graphics',
+    assetsInlineLimit: 0,
     target: 'es2022',
-    rollupOptions: { input: [resolve('heart-study.html'), resolve('flow-study.html'), resolve('junction-study.html')] },
+    rollupOptions: { input: [resolve('heart-study.html'), resolve('flow-study.html'), resolve('junction-study.html'), resolve('pack-study.html')] },
   },
 })

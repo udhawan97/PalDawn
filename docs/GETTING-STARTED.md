@@ -51,8 +51,8 @@ whether to offer **Install App** or **Add to Home Screen**. Installation is
 optional; the browser version remains available. The app cannot guarantee
 installation support on every browser or device.
 
-The [v0.6.1 release notes](releases/v0.6.1.md) describe the release scope. After
-the exact-commit gate publishes v0.6.1, its GitHub Release page provides source
+The [v0.6.2 release notes](releases/v0.6.2.md) describe the release scope. After
+the exact-commit gate publishes v0.6.2, its GitHub Release page provides source
 ZIP/tar archives. Reference-model packs are prepared separately. There is no native signing,
 notarization, or installer checksum to verify for this source-only release.
 

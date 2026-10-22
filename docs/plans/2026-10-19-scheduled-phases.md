@@ -1,7 +1,10 @@
 # PalDawn: next phases for scheduled implementation
 
 Planning date: October 19, 2026, America/Chicago.
-Status: P0–P2 engineering accepted and integrated through PR #2; P3 is next.
+Status: P0–P2 integrated through PR #2. P3 engineering implemented in the
+v0.6.2 source candidate; asset/clinical adoption remains blocked. Publication
+and exact commit acceptance are established by hosted gates, not this status line.
+See [P3 execution and holds](2026-10-22-p3-execution.md).
 Canonical checkout: `/Users/umang/developer/github/PalDawn`.
 
 Execution preparation: [October 21 Sol handoff for P0–P2](2026-10-21-sol-next-phases.md)
@@ -419,7 +422,7 @@ or people as part of the handoff without explicit authorization.
 | P0 | Integrated; native holds recorded | Preserve baseline and execution evidence |
 | P1 | Integrated; native/performance holds remain | Preserve synthetic-only scope and council receipt |
 | P2 | Integrated through PR #2; engineering accepted | Read PR #2's current main CI/Pages receipt before resuming |
-| P3 | Next; P2 engineering prerequisite satisfied | Recheck ownership and plan council; audit missing coverage and preserve proposal schema |
+| P3 | Engineering implemented in v0.6.2 source candidate; asset/clinical adoption blocked | Verify exact-head release gates; preserve pending review and missing geometry/views in the object dossier |
 | P4 | Waiting on P2/P3 | Compose candidate only after prerequisites |
 | P5 | Waiting on P4; human/device gates open | Measure and verify before publication |
 

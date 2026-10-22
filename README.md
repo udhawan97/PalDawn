@@ -18,7 +18,7 @@ treatment guide.
 <p align="center">
   <a href="https://udhawan97.github.io/PalDawn/"><strong>Open the web app ↗</strong></a>
   · <a href="docs/GETTING-STARTED.md">Getting started</a>
-  · <a href="docs/releases/v0.6.1.md">v0.6.1 release notes</a>
+  · <a href="docs/releases/v0.6.2.md">v0.6.2 release notes</a>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@ treatment guide.
 |---|---|---|
 | [Web app](https://udhawan97.github.io/PalDawn/) | Ten disease previews, source navigation, a conceptual body map, and a private learner workspace | JavaScript; WebGL2 for 3D. A text voyage is available. |
 | [Anatomy Lab — local preview](docs/ANATOMY-LAB.md) | Male/female reference meshes, 20 body-area research tracks, 113 condition-reading topics, and a session reading plan | Node.js 22+, Git, curl, and separately prepared reference packs. Qualified anatomy/clinical review is pending. |
-| [v0.6.1 release notes](docs/releases/v0.6.1.md) | Safer local study recovery, backups, keyboard routes and private-note exports | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
+| [v0.6.2 release notes](docs/releases/v0.6.2.md) | Connected synthetic junction, deterministic scene playback, and developer guidance | GitHub publishes source archives after the exact-commit release gate passes. Anatomy Lab remains a separately prepared local candidate. |
 
 Both paths share PalDawn's source-first study language, but they do not share a
 distribution boundary. The public app is deployed from `main` through GitHub
@@ -157,7 +157,9 @@ Code checks and browser acceptance do not replace qualified medical review.
 - [Curriculum 50](docs/CURRICULUM-50.md) · [Evidence navigation](docs/ATLAS-RESEARCH-LENS.md)
 - [Brand and editable assets](docs/BRAND-SYSTEM.md)
 - [Heart graphics workbench](docs/HEART-GRAPHICS-WORKBENCH.md) ·
-  [Synthetic flow study](docs/VESSEL-FLOW-WORKBENCH.md)—separate unreviewed studies,
+  [Synthetic flow study](docs/VESSEL-FLOW-WORKBENCH.md) ·
+  [Connected scene](docs/JUNCTION-SCENE-WORKBENCH.md) ·
+  [Scene-pack integrity](docs/SCENE-PACK-WORKBENCH.md)—separate unreviewed studies,
   excluded from the public build.
 
 Code is [MIT licensed](LICENSE). Upstream anatomy retains its own license and
