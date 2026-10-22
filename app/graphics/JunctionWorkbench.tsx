@@ -17,6 +17,7 @@ function JunctionScene({ time, quality, view, inspecting, reduced, wireframe, fr
   time: number; quality: FlowQuality; view: View | null; inspecting: boolean; reduced: boolean; wireframe: boolean; frameKey: string; probe: number | null; onPresented: (key: string, camera: number[][], frame: ReturnType<typeof resolveSceneFrame>) => void; onFailure: () => void
 }) {
   const { camera, size, gl, invalidate } = useThree()
+  const previousSize = useRef({ width: size.width, height: size.height })
   const [resources] = useState(() => {
     const wall = branchWallGeometry(), cell = cellGeometry(), material = new MeshStandardMaterial({ color: '#bb8070', roughness: .72 })
     const cellMaterial = new MeshStandardMaterial({ color: '#d44935', roughness: .55 }), clock = { value: 0 }
@@ -46,7 +47,19 @@ function JunctionScene({ time, quality, view, inspecting, reduced, wireframe, fr
     invalidate()
   }, [resources, time, quality, wireframe, probe, invalidate])
   useLayoutEffect(() => {
-    if (!(camera instanceof PerspectiveCamera) || size.width <= 0 || size.height <= 0 || (inspecting && view === null)) return
+    if (!(camera instanceof PerspectiveCamera) || size.width <= 0 || size.height <= 0) return
+    const resized = previousSize.current.width !== size.width || previousSize.current.height !== size.height
+    previousSize.current = { width: size.width, height: size.height }
+    if (inspecting && view === null) {
+      if (!resized) return
+      const target = new Vector3().fromArray(frame.camera.target)
+      const direction = camera.position.clone().sub(target)
+      const [low, high] = frame.framingBounds
+      const bounds = new Box3(new Vector3().fromArray(low!), new Vector3().fromArray(high!))
+      const fit = fitStudyCamera(bounds, size.width / size.height, direction, camera.fov)
+      camera.position.copy(target).addScaledVector(direction.normalize(), Math.max(frame.shot === 'inside' ? 1 : 0, fit.distance))
+      camera.lookAt(target); camera.updateProjectionMatrix(); invalidate(); return
+    }
     if (inspecting && view !== null) {
       const fit = fitStudyCamera(resources.bounds, size.width / size.height, VIEWS[view], camera.fov)
       camera.position.copy(fit.position); camera.lookAt(fit.target)
@@ -99,6 +112,7 @@ export function JunctionWorkbench() {
     if (!playing || status !== 'ready' || reduced || failed || text || inspecting) return
     let previous: number | null = null, request = 0
     const tick = (now: number) => {
+      if (!current.current.playing) return
       if (previous !== null) {
         const delta = Math.min(.25, (now - previous) / 1000), next = Math.min(12, current.current.time + delta)
         if (deferred && shotAt(next).id !== shotAt(current.current.time).id) requestFrame(next)

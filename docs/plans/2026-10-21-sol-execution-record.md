@@ -235,3 +235,30 @@ restart remain unverified. The task tab was closed and Safari control released.
 
 Next: freeze the P2 candidate, complete its two-round implementation council,
 then run exact-candidate integration checks, hosted CI and merge/push verification.
+
+### P2 round-1 corrections and revised acceptance
+
+Camera and linear flow policies are now declared in each frozen scene-spec shot
+and validated. The interior target is an explicit 0.12×0.12-unit central-lane
+cross-section plane, normal to the right-branch route, one unit forward of the
+camera, at Y=-0.12. Its route progress interpolates from0.70 to0.725 over the
+inside shot; reduced motion retains the start pose. Surrounding-wall clipping
+outside this forward target is intentional and declared. Independent checks
+assert plane orientation/dimensions, forward distance, exact mapping and actual
+mesh clearance, rather than merely fitting resolver-generated bounds.
+
+Free inspection now refits the declared target on same-page resize while
+preserving the current inspection direction and paused teaching time. The new
+wide→portrait→landscape→wide test checks padding/near-far bounds and exact return
+restoration. Notes-open and notes-closed framing are both covered. Pure tests
+also project transformed corners, reject malformed policies and cover pending
+request/restart/late completion and text/reduced interlocks. RAF now guards
+against a queued tick after pause before attempting any readiness request.
+A direct playing-pixels assertion supplements time advancement and paused
+stability.
+
+Revised full graphics suite: 46 passed (2.4m), exit0, both Chromium/WebKit
+(`p2-revised-browser.log`). Pure scene checks and graphics build passed (exit0;
+p2-scene-check.log, p2-build.log). The final readiness/restart browser amendment
+has its own focused log, p2-readiness-amendment.log. Candidate/public checks are
+still running and will be bound separately from this engineering receipt.

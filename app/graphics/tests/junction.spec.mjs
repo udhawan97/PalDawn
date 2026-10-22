@@ -27,6 +27,7 @@ test('connected junction renders from four sides and flow reconstructs the same 
   await expect.poll(async () => Number(await scene(page).getAttribute('data-time'))).toBeGreaterThan(6.2)
   await page.getByRole('button', { name: 'Pause passage', exact: true }).click(); await settled(page)
   const paused = await canvas.screenshot(); await page.waitForTimeout(100)
+  expect(paused.equals(initial)).toBe(false)
   expect((await canvas.screenshot()).equals(paused)).toBe(true)
   for (const view of ['Above', 'Below', 'Left', 'Right']) {
     await page.getByRole('button', { name: view, exact: true }).click(); await settled(page)

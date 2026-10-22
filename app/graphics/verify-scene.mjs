@@ -4,10 +4,14 @@ import { SYNTHETIC_SCENE, validateSceneSpec, resolveSceneFrame, shotAt } from '.
 import { INITIAL_PLAYBACK, playback } from './playback.ts'
 import { fitStudyCamera } from './cameraFit.ts'
 import { branchWallGeometry } from './branchGeometry.ts'
+import { branchRoute } from './branchModel.ts'
 
 const geometry = branchWallGeometry(), bounds = { whole: geometry.boundingBox.clone(), junction: new Box3(new Vector3(-2.4, -1.2, -2), new Vector3(2.4, .4, 2)) }
 bounds.whole.max.y = .4
 validateSceneSpec(SYNTHETIC_SCENE)
+for (const mutate of [s => { s.shots[0].flow.to = 5 }, s => { s.shots[0].camera.direction = Array(3) }, s => { s.shots[2].camera.progress = Array(2) }, s => { s.shots[2].camera.lookAhead = .1 }, s => { s.shots[2].camera.crossSection.halfWidth = NaN }, s => { s.shots[2].camera.clipping = 'none' }]) {
+  const spec = structuredClone(SYNTHETIC_SCENE); mutate(spec); assert.throws(() => validateSceneSpec(spec))
+}
 for (const mutate of [s => { s.version = 2 }, s => { s.shots[1].id = 'unknown' }, s => { s.shots[1].start = 5 }, s => { s.shots[1].start = 3 }, s => { s.shots[1].end = 4 }, s => { s.shots[2].end = Infinity }, s => { delete s.shots[1] }, s => { s.shots[1].source = 'clinical' }]) {
   const spec = structuredClone(SYNTHETIC_SCENE); mutate(spec); assert.throws(() => validateSceneSpec(spec))
 }
@@ -42,6 +46,13 @@ for (const event of [{ type: 'hidden' }, { type: 'inspect' }, { type: 'text', va
   assert.equal(playback(sample, { type: 'tick', delta: .2 }).time, 0)
 }
 state = playback(INITIAL_PLAYBACK, { type: 'inspect' }); state = playback(state, { type: 'return' }); assert.equal(state.playing, false)
+state = playback(INITIAL_PLAYBACK, { type: 'request', time: 8 }); const beforeRestart = state.requestId
+state = playback(state, { type: 'restart' }); assert.deepEqual(playback(state, { type: 'settled', requestId: beforeRestart, ok: true }), state)
+for (const event of [{ type: 'text', value: true }, { type: 'reduced', value: true }]) {
+  let sample = playback(INITIAL_PLAYBACK, { type: 'request', time: 8 }); sample = playback(sample, event)
+  sample = playback(sample, { type: 'settled', requestId: sample.requestId, ok: true })
+  assert.equal(playback(sample, { type: 'play' }).playing, false)
+}
 assert.throws(() => playback(INITIAL_PLAYBACK, { type: 'tick', delta: NaN }))
 for (const invalid of [new Box3(), new Box3(new Vector3(NaN, 0, 0), new Vector3(1, 1, 1))]) assert.throws(() => fitStudyCamera(invalid, 1, 'front'))
 for (const invalid of [new Vector3(), new Vector3(NaN, 0, 0)]) assert.throws(() => fitStudyCamera(bounds.whole, 1, invalid))
@@ -59,6 +70,19 @@ for (const viewport of [{ width: 320, height: 568 }, { width: 844, height: 390 }
   }
   fits++
   if (time >= 8) {
+    const policy = SYNTHETIC_SCENE.shots[2].camera
+    const progress = policy.progress[0] + (policy.progress[1] - policy.progress[0]) * ((time - 8) / 4)
+    const route = branchRoute(progress, policy.branch), target = new Vector3().fromArray(resolved.camera.target)
+    assert.ok(Math.abs(target.clone().sub(camera.position).dot(route.tangent) - policy.lookAhead) < 1e-6)
+    assert.ok(target.distanceTo(camera.position) >= .5)
+    assert.equal(resolved.crossSection.length, 4); assert.equal(resolved.clipping, 'surrounding-wall')
+    for (const point of resolved.crossSection) {
+      const offset = new Vector3().fromArray(point).sub(target)
+      assert.ok(Math.abs(offset.dot(route.tangent)) < 1e-6, 'target must be a forward cross-section plane')
+      assert.ok(Math.abs(Math.abs(offset.dot(route.normal)) - policy.crossSection.halfWidth) < 1e-6)
+      assert.ok(Math.abs(Math.abs(offset.y) - policy.crossSection.halfHeight) < 1e-6)
+    }
+    assert.equal(resolved.flowTime, time)
     let minimum = Infinity
     const triangle = new Triangle(), closest = new Vector3(), p = geometry.getAttribute('position'), ids = geometry.index.array
     for (let i = 0; i < ids.length; i += 3) {
@@ -69,7 +93,13 @@ for (const viewport of [{ width: 320, height: 568 }, { width: 844, height: 390 }
   }
 }
 const transformed = bounds.whole.clone().applyMatrix4(new Matrix4().makeRotationY(.4)).translate(new Vector3(3, 4, 5))
-assert.deepEqual(fitStudyCamera(transformed, 1, 'front').target, transformed.getCenter(new Vector3()))
+const transformedFit = fitStudyCamera(transformed, 1, 'front'), transformedCamera = new PerspectiveCamera(34, 1, .05, 150)
+assert.deepEqual(transformedFit.target, transformed.getCenter(new Vector3()))
+transformedCamera.position.copy(transformedFit.position); transformedCamera.lookAt(transformedFit.target); transformedCamera.updateMatrixWorld(true)
+for (const x of [transformed.min.x, transformed.max.x]) for (const y of [transformed.min.y, transformed.max.y]) for (const z of [transformed.min.z, transformed.max.z]) {
+  const corner = new Vector3(x, y, z).project(transformedCamera)
+  assert.ok(Math.abs(corner.x) < .81 && Math.abs(corner.y) < .81 && corner.z > -1 && corner.z < 1)
+}
 assert.deepEqual(frame(8, { width: 320, height: 568, reduced: true }).camera, frame(12, { width: 320, height: 568, reduced: true }).camera)
 geometry.dispose()
 console.log(`Scene checks passed: exact shot boundaries, direct/forward/backward/restart full-state equality, stale-load/failure lifecycle, ${fits} padded fits, transformed bounds and actual-mesh interior camera clearance.`)
