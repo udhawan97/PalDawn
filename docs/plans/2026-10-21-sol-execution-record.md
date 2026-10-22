@@ -262,3 +262,32 @@ Revised full graphics suite: 46 passed (2.4m), exit0, both Chromium/WebKit
 p2-scene-check.log, p2-build.log). The final readiness/restart browser amendment
 has its own focused log, p2-readiness-amendment.log. Candidate/public checks are
 still running and will be bound separately from this engineering receipt.
+
+## P2 implementation council receipt
+
+Frozen confirmation candidate: `b00a48ae534289e26307649a2209c17ed62805cc`.
+Four independent roles reviewed each of P2.1/P2.2/P2.3 in exactly two rounds:
+
+| Role | P2.1 round 1 / 2 | P2.2 round 1 / 2 | P2.3 round 1 / 2 |
+|---|---|---|---|
+| Evidence | BLOCK / APPROVE | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE |
+| Coverage | BLOCK / APPROVE | APPROVE_WITH_NITS / APPROVE | BLOCK / APPROVE |
+| Risk | APPROVE_WITH_NITS / APPROVE | APPROVE / APPROVE | APPROVE / APPROVE |
+| Outcome | BLOCK / APPROVE | APPROVE / APPROVE | BLOCK / APPROVE |
+
+No valid implementation blocker remains. Revised full graphics suite46 passed;
+focused readiness/restart amendment2 passed (6.8s), exit0. P0–P2 engineering
+accepted. All eight packets have their two-round/four-role implementation receipt.
+
+Graphify code graph refreshed with `graphify update .`; scoped query for
+`resolveSceneFrame()` and `branchWallGeometry()` locates the new models,
+workbench, playback and verification relationships, corroborated against source.
+The CLI refreshes code structurally; existing document semantic context is
+retained and current written queue/record is authoritative for execution state.
+No watcher or hook was installed. Generated graph outputs are included.
+
+Integration remains distinct: final public/PWA/provenance/license and hosted
+candidate/main checks are in progress. Source merge/push is authorized by the
+user; normal app-path integration can redeploy Pages. No release tag or new
+public clinical/anatomy adoption is authorized or claimed. Next implementation
+phase after integration is P3 from the canonical queue; it is not implemented.
