@@ -37,6 +37,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 .view-strip button[aria-pressed=true] { background: #4a554e; color: #f1efe4; }
 .view-strip button:hover { background: #384640; }
 .canvas-caption { font-size: 10px; line-height: 1.65; text-align: center; color: #a7b1a5; min-height: 28px; margin: 13px 20px 19px; }
+.scene-notes { padding: 0 20px 18px; font-size: 12px; line-height: 1.7; color: #d1d7cc; }
+.scene-notes summary { cursor: pointer; }
+.scene-notes p { margin-bottom: 0; }
 .study-controls { padding-top: 20px; }
 .study-controls fieldset { border: 0; padding: 0 0 24px; margin: 0 0 24px; border-bottom: 1px solid #c5c9bd; min-width: 0; }
 .study-controls legend { padding: 0; font: 21px Georgia, serif; margin-bottom: 15px; color: #283a32; }

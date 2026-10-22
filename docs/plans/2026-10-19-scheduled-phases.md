@@ -1,13 +1,16 @@
 # PalDawn: next phases for scheduled implementation
 
 Planning date: October 19, 2026, America/Chicago.
-Status: proposed execution queue; implementation has not started.
+Status: P0–P2 engineering accepted and integrated through PR #2; P3 is next.
 Canonical checkout: `/Users/umang/developer/github/PalDawn`.
 
 Execution preparation: [October 21 Sol handoff for P0–P2](2026-10-21-sol-next-phases.md)
 contains the bounded packets, command matrix and copy-paste prompt. P0 baseline
-execution is still pending; P1/P2 remain dependent on accepted earlier packets.
+execution passed; P1/P2 engineering and exact-candidate CI passed. Source integration
+and the live post-merge CI/Pages receipt are linked from the execution record.
 See its [preparation review receipt](2026-10-21-sol-next-phases-review.md).
+Current implementation evidence and ownership:
+[October 21 execution record](2026-10-21-sol-execution-record.md).
 
 ## Purpose and verified starting point
 
@@ -413,10 +416,10 @@ or people as part of the handoff without explicit authorization.
 
 | Phase | Initial state | Next action |
 |---|---|---|
-| P0 | Execution packet prepared; baseline run pending | Execute P0.1 from the October 21 Sol handoff |
-| P1 | Packet prepared; waiting on P0 engineering baseline | Revalidate the bounded synthetic Y contract, then P1.1 |
-| P2 | Packet prepared; waiting on P1 | Revalidate the three-shot frame contract, then P2.1 |
-| P3 | Asset inventory ready; runtime waits on P2 | Audit missing coverage; preserve proposal schema |
+| P0 | Integrated; native holds recorded | Preserve baseline and execution evidence |
+| P1 | Integrated; native/performance holds remain | Preserve synthetic-only scope and council receipt |
+| P2 | Integrated through PR #2; engineering accepted | Read PR #2's current main CI/Pages receipt before resuming |
+| P3 | Next; P2 engineering prerequisite satisfied | Recheck ownership and plan council; audit missing coverage and preserve proposal schema |
 | P4 | Waiting on P2/P3 | Compose candidate only after prerequisites |
 | P5 | Waiting on P4; human/device gates open | Measure and verify before publication |
 

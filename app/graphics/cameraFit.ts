@@ -8,9 +8,12 @@ const directions: Record<StudyView, [number, number, number]> = {
 // Fit all eight world-space bounds corners inside the actual canvas aspect.
 // No sidebar offsets: the canvas occupies only the unobscured layout column.
 export function fitStudyCamera(bounds: Box3, aspect: number, view: StudyView | Vector3, fov = 34) {
+  if (bounds.isEmpty() || ![...bounds.min.toArray(), ...bounds.max.toArray(), aspect, fov].every(Number.isFinite) || aspect <= 0 || fov <= 0 || fov >= 179) throw new Error('Invalid camera bounds or viewport')
   const target = bounds.getCenter(new Vector3())
   const direction = (typeof view === 'string' ? new Vector3(...directions[view]) : view.clone()).normalize()
-  const right = new Vector3(0, 1, 0).cross(direction).normalize()
+  if (!direction.toArray().every(Number.isFinite) || direction.lengthSq() === 0) throw new Error('Invalid camera view')
+  const worldUp = Math.abs(direction.y) > .999 ? new Vector3(0, 0, 1) : new Vector3(0, 1, 0)
+  const right = worldUp.cross(direction).normalize()
   const up = direction.clone().cross(right)
   const tangent = Math.tan(fov * Math.PI / 360)
   let distance = 0
