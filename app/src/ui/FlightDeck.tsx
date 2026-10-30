@@ -613,10 +613,6 @@ function WorkspacePanel({
   const markdown = () => studyWorkspaceMarkdown(workspace)
   const conditionRecordCount = Object.values(conditionStudy.records).filter((record) => record.saved || record.studied || record.note.trim()).length
 
-  useEffect(() => {
-    setSelectedStageId(stageAt(progress).id)
-  }, [progress])
-
   const updateNote = (value: string) => {
     onUpdateWorkspace((current) => {
       const notes = { ...current.notes }
@@ -1547,6 +1543,10 @@ export function FlightDeck({
   const [visibilityPaused, setVisibilityPaused] = useState(false)
   const [systemNoticesOpen, setSystemNoticesOpen] = useState(false)
   const [bookmarks, setBookmarks] = useState(() => orderedBookmarks(loadStageBookmarks()))
+  const [bookmarksPersisted, setBookmarksPersisted] = useState(true)
+  const bookmarksPersistedRef = useRef(true)
+  const [bookmarkConflict, setBookmarkConflict] = useState(false)
+  const bookmarkConflictRef = useRef(false)
   const [workspace, setWorkspace] = useState(loadLearnerWorkspace)
   const [workspacePersisted, setWorkspacePersisted] = useState(true)
   const workspacePersistedRef = useRef(true)
@@ -1566,6 +1566,7 @@ export function FlightDeck({
     offlineReady ? 'Offline ready' : null,
     updateBlocked ? 'Update paused' : updateReady ? 'Update ready' : null,
     visibilityPaused ? 'Voyage paused' : null,
+    bookmarkConflict ? 'Saved stage conflict' : !bookmarksPersisted ? 'Unsaved saved stages' : null,
     failedStorageKeys.length ? 'Local storage unavailable' : null,
   ].filter((label): label is string => label !== null)
   const systemNoticeCount = systemNoticeLabels.length
@@ -1615,6 +1616,35 @@ export function FlightDeck({
     setOpenPanel('workspace', { resumePlayback: false })
   }, [closeAtlas, setOpenPanel, showHome])
 
+  const retryBookmarkPersistence = useCallback(() => {
+    const persisted = !bookmarkConflictRef.current && saveStageBookmarks(bookmarksRef.current)
+    bookmarksPersistedRef.current = persisted
+    setBookmarksPersisted(persisted)
+    setBookmarkStatus(bookmarkConflictRef.current
+      ? 'Your unsaved selection remains in this tab. Use saved stages discards this draft and loads the other tab’s saved selection.'
+      : persisted ? 'Saved stages saved on this device.' : 'Saved-stage changes remain in this tab. Restore browser storage, then retry saving.')
+    return persisted
+  }, [])
+
+  const useSavedBookmarks = useCallback(() => {
+    const snapshot = exportLocalData()
+    const parsed = snapshot.ok ? parseLocalDataImport(snapshot.text) : null
+    if (!parsed?.ok) {
+      setBookmarkStatus('Saved stages could not be read. Your unsaved selection remains in this tab; restore browser storage before trying again.')
+      return
+    }
+    const next = orderedBookmarks(parsed.data.bookmarks)
+    bookmarksRef.current = next
+    setBookmarks(next)
+    bookmarksPersistedRef.current = true
+    setBookmarksPersisted(true)
+    bookmarkConflictRef.current = false
+    setBookmarkConflict(false)
+    // This verified snapshot also establishes reset/read coherence; other write failures remain unresolved.
+    setFailedStorageKeys(current => current.filter(key => key !== PALDAWN_BOOKMARKS_KEY && key !== PALDAWN_RESET_KEY))
+    setBookmarkStatus('Saved stages loaded. This tab’s unsaved saved-stage changes were discarded.')
+  }, [])
+
   const toggleStageBookmark = useCallback((id: string) => {
     if (!STAGE_IDS.has(id)) return false
     const current = bookmarksRef.current
@@ -1622,12 +1652,10 @@ export function FlightDeck({
     const next = orderedBookmarks(wasSaved ? current.filter((candidate) => candidate !== id) : [...current, id])
     bookmarksRef.current = next
     setBookmarks(next)
-    const persisted = saveStageBookmarks(next)
-    setBookmarkStatus(persisted
-      ? wasSaved ? 'Stage removed from saved stages.' : 'Stage saved on this device.'
-      : 'Stage changed for this tab, but browser storage is unavailable. Reload may lose it.')
+    const persisted = retryBookmarkPersistence()
+    if (persisted) setBookmarkStatus(wasSaved ? 'Stage removed from saved stages.' : 'Stage saved on this device.')
     return persisted
-  }, [])
+  }, [retryBookmarkPersistence])
 
   const retryWorkspacePersistence = useCallback(() => {
     // A retry must not overwrite another tab's work after detecting a conflict.
@@ -1652,7 +1680,7 @@ export function FlightDeck({
       progress: experience.progress,
       narrationMode: experience.narrationMode,
     })
-    const bookmarksSaved = saveStageBookmarks(bookmarksRef.current)
+    const bookmarksSaved = retryBookmarkPersistence()
     const workspaceSaved = retryWorkspacePersistence()
     const atlasStudySaved = useAtlasStudy.getState().persist()
     const settingsSaved = writeLocalStorageValue(PALDAWN_SETTINGS_KEY, JSON.stringify({
@@ -1670,7 +1698,7 @@ export function FlightDeck({
     }))
     setWorkspacePersisted(workspaceSaved)
     return journeySaved && bookmarksSaved && workspaceSaved && atlasStudySaved && settingsSaved
-  }, [retryWorkspacePersistence])
+  }, [retryBookmarkPersistence, retryWorkspacePersistence])
 
   const openWorkspace = useCallback((focusNote: boolean) => {
     setOpenPanel('workspace')
@@ -1773,6 +1801,12 @@ export function FlightDeck({
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
       if (event.key === PALDAWN_BOOKMARKS_KEY) {
+        if (!bookmarksPersistedRef.current) {
+          bookmarkConflictRef.current = true
+          setBookmarkConflict(true)
+          setBookmarkStatus('Your unsaved selection remains in this tab. Use saved stages discards this draft and loads the other tab’s saved selection.')
+          return
+        }
         const next = orderedBookmarks(loadStageBookmarks())
         bookmarksRef.current = next
         setBookmarks(next)
@@ -1865,9 +1899,6 @@ export function FlightDeck({
       setUpdateBlocked(detail)
       setUpdatePreparing(false)
       setSystemNoticesOpen(true)
-      window.setTimeout(() => document.getElementById(
-        detail.reason === 'committed-changed' ? 'pwa-committed-recovery' : 'pwa-update-action',
-      )?.focus(), 0)
     }
     const onOfflineReady = () => setOfflineReady(true)
     const onOnline = () => setOnline(true)
@@ -1887,6 +1918,13 @@ export function FlightDeck({
       window.removeEventListener('offline', onOffline)
     }
   }, [])
+
+  useLayoutEffect(() => {
+    if (!updateBlocked) return
+    document.getElementById(
+      updateBlocked.reason === 'committed-changed' ? 'pwa-committed-recovery' : 'pwa-update-action',
+    )?.focus()
+  }, [updateBlocked])
 
   useEffect(() => {
     if (systemNoticeCount === 0) setSystemNoticesOpen(false)
@@ -2059,7 +2097,7 @@ export function FlightDeck({
                 ? 'Saving local changes in every open PalDawn tab before updating…'
                 : updateBlocked
                 ? updateBlocked.reason === 'committed-changed'
-                  ? 'The update committed, but the open PalDawn tabs changed before it could finish. This page is frozen; close every PalDawn tab, then reopen PalDawn.'
+                  ? 'The update committed, but it could not finish safely. This page is frozen; close every PalDawn tab, then reopen PalDawn.'
                   : updateBlocked.reason === 'activation-timeout'
                   ? 'Update did not finish, so PalDawn did not reload this tab. Your local work remains open; retry when every PalDawn tab is ready.'
                   : updateBlocked.reason === 'changed'
@@ -2081,7 +2119,16 @@ export function FlightDeck({
           ) : null}
           {failedStorageKeys.length ? (
             <p className="system-banner system-banner-storage">
-              Local changes are not being saved. Keep this page open. Use Study to copy or download private notes; saved-stage changes and preferences remain only in this tab until storage recovers.
+              Local changes are not being saved. Keep this page open. Use Study to copy or download private notes; unsaved preferences remain in this tab.
+            </p>
+          ) : null}
+          {!bookmarksPersisted ? (
+            <p className="system-banner system-banner-storage system-banner-bookmarks" role="alert">
+              <strong>{bookmarkConflict ? 'Another tab changed saved stages.' : 'Saved-stage changes are not saved.'}</strong>{' '}
+              {bookmarkStatus}
+              {bookmarkConflict
+                ? <button type="button" onClick={useSavedBookmarks}>Use saved stages</button>
+                : <button type="button" onClick={retryBookmarkPersistence}>Retry saving stages</button>}
             </p>
           ) : null}
         </div>

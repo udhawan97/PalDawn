@@ -80,14 +80,15 @@ function safeURL(value: string, origin: string) { const url = new URL(value, ori
 export type PackFetch = (url: string, options: RequestInit) => Promise<Response>
 async function readBytes(url: string, length: number, signal: AbortSignal, fetcher: PackFetch) {
   const response = await fetcher(url, { signal, credentials: 'omit', redirect: 'error', cache: 'no-store' }).catch(error => { throw signal.aborted ? signal.reason ?? abortError() : error })
-  check(response.ok && !response.redirected && (!response.url || response.url === url), 'Scene bytes unavailable or redirected')
-  const declared = response.headers.get('content-length'); check(declared === null || (/^\d+$/.test(declared) && Number(declared) === length), 'Unexpected response size')
-  check(response.body, 'Scene response has no body'); const reader = response.body.getReader(), chunks: Uint8Array[] = []; let total = 0
-  const cancel = () => { void reader.cancel(signal.reason).catch(() => {}) }; signal.addEventListener('abort', cancel, { once: true })
+  const reader = response.body?.getReader(), chunks: Uint8Array[] = []; let total = 0
+  const cancel = () => { void reader?.cancel(signal.reason).catch(() => {}) }; signal.addEventListener('abort', cancel, { once: true })
   try {
+    check(response.ok && !response.redirected && (!response.url || response.url === url), 'Scene bytes unavailable or redirected')
+    const declared = response.headers.get('content-length'); check(declared === null || (/^\d+$/.test(declared) && Number(declared) === length), 'Unexpected response size')
+    check(reader, 'Scene response has no body')
     while (true) { if (signal.aborted) throw signal.reason ?? abortError(); const item = await reader.read(); if (signal.aborted) throw signal.reason ?? abortError(); if (item.done) break; total += item.value.byteLength; check(total <= length, 'Scene stream exceeds byte ceiling'); chunks.push(item.value) }
     check(total === length && !signal.aborted, 'Missing or superseded scene bytes'); const bytes = new Uint8Array(total); let cursor = 0; for (const chunk of chunks) { bytes.set(chunk, cursor); cursor += chunk.length }; return bytes
-  } catch (error) { throw signal.aborted ? signal.reason ?? abortError() : error } finally { signal.removeEventListener('abort', cancel); await reader.cancel().catch(() => {}); reader.releaseLock() }
+  } catch (error) { throw signal.aborted ? signal.reason ?? abortError() : error } finally { signal.removeEventListener('abort', cancel); await reader?.cancel().catch(() => {}); reader?.releaseLock() }
 }
 
 export function decodePackMesh(bytes: Uint8Array, asset: PackAsset): BufferGeometry {

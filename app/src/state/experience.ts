@@ -97,6 +97,9 @@ export const useExperience = create<ExperienceState>()((set, get) => ({
     set({ entered: true, playing: false, progress })
   },
   setOpenPanel: (openPanel, options) => set((state) => {
+    if (openPanel === 'workspace') {
+      return { openPanel, playing: false, resumeAfterSettings: false }
+    }
     if (openPanel === 'settings' && state.openPanel !== 'settings') {
       return {
         openPanel,

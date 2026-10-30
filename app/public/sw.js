@@ -94,7 +94,13 @@ self.addEventListener('activate', (event) => {
         return
       }
       notifyCommitted(updateRequest.requestId, beforeCacheCleanup)
-      await deleteStalePalDawnCaches()
+      try {
+        await deleteStalePalDawnCaches()
+      } catch {
+        // Commit cannot be undone; preserve the lock and explain how to reopen safely.
+        await notifyBlocked(updateRequest.requestId, 'failed', beforeCacheCleanup)
+        return
+      }
       for (const client of beforeCacheCleanup) {
         client.postMessage({ type: UPDATE_ACTIVATED_MESSAGE, requestId: updateRequest.requestId })
       }

@@ -204,7 +204,9 @@ test('blocked browser storage never claims local notes or bookmarks were saved',
   await expect(page.getByRole('button', { name: 'My study' })).toBeFocused()
   await page.keyboard.press('t')
   await page.getByRole('button', { name: 'Save stage' }).first().click()
-  await expect(page.getByText(/Stage changed for this tab, but browser storage is unavailable/i)).toBeAttached()
+  const bookmarkWarning = page.locator('.system-banner-bookmarks')
+  await expect(bookmarkWarning).toContainText('Saved-stage changes remain in this tab. Restore browser storage, then retry saving.')
+  await expect(bookmarkWarning).not.toContainText('saved on this device')
   await expect(page.getByRole('button', { name: /Local storage unavailable/i })).toBeVisible()
 
   await page.getByRole('button', { name: 'Close panel' }).click()

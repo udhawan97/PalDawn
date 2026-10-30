@@ -471,6 +471,8 @@ export function DiseaseExplorer({ rendererAvailable }: { rendererAvailable: bool
   useEffect(() => {
     useExperience.getState().pause()
     const onKeyDown = (event: KeyboardEvent) => {
+      // Open drawers own shortcuts, including the nonmodal desktop side panel.
+      if (event.defaultPrevented || useExperience.getState().openPanel !== null) return
       const target = event.target
       if (target instanceof HTMLElement && ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return
       if (event.key === '/') {
