@@ -73,8 +73,53 @@ async function runFetchCacheFailureTests() {
   assert.equal(dispatchFetch({ origin: 'https://other.test' }).response, undefined, 'cross-origin requests must remain untouched')
 }
 
+async function runCommittedCacheCleanupFailureTests() {
+  for (const failure of ['keys', 'delete']) {
+    const listeners = new Map()
+    const messages = [[], []]
+    const clients = messages.map((received, index) => ({
+      id: `cleanup-client-${index}`,
+      url: `https://example.test/PalDawn/?tab=${index}`,
+      postMessage: message => received.push(JSON.parse(JSON.stringify(message))),
+    }))
+    const marker = { requestId: `cleanup-${failure}`, clientIds: clients.map(client => client.id) }
+    let markerDeleted = false
+    const cache = {
+      match: async () => new Response(JSON.stringify(marker)),
+      delete: async () => { markerDeleted = true; return true },
+    }
+    vm.runInNewContext(serviceWorkerSource, {
+      URL, Request, Response, setTimeout, clearTimeout,
+      caches: {
+        open: async () => cache,
+        keys: async () => {
+          if (failure === 'keys') throw new Error('Injected cache keys failure')
+          return ['paldawn-foundation-old']
+        },
+        delete: async () => { throw new Error('Injected cache delete failure') },
+      },
+      self: {
+        addEventListener: (name, listener) => listeners.set(name, listener),
+        location: { origin: 'https://example.test' },
+        registration: { scope: 'https://example.test/PalDawn/' },
+        clients: { matchAll: async () => clients, claim: async () => {} },
+      },
+    }, { filename: 'sw.js' })
+    let activation
+    listeners.get('activate')({ waitUntil: promise => { activation = promise } })
+    await activation
+    for (const received of messages) {
+      assert.ok(received.some(message => message.type === 'PALDAWN_UPDATE_COMMITTED'))
+      assert.deepEqual(received.at(-1), { type: 'PALDAWN_UPDATE_BLOCKED', requestId: marker.requestId, reason: 'failed' }, `${failure}: committed failure must reach every prepared client`)
+      assert.ok(!received.some(message => message.type === 'PALDAWN_UPDATE_ACTIVATED'), 'failed cleanup must not announce activation')
+    }
+    assert.equal(markerDeleted, false, 'failed committed cleanup must retain its recovery marker')
+  }
+}
+
 export async function runPwaLifecycleTests() {
   await runFetchCacheFailureTests()
+  await runCommittedCacheCleanupFailureTests()
   const listeners = new Map()
   const cacheBuckets = new Map()
   const clientMessages = [[], []]

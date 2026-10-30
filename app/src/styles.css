@@ -1786,6 +1786,12 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
+.system-banner-bookmarks {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
 .pwa-committed-recovery {
   position: fixed;
   z-index: 200;

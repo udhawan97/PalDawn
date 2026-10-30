@@ -91,7 +91,7 @@ const showCommittedUpdateRecovery = (requestId: string): void => {
     title.id = `${COMMITTED_RECOVERY_NOTICE_ID}-title`
     title.textContent = 'Close and reopen PalDawn to finish the update'
     const explanation = document.createElement('p')
-    explanation.textContent = 'The open PalDawn tabs changed after the update committed. This page is frozen to protect local work. Close every PalDawn tab, then reopen PalDawn so all tabs use one version.'
+    explanation.textContent = 'The update committed, but it could not finish safely. This page is frozen to protect local work. Close every PalDawn tab, then reopen PalDawn so all tabs use one version.'
     notice.append(title, explanation)
     document.body.append(notice)
   }
